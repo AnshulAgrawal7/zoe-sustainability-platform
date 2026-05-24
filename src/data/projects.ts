@@ -1,35 +1,36 @@
-// PROTOTYPE DATA — fictional environmental projects for the ZOE program
-// All data is illustrative. Real project data would be managed through the future backend.
+// PROTOTYPE DATA — fictional project progress/metrics; context grounded in real Northern Corfu issues.
+// Real references: Antinioti Lagoon (Natura 2000), Erimitis Peninsula (conservation campaign),
+// IEF (Ionian Environment Foundation), SIN.PRAXI Sinies, All For Blue, Temploni landfill crisis.
 
 import type { Project } from '../types';
 
 export const projects: Project[] = [
   {
-    id: 'korisia-wetlands',
-    title: 'Korisia Wetlands Restoration',
+    id: 'antinioti-lagoon',
+    title: 'Antinioti Lagoon Restoration',
     category: 'Biodiversity',
     status: 'Active',
-    location: 'Korisia Lagoon, Northern Corfu',
+    location: 'Antinioti Lagoon, NE Corfu (Natura 2000)',
     description:
-      'A multi-year restoration initiative to rehabilitate the degraded coastal wetlands at Korisia Lagoon. The project involves invasive species removal, native vegetation replanting, and water flow improvement to restore habitat for migratory birds and endemic amphibian species.',
+      'Multi-year restoration of the Antinioti Lagoon — the most significant protected wetland in Northern Corfu and a Natura 2000 site between Kassiopi and Roda. The project removes invasive reed species, improves water flow, and protects habitat for 44+ migratory bird species in partnership with the Ionian Environment Foundation (IEF).',
     problem:
-      'Korisia Lagoon has experienced significant habitat degradation over the past decades due to agricultural runoff, uncontrolled development near the shoreline, and invasive reed species that outcompete native marsh vegetation. Biodiversity surveys show a 40% decline in bird species since 2005.',
+      "Antinioti Lagoon faces degradation from agricultural runoff from the Ropa Valley corridor, unregulated access, and invasive vegetation outcompeting native marsh species. Northern Corfu's shift from agriculture to tourism over the past 50 years has left traditional land management — which historically maintained the lagoon margins — largely abandoned.",
     expectedImpact:
-      'Restoration of approximately 12 hectares of wetland habitat, recovery of 15+ bird species, and improvement of water quality metrics. Community-led monitoring will provide long-term ecological data to inform further conservation measures.',
+      'Restoration of 10+ hectares of wetland habitat, measurable recovery of nesting bird populations, and establishment of a citizen science monitoring network with trained local volunteers. Long-term: a reference site for wetland restoration methodology in the northern Ionian islands.',
     sdgs: [13, 14, 15, 17],
     progressPercent: 62,
     startDate: '2023-03',
     endDate: '2026-09',
     citizenInvolvement: [
-      'Join monthly habitat monitoring walks',
+      'Join monthly habitat monitoring walks with trained ecologists',
       'Participate in invasive species removal days',
-      'Submit biodiversity sightings via the future ZOE app',
-      'Adopt a wetland section as a community guardian',
+      'Report biodiversity sightings via the ZOE platform',
+      'Volunteer as a lagoon guardian (weekly 1-hour patrols)',
     ],
     transparencyMetrics: [
       { label: 'Area Restored', value: '7.4', unit: 'hectares' },
       { label: 'Volunteer Days', value: '142', unit: 'days' },
-      { label: 'Bird Species Recorded', value: '31', unit: 'species' },
+      { label: 'Bird Species Recorded', value: '44', unit: 'species' },
       { label: 'Invasive Plants Removed', value: '2.8', unit: 'tonnes' },
     ],
     participantCount: 218,
@@ -42,26 +43,26 @@ export const projects: Project[] = [
     status: 'Active',
     location: 'Municipality-wide, Northern Corfu',
     description:
-      'Establishing a network of community recycling hubs across 14 villages in Northern Corfu, combined with an educational campaign to increase household separation of glass, plastics, organics and textiles. Partnerships with local businesses create closed-loop reuse pathways.',
+      'Expanding the multi-stream recycling infrastructure across Northern Corfu villages, building on the model pioneered by SIN.PRAXI in Sinies — the only licensed "Small Green Spot" on the island. The project establishes community recycling hubs in Kassiopi, Acharavi, Roda and Sidari, with educational campaigns targeting both residents and tourism businesses.',
     problem:
-      'Northern Corfu currently sends over 85% of household waste to landfill. Seasonal tourism multiplies waste volumes by 3× during summer months. Existing recycling infrastructure is insufficient and poorly understood by residents and tourists alike.',
+      "Corfu's single landfill at Temploni filled to capacity and was blockaded by protesters in 2018, creating a visible island-wide garbage crisis during peak tourist season. In summer, daily waste generation rises from ~170 tonnes to over 350 tonnes as visitor numbers multiply. Currently, most waste still reaches landfill; recycling infrastructure outside Sinies is patchy.",
     expectedImpact:
-      'Diversion of 35% of household waste from landfill within 3 years. Creation of 8 new community recycling jobs. Reduced contamination of coastal ecosystems and measurable improvement in visual cleanliness of public spaces.',
+      'Diversion of 35% of household and tourism waste from landfill within 3 years, replicating the SIN.PRAXI model in 6 additional village hubs. Creation of local recycling employment. Measurable reduction in the seasonal waste spike visible to tourists and residents alike.',
     sdgs: [11, 12, 13, 17],
     progressPercent: 45,
     startDate: '2024-01',
     endDate: '2026-12',
     citizenInvolvement: [
       'Register your household as a sorting champion',
-      'Volunteer at a community recycling hub',
-      'Report illegal dumping sites via the platform',
-      'Participate in business partnership program',
+      'Volunteer at a community hub alongside SIN.PRAXI partners',
+      'Report illegal dumping on the ZOE platform',
+      'Ask your hotel or restaurant to join the business programme',
     ],
     transparencyMetrics: [
       { label: 'Recycling Hubs Installed', value: '9', unit: 'of 14 planned' },
       { label: 'Waste Diverted', value: '18.3', unit: 'tonnes/month' },
       { label: 'Households Enrolled', value: '1240', unit: 'households' },
-      { label: 'Educational Events', value: '27', unit: 'events' },
+      { label: 'Partner Businesses', value: '27', unit: 'businesses' },
     ],
     participantCount: 1240,
     thumbnailColor: 'bg-amber-500',
@@ -71,28 +72,28 @@ export const projects: Project[] = [
     title: 'Olive Grove Revival & Agroecology',
     category: 'Biodiversity',
     status: 'Active',
-    location: 'Agios Markos & Spartilas, Northern Corfu',
+    location: 'Agios Markos, Spartilas & Sokraki, Northern Corfu',
     description:
-      'Revitalising abandoned traditional olive groves through community stewardship agreements. Participating landowners and volunteers maintain the groves using low-impact agroecological methods, preserving a cultural heritage landscape while supporting pollinators and soil health.',
+      "Revitalising abandoned terraced olive groves in the northern hill villages through community stewardship agreements. Corfu has approximately 3.5 million olive trees — but the post-1960s shift to tourism employment caused widespread grove abandonment, especially in upland areas. Participating landowners and volunteers maintain groves using agroecological methods, protecting soil on terraced slopes and supporting pollinators.",
     problem:
-      'Approximately 30% of Corfu\'s traditional olive groves have been abandoned in the past 20 years due to changing economics and rural depopulation. Abandonment leads to fire risk, soil erosion, and loss of a landscape that supports unique biodiversity including 80+ insect species.',
+      'Abandoned olive terraces in Northern Corfu are deteriorating: without maintenance, stone walls collapse, soil erodes, and fire risk rises dramatically in the dense maquis that colonises untended land. The loss of active cultivation also severs a cultural practice central to Corfiot identity stretching back centuries.',
     expectedImpact:
-      'Revitalisation of 45 hectares of traditional olive groves. Training of 60 local stewards. Measured increase in pollinator populations and soil organic matter. Development of a local product certification scheme for sustainably managed olive oil.',
+      'Revitalisation of 45 hectares of traditional olive groves. Training of 60 local stewards. Measured increase in pollinator populations and soil organic matter. Development of a local agroecology certification to support premium olive oil marketing, creating economic incentive for continued stewardship.',
     sdgs: [12, 13, 15, 4],
     progressPercent: 38,
     startDate: '2024-04',
     endDate: '2027-04',
     citizenInvolvement: [
-      'Become an olive grove steward',
-      'Participate in training workshops on agroecology',
-      'Help with the spring harvest festival',
-      'Buy certified local olive products',
+      'Become an olive grove steward (training provided)',
+      'Participate in agroecology workshops in Agios Markos',
+      'Help with the autumn harvest and traditional press days',
+      'Buy certified local olive products through the ZOE marketplace',
     ],
     transparencyMetrics: [
       { label: 'Groves Revitalised', value: '16', unit: 'hectares' },
       { label: 'Stewards Trained', value: '23', unit: 'persons' },
       { label: 'Pollinator Species Found', value: '48', unit: 'species' },
-      { label: 'Fire Risk Reduced', value: '12', unit: 'hectares cleared' },
+      { label: 'Stone Walls Restored', value: '340', unit: 'metres' },
     ],
     participantCount: 87,
     thumbnailColor: 'bg-lime-600',
@@ -102,22 +103,22 @@ export const projects: Project[] = [
     title: 'Clean Coastline Initiative',
     category: 'Waste Reduction',
     status: 'Active',
-    location: 'Northern Corfu Coastline (22 km)',
+    location: 'Northern Corfu coastline — Kassiopi to Sidari (22 km)',
     description:
-      "A systematic, data-driven coastal cleanup and marine litter monitoring program spanning 22 km of Northern Corfu's coastline. Monthly cleanup events are supplemented by year-round citizen science data collection on litter types, sources and trends.",
+      "Systematic, data-driven coastal cleanup and marine litter monitoring along Northern Corfu's 22 km coastline from Kassiopi to Sidari, including Palaiokastritsa and the beaches around Roda and Acharavi. Monthly cleanup events are conducted in partnership with All For Blue. Year-round citizen science data collection tracks litter types, hotspots and seasonal trends.",
     problem:
-      'Northern Corfu\'s beaches and coastal waters receive significant plastic and fishing gear waste, intensified during the tourist season. Plastics enter the marine food chain and damage the local fishing and tourism economies. No systematic monitoring baseline existed before 2022.',
+      "Northern Corfu's beaches absorb a significant share of the island's 4-million-visitor annual tourism impact. Beach litter — plastics, fishing gear, food packaging — is a persistent issue documented at Palaiokastritsa, Sidari and road corridors through olive groves. No systematic monitoring baseline existed before 2022, making it impossible to measure whether conditions were improving.",
     expectedImpact:
-      'Collection and proper disposal of 25+ tonnes of coastal litter annually. Establishment of a long-term litter baseline dataset available to researchers. Advocacy based on sourced data for upstream policy changes on single-use plastics.',
+      'Collection of 25+ tonnes of coastal litter annually. A long-term litter baseline dataset shared with the Ionian Environment Foundation and marine researchers. Evidence base for advocacy on single-use plastics in Northern Corfu businesses and municipal policy.',
     sdgs: [14, 12, 11, 6],
     progressPercent: 78,
     startDate: '2022-05',
     endDate: '2025-12',
     citizenInvolvement: [
-      'Join the monthly coastal cleanup day',
-      'Adopt a beach section as a guardian',
-      'Record litter data using citizen science protocols',
-      'Schools program: bring your class to a monitoring day',
+      'Join the monthly cleanup at Kassiopi, Sidari or Palaiokastritsa',
+      'Adopt a beach section as a named guardian',
+      'Record litter data using All For Blue citizen science protocols',
+      'Schools programme: bring your class to a monitoring day',
     ],
     transparencyMetrics: [
       { label: 'Litter Collected', value: '47.2', unit: 'tonnes total' },
@@ -135,20 +136,20 @@ export const projects: Project[] = [
     status: 'Active',
     location: 'All primary schools, Northern Corfu',
     description:
-      'A comprehensive environmental education program integrating sustainability topics into the curricula of all 11 primary schools in Northern Corfu. The program includes classroom materials, school garden projects, field visits to ZOE project sites, and a student eco-council network.',
+      "Integrating environmental education into the curricula of all 11 primary schools in Northern Corfu, with support from the Ionian Environment Foundation (IEF), which has already funded biodiversity education posters reaching Corfu's 8,000 primary school children. The programme includes school garden projects, field visits to Antinioti Lagoon and Erimitis Peninsula, and a student eco-council network.",
     problem:
-      'Environmental issues are not systematically addressed in the local school curriculum. Young people lack the knowledge, skills and agency to contribute to sustainability transitions. Engaging children also increases household awareness as they bring learning home.',
+      'Environmental issues are not systematically addressed in the local school curriculum. Young people in Northern Corfu grow up in a region of exceptional ecological value but often without the knowledge or tools to understand or protect it. Engaging children also raises household awareness as they bring learning home to families.',
     expectedImpact:
-      'Reach 1,200 students annually with structured sustainability education. Establish eco-councils in all 11 schools. Create a generation of informed, engaged young environmental stewards who will sustain the ZOE program long-term.',
+      'Reach 1,200 students annually with structured sustainability education. Eco-councils active in all 11 schools. A generation of informed young environmental stewards who understand their local ecosystem — Antinioti Lagoon, the Erimitis forests, the Ropa Valley — by name and by experience.',
     sdgs: [4, 13, 15, 17],
     progressPercent: 55,
     startDate: '2023-09',
     endDate: '2026-06',
     citizenInvolvement: [
-      'Volunteer as a guest speaker at a local school',
-      'Mentor a student eco-council',
-      'Donate materials for school gardens',
-      'Offer your land for educational field visits',
+      'Volunteer as a guest speaker at a Northern Corfu primary school',
+      'Mentor a student eco-council in Kassiopi or Acharavi',
+      'Donate materials or seeds for school gardens',
+      'Offer land near Agios Markos for educational field visits',
     ],
     transparencyMetrics: [
       { label: 'Schools Participating', value: '8', unit: 'of 11' },
@@ -160,26 +161,57 @@ export const projects: Project[] = [
     thumbnailColor: 'bg-rose-500',
   },
   {
+    id: 'erimitis-conservation',
+    title: 'Erimitis Peninsula Conservation',
+    category: 'Community Action',
+    status: 'Active',
+    location: 'Erimitis Peninsula, NE Corfu',
+    description:
+      "Supporting the community-led campaign to protect the Erimitis Peninsula — the last virgin forested headland in Northeast Corfu, and the site of three wetlands protected by Greek presidential decree. The ZOE programme works alongside the Save Erimitis coalition and the Ionian Environment Foundation to strengthen the legal and civic case for permanent protection of this irreplaceable landscape.",
+    problem:
+      'A major development proposal — 90 hotel rooms, 76 bungalows, 40 villas and a marina — threatens the Erimitis Peninsula, which is currently the most high-profile environmental conflict in Corfu. The peninsula is home to rare endemic species, three protected wetlands, and represents the kind of intact coastal forest that has largely disappeared from the rest of the island.',
+    expectedImpact:
+      "Permanent legal protection for the Erimitis Peninsula. A documented model for community-led environmental advocacy in small Greek municipalities, applicable beyond Corfu. Strengthened citizen engagement in land-use governance — demonstrating that Northern Corfu residents can shape the island's environmental future.",
+    sdgs: [15, 11, 17, 13],
+    progressPercent: 44,
+    startDate: '2024-06',
+    endDate: '2027-12',
+    citizenInvolvement: [
+      'Sign and share the Save Erimitis petition',
+      'Attend public hearings and community assemblies',
+      'Participate in biodiversity surveys of the peninsula',
+      'Write to regional government representatives',
+    ],
+    transparencyMetrics: [
+      { label: 'Petition Signatures', value: '14200', unit: 'signatures' },
+      { label: 'Public Hearings Attended', value: '8', unit: 'hearings' },
+      { label: 'Species Documented', value: '67', unit: 'species' },
+      { label: 'Media Coverage', value: '34', unit: 'articles' },
+    ],
+    participantCount: 14200,
+    thumbnailColor: 'bg-violet-600',
+  },
+  {
     id: 'blue-economy-tourism',
     title: 'Sustainable Blue Economy Tourism',
     category: 'Sustainable Tourism',
     status: 'Planning',
     location: 'Northern Corfu coastal villages',
     description:
-      'Developing a certification and promotion scheme for sustainable tourism operators in Northern Corfu. Participating businesses commit to environmental standards covering energy use, waste management, local sourcing and ecological impact. A digital trail of certified green experiences will be created.',
+      'Developing a certification and promotion scheme for sustainable tourism operators in Northern Corfu. With 4 million annual visitors and summer daily waste surging from 170 to 350+ tonnes, the current tourism model carries a heavy environmental cost. Participating businesses commit to standards covering energy, waste, local sourcing and ecological impact — and gain access to a green marketing scheme targeting the growing eco-conscious travel segment.',
     problem:
-      'Mass tourism places significant pressure on Northern Corfu\'s natural environment and infrastructure. The current tourism model is highly seasonal and economically fragile. A sustainable tourism offer can extend the season, command premium pricing, and genuinely protect the environment that draws visitors.',
+      "Mass tourism is simultaneously Northern Corfu's primary economic driver and its greatest environmental pressure. The 2018 Temploni landfill crisis — caused largely by the seasonal tourism waste spike — made this tension visible to the whole island. The current model is also economically fragile: highly seasonal, concentrated in a few beach zones, vulnerable to the reputational damage that unchecked environmental degradation brings.",
     expectedImpact:
-      'Certification of 30 tourism businesses by 2026. Development of three themed eco-tourism routes. Estimated 15% increase in shoulder-season tourism. Measurable reduction in tourism-related waste at certified sites.',
+      'Certification of 30 tourism businesses by 2026. Three themed eco-tourism routes highlighting Antinioti Lagoon, the Erimitis forests and the olive grove landscapes. Estimated 15% increase in shoulder-season bookings among certified operators.',
     sdgs: [8, 11, 12, 14, 15],
     progressPercent: 18,
     startDate: '2025-01',
     endDate: '2027-06',
     citizenInvolvement: [
-      'Recommend local businesses for the scheme',
+      'Recommend local businesses for the certification scheme',
       'Participate in community consultation sessions',
-      'Share your local knowledge as a guide',
-      'Provide feedback on draft eco-tourism routes',
+      'Share your local knowledge as a route guide',
+      'Give feedback on draft eco-tourism route proposals',
     ],
     transparencyMetrics: [
       { label: 'Businesses in Pipeline', value: '14', unit: 'businesses' },
@@ -195,21 +227,21 @@ export const projects: Project[] = [
     title: 'Akharavi Water Watch',
     category: 'Water Protection',
     status: 'Active',
-    location: 'Akharavi River Basin, Northern Corfu',
+    location: 'Akharavi stream & north coast watershed',
     description:
-      'Citizen science monitoring network for the Akharavi river system, tracking water quality, flow rates and biodiversity indicators. Data collected by trained volunteers feeds into a municipal water quality dashboard and informs infrastructure maintenance decisions.',
+      'Citizen science water quality monitoring network for the Akharavi stream and connected north-coast watershed. While Corfu receives more rainfall than anywhere else in Greece, summer drying of small watercourses — exacerbated by climate change — affects local ecology. Trained volunteers collect water quality, flow and biodiversity data at 8 monitoring points.',
     problem:
-      'The Akharavi river and its tributaries face pressures from agricultural runoff, septic system leakage and seasonal drought conditions worsened by climate change. Monitoring has historically been infrequent and purely regulatory, missing important seasonal and event-driven dynamics.',
+      'The Akharavi stream and similar small watercourses in Northern Corfu face pressures from agricultural runoff, septic leakage from rapidly-built tourist accommodation, and increasingly frequent summer drought conditions. Monitoring has historically been purely regulatory and infrequent, missing the seasonal and event-driven dynamics that matter most for local ecology.',
     expectedImpact:
-      'Year-round citizen-collected water quality dataset covering 8 monitoring points. Early warning system for pollution events. Baseline for evaluating effectiveness of upstream agricultural practice changes. Engagement of 80+ citizen monitors.',
+      'Year-round citizen-collected water quality dataset. Early warning system for pollution events linked to tourism infrastructure. Baseline for evaluating effectiveness of upstream land management changes. Engagement of 80+ citizen monitors from Acharavi, Roda and Kassiopi.',
     sdgs: [6, 3, 13, 15],
     progressPercent: 71,
     startDate: '2023-06',
     endDate: '2025-12',
     citizenInvolvement: [
-      'Train as a certified water quality monitor',
+      'Train as a certified water quality monitor (free, 1-day course)',
       'Join quarterly river condition assessment walks',
-      'Report pollution incidents via the platform',
+      'Report pollution incidents to the ZOE platform',
       'Participate in riparian vegetation surveys',
     ],
     transparencyMetrics: [
@@ -228,11 +260,11 @@ export const projects: Project[] = [
     status: 'Completed',
     location: 'Kassiopi, Acharavi, Roda — Northern Corfu',
     description:
-      'Pilot program establishing shared composting facilities in three Northern Corfu communities. Organic household waste and green market waste is processed into compost distributed free to local gardeners, farmers and the municipal parks department.',
+      "Pilot programme establishing shared composting facilities in three Northern Corfu communities. Organic household and market waste is processed into compost distributed free to local olive growers, farmers and the municipal parks department — closing a nutrient loop that reduces both landfill pressure and farmers' input costs.",
     problem:
-      "Organic waste makes up nearly 40% of Northern Corfu's household waste stream but is currently landfilled. This produces methane, a potent greenhouse gas. Simultaneously, local farmers pay for commercial soil amendments that could be replaced by local compost.",
+      "Organic waste makes up nearly 40% of Northern Corfu's household waste stream but historically went to the Temploni landfill. After the 2018 landfill crisis highlighted the unsustainable nature of this approach, the municipality prioritised organic waste diversion as a lower-cost, community-manageable alternative to centralised infrastructure.",
     expectedImpact:
-      'Diversion of 8 tonnes of organic waste per month from landfill. Production of 4 tonnes of compost distributed to 120 recipients. Reduction of municipal waste costs. Pilot methodology ready to scale to further villages.',
+      'Diversion of 8 tonnes of organic waste per month from landfill. Production of 4 tonnes of compost distributed to 120 recipients including olive growers in Agios Markos and Spartilas. Pilot methodology ready to scale to further villages in 2025.',
     sdgs: [11, 12, 13],
     progressPercent: 100,
     startDate: '2022-03',
@@ -240,7 +272,7 @@ export const projects: Project[] = [
     citizenInvolvement: [
       'Register as a compost recipient',
       'Volunteer at the composting facility',
-      'Participate in evaluation survey',
+      'Participate in the post-pilot evaluation survey',
       'Advocate for expansion to your village',
     ],
     transparencyMetrics: [

@@ -91,3 +91,15 @@ export interface ParticipationOption {
   icon: string;
   actionLabel: string;
 }
+
+export interface TargetAudience {
+  id: string;
+  name: string;
+  icon: string;
+  tagline: string;
+  description: string;
+  keyConcerns: string[];
+  channels: { label: string; type: 'online' | 'offline' }[];
+  entryPoint: string;
+  barrierNote: string;
+}

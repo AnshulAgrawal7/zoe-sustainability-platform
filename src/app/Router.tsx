@@ -9,6 +9,7 @@ import ParticipationPage from '../pages/ParticipationPage';
 import EventsPage from '../pages/EventsPage';
 import TransparencyPage from '../pages/TransparencyPage';
 import RoadmapPage from '../pages/RoadmapPage';
+import AudiencesPage from '../pages/AudiencesPage';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: 'projects/:id', element: <ProjectDetailPage /> },
       { path: 'sdg-dashboard', element: <SDGDashboardPage /> },
       { path: 'participate', element: <ParticipationPage /> },
+      { path: 'audiences', element: <AudiencesPage /> },
       { path: 'events', element: <EventsPage /> },
       { path: 'transparency', element: <TransparencyPage /> },
       { path: 'roadmap', element: <RoadmapPage /> },

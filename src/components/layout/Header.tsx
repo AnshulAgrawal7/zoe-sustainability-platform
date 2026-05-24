@@ -5,7 +5,8 @@ import { Leaf, Menu, X } from 'lucide-react';
 const navLinks = [
   { to: '/about', label: 'About ZOE' },
   { to: '/projects', label: 'Projects' },
-  { to: '/sdg-dashboard', label: 'SDG Dashboard' },
+  { to: '/sdg-dashboard', label: 'SDGs' },
+  { to: '/audiences', label: 'Who We Reach' },
   { to: '/participate', label: 'Participate' },
   { to: '/events', label: 'Events' },
   { to: '/transparency', label: 'Impact & Data' },
