@@ -15,7 +15,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'Noto Sans', 'system-ui', 'sans-serif'],
       },
     },
   },

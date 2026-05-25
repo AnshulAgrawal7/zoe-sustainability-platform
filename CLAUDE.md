@@ -81,6 +81,27 @@ docs/
 
 ---
 
+## Accessibility — Pflicht bei jeder Änderung
+
+Rechtliche Grundlage: **EU Directive 2016/2102**, EN 301 549, **WCAG 2.1 Level AA**, EAA (Juni 2025).  
+Vollständige Referenz: `docs/accessibility-guidelines.md`
+
+Vor jedem Commit muss für jeden geänderten/neuen Component gelten:
+
+- [ ] Semantisch korrektes HTML-Element (kein `<div onClick>`, kein `role="button"` auf `<button>`)
+- [ ] Alle `<img>` haben `alt`-Attribut (dekorativ: `alt=""` + `aria-hidden="true"`)
+- [ ] Farbkontrast: 4.5:1 (Normaltext), 3:1 (Großtext/UI-Elemente) — prüfen mit webaim.org/resources/contrastchecker
+- [ ] Tastatur-navigierbar: Tab + Enter/Space, Fokus-Indikator via `focus-visible:ring-2`
+- [ ] Kein hardcodierter Text — ausnahmslos `t('key')`
+- [ ] Icon-Only-Buttons: `aria-label={t('key')}` vorhanden
+- [ ] Mobile 375px: Touch-Targets ≥ 44×44px
+- [ ] `prefers-reduced-motion`: keine Animationen ohne `motion-safe:` Präfix in Tailwind
+- [ ] Dark Mode: Kontraste in beiden Modi eingehalten
+- [ ] Neue Formularfelder: `htmlFor`+`id` verknüpft, `aria-required`, `role="alert"` auf Fehler
+- [ ] `aria-label` immer via `t('key')` (nicht hardcodiert)
+
+---
+
 ## Auth-System
 
 - Rollen: `USER` · `ADMIN`

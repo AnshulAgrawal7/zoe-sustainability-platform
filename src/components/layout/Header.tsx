@@ -6,7 +6,6 @@ import {
   X,
   Sun,
   Moon,
-  Globe,
   Star,
   LayoutDashboard,
   LogOut,
@@ -79,7 +78,11 @@ export default function Header() {
                   }`
                 }
               >
-                {link.label}
+                {({ isActive }) => (
+                  <span aria-current={isActive ? 'page' : undefined}>
+                    {link.label}
+                  </span>
+                )}
               </NavLink>
             ))}
           </nav>
@@ -87,32 +90,18 @@ export default function Header() {
           {/* Controls */}
           <div className="hidden items-center gap-2 lg:flex">
             {/* Language selector */}
-            <div className="group relative">
-              <button
-                className="flex items-center gap-1 rounded-md p-2 text-sm text-gray-500 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
-                aria-label={t('common.language')}
-              >
-                <Globe size={16} aria-hidden="true" />
-                <span className="text-xs font-semibold uppercase">
-                  {language}
-                </span>
-              </button>
-              <div className="invisible absolute right-0 z-50 mt-1 min-w-[120px] rounded-lg border border-gray-200 bg-white opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100 dark:border-gray-700 dark:bg-gray-800">
-                {LANGUAGES.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => setLanguage(lang.code)}
-                    className={`w-full px-3 py-2 text-left text-sm transition-colors hover:bg-gray-50 dark:hover:bg-gray-700 ${
-                      language === lang.code
-                        ? 'font-medium text-green-600 dark:text-green-400'
-                        : 'text-gray-700 dark:text-gray-300'
-                    }`}
-                  >
-                    {lang.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value as Language)}
+              aria-label={t('common.language')}
+              className="rounded-md px-2 py-2 text-sm text-gray-500 bg-transparent border-0 cursor-pointer transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1"
+            >
+              {LANGUAGES.map((lang) => (
+                <option key={lang.code} value={lang.code}>
+                  {lang.label}
+                </option>
+              ))}
+            </select>
 
             {/* Dark mode toggle */}
             <button
@@ -184,7 +173,7 @@ export default function Header() {
             onClick={() => setMenuOpen(!menuOpen)}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            aria-label={menuOpen ? t('common.close') : 'Open menu'}
+            aria-label={menuOpen ? t('common.close') : t('nav.openMenu')}
           >
             {menuOpen ? (
               <X size={22} aria-hidden="true" />
@@ -216,7 +205,11 @@ export default function Header() {
                   }`
                 }
               >
-                {link.label}
+                {({ isActive }) => (
+                  <span aria-current={isActive ? 'page' : undefined}>
+                    {link.label}
+                  </span>
+                )}
               </NavLink>
             ))}
             <div className="mt-2 flex items-center gap-2 border-t border-gray-100 pt-2 dark:border-gray-800">
@@ -224,6 +217,7 @@ export default function Header() {
                 <button
                   key={lang.code}
                   onClick={() => setLanguage(lang.code)}
+                  aria-pressed={language === lang.code}
                   className={`rounded px-2 py-1 text-xs font-semibold ${
                     language === lang.code
                       ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-400'

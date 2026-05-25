@@ -48,15 +48,15 @@ export default function NewProjectPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.titleEn || !form.titleEl || !form.titleDe) {
-      setError('All three titles are required.');
+      setError(t('admin.validationTitlesRequired'));
       return;
     }
     if (!form.descriptionEn || !form.descriptionEl || !form.descriptionDe) {
-      setError('All three descriptions are required.');
+      setError(t('admin.validationDescriptionsRequired'));
       return;
     }
     if (selectedSdgs.length === 0) {
-      setError('Select at least one SDG.');
+      setError(t('admin.validationSdgRequired'));
       return;
     }
     setError('');
@@ -104,21 +104,21 @@ export default function NewProjectPage() {
         {/* Titles */}
         <section className="space-y-4 rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-            Title
+            {t('admin.formTitle')}
           </h2>
           {(['En', 'El', 'De'] as const).map((lang) => (
             <div key={lang}>
-              <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
-                {lang === 'En'
-                  ? 'English'
-                  : lang === 'El'
-                    ? 'Ελληνικά'
-                    : 'Deutsch'}{' '}
-                *
+              <label
+                htmlFor={`new-title-${lang.toLowerCase()}`}
+                className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
+              >
+                {lang === 'En' ? 'English' : lang === 'El' ? 'Ελληνικά' : 'Deutsch'} *
               </label>
               <input
+                id={`new-title-${lang.toLowerCase()}`}
                 type="text"
                 required
+                aria-required="true"
                 value={form[`title${lang}` as keyof typeof form] as string}
                 onChange={(e) => set(`title${lang}`, e.target.value)}
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
@@ -130,24 +130,22 @@ export default function NewProjectPage() {
         {/* Descriptions */}
         <section className="space-y-4 rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-            Description
+            {t('admin.formDescription')}
           </h2>
           {(['En', 'El', 'De'] as const).map((lang) => (
             <div key={lang}>
-              <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
-                {lang === 'En'
-                  ? 'English'
-                  : lang === 'El'
-                    ? 'Ελληνικά'
-                    : 'Deutsch'}{' '}
-                *
+              <label
+                htmlFor={`new-desc-${lang.toLowerCase()}`}
+                className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
+              >
+                {lang === 'En' ? 'English' : lang === 'El' ? 'Ελληνικά' : 'Deutsch'} *
               </label>
               <textarea
+                id={`new-desc-${lang.toLowerCase()}`}
                 required
+                aria-required="true"
                 rows={3}
-                value={
-                  form[`description${lang}` as keyof typeof form] as string
-                }
+                value={form[`description${lang}` as keyof typeof form] as string}
                 onChange={(e) => set(`description${lang}`, e.target.value)}
                 className="w-full resize-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
@@ -158,12 +156,12 @@ export default function NewProjectPage() {
         {/* Meta */}
         <section className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800">
           <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-            Details
+            {t('admin.formDetails')}
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
-                Category *
+                {t('admin.formCategory')} *
               </label>
               <select
                 value={form.category}
@@ -179,7 +177,7 @@ export default function NewProjectPage() {
             </div>
             <div>
               <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
-                Status
+                {t('admin.formStatus')}
               </label>
               <select
                 value={form.status}
@@ -195,7 +193,7 @@ export default function NewProjectPage() {
             </div>
             <div>
               <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
-                Reward Points
+                {t('admin.formRewardPoints')}
               </label>
               <input
                 type="number"
@@ -207,20 +205,20 @@ export default function NewProjectPage() {
             </div>
             <div>
               <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
-                Max Participants
+                {t('admin.formMaxParticipants')}
               </label>
               <input
                 type="number"
                 min={0}
                 value={form.maxParticipants}
                 onChange={(e) => set('maxParticipants', e.target.value)}
-                placeholder="Unlimited"
+                placeholder={t('admin.formUnlimited')}
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
             </div>
             <div className="sm:col-span-2">
               <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
-                Location
+                {t('admin.formLocation')}
               </label>
               <input
                 type="text"
@@ -236,7 +234,7 @@ export default function NewProjectPage() {
         {/* SDGs */}
         <section className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800">
           <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-            SDGs *
+            {t('admin.formSdgs')} *
           </h2>
           <div className="flex flex-wrap gap-2">
             {ALL_SDGS.map((n) => (
@@ -258,7 +256,7 @@ export default function NewProjectPage() {
           </div>
           {selectedSdgs.length > 0 && (
             <p className="mt-2 text-xs text-green-600 dark:text-green-400">
-              Selected: {selectedSdgs.sort((a, b) => a - b).join(', ')}
+              {t('admin.formSdgSelected')} {selectedSdgs.sort((a, b) => a - b).join(', ')}
             </p>
           )}
         </section>

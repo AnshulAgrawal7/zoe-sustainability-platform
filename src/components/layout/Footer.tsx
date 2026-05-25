@@ -1,7 +1,24 @@
 import { Link } from 'react-router-dom';
 import { Leaf, ExternalLink } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
+  const { t } = useTranslation();
+
+  const platformLinks = [
+    { to: '/', label: t('nav.home') },
+    { to: '/about', label: t('nav.about') },
+    { to: '/projects', label: t('nav.projects') },
+    { to: '/sdg-dashboard', label: t('nav.sdgs') },
+  ];
+
+  const engagementLinks = [
+    { to: '/participate', label: t('nav.participate') },
+    { to: '/events', label: t('nav.events') },
+    { to: '/transparency', label: t('nav.transparency') },
+    { to: '/roadmap', label: t('nav.roadmap') },
+  ];
+
   return (
     <footer className="bg-gray-900 text-gray-300 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -10,27 +27,21 @@ export default function Footer() {
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 text-white font-bold mb-3">
               <Leaf size={20} className="text-green-400" aria-hidden="true" />
-              <span>ZOE Platform</span>
+              <span>{t('footer.brand')}</span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
-              Strategic Framework for Environmental Actions — Municipality of
-              Northern Corfu.
+              {t('footer.tagline')}
             </p>
             <p className="text-xs text-amber-400 mt-3 border border-amber-600/40 rounded px-2 py-1 inline-block">
-              Frontend Prototype — Dummy Data
+              {t('footer.prototypeNotice')}
             </p>
           </div>
 
           {/* Platform links */}
           <div>
-            <h3 className="text-white font-semibold text-sm mb-3">Platform</h3>
+            <h3 className="text-white font-semibold text-sm mb-3">{t('footer.platformLinks')}</h3>
             <ul className="space-y-2 text-sm">
-              {[
-                { to: '/', label: 'Home' },
-                { to: '/about', label: 'About ZOE' },
-                { to: '/projects', label: 'Projects' },
-                { to: '/sdg-dashboard', label: 'SDG Dashboard' },
-              ].map((l) => (
+              {platformLinks.map((l) => (
                 <li key={l.to}>
                   <Link to={l.to} className="hover:text-white transition-colors">
                     {l.label}
@@ -42,16 +53,9 @@ export default function Footer() {
 
           {/* Engagement links */}
           <div>
-            <h3 className="text-white font-semibold text-sm mb-3">
-              Engagement
-            </h3>
+            <h3 className="text-white font-semibold text-sm mb-3">{t('footer.engagementLinks')}</h3>
             <ul className="space-y-2 text-sm">
-              {[
-                { to: '/participate', label: 'Participate' },
-                { to: '/events', label: 'Events' },
-                { to: '/transparency', label: 'Impact & Data' },
-                { to: '/roadmap', label: 'Roadmap' },
-              ].map((l) => (
+              {engagementLinks.map((l) => (
                 <li key={l.to}>
                   <Link to={l.to} className="hover:text-white transition-colors">
                     {l.label}
@@ -63,32 +67,33 @@ export default function Footer() {
 
           {/* Research context */}
           <div>
-            <h3 className="text-white font-semibold text-sm mb-3">
-              Research Context
-            </h3>
+            <h3 className="text-white font-semibold text-sm mb-3">{t('footer.researchContext')}</h3>
             <p className="text-sm text-gray-400 leading-relaxed">
-              This platform is a Design Science Research artifact developed as
-              part of a university seminar in Information Systems.
+              {t('footer.researchText')}
             </p>
             <a
               href="https://github.com"
               className="inline-flex items-center gap-2 mt-3 text-sm text-gray-400 hover:text-white transition-colors"
-              aria-label="View source on GitHub"
+              aria-label={t('footer.viewOnGitHub')}
             >
               <ExternalLink size={16} aria-hidden="true" />
-              <span>View on GitHub</span>
+              <span>{t('footer.viewOnGitHub')}</span>
             </a>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-500">
-          <p>
-            © 2025 ZOE Environmental Programme — Municipality of Northern Corfu
-          </p>
-          <p>
-            DSR Prototype · All data fictional · No personal data collected
-          </p>
+          <p>{t('footer.copyright')}</p>
+          <nav aria-label="Legal navigation" className="flex items-center gap-4">
+            <Link to="/accessibility" className="hover:text-white transition-colors">
+              {t('footer.accessibility')}
+            </Link>
+            <Link to="/privacy" className="hover:text-white transition-colors">
+              {t('footer.privacy')}
+            </Link>
+          </nav>
         </div>
+        <p className="text-center text-xs text-gray-600 mt-3">{t('footer.dsr')}</p>
       </div>
     </footer>
   );

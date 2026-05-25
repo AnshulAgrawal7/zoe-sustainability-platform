@@ -31,6 +31,8 @@ import ManageProjectsPage from '../pages/admin/ManageProjectsPage';
 import ManageUsersPage from '../pages/admin/ManageUsersPage';
 import NewProjectPage from '../pages/admin/NewProjectPage';
 import EditProjectPage from '../pages/admin/EditProjectPage';
+import AccessibilityPage from '../pages/AccessibilityPage';
+import PrivacyPage from '../pages/PrivacyPage';
 
 const router = createBrowserRouter([
   {
@@ -49,6 +51,8 @@ const router = createBrowserRouter([
       { path: 'transparency', element: <TransparencyPage /> },
       { path: 'roadmap', element: <RoadmapPage /> },
       { path: 'rewards', element: <RewardsPage /> },
+      { path: 'accessibility', element: <AccessibilityPage /> },
+      { path: 'privacy', element: <PrivacyPage /> },
 
       // Auth
       { path: 'login', element: <LoginPage /> },
