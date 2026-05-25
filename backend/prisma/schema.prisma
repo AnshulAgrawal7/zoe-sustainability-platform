@@ -1,0 +1,103 @@
+// PROTOTYPE SCHEMA — ZOE Sustainability Platform
+// SQLite: enums replaced with String (validated at application layer)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Role: "USER" | "ADMIN"
+// Language: "EN" | "EL" | "DE"
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  password      String
+  name          String
+  role          String   @default("USER")
+  points        Int      @default(0)
+  avatarUrl     String?
+  language      String   @default("EN")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  participations  Participation[]
+  userBadges      UserBadge[]
+  refreshTokens   RefreshToken[]
+  createdProjects Project[]       @relation("CreatedBy")
+}
+
+// category: "ENVIRONMENT" | "MOBILITY" | "COMMUNITY" | "EDUCATION" | "CULTURE"
+// status:   "DRAFT" | "OPEN" | "CLOSED" | "COMPLETED"
+model Project {
+  id            String   @id @default(cuid())
+  titleEn       String
+  titleEl       String
+  titleDe       String
+  descriptionEn String
+  descriptionEl String
+  descriptionDe String
+  sdgIds        String   // JSON array: "[3, 11, 13]"
+  category      String
+  status        String   @default("OPEN")
+  maxParticipants Int?
+  rewardPoints  Int      @default(50)
+  imageUrl      String?
+  location      String?
+  startDate     DateTime?
+  endDate       DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  createdBy      User          @relation("CreatedBy", fields: [createdById], references: [id])
+  createdById    String
+  participations Participation[]
+}
+
+model Participation {
+  id            String   @id @default(cuid())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  project       Project  @relation(fields: [projectId], references: [id])
+  projectId     String
+  joinedAt      DateTime @default(now())
+  pointsAwarded Int      @default(0)
+
+  @@unique([userId, projectId])
+}
+
+model Badge {
+  id        String    @id @default(cuid())
+  nameEn    String
+  nameEl    String
+  nameDe    String
+  descEn    String
+  descEl    String
+  descDe    String
+  iconName  String
+  threshold Int
+
+  userBadges UserBadge[]
+}
+
+model UserBadge {
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String
+  badge    Badge    @relation(fields: [badgeId], references: [id])
+  badgeId  String
+  earnedAt DateTime @default(now())
+
+  @@id([userId, badgeId])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}

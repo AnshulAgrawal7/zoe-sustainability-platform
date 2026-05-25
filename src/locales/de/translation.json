@@ -1,0 +1,141 @@
+{
+  "prototype": {
+    "banner": "Forschungsprototyp — Diese Plattform enthält fiktive Daten für akademische Zwecke (DSR, FAU SoSe 2026). Kein echter kommunaler Dienst."
+  },
+  "nav": {
+    "home": "Startseite",
+    "projects": "Projekte",
+    "sdgs": "SDGs",
+    "events": "Veranstaltungen",
+    "rewards": "Belohnungen",
+    "about": "Über ZOE",
+    "transparency": "Transparenz",
+    "roadmap": "Fahrplan",
+    "participate": "Mitmachen",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "dashboard": "Dashboard",
+    "profile": "Profil",
+    "logout": "Abmelden",
+    "admin": "Administration"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "register": "Konto erstellen",
+    "email": "E-Mail-Adresse",
+    "password": "Passwort",
+    "name": "Vollständiger Name",
+    "confirmPassword": "Passwort bestätigen",
+    "loginButton": "Anmelden",
+    "registerButton": "Konto erstellen",
+    "noAccount": "Noch kein Konto?",
+    "hasAccount": "Bereits ein Konto?",
+    "forgotPassword": "Passwort vergessen?",
+    "language": "Bevorzugte Sprache",
+    "logoutSuccess": "Sie wurden abgemeldet.",
+    "loginError": "Ungültige E-Mail oder falsches Passwort.",
+    "registerError": "Registrierung fehlgeschlagen. Bitte erneut versuchen."
+  },
+  "projects": {
+    "title": "ZOE Projekte",
+    "subtitle": "31 Umweltinitiativen für Nordkorfu",
+    "filter": "Filter",
+    "allCategories": "Alle Kategorien",
+    "search": "Projekte suchen...",
+    "participate": "Am Projekt teilnehmen",
+    "withdraw": "Teilnahme beenden",
+    "participating": "Ich nehme teil",
+    "points": "{{points}} Punkte",
+    "participants": "{{count}} Teilnehmer",
+    "location": "Ort",
+    "status": {
+      "OPEN": "Offen",
+      "CLOSED": "Geschlossen",
+      "DRAFT": "Entwurf",
+      "COMPLETED": "Abgeschlossen"
+    },
+    "category": {
+      "ENVIRONMENT": "Umwelt",
+      "MOBILITY": "Mobilität",
+      "COMMUNITY": "Gemeinschaft",
+      "EDUCATION": "Bildung",
+      "CULTURE": "Kultur"
+    },
+    "noProjects": "Keine Projekte gefunden.",
+    "loadMore": "Mehr laden",
+    "joinSuccess": "Sie haben am Projekt teilgenommen und {{points}} Punkte erhalten!",
+    "withdrawSuccess": "Sie haben das Projekt verlassen.",
+    "alreadyParticipating": "Sie nehmen bereits an diesem Projekt teil."
+  },
+  "rewards": {
+    "title": "Belohnungen & Abzeichen",
+    "yourPoints": "Ihre Punkte",
+    "badges": "Abzeichen",
+    "leaderboard": "Rangliste",
+    "nextBadge": "Nächstes Abzeichen",
+    "pointsToGo": "Noch {{points}} Punkte",
+    "earnedBadge": "Abzeichen verdient!",
+    "allBadges": "Alle Abzeichen",
+    "rank": "Rang",
+    "participations": "Teilnahmen",
+    "noBadges": "Noch keine Abzeichen. Treten Sie einem Projekt bei!",
+    "badges_earned": "Verdiente Abzeichen",
+    "points_label": "Punkte"
+  },
+  "dashboard": {
+    "title": "Mein Dashboard",
+    "welcome": "Willkommen zurück, {{name}}!",
+    "yourProjects": "Ihre Projekte",
+    "recentActivity": "Letzte Aktivitäten",
+    "totalPoints": "Gesamtpunkte",
+    "badgesEarned": "Verdiente Abzeichen",
+    "projectsJoined": "Beigetretene Projekte",
+    "noActivity": "Noch keine Aktivität. Treten Sie einem Projekt bei!"
+  },
+  "admin": {
+    "title": "Admin-Dashboard",
+    "users": "Benutzer",
+    "projects": "Projekte",
+    "stats": "Statistiken",
+    "createProject": "Neues Projekt",
+    "editProject": "Projekt bearbeiten",
+    "deleteProject": "Projekt schließen",
+    "totalUsers": "Gesamtbenutzer",
+    "totalProjects": "Gesamtprojekte",
+    "totalParticipations": "Gesamtteilnahmen",
+    "openProjects": "Offene Projekte",
+    "changeRole": "Rolle ändern",
+    "confirmClose": "Möchten Sie dieses Projekt wirklich schließen?",
+    "saveChanges": "Änderungen speichern",
+    "cancel": "Abbrechen"
+  },
+  "sdgs": {
+    "title": "Ziele für nachhaltige Entwicklung",
+    "subtitle": "Das ZOE-Programm adressiert 11 der 17 UN-SDGs",
+    "projects": "{{count}} Projekte",
+    "learnMore": "Mehr erfahren"
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Etwas ist schiefgelaufen.",
+    "retry": "Erneut versuchen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "back": "Zurück",
+    "close": "Schließen",
+    "viewAll": "Alle anzeigen",
+    "learnMore": "Mehr erfahren",
+    "readMore": "Weiterlesen",
+    "showLess": "Weniger anzeigen",
+    "language": "Sprache",
+    "darkMode": "Dunkelmodus",
+    "lightMode": "Hellmodus"
+  },
+  "footer": {
+    "madeBy": "ZOE Nachhaltigkeitsplattform",
+    "dsr": "DSR Forschungsprototyp — FAU SoSe 2026",
+    "corfu": "Gemeinde Nordkorfu"
+  }
+}

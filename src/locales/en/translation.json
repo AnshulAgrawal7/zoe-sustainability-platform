@@ -1,0 +1,141 @@
+{
+  "prototype": {
+    "banner": "Research Prototype — This platform contains fictional data for academic purposes (DSR, FAU SoSe 2026). Not a real municipal service."
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "sdgs": "SDGs",
+    "events": "Events",
+    "rewards": "Rewards",
+    "about": "About ZOE",
+    "transparency": "Transparency",
+    "roadmap": "Roadmap",
+    "participate": "Participate",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "logout": "Logout",
+    "admin": "Admin"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Create Account",
+    "email": "Email address",
+    "password": "Password",
+    "name": "Full name",
+    "confirmPassword": "Confirm password",
+    "loginButton": "Sign in",
+    "registerButton": "Create account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "forgotPassword": "Forgot password?",
+    "language": "Preferred language",
+    "logoutSuccess": "You have been logged out.",
+    "loginError": "Invalid email or password.",
+    "registerError": "Registration failed. Please try again."
+  },
+  "projects": {
+    "title": "ZOE Projects",
+    "subtitle": "31 environmental initiatives for Northern Corfu",
+    "filter": "Filter",
+    "allCategories": "All categories",
+    "search": "Search projects...",
+    "participate": "Join project",
+    "withdraw": "Withdraw",
+    "participating": "Participating",
+    "points": "{{points}} points",
+    "participants": "{{count}} participants",
+    "location": "Location",
+    "status": {
+      "OPEN": "Open",
+      "CLOSED": "Closed",
+      "DRAFT": "Draft",
+      "COMPLETED": "Completed"
+    },
+    "category": {
+      "ENVIRONMENT": "Environment",
+      "MOBILITY": "Mobility",
+      "COMMUNITY": "Community",
+      "EDUCATION": "Education",
+      "CULTURE": "Culture"
+    },
+    "noProjects": "No projects found.",
+    "loadMore": "Load more",
+    "joinSuccess": "You joined the project and earned {{points}} points!",
+    "withdrawSuccess": "You withdrew from the project.",
+    "alreadyParticipating": "You are already participating in this project."
+  },
+  "rewards": {
+    "title": "Rewards & Badges",
+    "yourPoints": "Your Points",
+    "badges": "Badges",
+    "leaderboard": "Leaderboard",
+    "nextBadge": "Next badge",
+    "pointsToGo": "{{points}} points to go",
+    "earnedBadge": "Badge earned!",
+    "allBadges": "All badges",
+    "rank": "Rank",
+    "participations": "Participations",
+    "noBadges": "No badges yet. Join a project to earn your first badge!",
+    "badges_earned": "Badges earned",
+    "points_label": "points"
+  },
+  "dashboard": {
+    "title": "My Dashboard",
+    "welcome": "Welcome back, {{name}}!",
+    "yourProjects": "Your Projects",
+    "recentActivity": "Recent activity",
+    "totalPoints": "Total points",
+    "badgesEarned": "Badges earned",
+    "projectsJoined": "Projects joined",
+    "noActivity": "No activity yet. Join a project to get started!"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "users": "Users",
+    "projects": "Projects",
+    "stats": "Statistics",
+    "createProject": "New project",
+    "editProject": "Edit project",
+    "deleteProject": "Close project",
+    "totalUsers": "Total users",
+    "totalProjects": "Total projects",
+    "totalParticipations": "Total participations",
+    "openProjects": "Open projects",
+    "changeRole": "Change role",
+    "confirmClose": "Are you sure you want to close this project?",
+    "saveChanges": "Save changes",
+    "cancel": "Cancel"
+  },
+  "sdgs": {
+    "title": "Sustainable Development Goals",
+    "subtitle": "The ZOE programme addresses 11 of the 17 UN SDGs",
+    "projects": "{{count}} projects",
+    "learnMore": "Learn more"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong.",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "close": "Close",
+    "viewAll": "View all",
+    "learnMore": "Learn more",
+    "readMore": "Read more",
+    "showLess": "Show less",
+    "language": "Language",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode"
+  },
+  "footer": {
+    "madeBy": "ZOE Sustainability Platform",
+    "dsr": "DSR Prototype — FAU SoSe 2026",
+    "corfu": "Municipality of Northern Corfu"
+  }
+}

@@ -5,7 +5,7 @@ import PrototypeBanner from '../ui/PrototypeBanner';
 
 export default function Layout() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-950">
       <PrototypeBanner />
       <Header />
       <main id="main-content" className="flex-1">

@@ -11,18 +11,7 @@ export type ProjectCategory =
 
 export type ProjectStatus = 'Planning' | 'Active' | 'Completed' | 'Paused';
 
-export type SDGNumber =
-  | 3
-  | 4
-  | 6
-  | 7
-  | 8
-  | 11
-  | 12
-  | 13
-  | 14
-  | 15
-  | 17;
+export type SDGNumber = 3 | 4 | 6 | 7 | 8 | 11 | 12 | 13 | 14 | 15 | 17;
 
 export interface SDG {
   number: SDGNumber;
@@ -130,4 +119,103 @@ export interface TargetAudience {
   channels: { label: string; type: 'online' | 'offline' }[];
   entryPoint: string;
   barrierNote: string;
+}
+
+// --- Auth & User types (backend-connected) ---
+
+export type UserRole = 'USER' | 'ADMIN';
+export type UserLanguage = 'EN' | 'EL' | 'DE';
+export type ApiProjectStatus = 'DRAFT' | 'OPEN' | 'CLOSED' | 'COMPLETED';
+export type ApiProjectCategory =
+  | 'ENVIRONMENT'
+  | 'MOBILITY'
+  | 'COMMUNITY'
+  | 'EDUCATION'
+  | 'CULTURE';
+
+export interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+  points: number;
+  avatarUrl: string | null;
+  language: UserLanguage;
+}
+
+export interface ApiProject {
+  id: string;
+  titleEn: string;
+  titleEl: string;
+  titleDe: string;
+  descriptionEn: string;
+  descriptionEl: string;
+  descriptionDe: string;
+  sdgIds: string; // JSON string of number[]
+  category: ApiProjectCategory;
+  status: ApiProjectStatus;
+  rewardPoints: number;
+  location: string | null;
+  maxParticipants: number | null;
+  createdAt: string;
+  _count?: { participations: number };
+}
+
+export interface ApiBadge {
+  id: string;
+  nameEn: string;
+  nameEl: string;
+  nameDe: string;
+  descEn: string;
+  descEl: string;
+  descDe: string;
+  iconName: string;
+  threshold: number;
+}
+
+export interface ApiUserBadge {
+  badge: ApiBadge;
+  earnedAt: string;
+}
+
+export interface ApiParticipation {
+  id: string;
+  projectId: string;
+  joinedAt: string;
+  pointsAwarded: number;
+  project?: Pick<
+    ApiProject,
+    'id' | 'titleEn' | 'titleEl' | 'titleDe' | 'category'
+  >;
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+  error?: string;
+}
+
+export interface AuthTokens {
+  accessToken: string;
+}
+
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface RegisterPayload {
+  email: string;
+  password: string;
+  name: string;
+  language?: UserLanguage;
+}
+
+export interface LeaderboardEntry {
+  id: string;
+  name: string;
+  points: number;
+  avatarUrl: string | null;
+  _count: { participations: number };
 }
