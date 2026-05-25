@@ -218,10 +218,17 @@ export default function LandingPage() {
           <h2 className="text-3xl font-bold mb-4 text-white">
             Your participation matters
           </h2>
-          <p className="text-lg text-green-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-green-100 mb-4 max-w-2xl mx-auto">
             Whether you have five minutes to share feedback or five hours to
             volunteer at a restoration site — the ZOE programme needs your
             involvement to succeed.
+          </p>
+          <p className="text-green-200 text-sm mb-8">
+            Every action earns ZOE points — rise from Σπόρος (Seed) to Θεματοφύλακας (Steward) and
+            unlock recognition from the municipality.{' '}
+            <Link to="/rewards" className="text-white underline hover:text-green-100">
+              See the Rewards Programme →
+            </Link>
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             {[

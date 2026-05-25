@@ -92,6 +92,34 @@ export interface ParticipationOption {
   actionLabel: string;
 }
 
+export interface RewardTier {
+  id: string;
+  name: string;
+  greekName: string;
+  pointsMin: number;
+  pointsMax: number | null;
+  icon: string;
+  colorClasses: string;
+  description: string;
+  rewards: string[];
+}
+
+export interface RewardActivity {
+  id: string;
+  label: string;
+  points: number;
+  icon: string;
+  category: string;
+}
+
+export interface CommunityMilestone {
+  label: string;
+  target: number;
+  current: number;
+  reward: string;
+  unlocked: boolean;
+}
+
 export interface TargetAudience {
   id: string;
   name: string;

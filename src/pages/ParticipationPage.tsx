@@ -7,9 +7,18 @@ import {
   MessageSquare,
   CheckCircle2,
   X,
+  Award,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { participationOptions } from '../data/metrics';
+
+const optionPoints: Record<string, number> = {
+  'submit-idea': 15,
+  'volunteer': 25,
+  'join-event': 20,
+  'report-issue': 10,
+  'feedback': 10,
+};
 
 const iconMap: Record<string, React.ElementType> = {
   Lightbulb,
@@ -53,6 +62,13 @@ export default function ParticipationPage() {
           local idea to volunteering in the field. Choose how you want to
           participate below.
         </p>
+        <Link
+          to="/rewards"
+          className="inline-flex items-center gap-2 mt-4 bg-green-50 border border-green-200 text-green-800 text-sm font-medium rounded-lg px-4 py-2 hover:bg-green-100 transition-colors"
+        >
+          <Award size={15} aria-hidden="true" />
+          Every action earns ZOE points — see the Rewards Programme
+        </Link>
       </div>
 
       {/* Participation options */}
@@ -90,13 +106,20 @@ export default function ParticipationPage() {
               <p className="text-sm text-gray-600 leading-relaxed">
                 {option.description}
               </p>
-              <span
-                className={`mt-3 inline-block text-sm font-medium ${
-                  isActive ? 'text-green-700' : 'text-gray-400'
-                }`}
-              >
-                {isActive ? '↑ Selected' : option.actionLabel + ' →'}
-              </span>
+              <div className="mt-3 flex items-center justify-between">
+                <span
+                  className={`text-sm font-medium ${
+                    isActive ? 'text-green-700' : 'text-gray-400'
+                  }`}
+                >
+                  {isActive ? '↑ Selected' : option.actionLabel + ' →'}
+                </span>
+                {optionPoints[option.id] && (
+                  <span className="text-xs font-semibold bg-amber-100 text-amber-800 rounded-full px-2 py-0.5">
+                    +{optionPoints[option.id]} pts
+                  </span>
+                )}
+              </div>
             </button>
           );
         })}

@@ -10,6 +10,7 @@ import EventsPage from '../pages/EventsPage';
 import TransparencyPage from '../pages/TransparencyPage';
 import RoadmapPage from '../pages/RoadmapPage';
 import AudiencesPage from '../pages/AudiencesPage';
+import RewardsPage from '../pages/RewardsPage';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: 'events', element: <EventsPage /> },
       { path: 'transparency', element: <TransparencyPage /> },
       { path: 'roadmap', element: <RoadmapPage /> },
+      { path: 'rewards', element: <RewardsPage /> },
     ],
   },
 ]);

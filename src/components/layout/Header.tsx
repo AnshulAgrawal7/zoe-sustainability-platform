@@ -11,6 +11,7 @@ const navLinks = [
   { to: '/events', label: 'Events' },
   { to: '/transparency', label: 'Impact & Data' },
   { to: '/roadmap', label: 'Roadmap' },
+  { to: '/rewards', label: 'Rewards' },
 ];
 
 export default function Header() {
