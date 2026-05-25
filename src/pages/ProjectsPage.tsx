@@ -24,6 +24,7 @@ export default function ProjectsPage() {
   const [categoryFilter, setCategoryFilter] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -52,7 +53,7 @@ export default function ProjectsPage() {
     return () => {
       cancelled = true;
     };
-  }, [page, categoryFilter, t]);
+  }, [page, categoryFilter, t, retryCount]);
 
   function getTitle(p: ApiProject): string {
     if (lang === 'el') return p.titleEl;
@@ -135,7 +136,7 @@ export default function ProjectsPage() {
         <div className="py-16 text-center">
           <p className="mb-4 text-red-600 dark:text-red-400">{error}</p>
           <button
-            onClick={() => void fetchProjects()}
+            onClick={() => setRetryCount((c) => c + 1)}
             className="font-medium text-green-600 hover:underline"
           >
             {t('common.retry')}
