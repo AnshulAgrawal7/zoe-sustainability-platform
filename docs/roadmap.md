@@ -4,106 +4,78 @@ This roadmap describes the planned evolution of the ZOE Sustainability Platform 
 
 ---
 
-## Phase 1 — MVP Prototype (Current)
-**Timeline:** Spring 2025  
-**Status:** Complete
+## Phase 1 — Full-Stack Prototype (Current)
+**Timeline:** SoSe 2026 (FAU Seminar)  
+**Status:** ✅ Complete
 
 ### Goal
-Demonstrate the concept, information architecture, and citizen engagement workflows. Establish a working codebase ready for evaluation.
+Demonstrate the full concept — information architecture, citizen engagement workflows, authentication, and admin tooling — as a working full-stack prototype ready for evaluation.
 
 ### Scope
-- Frontend-only React + TypeScript + Tailwind SPA
-- 8 environmental projects with dummy data
-- 9 pages: Landing, About, Projects, Project Detail, SDG Dashboard, Participation, Events, Transparency, Roadmap
-- Local-only mock form for citizen participation
-- Full DSR documentation
+- React 19 + TypeScript + Tailwind CSS SPA (frontend)
+- Node.js + Express + Prisma + SQLite REST API (backend)
+- JWT authentication (citizen + admin roles)
+- 8 environmental projects (seed data)
+- Public pages: Landing, About, Projects, Project Detail, SDG Dashboard, Participation, Events, Transparency, Roadmap, Rewards, Audiences
+- Authenticated pages: Dashboard, Profile, User Rewards
+- Admin pages: Manage Projects (CRUD), Manage Users, New/Edit Project
+- Trilingual UI: English, Greek, German (react-i18next)
+- WCAG 2.1 AA accessibility (EU Directive 2016/2102)
+- Point-based gamification: 5 reward tiers, 5 achievement badges
+- Full documentation: DSR methodology, API, user guide, admin guide, architecture
 
 ### Success criteria
-- `npm run build` passes with no TypeScript errors
-- All pages navigable
-- Prototype notices visible throughout
-- Documentation complete and accurate
+- All pages navigable, backend and frontend connected
+- Auth flows working (register, login, logout, role-based access)
+- Admin can create/edit/delete projects and manage users
+- Citizens earn points for participation actions
+- 37 frontend + 32 backend + 49 E2E tests passing
 - Demonstrable to seminar and municipality stakeholders
 
 ---
 
-## Phase 2 — UX & Content Improvement
-**Timeline:** Summer–Autumn 2025  
+## Phase 2 — DSR Evaluation & Iteration
+**Timeline:** Summer–Autumn 2026  
 **Status:** Planned
 
 ### Goal
-Improve the platform based on initial feedback and expert review. Conduct formative user testing.
+Conduct structured DSR evaluation with real users. Iterate on findings. Produce evaluation report for academic submission.
 
 ### Scope
-- Expert UI/UX review and prioritised iterations
-- WCAG 2.1 AA accessibility audit and fixes
-- Greek language support (`react-i18next`)
-- Improved mobile experience (especially navigation and project cards)
-- Enhanced SDG visualisation (e.g., Recharts bar/donut charts)
-- Content review by municipality communications team
-- Search functionality across projects and events
-- Map integration for project locations
+- Formative user testing (5–10 participants: citizens, municipality staff, IS researchers)
+- Expert walkthroughs with IS/HCI researchers
+- System Usability Scale (SUS) questionnaire
+- Semi-structured interviews on usefulness, usability, participation intent
+- Iteration based on top 3–5 evaluation findings
+- Evaluation report for academic publication / seminar submission
+- Stakeholder presentation to Municipality of Northern Corfu
 
 ### Evaluation milestone
-5–10 formative user testing sessions (see `docs/evaluation-plan.md`)
+Full evaluation protocol in `docs/evaluation-plan.md`. Target: SUS score ≥ 68 (average usability threshold).
 
 ---
 
-## Phase 3 — DSR Evaluation & Iteration
-**Timeline:** Autumn–Winter 2025  
+## Phase 3 — Real Municipal Data
+**Timeline:** Autumn–Winter 2026  
 **Status:** Planned
 
 ### Goal
-Conduct structured DSR evaluation. Iterate on findings. Produce evaluation report for academic submission.
+Replace seed data with real, municipality-approved project data. Establish content management workflows.
 
 ### Scope
-- Structured evaluation sessions (8–15 participants: citizens, staff, researchers)
-- System Usability Scale (SUS) questionnaire
-- Expert walkthroughs with IS/HCI researchers
-- Thematic analysis of interview findings
-- Artefact iteration based on top 3–5 findings
-- Evaluation report for academic publication / seminar submission
-- Stakeholder presentation to municipality
-
-### Success criteria
-- SUS score ≥ 68 (average usability threshold)
-- All six evaluation criteria scored and documented
-- Iteration decisions documented with rationale
-- Academic report submitted
+- Data migration: prototype seed → real municipal project data
+- PostgreSQL for production (Prisma schema already compatible)
+- Moderation workflow for citizen submissions
+- Content review by municipality communications team
+- Enhanced SDG visualisation (charts, timelines)
+- Map integration for project locations
+- Search functionality across projects and events
 
 ---
 
-## Phase 4 — Backend Concept & Pilot
-**Timeline:** 2026  
-**Status:** Future work (not started)
-
-### Goal
-Design and implement a real backend to replace dummy data. Establish the data model, API, and admin interface.
-
-### Scope
-- Database schema design (PostgreSQL or equivalent)
-- REST API design and implementation (FastAPI or Node.js + Express)
-- Authentication and role management (citizen / municipality staff)
-- Admin dashboard for municipality staff
-- Citizen submission workflow with moderation
-- Data migration: dummy → real project data
-- GDPR and security assessment
-- Pilot deployment with selected municipality staff
-
-### Technical requirements
-See `docs/backend-future-concept.md` for full technical specification.
-
-### Success criteria
-- Staff can create and update projects without code changes
-- Citizens can submit ideas/reports and receive confirmation
-- Admin can moderate submissions before they are published
-- All real data verified and approved by municipality
-
----
-
-## Phase 5 — Production Deployment
-**Timeline:** 2026–2027  
-**Status:** Future work (not started)
+## Phase 4 — Production Deployment
+**Timeline:** 2027  
+**Status:** Planned
 
 ### Goal
 Full public deployment for Northern Corfu citizens. Ongoing operations, monitoring, and feature development.
@@ -114,9 +86,8 @@ Full public deployment for Northern Corfu citizens. Ongoing operations, monitori
 - Citizen onboarding guides and tutorials
 - Analytics dashboard for usage monitoring
 - Summative evaluation (before/after metrics)
-- Mobile app exploration (React Native or PWA)
 - Open data API for researchers and journalists
-- Potential integration with EU/national sustainability reporting systems
+- Mobile app exploration (PWA or React Native)
 
 ### Success criteria
 - Platform live and publicly accessible
@@ -130,10 +101,9 @@ Full public deployment for Northern Corfu citizens. Ongoing operations, monitori
 
 | Phase | Depends on |
 |---|---|
-| Phase 2 | Phase 1 complete; user testing participants recruited |
-| Phase 3 | Phase 2 complete; evaluation participants recruited |
-| Phase 4 | Phase 3 complete; municipality decision to invest in backend; developer capacity |
-| Phase 5 | Phase 4 complete; hosting budget; municipal IT approval |
+| Phase 2 | Phase 1 complete; evaluation participants recruited |
+| Phase 3 | Phase 2 complete; municipality decision to provide real data |
+| Phase 4 | Phase 3 complete; hosting budget; municipal IT approval |
 
 ---
 
@@ -141,6 +111,5 @@ Full public deployment for Northern Corfu citizens. Ongoing operations, monitori
 
 - National-level data aggregation (this is a local platform)
 - Blockchain or NFT features
-- Gamification / points / leaderboards (considered but deprioritised; may revisit in Phase 5)
 - Social media integration (privacy concerns; out of scope)
 - Real-time collaboration features

@@ -86,7 +86,7 @@ Three languages are operationally relevant for the ZOE platform:
 | English (EN) | International tourists, diaspora, academic context | Dominant tourist lingua franca; required for university seminar audience |
 | German (DE) | German-speaking visitors | Germany and German-speaking countries represent the single largest tourist-origin group for northern Corfu; German visitors are also among the most environmentally engaged in the European tourism context |
 
-The current ZOE prototype operates in English only. Addition of Greek and German language support is designated as a Phase 2 priority in the platform roadmap, consistent with the `docs/roadmap.md` documentation.
+The ZOE prototype is trilingual: English (EN), Greek (EL), and German (DE) are fully implemented via react-i18next with complete translation coverage. The language selector is available in the header on all pages and persists across sessions.
 
 ---
 
@@ -98,12 +98,12 @@ The following design requirements are derived directly from the context analysed
 |---|---|---|
 | ~80% smartphone penetration; below-average island broadband | Mobile-first responsive layout required; minimise page weight | Implemented: Tailwind responsive classes, no heavy assets |
 | Low DESI "Digital Public Services" score; limited prior experience with civic digital tools | Low-friction participation: no mandatory account creation for basic access | Implemented: public-access routes; auth optional |
-| Ageing permanent population with lower digital literacy | Large text, clear navigation, minimal jargon, accessible WCAG compliance | Partial: semantic HTML, aria labels present; formal WCAG audit planned Phase 2 |
+| Ageing permanent population with lower digital literacy | Large text, clear navigation, minimal jargon, accessible WCAG compliance | Implemented: WCAG 2.1 AA full pass (EU Directive 2016/2102) |
 | Low institutional trust; weak formal civic participation habits | Visible transparency features; feedback loop from participation to visible outcomes | Implemented: transparency page, KPI dashboard, project status tracking |
-| Trilingual audience (EL/EN/DE) | Internationalisation (react-i18next) with three language files | Planned: Phase 2; i18n architecture designed in `docs/architecture.md` |
+| Trilingual audience (EL/EN/DE) | Internationalisation (react-i18next) with three language files | Implemented: EN/EL/DE all complete; language selector in header |
 | Seasonal tourism with high-volume transient population | Participation modes accessible without residency context (event attendance, issue reporting) | Implemented: participation page accessible without account |
 | Strong environmental identity tied to landscape | Mission framing around place-specific features (olive groves, Antinioti, beach ecosystems) | Implemented: project data grounded in real Corfu locations |
-| German visitors as largest non-Greek-speaking group | German translation required in addition to English | Planned: Phase 2 |
+| German visitors as largest non-Greek-speaking group | German translation required in addition to English | Implemented: full German translation in `src/locales/de/translation.json` |
 
 ---
 

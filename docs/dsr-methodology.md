@@ -30,13 +30,15 @@ Following Hevner et al. (2004), DSR artefacts can be constructs, models, methods
 
 **Artefact type:** Instantiation (a working prototype system)
 
-**Artefact name:** ZOE Sustainability Platform (Version 1 — Frontend MVP)
+**Artefact name:** ZOE Sustainability Platform (Version 1 — Full-Stack Prototype)
 
 **Artefact composition:**
-- A React TypeScript single-page application
-- An information architecture for municipal environmental transparency
-- Citizen participation interaction patterns
-- SDG communication design
+- A React 19 TypeScript single-page application (frontend)
+- A Node.js + Express + Prisma REST API backend with SQLite database
+- JWT-based authentication system (citizens and admin roles)
+- Citizen participation interaction patterns with point-based gamification
+- SDG communication design and dashboard
+- WCAG 2.1 AA accessible interface (EN/EL/DE trilingual)
 - Design knowledge encoded in documentation
 
 ---
@@ -70,17 +72,25 @@ The ZOE platform should:
 
 ### Activity 3: Design and Development
 
-**This prototype (Phase 1) implements:**
-- Frontend-only React application with React Router
-- Eight environmental projects with realistic dummy data
-- SDG dashboard with nine relevant goals
-- Citizen participation page with local-only form submission
-- Events listing and impact metrics page
-- Responsive design using Tailwind CSS
+**This prototype implements:**
+
+*Frontend (React 19 + TypeScript + Tailwind CSS):*
+- Public pages: Landing, About, Projects, Project Detail, SDG Dashboard, Participation, Events, Transparency, Roadmap, Rewards, Audiences
+- Authenticated user pages: Dashboard, Profile, Rewards history
+- Admin pages: Manage Projects (CRUD), Manage Users, New/Edit Project
+- react-i18next trilingual support (English, Greek, German)
+- WCAG 2.1 AA accessibility (EU Directive 2016/2102 compliant)
+- Dark mode, responsive design (mobile-first, 375px baseline)
+
+*Backend (Node.js + Express + TypeScript + Prisma + SQLite):*
+- REST API with JWT authentication (access token 15 min + refresh token 7 days)
+- Role-based access control (CITIZEN / ADMIN)
+- Project and participation management with point-based gamification
+- Five reward tiers: Newcomer → Activist → Eco Hero → Ambassador → Legend
+
+*Seed data:* Eight environmental projects with realistic prototype data, four demo users, five achievement badges.
 
 **Design decisions documented in:** `docs/artifact-description.md` and `docs/architecture.md`
-
-**Dummy data rationale:** Since no real backend or dataset exists yet, all data is fictional but realistic, based on the types of actions described in municipal sustainability plans for Greek municipalities and comparable European programmes.
 
 ### Activity 4: Demonstration
 
@@ -92,10 +102,13 @@ The ZOE platform should:
 **Demonstration artefact:** This repository and running prototype at `npm run dev`
 
 **Demonstration scope:**
-- Walk through each page showing the information architecture
-- Show the citizen participation form workflow (local mock)
+- Walk through public pages showing the information architecture and SDG alignment
+- Demonstrate citizen registration, login, and participation (point-awarding workflow)
 - Show the SDG dashboard and project filtering
 - Show the project detail page with transparency metrics
+- Demonstrate admin capabilities (project CRUD, user management)
+- Show trilingual UI (EN/EL/DE) and dark mode
+- Run automated test suite (37 frontend + 32 backend + 49 Playwright E2E)
 
 ### Activity 5: Evaluation
 
@@ -171,10 +184,9 @@ Following Gregor & Hevner (2013):
 
 This prototype is explicitly **Version 1**. DSR is inherently iterative. The roadmap (`docs/roadmap.md`) defines:
 
-- **Version 1 (current):** Frontend MVP with dummy data — demonstration phase
-- **Version 2:** UX improvement + formative evaluation + Greek language
-- **Version 3:** DSR evaluation + iteration based on findings
-- **Version 4:** Backend integration + real data
-- **Version 5:** Production deployment + summative evaluation
+- **Version 1 (current):** Full-stack prototype with seed data — demonstration phase (complete)
+- **Version 2:** Formative user evaluation + iteration based on findings
+- **Version 3:** DSR evaluation + production-ready backend with real municipal data
+- **Version 4:** Production deployment + summative evaluation
 
 Each version should be preceded by evaluation and followed by documented iteration rationale.

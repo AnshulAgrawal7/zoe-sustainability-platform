@@ -112,7 +112,12 @@ export default function NewProjectPage() {
                 htmlFor={`new-title-${lang.toLowerCase()}`}
                 className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
               >
-                {lang === 'En' ? 'English' : lang === 'El' ? 'Ελληνικά' : 'Deutsch'} *
+                {lang === 'En'
+                  ? 'English'
+                  : lang === 'El'
+                    ? 'Ελληνικά'
+                    : 'Deutsch'}{' '}
+                *
               </label>
               <input
                 id={`new-title-${lang.toLowerCase()}`}
@@ -138,14 +143,21 @@ export default function NewProjectPage() {
                 htmlFor={`new-desc-${lang.toLowerCase()}`}
                 className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
               >
-                {lang === 'En' ? 'English' : lang === 'El' ? 'Ελληνικά' : 'Deutsch'} *
+                {lang === 'En'
+                  ? 'English'
+                  : lang === 'El'
+                    ? 'Ελληνικά'
+                    : 'Deutsch'}{' '}
+                *
               </label>
               <textarea
                 id={`new-desc-${lang.toLowerCase()}`}
                 required
                 aria-required="true"
                 rows={3}
-                value={form[`description${lang}` as keyof typeof form] as string}
+                value={
+                  form[`description${lang}` as keyof typeof form] as string
+                }
                 onChange={(e) => set(`description${lang}`, e.target.value)}
                 className="w-full resize-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
@@ -160,10 +172,14 @@ export default function NewProjectPage() {
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
+              <label
+                htmlFor="new-category"
+                className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
+              >
                 {t('admin.formCategory')} *
               </label>
               <select
+                id="new-category"
                 value={form.category}
                 onChange={(e) => set('category', e.target.value)}
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
@@ -176,10 +192,14 @@ export default function NewProjectPage() {
               </select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
+              <label
+                htmlFor="new-status"
+                className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
+              >
                 {t('admin.formStatus')}
               </label>
               <select
+                id="new-status"
                 value={form.status}
                 onChange={(e) => set('status', e.target.value)}
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
@@ -192,10 +212,14 @@ export default function NewProjectPage() {
               </select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
+              <label
+                htmlFor="new-reward-points"
+                className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
+              >
                 {t('admin.formRewardPoints')}
               </label>
               <input
+                id="new-reward-points"
                 type="number"
                 min={0}
                 value={form.rewardPoints}
@@ -204,10 +228,14 @@ export default function NewProjectPage() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
+              <label
+                htmlFor="new-max-participants"
+                className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
+              >
                 {t('admin.formMaxParticipants')}
               </label>
               <input
+                id="new-max-participants"
                 type="number"
                 min={0}
                 value={form.maxParticipants}
@@ -217,10 +245,14 @@ export default function NewProjectPage() {
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
+              <label
+                htmlFor="new-location"
+                className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
+              >
                 {t('admin.formLocation')}
               </label>
               <input
+                id="new-location"
                 type="text"
                 value={form.location}
                 onChange={(e) => set('location', e.target.value)}
@@ -256,7 +288,8 @@ export default function NewProjectPage() {
           </div>
           {selectedSdgs.length > 0 && (
             <p className="mt-2 text-xs text-green-600 dark:text-green-400">
-              {t('admin.formSdgSelected')} {selectedSdgs.sort((a, b) => a - b).join(', ')}
+              {t('admin.formSdgSelected')}{' '}
+              {selectedSdgs.sort((a, b) => a - b).join(', ')}
             </p>
           )}
         </section>

@@ -88,7 +88,7 @@ Inhalte müssen von aktuellen und zukünftigen Assistive Technologies interpreti
 
 | Klasse (Vordergrund) | Hintergrund | Verhältnis (approx.) | Status |
 |---|---|---|---|
-| `text-gray-300` | `bg-white` | ~7.1:1 | OK |
+| `text-gray-300` | `bg-white` | ~1.8:1 | FAIL — nicht für normalen Text verwenden |
 | `text-gray-400` | `bg-white` | ~4.6:1 | knapp OK (prüfen) |
 | `text-gray-500` | `bg-white` | ~3.0:1 | FAIL (normaler Text) |
 | `text-gray-600` | `bg-white` | ~5.9:1 | OK |

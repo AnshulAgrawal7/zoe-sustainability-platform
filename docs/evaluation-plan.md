@@ -15,7 +15,7 @@ Evaluation is the fifth activity in the Peffers et al. (2007) DSRM process. It i
 | **Validation** | Checking that the artefact is built correctly (technically sound) | TypeScript compilation, ESLint, build passes, navigation works, form shows success message |
 | **Evaluation** | Checking that the artefact works well for its intended purpose | User testing, expert review, usefulness assessment |
 
-Version 1 has passed **validation** (the build succeeds and all pages are functional). **Evaluation** is the next step and requires human participants.
+Version 1 has passed **validation** (build succeeds, 37 frontend + 32 backend + 49 E2E tests passing, all pages functional). **Evaluation** is the next step and requires human participants.
 
 ---
 
@@ -166,8 +166,7 @@ Following DSR iterative principles:
 
 | Phase | Evaluation type | Expected by |
 |---|---|---|
-| Phase 1 (current) | Validation only | Spring 2025 |
-| Phase 2 | Formative, artificial (5 sessions) | Summer 2025 |
-| Phase 3 | Expert walkthroughs + SUS | Autumn 2025 |
-| Phase 4 | Naturalistic formative (real backend) | 2026 |
-| Phase 5 | Summative, naturalistic | 2026–2027 |
+| Phase 1 (current) | Validation only (tests passing, demo working) | SoSe 2026 — ✅ Complete |
+| Phase 2 | Formative, artificial (5–10 sessions with citizens + staff) | Summer–Autumn 2026 |
+| Phase 3 | Expert walkthroughs + SUS questionnaire | Autumn–Winter 2026 |
+| Phase 4 | Naturalistic formative (real municipal data) | 2027 |

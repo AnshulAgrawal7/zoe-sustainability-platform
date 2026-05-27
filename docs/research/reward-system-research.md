@@ -15,7 +15,7 @@
 - Leaderboard-only designs risk demotivating the majority of participants who do not place near the top; point and badge systems are more inclusive because they reward individual progress independent of others' activity (Hamari et al., 2014).
 - Platform evidence from Decidim, CitizenLab, FixMyStreet, and My Street Helsinki demonstrates that lightweight acknowledgement mechanisms — progress indicators, completion confirmations, visible community milestones — increase return visits and sustained engagement without requiring complex gamification infrastructure.
 - Mediterranean and Southern European civic cultures show stronger responses to community recognition and social embeddedness than to competitive ranking, with implications for how reward visibility should be framed (Putnam, 1993; Fung, 2006).
-- The ZOE platform's five-tier progression system (Seed → Leaf → Branch → Guardian → Steward), using Greek-language tier names, is consistent with the literature's recommendation for contextually grounded, identity-affirming reward structures in local civic engagement platforms.
+- The ZOE platform's five-tier progression system (Newcomer → Activist → Eco Hero → Ambassador → Legend), using Greek-language tier names (Νεοφερμένος, Ακτιβιστής, Οικολογικός Ήρωας, Πρεσβευτής, Θρύλος), is consistent with the literature's recommendation for contextually grounded, identity-affirming reward structures in local civic engagement platforms.
 
 ---
 
@@ -74,7 +74,7 @@ FixMyStreet is the UK's most-used civic issue-reporting platform. It does not us
 
 My Street Helsinki (Oma Kaupunginosa) is a participatory urban planning platform using interactive maps and task-based engagement. Helsinki's implementation included a digital badge system for completing contributions to neighbourhood improvement discussions. Internal evaluation (reported by the City of Helsinki digital services team) found that badge visibility on user profiles motivated a subset of users to contribute across multiple neighbourhood areas — going beyond their immediate residential area.
 
-**Lesson for ZOE:** Badge visibility effects work when badges carry localised meaning. In the ZOE context, this suggests that tier names in Greek (Σπόρος, Φύλλο, Κλαδί, Φύλακας, Θεματοφύλακας) and tangible local rewards (olive oil from Agios Markos, named stewardship on the public map) will be more motivationally effective than generic digital badges.
+**Lesson for ZOE:** Badge visibility effects work when badges carry localised meaning. In the ZOE context, this suggests that tier names in Greek (Νεοφερμένος, Ακτιβιστής, Οικολογικός Ήρωας, Πρεσβευτής, Θρύλος) and tangible local rewards (olive oil from Agios Markos, named stewardship on the public map) will be more motivationally effective than generic digital badges.
 
 ---
 
@@ -111,13 +111,13 @@ Reward systems can acknowledge this without being cynical about it: the ZOE eco-
 
 ### 5.1 Design Rationale: Points + Badges, Not Leaderboard Alone
 
-The ZOE platform uses a combination of accumulated points, five named tier levels with Greek-language identities, activity-specific badges, and community milestones. The following argument justifies this combination for the specific Northern Corfu context.
+The ZOE platform uses a combination of accumulated points, five named tier levels with Greek-language identities (Νεοφερμένος 0 pts, Ακτιβιστής 100 pts, Οικολογικός Ήρωας 300 pts, Πρεσβευτής 500 pts, Θρύλος 1000 pts), activity-specific badges, and community milestones. The following argument justifies this combination for the specific Northern Corfu context.
 
 **Points** provide a continuous, legible progress metric that every participant can improve regardless of others' activity. Unlike a leaderboard position, a points total is not a zero-sum quantity. For a community with strong bonding social capital and high-density social relationships, this is essential: a competitive ranking mechanism would introduce social friction into a small-island community where the "winners" and "losers" are neighbours.
 
 **Badges** provide categorical recognition for qualitatively distinct contributions. A citizen who reports twenty environmental issues has contributed differently from one who led a school session or registered their business in the eco-scheme. Points alone flatten this distinction; badges preserve it. Hamari et al. (2014) find that badges are motivationally effective when they signal genuine achievement rather than trivial completion — the ZOE badge activities are calibrated to reflect real effort (40 points for completing water monitoring certification; 8 points for photo documentation).
 
-**Tier progression** provides a long-horizon motivational arc. The Seed-to-Steward progression, with culturally resonant Greek-language tier names, allows citizens to understand their cumulative contribution in narrative terms — "I am a Branch in the ZOE community" — rather than purely numerical ones. The use of Greek botanical and civic vocabulary (Σπόρος, Φύλλο, Κλαδί, Φύλακας, Θεματοφύλακας) grounds the system in local identity.
+**Tier progression** provides a long-horizon motivational arc. The Newcomer-to-Legend progression, with culturally resonant Greek-language tier names, allows citizens to understand their cumulative contribution in narrative terms — "I am an Activist in the ZOE community" — rather than purely numerical ones. The use of Greek civic vocabulary (Νεοφερμένος, Ακτιβιστής, Οικολογικός Ήρωας, Πρεσβευτής, Θρύλος) grounds the system in local identity.
 
 **Community milestones** serve the function that leaderboards typically serve in gamified systems — motivating toward a collective goal — without the social fragmentation that individual ranking introduces. When the community reaches 500 volunteer-hours, twenty trees are planted along the Antinioti trail. Every participant contributed to that outcome; no one is ranked against another.
 
@@ -138,7 +138,7 @@ The design deliberately maintains the balance between intrinsic and extrinsic mo
 | Research Finding | ZOE Design Response | Implementation |
 |---|---|---|
 | Leaderboard demotivates majority (Hamari et al., 2014) | No individual leaderboard; community milestones instead | `communityMilestones[]` in `src/data/rewards.ts` |
-| Badges need cultural meaning (Deterding et al., 2011) | Greek-language tier names; place-specific rewards | `greekName` field in `RewardTier`; Agios Markos olive oil reward |
+| Badges need cultural meaning (Deterding et al., 2011) | Greek-language tier names (Νεοφερμένος → Θρύλος); place-specific rewards | `nameEl` field in badge schema; seed data with Greek names |
 | Closing the loop increases re-engagement (MySociety, 2019) | Transparency page; project status updates | `/transparency` route; project `status` field |
 | Bonding social capital resists competitive ranking (Putnam, 1993) | Named stewardship (not ranked) at Guardian tier | Guardian tier reward: named section on public map |
 | Low institutional trust requires visible accountability (Fung, 2006) | SDG dashboard; KPI metrics; transparent progress | `/sdg-dashboard` route; `metrics.ts` data |
