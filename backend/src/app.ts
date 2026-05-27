@@ -21,7 +21,8 @@ app.use(cookieParser());
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 20,
+  // Higher limit in dev/test to allow E2E test suites; tighten for production
+  max: process.env['NODE_ENV'] === 'production' ? 20 : 200,
   message: { success: false, error: 'Too many requests, please try again later' },
 });
 

@@ -180,3 +180,36 @@ cp .env.example .env
 npm install
 npm run dev          # → http://localhost:5173
 ```
+
+---
+
+## 10. Testing
+
+| Layer | Tool | Count | Command |
+|---|---|---|---|
+| Frontend unit | Vitest + React Testing Library | 37 tests | `npm test` |
+| Accessibility | jest-axe (axe-core) | 5 tests | `npm test` |
+| Backend integration | Vitest + Supertest | 32 tests | `cd backend && npm test` |
+| E2E browser | Playwright (Chromium) | 49 tests | `npm run test:e2e` |
+
+### Running E2E tests (WSL2 note)
+
+On WSL2, Playwright's bundled Chromium needs system libraries. First-time setup:
+
+```bash
+./scripts/setup-e2e-deps.sh   # downloads libs without sudo
+npm run test:e2e               # LD_LIBRARY_PATH is set automatically
+```
+
+On native Linux or with `sudo`: `sudo npx playwright install-deps && npm run test:e2e`
+
+### E2E test coverage
+
+| File | Tests |
+|---|---|
+| `e2e/public-navigation.spec.ts` | All public routes load, PrototypeBanner visible |
+| `e2e/auth.spec.ts` | Login, logout, admin login, register form |
+| `e2e/protected-routes.spec.ts` | Unauthenticated redirect to /login, admin access control |
+| `e2e/dark-mode-and-language.spec.ts` | Dark mode toggle, language switching (EN/EL/DE) |
+| `e2e/accessibility.spec.ts` | Keyboard nav, lang attribute, images alt, footer |
+| `e2e/projects.spec.ts` | Projects list, project detail, admin project management |

@@ -24,5 +24,11 @@ backend/prisma/test.db-journal
 *.sln
 *.sw?
 
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
 # Claude Code memory (local only)
 memory/
