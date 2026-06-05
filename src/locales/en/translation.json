@@ -18,7 +18,8 @@
     "profile": "Profile",
     "logout": "Logout",
     "admin": "Admin",
-    "openMenu": "Open menu"
+    "openMenu": "Open menu",
+    "getInvolved": "Get Involved"
   },
   "auth": {
     "login": "Login",
@@ -202,6 +203,50 @@
     "legalBasis": "Legal Basis",
     "legalBasisText": "This accessibility statement is made pursuant to EU Directive 2016/2102 on the accessibility of websites and mobile applications of public sector bodies, transposed via EN 301 549."
   },
+  "landing": {
+    "hero": {
+      "badge": "Municipality of Northern Corfu",
+      "title": "ZOE — Environmental Actions for Northern Corfu",
+      "subtitle": "A transparent, participatory platform connecting citizens with the environmental projects protecting the nature, coastlines, and communities of Northern Corfu.",
+      "exploreProjects": "Explore Projects",
+      "getInvolved": "Get Involved"
+    },
+    "stats": {
+      "disclaimer": "* All statistics are prototype dummy data for demonstration purposes."
+    },
+    "pillars": {
+      "heading": "Why the ZOE Platform?",
+      "subheading": "Environmental governance in small municipalities often lacks visibility and citizen connection. ZOE changes that with three core commitments.",
+      "transparency": {
+        "title": "Transparency",
+        "description": "Every project publishes progress metrics, participation numbers, and impact data openly. Citizens can see where funding goes and what is being achieved."
+      },
+      "participation": {
+        "title": "Citizen Participation",
+        "description": "From submitting ideas to volunteering on the ground, the ZOE platform connects residents directly to the environmental actions shaping their community."
+      },
+      "impact": {
+        "title": "Sustainability Impact",
+        "description": "Aligned with the UN Sustainable Development Goals, each ZOE project is designed to deliver measurable, long-term environmental benefit."
+      }
+    },
+    "featured": {
+      "heading": "Active Projects",
+      "subheading": "Environmental actions underway right now in Northern Corfu.",
+      "viewAll": "View all projects",
+      "progress": "Progress",
+      "participants": "{{count}} participants"
+    },
+    "cta": {
+      "heading": "Your participation matters",
+      "body": "Whether you have five minutes to share feedback or five hours to volunteer at a restoration site — the ZOE programme needs your involvement to succeed.",
+      "rewards": "Every action earns ZOE points — rise from Σπόρος (Seed) to Θεματοφύλακας (Steward) and unlock recognition from the municipality.",
+      "rewardsLink": "See the Rewards Programme →",
+      "submitIdea": "Submit an Idea",
+      "joinEvent": "Join an Event",
+      "seeImpact": "See Impact Data"
+    }
+  },
   "privacy": {
     "title": "Privacy Policy",
     "subtitle": "ZOE Platform — Municipality of Northern Corfu",
@@ -218,5 +263,71 @@
     "contactText": "For privacy-related questions, contact:",
     "lastUpdate": "Last updated",
     "lastUpdateDate": "May 2026"
+  },
+  "getInvolved": {
+    "title": "Get Involved",
+    "subtitle": "Whether you live in Northern Corfu or are visiting for a week — there is a way for you to help protect it. Explore ZOE's initiatives, see how visitors can contribute, and stay informed.",
+    "initiatives": {
+      "heading": "Explore initiatives by theme",
+      "intro": "ZOE bundles the municipality's environmental actions into four thematic initiatives. Choose a theme to see the related actions.",
+      "tablistLabel": "ZOE initiatives",
+      "noProjects": "No actions are available yet.",
+      "marineCoast": {
+        "name": "Marine & Coast",
+        "description": "Protecting Northern Corfu's 22 km coastline and freshwater streams — beach cleanups, marine litter monitoring and water quality."
+      },
+      "natureBiodiversity": {
+        "name": "Nature & Biodiversity",
+        "description": "Safeguarding natural monuments — the Antinioti Lagoon, the Erimitis Peninsula and traditional olive landscapes."
+      },
+      "circularClimate": {
+        "name": "Circular & Climate",
+        "description": "Cutting waste and closing loops — recycling hubs and community composting across the villages."
+      },
+      "educationTourism": {
+        "name": "Education & Tourism",
+        "description": "Building awareness — environmental education in schools and a sustainable tourism scheme."
+      },
+      "status": {
+        "Planning": "Planning",
+        "Active": "Active",
+        "Completed": "Completed",
+        "Paused": "Paused"
+      }
+    },
+    "tourists": {
+      "heading": "How visitors can contribute",
+      "intro": "Northern Corfu welcomes around four million visitors a year. Tourism is often seen only as a source of waste — but visitors can also be part of the solution.",
+      "ways": {
+        "cleanups": {
+          "title": "Join a beach cleanup",
+          "desc": "Spend an hour at a monthly cleanup in Kassiopi, Sidari or Palaiokastritsa."
+        },
+        "report": {
+          "title": "Report litter or pollution",
+          "desc": "Flag a litter hotspot or a pollution incident so the municipality can act."
+        },
+        "choose": {
+          "title": "Choose certified operators",
+          "desc": "Favour accommodation and tours committed to ZOE's sustainable tourism standards."
+        },
+        "respect": {
+          "title": "Respect nature & wildlife",
+          "desc": "Keep your distance from turtle nesting sites and protected wetlands."
+        }
+      },
+      "evidenceNote": "Evidence from comparable Mediterranean destinations shows that involving visitors and communities through digital tools measurably improves a destination's sustainability (Vegas Macias et al., 2023; Laksmi et al., 2026).",
+      "cta": "See all ways to participate"
+    },
+    "newsletter": {
+      "heading": "Stay informed",
+      "intro": "Get occasional updates on new actions, events and results in Northern Corfu.",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "subscribe": "Subscribe",
+      "invalidEmail": "Please enter a valid email address.",
+      "success": "Thanks! In the full version you would now receive a confirmation email.",
+      "prototypeNotice": "Prototype: no email is stored or sent. This illustrates the planned newsletter opt-in."
+    }
   }
 }

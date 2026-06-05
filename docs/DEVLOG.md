@@ -26,6 +26,7 @@ Ziel: den iterativen Design-Develop-Demonstrate-Zyklus nachvollziehbar dokumenti
 | 4 | 2026-05-25 | TP4 | i18n (EN/EL/DE), Dark Mode, Zustand-State | 🔨 |
 | 5 | 2026-05-25 | TP4 | WCAG 2.1 AA Barrierefreiheit + axe-core-Tests | ✅ |
 | 6 | 2026-05-27 | übergreifend | Playwright E2E (49 Tests), Test-Setup, Doku-Update | ✅ |
+| 7 | 2026-06-06 | TP1, TP4, TP6 | Additive Features: Initiative-Tabs, Tourist:innen-Beitrag, Newsletter-Opt-in (`/get-involved`) | ✅ |
 
 > Datumsangaben aus der Git-History abgeleitet (Commit-Daten). Eine Iteration kann mehrere Commits umfassen.
 
@@ -107,6 +108,23 @@ Ziel: den iterativen Design-Develop-Demonstrate-Zyklus nachvollziehbar dokumenti
 - **Technische Entscheidung:** Trennung Unit/Integration (Vitest) und E2E (Playwright); E2E aus Vitest-Lauf ausgeschlossen, um Test-Runner-Konflikte zu vermeiden.
 - **DSR-Bezug:** Sicherung der Artefakt-Qualität als Voraussetzung für die Phase-5-Evaluation.
 - **Status:** ✅ Implementiert
+
+### Iteration 7 — Additive Features: Initiative-Tabs, Tourist:innen-Beitrag, Newsletter-Opt-in
+- **Datum:** 2026-06-06 (Branch `claude/nightly-run`)
+- **Adressiertes Teilproblem:** TP1 (Sichtbarkeit/Gruppierung), TP6 (Touristen als Ressource — bislang gar nicht adressiert), TP4 (Mehrsprachigkeit der neuen Inhalte)
+- **Was wurde implementiert (rein additiv, kein bestehender Code entfernt):**
+  - `src/pages/GetInvolvedPage.tsx` — neue öffentliche Seite unter `/get-involved`, in `Router.tsx` registriert, Navigationslink in `Header.tsx` (`nav.getInvolved`)
+  - `src/components/engagement/InitiativeTabs.tsx` — barrierefreie Tabs (WAI-ARIA-Tabs-Pattern: `tablist`/`tab`/`tabpanel`, Roving-Tabindex, Pfeiltasten/Home/End) gruppieren die ZOE-Aktionen in vier Initiativen (Meer & Küste, Natur & Biodiversität, Kreislauf & Klima, Bildung & Tourismus); zeigt **auch abgeschlossene** Aktionen
+  - `src/components/engagement/TouristContribution.tsx` — TP6-Sektion „Wie Besucher:innen beitragen" (4 konkrete Wege), mit Literatur-Beleg-Hinweis
+  - `src/components/ui/NewsletterSignup.tsx` — Newsletter-Opt-in mit Zod-E-Mail-Validierung, `role="alert"`/`role="status"`, **expliziter Prototyp-Hinweis** (kein Versand)
+  - i18n EN/EL/DE: neuer `getInvolved`-Namespace + `nav.getInvolved` in allen drei `translation.json` (Parität geprüft)
+  - Tests: `InitiativeTabs.test.tsx` (Tabs/Panel/Tastatur), `NewsletterSignup.test.tsx` (Validierung/Erfolg/Prototyp-Hinweis), `accessibility/GetInvolvedPage.test.tsx` (axe) → **44/44 grün**, `tsc --noEmit` + `vite build` grün
+- **Technische Entscheidung & Begründung:**
+  - **Komponenten + eine neue Route, kein Eingriff in bestehende Seiten** — minimiert Regressionsrisiko, hält den Schritt additiv (Regel 3 des Nacht-Laufs).
+  - **Kein Backend** für Newsletter/Initiativen-Persistenz — bewusste Designentscheidung (Scope/Datenschutz); realer Versand = Future Work (GDPR-by-Design, Diamantopoulou 2019 [B]).
+  - **TP6 erstmals adressiert**, weil die ursprüngliche MATRIX nur TP1–TP4 abdeckte, der Stakeholder-/Phase-1-Input Tourismus aber als zentrales Thema nennt.
+- **DSR-Bezug:** Designprinzipien DP1 (zentral/gruppiert), DP6 (Tourist:innen als Ressource) aus [`MATRIX.md`](MATRIX.md); belegt durch Simelio 2021 [A] (DP1), Laksmi 2026 [A] + Vegas Macias 2023 [A] (DP6); Engagement-Design nach Yang & Wu 2025 [A]/Krath 2021 [B].
+- **Status:** ✅ Implementiert & getestet (additiv auf `claude/nightly-run`).
 
 ---
 

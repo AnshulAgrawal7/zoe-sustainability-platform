@@ -39,6 +39,7 @@ export default function Header() {
     { to: '/sdg-dashboard', label: t('nav.sdgs') },
     { to: '/events', label: t('nav.events') },
     { to: '/transparency', label: t('nav.transparency') },
+    { to: '/get-involved', label: t('nav.getInvolved') },
     { to: '/rewards', label: t('nav.rewards') },
   ];
 
@@ -94,7 +95,7 @@ export default function Header() {
               value={language}
               onChange={(e) => setLanguage(e.target.value as Language)}
               aria-label={t('common.language')}
-              className="rounded-md px-2 py-2 text-sm text-gray-500 bg-transparent border-0 cursor-pointer transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1"
+              className="cursor-pointer rounded-md border-0 bg-transparent px-2 py-2 text-sm text-gray-500 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 dark:text-gray-400 dark:hover:bg-gray-800"
             >
               {LANGUAGES.map((lang) => (
                 <option key={lang.code} value={lang.code}>

@@ -15,6 +15,7 @@ import TransparencyPage from '../pages/TransparencyPage';
 import RoadmapPage from '../pages/RoadmapPage';
 import AudiencesPage from '../pages/AudiencesPage';
 import RewardsPage from '../pages/RewardsPage';
+import GetInvolvedPage from '../pages/GetInvolvedPage';
 
 // Auth pages
 import LoginPage from '../pages/auth/LoginPage';
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       { path: 'projects/:id', element: <ProjectDetailPage /> },
       { path: 'sdg-dashboard', element: <SDGDashboardPage /> },
       { path: 'participate', element: <ParticipationPage /> },
+      { path: 'get-involved', element: <GetInvolvedPage /> },
       { path: 'audiences', element: <AudiencesPage /> },
       { path: 'events', element: <EventsPage /> },
       { path: 'transparency', element: <TransparencyPage /> },

@@ -18,7 +18,8 @@
     "profile": "Profil",
     "logout": "Abmelden",
     "admin": "Administration",
-    "openMenu": "Menü öffnen"
+    "openMenu": "Menü öffnen",
+    "getInvolved": "Mitmachen"
   },
   "auth": {
     "login": "Anmelden",
@@ -202,6 +203,50 @@
     "legalBasis": "Rechtsgrundlage",
     "legalBasisText": "Diese Barrierefreiheitserklärung wird gemäß der EU-Richtlinie 2016/2102 über die Barrierefreiheit von Websites und mobilen Anwendungen öffentlicher Stellen abgegeben, umgesetzt durch EN 301 549."
   },
+  "landing": {
+    "hero": {
+      "badge": "Gemeinde Nordkorfu",
+      "title": "ZOE — Umweltprojekte für Nordkorfu",
+      "subtitle": "Eine transparente, partizipative Plattform, die Bürgerinnen und Bürger mit den Umweltprojekten verbindet, die die Natur, Küsten und Gemeinschaften Nordkorfus schützen.",
+      "exploreProjects": "Projekte entdecken",
+      "getInvolved": "Mitmachen"
+    },
+    "stats": {
+      "disclaimer": "* Alle Statistiken sind Prototyp-Demodaten zu Demonstrationszwecken."
+    },
+    "pillars": {
+      "heading": "Warum die ZOE-Plattform?",
+      "subheading": "Die Umweltgovernance in kleinen Gemeinden mangelt oft an Transparenz und Bürgerbeteiligung. ZOE ändert das mit drei zentralen Grundsätzen.",
+      "transparency": {
+        "title": "Transparenz",
+        "description": "Jedes Projekt veröffentlicht offen Fortschrittskennzahlen, Teilnehmerzahlen und Wirkungsdaten. Bürgerinnen und Bürger können sehen, wohin Mittel fließen und was erreicht wird."
+      },
+      "participation": {
+        "title": "Bürgerbeteiligung",
+        "description": "Von der Einreichung von Ideen bis zur Freiwilligenarbeit vor Ort — die ZOE-Plattform verbindet Einwohnerinnen und Einwohner direkt mit den Umweltmaßnahmen, die ihre Gemeinschaft gestalten."
+      },
+      "impact": {
+        "title": "Nachhaltigkeitswirkung",
+        "description": "Im Einklang mit den UN-Zielen für nachhaltige Entwicklung ist jedes ZOE-Projekt darauf ausgelegt, einen messbaren, langfristigen Umweltnutzen zu erzielen."
+      }
+    },
+    "featured": {
+      "heading": "Aktive Projekte",
+      "subheading": "Umweltprojekte, die gerade in Nordkorfu laufen.",
+      "viewAll": "Alle Projekte anzeigen",
+      "progress": "Fortschritt",
+      "participants": "{{count}} Teilnehmende"
+    },
+    "cta": {
+      "heading": "Ihre Beteiligung zählt",
+      "body": "Ob Sie fünf Minuten Zeit haben, um Feedback zu geben, oder fünf Stunden, um an einem Wiederherstellungsstandort zu helfen — das ZOE-Programm braucht Ihre Beteiligung, um erfolgreich zu sein.",
+      "rewards": "Jede Aktion bringt ZOE-Punkte — steigen Sie von Σπόρος (Samen) zu Θεματοφύλακας (Hüter) auf und erhalten Sie Anerkennung der Gemeinde.",
+      "rewardsLink": "Zum Belohnungsprogramm →",
+      "submitIdea": "Idee einreichen",
+      "joinEvent": "An Veranstaltung teilnehmen",
+      "seeImpact": "Wirkungsdaten ansehen"
+    }
+  },
   "privacy": {
     "title": "Datenschutzerklärung",
     "subtitle": "ZOE-Plattform — Gemeinde Nordkorfu",
@@ -218,5 +263,71 @@
     "contactText": "Bei datenschutzbezogenen Fragen wenden Sie sich bitte an:",
     "lastUpdate": "Zuletzt aktualisiert",
     "lastUpdateDate": "Mai 2026"
+  },
+  "getInvolved": {
+    "title": "Mitmachen",
+    "subtitle": "Ob Sie in Nord-Korfu leben oder nur eine Woche zu Besuch sind – es gibt einen Weg, wie Sie helfen können. Entdecken Sie die ZOE-Initiativen, erfahren Sie, wie Besucher:innen beitragen können, und bleiben Sie informiert.",
+    "initiatives": {
+      "heading": "Initiativen nach Thema entdecken",
+      "intro": "ZOE bündelt die Umweltaktionen der Gemeinde in vier thematische Initiativen. Wählen Sie ein Thema, um die zugehörigen Aktionen zu sehen.",
+      "tablistLabel": "ZOE-Initiativen",
+      "noProjects": "Es sind noch keine Aktionen verfügbar.",
+      "marineCoast": {
+        "name": "Meer & Küste",
+        "description": "Schutz der 22 km langen Küste Nord-Korfus und der Süßwasserläufe – Strandsäuberungen, Monitoring von Meeresmüll und Wasserqualität."
+      },
+      "natureBiodiversity": {
+        "name": "Natur & Biodiversität",
+        "description": "Schutz der Naturmonumente – die Antinioti-Lagune, die Halbinsel Erimitis und traditionelle Olivenlandschaften."
+      },
+      "circularClimate": {
+        "name": "Kreislauf & Klima",
+        "description": "Abfall vermeiden und Kreisläufe schließen – Recycling-Stationen und kommunale Kompostierung in den Dörfern."
+      },
+      "educationTourism": {
+        "name": "Bildung & Tourismus",
+        "description": "Bewusstsein schaffen – Umweltbildung an Schulen und ein nachhaltiges Tourismusprogramm."
+      },
+      "status": {
+        "Planning": "In Planung",
+        "Active": "Aktiv",
+        "Completed": "Abgeschlossen",
+        "Paused": "Pausiert"
+      }
+    },
+    "tourists": {
+      "heading": "Wie Besucher:innen beitragen können",
+      "intro": "Nord-Korfu empfängt rund vier Millionen Besucher:innen pro Jahr. Tourismus wird oft nur als Müllquelle gesehen – doch Besucher:innen können auch Teil der Lösung sein.",
+      "ways": {
+        "cleanups": {
+          "title": "An einer Strandsäuberung teilnehmen",
+          "desc": "Verbringen Sie eine Stunde bei einer monatlichen Säuberung in Kassiopi, Sidari oder Palaiokastritsa."
+        },
+        "report": {
+          "title": "Müll oder Verschmutzung melden",
+          "desc": "Melden Sie einen Müll-Hotspot oder einen Verschmutzungsvorfall, damit die Gemeinde handeln kann."
+        },
+        "choose": {
+          "title": "Zertifizierte Anbieter wählen",
+          "desc": "Bevorzugen Sie Unterkünfte und Touren, die sich den ZOE-Standards für nachhaltigen Tourismus verpflichten."
+        },
+        "respect": {
+          "title": "Natur & Tierwelt respektieren",
+          "desc": "Halten Sie Abstand zu Schildkröten-Nistplätzen und geschützten Feuchtgebieten."
+        }
+      },
+      "evidenceNote": "Belege aus vergleichbaren Mittelmeer-Destinationen zeigen, dass die Einbindung von Besucher:innen und Gemeinschaften über digitale Werkzeuge die Nachhaltigkeit einer Destination messbar verbessert (Vegas Macias et al., 2023; Laksmi et al., 2026).",
+      "cta": "Alle Beteiligungsmöglichkeiten ansehen"
+    },
+    "newsletter": {
+      "heading": "Bleiben Sie informiert",
+      "intro": "Erhalten Sie gelegentlich Updates zu neuen Aktionen, Veranstaltungen und Ergebnissen in Nord-Korfu.",
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "sie@beispiel.de",
+      "subscribe": "Abonnieren",
+      "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "success": "Danke! In der Vollversion würden Sie nun eine Bestätigungs-E-Mail erhalten.",
+      "prototypeNotice": "Prototyp: Es wird keine E-Mail gespeichert oder versendet. Dies veranschaulicht das geplante Newsletter-Opt-in."
+    }
   }
 }
