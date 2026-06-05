@@ -32,3 +32,14 @@ backend/prisma/test.db-journal
 
 # Claude Code memory (local only)
 memory/
+
+# Claude Code worktrees (local only)
+.claude/worktrees/
+
+# Literature corpus — copyrighted publisher PDFs, kept local only (NOT pushed).
+# Cataloged in docs/literature-index.md; the renamed/ folder holds local symlinks.
+Projektseminar_Literatur/
+# Course material binaries at repo root (local only). Generated decks in
+# docs/slides/ are intentionally NOT ignored.
+/PP-Master-FAU_WiSo_16zu9_v2.pptx
+/Projektseminar Wi1 Gruppe 5 - NuernbergBarrierefrei.pdf
