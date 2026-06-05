@@ -1,0 +1,152 @@
+\documentclass[11pt,a4paper]{article}
+
+% ---------------------------------------------------------------------------
+% ZOE Platform North Corfu — Individual Report (Marieclaire)
+% DSR Phase 3: Design & Development. English, APA7. Compiles with pdflatex.
+% Image placeholders: % TODO: Bild einfügen — <description>
+% Citations drawn EXCLUSIVELY from docs/literature-index.md.
+% ---------------------------------------------------------------------------
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.9em}{0.3em}
+
+\newcommand{\refitem}[1]{\noindent\hangindent=2em\hangafter=1 #1\par\smallskip}
+\newcommand{\figplaceholder}[1]{%
+  \begin{center}
+  \fbox{\parbox[c][2.6cm][c]{0.82\textwidth}{\centering\itshape [Placeholder --- #1]}}
+  \end{center}}
+
+\title{\textbf{Designing a Civic Sustainability Platform for the\\ Municipality of North Corfu}\\[0.3em]
+\large A Design Science Research Account of Phase~3 (Design and Development)}
+\author{Marieclaire\\ \small Project Seminar Information Systems, FAU Erlangen--N\"urnberg, Group~1 (SoSe~2026)}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent This report documents Phase~3 (\emph{Design and Development}) of a Design Science Research (DSR) project that develops ZOE, a digital sustainability and civic-participation platform for the Greek municipality of North Corfu. Its core contribution is the derivation of a set of \emph{design principles} that translate the team's problem identification and solution objectives (Phases~1--2) into prescriptive design knowledge, expressed in the form of Gregor and Jones (2007). Each principle is traced from a sub-problem through a solution objective to a concrete design decision, and is grounded in the literature and classified as either evidence of a measured effect (Type~A) or a framework recommendation (Type~B). The report presents the problem-to-solution matrix as the project's central design instrument, justifies the architecture and technology decisions (including the deliberate decision not to operate a production backend in the beta), and reconstructs the design cycle through the project's documented iterations. The demonstration of the artefact (Phase~4) is the focus of my project partner's report and is only briefly referenced here.
+\end{abstract}
+
+\section{Introduction}
+
+North Corfu, a municipality at the northern tip of the Ionian island of Corfu, faces a tension common to Mediterranean destinations: an environment of exceptional value --- Natura~2000 wetlands, the forested Erimitis peninsula, a 22~km coastline --- under the pressure of roughly four million annual visitors whose seasonal waste once overwhelmed the island's landfill. The municipal \emph{ZOE} programme bundles environmental actions (sea-turtle protection, school beach cleanups, the protection of natural monuments) and relates them to the seventeen UN Sustainable Development Goals (SDGs). Yet these actions are communicated mainly through the vice-mayor's personal Facebook profile, with no central, multilingual, accessible place that makes them findable, shows their SDG contribution and impact, and lets citizens contribute.
+
+The problem space was elaborated collectively by the team in Phases~1 and~2 and is summarised here; its full derivation is found in the team's contributions. In condensed form, the sub-problems are a visibility deficit (TP1), a participation barrier (TP2), a lack of SDG transparency (TP3), the heterogeneity of target groups (TP4), and tourists as an un-tapped resource (TP6). The supervising guidance was explicit and methodological: ``Start with what you want to do, before asking how. Look into literature first, define goals, then features.''
+
+This report concentrates on \textbf{Phase~3, Design and Development}. Its research questions are: \emph{(RQ1)} How can the identified sub-problems and solution objectives be translated into well-grounded, prescriptive design principles? and \emph{(RQ2)} How do these principles, together with the architecture decisions, constitute the design knowledge of the project? The objective is to make the design rationale explicit and traceable, so that every feature can be related back to a problem, a principle, and a piece of evidence.
+
+\section{Research Method: Design Science Research}
+
+\subsection{DSR in general}
+
+Design Science Research creates knowledge through the construction and evaluation of artefacts. Peffers et al. (2007) structure the process into six iterative activities: problem identification, objectives of a solution, design and development, demonstration, evaluation, and communication. Hevner (2007) describes the structure as three interlocking cycles --- relevance (application context), rigor (knowledge base), and the central design cycle of construction and evaluation. Gregor and Hevner (2013) characterise the resulting knowledge contribution, distinguishing improvement and exaptation, among others.
+
+For the specification of design knowledge itself, this report relies on Gregor and Jones (2007), who identify eight components of a design theory. Two are central here: the \emph{principles of form and function} (what the artefact is and does, abstractly) and the \emph{principles of implementation} (how it is realised). A design principle, in this report, is therefore a prescriptive statement of the form: \emph{to achieve a goal for given users in a given context, provide a particular feature or mechanism, because of a justification grounded in evidence or theory.}
+
+\subsection{Positioning of Phase~3}
+
+This report addresses Phase~3, which produces the design principles and the running artefact. It follows the definition of solution objectives (Phase~2) and provides the input to demonstration (Phase~4, the focus of my partner's report). In Hevner's terms, Phase~3 \emph{is} the design cycle: it iterates between constructing the artefact and assessing it against the requirements drawn from North Corfu (relevance) and the literature (rigor). In line with the project's reporting convention, this methodological chapter is kept deliberately short relative to the main chapter (Section~4), which carries the contribution.
+
+\section{Theoretical Background and Related Work}
+
+The design draws on three bodies of related work. \textbf{Comparable municipal e-participation} provides reusable designs: Decide Madrid (built on the Consul software, adopted in more than one hundred institutions across thirty-three countries) is analysed critically by Royo et al. (2020), who show that transparency and well-functioning participatory features are decisive for sustained performance; Arana-Catania et al. (2021) identify information overload as a barrier; Royo et al. (2024) and Pina et al. (2024) add the comparative and best-practice perspective, including the importance of closing the feedback loop. \textbf{Engagement and gamification} research informs the participation principles: Krath et al. (2021) synthesise, from a review of 118 theories, the mechanisms by which gamification works (illustrating goals and their relevance, guided paths, immediate feedback, reinforcement, simplification), while Thiel et al. (2016) caution that purely reward-based gamification may be short-lived; Yang and Wu (2025) provide experimental evidence that design features such as feedback, disclosure, social comparison, and accessibility significantly raise engagement. \textbf{Transparency and SDG localisation} ground the impact principles: Grimmelikhuijsen and Welch (2012) distinguish decision-making, policy-information, and policy-outcome transparency; Simonofski et al. (2022) show that lay citizens expect simplified, visualised data; Clement et al. (2023) analyse how strategies localise specific SDGs. The reader is referred to my partner's report for the related work most relevant to demonstration and evaluation.
+
+It should be noted that the project brief named Cronholm and G\"obel (2018) alongside Gregor and Jones (2007) as a form for design principles; that source is, however, not part of the project's literature corpus, and --- in keeping with the project's strict no-hallucination rule --- only Gregor and Jones (2007) is used here. Adopting the Cronholm and G\"obel formulation is noted as an open item for verification.
+
+\section{Design Principles, Architecture, and the Design Cycle}
+
+This is the central chapter. It presents the design principles in detail, then the matrix that organises them, then the architecture and technology decisions, and finally the iterations of the design cycle.
+
+\subsection{From problem to design principle}
+
+The derivation follows a consistent chain --- sub-problem $\rightarrow$ solution objective $\rightarrow$ design principle $\rightarrow$ evidence --- recorded in full in the project's matrix. One worked example illustrates the logic for the participation barrier (TP2). The \emph{problem} is that there is no low-threshold, central place for citizens' own initiatives, so participation depends on personal networks. The \emph{objective} is to enable submissions without a mandatory account and to build community. This yields two principles.
+
+\textbf{DP2a (form and function).} \emph{To lower participation barriers, allow contributions without a mandatory account and curate content against information overload.} The justification is Type~A: account and registration friction is a measurable barrier whose removal, via integration into already-used spaces, reduces the barriers of participation (Saldivar et al.); and information overload is a documented barrier on comparable platforms (Arana-Catania et al., 2021).
+
+\textbf{DP2b (form and function, with a caution).} \emph{Use engagement mechanics --- immediate feedback, progress, illustrating relevance --- but not purely reward-based ones.} The positive part is justified by experimental evidence that such design features significantly raise willingness to engage (Yang \& Wu, 2025, Type~A) and by the mechanisms synthesised in a review (Krath et al., 2021, Type~B); the caution is justified by a review finding that reward-only gamification may evoke only short-term effects and may reduce participation quality (Thiel et al., 2016, Type~B). DP2b is therefore implemented as a \emph{deliberate, evaluable} design decision rather than as an unconditional feature.
+
+The other principles follow the same structure. \textbf{DP1} (a central, structured, groupable, searchable place for all actions) is justified by Simelio-Sol\`a et al. (2021), who show across 605 municipalities that unstructured information prevents informed decisions (Type~A), and by Tsatsani et al. (2024) on Greek municipal sites (Type~A). \textbf{DP3a} (make SDG contribution and impact visible as a comprehensible dashboard with meaningful metrics) is justified by Chokki et al.\ (dashboards raise engagement; Type~A, preprint, used with caution) and Simonofski et al. (2022, Type~A), with the distinct status of outcome transparency from Grimmelikhuijsen and Welch (2012, Type~A); \textbf{DP3b} (report impact in a SMART, comparable way and return the decision/outcome path to citizens) draws on Shin et al. (2024) on the accountability-information deficit (Type~A) and Leite et al. (2026) on SMART indicators (Type~B). \textbf{DP4} (reach diverse groups through full multilingualism \emph{and} WCAG~2.1 AA accessibility in every language version, plus easy language and target-group formats) is justified by Csontos and Heckl (2021, 2025, Type~A), Pontus and Rodr\'iguez V\'azquez (2021, Type~A), Asghari et al. (2023, Type~A), and, for school formats, Peacock et al. (2018) and Vare (2025) (Type~A). \textbf{DP6} (turn visitors into a resource through low-threshold visitor-oriented contribution and storytelling) is justified by Laksmi et al. (2026, Type~A) and Vegas Macias et al. (2023, Type~A).
+
+% TODO: Bild einfügen — Diagramm: Ableitungskette Problem -> Ziel -> Designprinzip -> Beleg (Beispiel TP2)
+\figplaceholder{Diagram: derivation chain problem $\rightarrow$ objective $\rightarrow$ design principle $\rightarrow$ evidence (example TP2)}
+
+\subsection{The matrix as the central design instrument}
+
+The design principles are organised in a problem-to-solution matrix whose columns are: sub-problem, solution objective (Phase~2), design principle (in the Gregor \& Jones form), source with A/B classification, design realisation, implementation status, evaluability (for Phase~5), and author. The matrix is the project's central instrument because it makes the design rationale \emph{traceable} in both directions: every feature can be justified by a principle and a source, and every principle can be checked for whether and how it was realised. It also enforces honesty, since the implementation column distinguishes built, partially built, and conceived elements, and the source column forbids presenting a framework recommendation (Type~B) as a measured effect (Type~A).
+
+% TODO: Bild einfügen — Screenshot/Auszug der Problem-zu-Lösung-Matrix (docs/MATRIX.md)
+\figplaceholder{Screenshot: excerpt of the problem-to-solution matrix (docs/MATRIX.md)}
+
+\subsection{Architecture and technology decisions}
+
+The artefact is a full-stack web application: a React~19 / TypeScript / Vite / Tailwind frontend with \texttt{react-i18next} (English, Greek, German) and Zustand state, and a Node.js / Express / Prisma / SQLite backend with JWT authentication for the municipal administration. These choices are \emph{deliberate design decisions}: they are pragmatic and carry no effect claim, and are therefore not backed by literature, in keeping with the project's rule that only effect claims require evidence.
+
+Two architectural decisions are design-relevant. First, the strict separation of the user interface from data access (components never call the network directly; all access goes through a service layer) realises the \emph{principle of implementation} that the prototype's static fallback data can be replaced by an API without rewriting the interface --- which is exactly what enabled the move from a static frontend to a full-stack artefact across iterations. Second, the decision \emph{not} to operate a production backend for the free submission of citizen initiatives in the beta is an explicit, conscious design decision, not an omission: processing citizens' personal data at scale would require privacy-by-design (Diamantopoulou et al., 2019) and raises the transparency--privacy tension documented by Paguay-Chimarro et al. (2025); it is therefore deferred to Future Work.
+
+\subsection{The design cycle: iterations}
+
+The design cycle is reconstructed from the project's development log. The artefact grew over seven iterations: an initial frontend MVP (catalogue, SDG dashboard, transparency, participation); the grounding of the content in the real North Corfu context and a target-audience page; a full-stack step adding the backend, authentication, and the administrative area; the internationalisation, dark-mode, and state-management step; the WCAG~2.1 AA accessibility step with automated axe-core tests; an end-to-end testing step; and, most recently, an additive ``Get Involved'' iteration that introduced initiative tabs, a visitor-contribution section (the first realisation of DP6), and a newsletter opt-in concept. Each iteration is logged with the sub-problem addressed, the decision taken, its justification, and its status --- documenting, in Hevner's sense, the tight loop of construction and assessment. Importantly, the iterations also record honest limitations (for example, that several legacy pages still contain hard-coded text and are therefore not yet fully multilingual), which are themselves design knowledge for the next cycle.
+
+% TODO: Bild einfügen — Zeitstrahl der 7 Iterationen (aus DEVLOG.md)
+\figplaceholder{Timeline of the seven iterations (from docs/DEVLOG.md)}
+
+\section{Evaluation and Evaluability}
+
+Although evaluation (Phase~5) is the focus of a later phase and is treated in more depth in my partner's report, the design principles must be \emph{evaluable}. Following the FEDS framework (Venable et al., 2016), each principle is associated with an evaluation approach in the matrix: DP1 with task-completion and findability tests; DP2 with completion rates and perceived-barrier measures, and specifically an A/B comparison of the point mechanic to test the Thiel et al. (2016) caution; DP3 with comprehension and perceived-transparency measures; DP4 with a WCAG~2.1 AA audit (following Csontos \& Heckl, 2021, 2025) and a multilingual completeness check (following Pontus \& Rodr\'iguez V\'azquez, 2021); and DP6 with task tests using a visitor persona. Artificial, ex-ante evaluation (accessibility, performance) is already feasible; naturalistic, ex-post evaluation is designed and handed to Phase~5.
+
+\section{Discussion, Limitations, and Future Work}
+
+The chapter has shown how the sub-problems were translated into grounded, prescriptive design principles and how the matrix and architecture constitute the project's design knowledge, supporting affirmative answers to RQ1 and RQ2. The principal limitation is that the principles are, so far, justified and demonstrated but not yet \emph{evaluated} with users; their utility is therefore argued, not measured. A further limitation is internal to the artefact: the realisation of some principles is partial (for example, DP4 is not yet honoured on all legacy pages, and DP3 uses coloured text badges rather than official SDG iconography). These gaps, and the deliberate decision to defer a production backend, define the Future Work, alongside the sub-problems held back as TP5/TP7/TP8 and persistent gamification. The project then proceeds to Phase~6 (Communication).
+
+\section{Conclusion}
+
+This report has presented the design of a civic sustainability platform for North Corfu as the Phase~3 contribution of a DSR project. By deriving design principles in the form of Gregor and Jones (2007), grounding each in evidence classified as a measured effect or a framework recommendation, organising them in a traceable matrix, and reconstructing the design cycle, it has made the project's design rationale explicit and checkable. The demonstration of these principles in practice is the subject of my partner's report.
+
+\vspace{0.5em}
+\small\emph{AI-use reflection.} Generative AI tools supported literature triage, drafting, and the structuring of the matrix. All cited sources were verified against the original PDFs; uncertain bibliographic details are flagged in \texttt{docs/literature-index.md}, and the brief's suggested Cronholm and G\"obel (2018) form is noted as absent from the corpus. The author takes responsibility for the content.
+
+\newpage
+\section*{References}
+\refitem{Arana-Catania, M., van Lier, F.-A., Procter, R., Tkachenko, N., He, Y., Zubiaga, A., \& Liakata, M. (2021). Citizen participation and machine learning for a better democracy. \emph{Digital Government: Research and Practice, 2}(3), Article~27. https://doi.org/10.1145/3452118}
+\refitem{Asghari, H., Hewett, F., \& Z\"uger, T. (2023). On the prevalence of Leichte Sprache on the German web. In \emph{15th ACM Web Science Conference 2023 (WebSci~'23)}. ACM. https://doi.org/10.1145/3578503.3583599}
+\refitem{Chokki, A. P., Simonofski, A., Fr\'enay, B., \& Vanderose, B. (n.d.). Engaging citizens with open government data: The value of dashboards compared to individual visualizations. \emph{Digital Government: Research and Practice} (preprint).}
+\refitem{Clement, J., Ruysschaert, B., \& Crutzen, N. (2023). Smart city strategies --- A driver for the localization of the sustainable development goals? \emph{Ecological Economics, 213}, 107941. https://doi.org/10.1016/j.ecolecon.2023.107941}
+\refitem{Csontos, B., \& Heckl, I. (2021). Accessibility, usability, and security evaluation of Hungarian government websites. \emph{Universal Access in the Information Society, 20}, 139--156. https://doi.org/10.1007/s10209-020-00716-9}
+\refitem{Csontos, B., \& Heckl, I. (2025). Five years of changes in the accessibility, usability, and security of Hungarian government websites. \emph{Universal Access in the Information Society, 24}, 2757--2781. https://doi.org/10.1007/s10209-025-01223-5}
+\refitem{Diamantopoulou, V., Androutsopoulou, A., Gritzalis, S., \& Charalabidis, Y. (2019). Preserving digital privacy in e-participation environments: Towards GDPR compliance.}
+\refitem{Gregor, S., \& Hevner, A. R. (2013). Positioning and presenting design science research for maximum impact. \emph{MIS Quarterly, 37}(2), 337--355. https://doi.org/10.25300/MISQ/2013/37.2.01}
+\refitem{Gregor, S., \& Jones, D. (2007). The anatomy of a design theory. \emph{Journal of the Association for Information Systems, 8}(5), 312--335. https://doi.org/10.17705/1jais.00129}
+\refitem{Grimmelikhuijsen, S. G., \& Welch, E. W. (2012). Developing and testing a theoretical framework for computer-mediated transparency of local governments. \emph{Public Administration Review.}}
+\refitem{Hevner, A. R. (2007). A three cycle view of design science research. \emph{Scandinavian Journal of Information Systems, 19}(2), 87--92.}
+\refitem{Krath, J., Sch\"urmann, L., \& von Korflesch, H. F. O. (2021). Revealing the theoretical basis of gamification: A systematic review and analysis of theory in research on gamification, serious games and game-based learning. \emph{Computers in Human Behavior, 125}, 106963. https://doi.org/10.1016/j.chb.2021.106963}
+\refitem{Leite, G., Carneiro, F., Santos, J., Concei\c{c}\~ao, L., \& Carvalho, A. M. (2026). Designing an integrated SMART indicator framework for urban green transitions: Aligning SDGs and ISO~37120 at city level. \emph{Sustainability.}}
+\refitem{Peacock, S., Anderson, R., \& Crivellaro, C. (2018). Streets for people: Engaging children in placemaking through a socio-technical process. In \emph{Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems}. ACM.}
+\refitem{Peffers, K., Tuunanen, T., Rothenberger, M. A., \& Chatterjee, S. (2007). A design science research methodology for information systems research. \emph{Journal of Management Information Systems, 24}(3), 45--77. https://doi.org/10.2753/MIS0742-1222240302}
+\refitem{Pina, V., Torres, L., Royo, S., \& Garcia-Rayado, J. (2024). Decide Madrid: A Spanish best practice on e-participation. In \emph{[edited volume, Ch.~11]}. Edward Elgar.}
+\refitem{Pontus, V., \& Rodr\'iguez V\'azquez, S. (2021). Language-related criteria for evaluating the accessibility of localised multilingual websites. In \emph{Proceedings of the 3rd Swiss Conference on Barrier-free Communication (BfC~2020)} (pp.~162--169). ZHAW.}
+\refitem{Royo, S., Pina, V., \& Garcia-Rayado, J. (2020). Decide Madrid: A critical analysis of an award-winning e-participation initiative. \emph{Sustainability, 12}(4), 1674. https://doi.org/10.3390/su12041674}
+\refitem{Royo, S., Bell\`o, B., Torres, L., \& Downe, J. (2024). The success of e-participation: Learning lessons from Decide Madrid and We Asked, You Said, We Did in Scotland. \emph{Policy \& Internet, 16}(1), 65--82. https://doi.org/10.1002/poi3.363}
+\refitem{Saldivar, J., Daniel, F., Cernuzzi, L., \& Casati, F. (n.d.). Online idea management for civic engagement: A study on the benefits of integration with social networking. \emph{Computer Supported Cooperative Work (CSCW).}}
+\refitem{Shin, B., Floch, J., Rask, M., B\ae ck, P., Edgar, C., Berditchevskaia, A., Mesure, P., \& Branlat, M. (2024). A systematic analysis of digital tools for citizen participation. \emph{Government Information Quarterly, 41}(2), 101954. https://doi.org/10.1016/j.giq.2024.101954}
+\refitem{Simelio-Sol\`a, N., Ferr\'e-Pavia, C., \& Herrero-Guti\'errez, F.-J. (2021). Transparent information and access to citizen participation on municipal websites. \emph{Profesional de la Informaci\'on, 30}(2), e300211. https://doi.org/10.3145/epi.2021.mar.11}
+\refitem{Simonofski, A., Zuiderwijk, A., Clarinval, A., \& Hammedi, W. (2022). Tailoring open government data portals for lay citizens: A gamification theory approach. \emph{International Journal of Information Management, 65}, 102511. https://doi.org/10.1016/j.ijinfomgt.2022.102511}
+\refitem{Thiel, S.-K., Reisinger, M., R\"oderer, K., \& Fr\"ohlich, P. (2016). Playing (with) democracy: A review of gamified participation approaches. \emph{JeDEM, 8}(3), 32--60.}
+\refitem{Tsatsani, O., Patergiannaki, Z., \& Pollalis, Y. (2024). Unraveling the dynamics of e-government digitization, penetration and user experience: A case study of Greek municipalities. \emph{Journal of Strategic Innovation and Sustainability, 19}(3).}
+\refitem{Vare, P. (2025). Exploring the impacts of student-led sustainability projects with secondary school students and teachers. \emph{Proceedings Series on Social Sciences \& Humanities, 21}.}
+\refitem{Vegas Macias, J., Lamers, M., \& Toonen, H. (2023). Connecting fishing and tourism practices using digital tools: A case study of Marsaxlokk, Malta. \emph{Maritime Studies, 22}, 24. https://doi.org/10.1007/s40152-023-00305-5}
+\refitem{Venable, J., Pries-Heje, J., \& Baskerville, R. (2016). FEDS: A framework for evaluation in design science research. \emph{European Journal of Information Systems, 25}(1), 77--89. https://doi.org/10.1057/ejis.2014.36}
+\refitem{Yang, W., \& Wu, J. (2025). Engaging the public through design: How digital platforms nudge public engagement. \emph{Governance.}}
+
+\end{document}

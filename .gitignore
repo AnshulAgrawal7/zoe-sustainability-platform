@@ -43,3 +43,9 @@ Projektseminar_Literatur/
 # docs/slides/ are intentionally NOT ignored.
 /PP-Master-FAU_WiSo_16zu9_v2.pptx
 /Projektseminar Wi1 Gruppe 5 - NuernbergBarrierefrei.pdf
+
+# LaTeX build artifacts
+docs/reports/*.aux
+docs/reports/*.log
+docs/reports/*.out
+docs/reports/*.toc
