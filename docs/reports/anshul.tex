@@ -80,6 +80,8 @@ The knowledge base for the ZOE artefact spans three fields, each of which suppli
 
 Methodologically, the demonstration is an expository instantiation (Gregor \& Jones, 2007), and the contribution is best read as improvement / exaptation (Gregor \& Hevner, 2013): designs proven elsewhere are adapted to an under-served small-municipality context.
 
+Two further observations sharpen the relevance of this knowledge base for North Corfu. First, the Greek evidence is not merely background but a close analogue. Tsatsani et al. (2024) audited Greek municipal websites with Lighthouse and an adapted user-experience audit and found systemic weakness --- no municipality scored above 55\%, with technical performance and missing features below 50\% --- and they single out feedback mechanisms, multilingual support, and accessible help sections as the very capabilities a platform like ZOE must provide. Carayannis et al. (2026) add the attitudinal layer: Greek citizens are aware of and want sustainable, smart-city solutions (82.8\% awareness) but are financially cautious (52.1\% unwilling to pay higher taxes) and dissatisfied with current infrastructure (64.8\%); they conclude that participatory, transparent governance and effective communication of benefits are decisive. ZOE is a concrete, low-cost response to exactly this configuration of needs. Second, the tourism analogues are unusually tight: Marsaxlokk (Vegas Macias et al., 2023) is, like North Corfu, a Mediterranean coastal community whose fishing heritage and tourism pressure coexist, and the Bali quasi-experiment (Laksmi et al., 2026) provides the rare measured effect that community participation and digital strategy jointly raise a destination's sustainability performance. Demonstrating TP6 in North Corfu is therefore an exaptation with directly comparable precedent rather than a speculative leap.
+
 \section{Implementation and Demonstration of the Artefact}
 
 This is the central chapter. It first summarises what was implemented, separating built from conceived features, and then demonstrates the artefact through four scenario walkthroughs. Each scenario is described in text with a placeholder for the corresponding screenshot or live-demo step, and each is tied to a design principle (DP, defined in the project matrix) and to its justifying source.
@@ -123,6 +125,12 @@ ZOE is a full-stack web application. The frontend is built with React~19, TypeSc
 % TODO: Bild einfügen — Sprachumschaltung (EN/EL/DE) + Tastatur-Fokus-Indikator
 \figplaceholder{Screenshot: language switch (EN/EL/DE) and keyboard focus indicator}
 
+\subsection{Demonstration protocol and cross-cutting observations}
+
+The four scenarios share a common protocol that makes the demonstration reproducible and prepares the transition to evaluation. Each scenario fixes a \emph{persona} (a representative member of one target group), a \emph{precondition} (the state of the artefact and the entry point), a sequence of \emph{steps} (the concrete interaction path), and an \emph{expected observation} (what a viewer should see that evidences the design principle). For Scenario~A, the expected observation is that the visitor reaches a concrete, actionable contribution within a few clicks and across language versions; for Scenario~B, that an idea is submitted and acknowledged \emph{without} any registration step; for Scenario~C, that a non-expert can name the SDGs an action serves and read its impact while remaining aware that the figures are illustrative; and for Scenario~D, that the same task can be completed by keyboard alone and in any of the three languages with a visible focus indicator at every step.
+
+Three cross-cutting observations emerge. First, honesty is built into the demonstration: each scenario names at least one limitation (non-persisted submissions, prototype impact data, partially internationalised legacy pages), which both respects the ``built versus conceived'' rule and pre-registers the risks that Phase~5 must probe. Second, the design principles interact: the visitor scenario (DP6) only works because the catalogue is central and grouped (DP1) and because the interface is multilingual (DP4), so the demonstration also shows the \emph{coherence} of the principle set rather than four isolated features. Third, the demonstration already surfaces measurable quantities --- click depth, number of steps, presence of focus indicators, completeness of translations --- that become the dependent variables of the evaluation, which is the subject of the next section.
+
 \section{Evaluation and Evaluability}
 
 Demonstration is not evaluation; however, a central purpose of Phase~4 is to show that the artefact is \emph{evaluable} and to hand a concrete evaluation design to Phase~5. The Framework for Evaluation in Design Science (FEDS; Venable et al., 2016) structures this along two dimensions --- functional purpose (formative/summative) and paradigm (artificial/naturalistic) --- and recommends choosing an evaluation strategy explicitly. For ZOE, a \emph{Human Risk and Effectiveness} strategy is appropriate, because the principal uncertainty is whether real, heterogeneous citizens benefit.
@@ -130,6 +138,25 @@ Demonstration is not evaluation; however, a central purpose of Phase~4 is to sho
 \textbf{Artificial, ex-ante evaluation is already feasible.} Accessibility can be assessed both automatically (axe-core, already integrated into the test suite) and manually, following the method of Csontos and Heckl (2021, 2025); the criterion is WCAG~2.1 AA, the legal baseline being the EU Web Accessibility Directive 2016/2102 and EN~301~549. Front-end performance and quality can be audited with Lighthouse, exactly as Tsatsani et al. (2024) did for Greek municipal sites, yielding a comparable score. A multilingual completeness check (detecting missing translation keys across all three languages) operationalises the accessibility-across-languages concern of Pontus and Rodr\'iguez V\'azquez (2021). A structured heuristic walkthrough can additionally surface usability issues before any user is involved.
 
 \textbf{Naturalistic, ex-post evaluation is planned.} Following FEDS, summative naturalistic episodes are designed but not yet executed: task-completion tests with representatives of each target group (``find action~X and its progress''; ``submit an idea without an account''; ``which SDGs does action~X address?''), the System Usability Scale, and comprehension and perceived-transparency measures. These are described per feature in the project's evaluation plan and handed over to Phase~5. The demonstration thus establishes the \emph{evaluability} that the next phase requires.
+
+Table~\ref{tab:eval} consolidates the evaluability per design principle, distinguishing what can be assessed now (artificial) from what is designed for later (naturalistic), and naming the FEDS strategy. It is the concrete artefact handed to Phase~5.
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{p{2.3cm}p{4.3cm}p{4.3cm}p{2.4cm}}
+\hline
+\textbf{Principle} & \textbf{Artificial / ex-ante (now)} & \textbf{Naturalistic / ex-post (planned)} & \textbf{FEDS strategy}\\
+\hline
+DP1 (visibility) & Lighthouse; heuristic walkthrough & Task completion ``find action X''; SUS; vs.\ Facebook baseline & Human Risk \& Eff.\\
+DP2 (participation) & Heuristic review of the form flow & Completion rate without account; perceived barrier; A/B of the point mechanic (tests Thiel et al., 2016) & Human Risk \& Eff.\\
+DP3 (transparency) & Readability and contrast checks & Comprehension ``which SDGs?''; perceived transparency & Human Risk \& Eff.\\
+DP4 (audiences) & axe-core (present); manual WCAG~2.1 AA (Csontos \& Heckl); translation-completeness check (Pontus \& Rodr\'iguez V\'azquez) & Comprehensibility tests per group; screen-reader walkthrough & Technical Risk \& Eff.\ + Human Risk\\
+DP6 (tourists) & Heuristic review & Task test with a visitor persona; perceived relevance & Human Risk \& Eff.\\
+\hline
+\end{tabular}
+\caption{Evaluability per design principle (handover to Phase~5).}
+\label{tab:eval}
+\end{table}
 
 \section{Discussion, Limitations, and Future Work}
 
