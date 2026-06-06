@@ -359,5 +359,55 @@
     "contributingProjects": "Beitragende Projekte:",
     "aboutTitle": "Über dieses Dashboard",
     "aboutText": "Die SDG-Zuordnung wird von den Projektkoordinator:innen selbst angegeben und vom ZOE-Team geprüft. Die Fortschritts-Prozentsätze sind die Einschätzung der Gemeinde gegenüber lokal definierten Zielen. Dieses Dashboard ist ein Prototyp — ein echtes System würde Live-Daten aus verifizierten Projektberichten beziehen."
+  },
+  "transparency": {
+    "title": "Wirkungs- & Transparenzdaten",
+    "intro": "Das ZOE-Programm veröffentlicht transparente Daten zu allen Projektaktivitäten und -ergebnissen. Diese Seite bietet einen programmweiten Überblick über zentrale Leistungskennzahlen.",
+    "prototypeNoticeLabel": "Prototyp-Hinweis:",
+    "prototypeNotice": "Alle Zahlen unten sind fiktive Beispieldaten zu Demonstrationszwecken. Ein echter Einsatz würde verifizierte Live-Daten aus Projektberichten zeigen.",
+    "kpiSectionLabel": "Zentrale Leistungskennzahlen",
+    "kpiHeading": "Programm-KPIs",
+    "trend": {
+      "up": "Trend: steigend",
+      "down": "Trend: fallend",
+      "stable": "Trend: stabil"
+    },
+    "progressSectionLabel": "Projektfortschritt",
+    "progressHeading": "Übersicht Projektfortschritt",
+    "thProject": "Projekt",
+    "thCategory": "Kategorie",
+    "thStatus": "Status",
+    "thProgress": "Fortschritt",
+    "thParticipants": "Teilnehmende",
+    "principlesSectionLabel": "Transparenzprinzipien",
+    "principlesHeading": "Unser Transparenz-Versprechen",
+    "principles": [
+      {
+        "title": "Offene Fortschrittsdaten",
+        "desc": "Jedes Projekt veröffentlicht regelmäßige Updates zu Fortschritt, Ausgaben und Ergebnissen. Keine Daten werden vor den Bürger:innen verborgen."
+      },
+      {
+        "title": "Unabhängige Kennzahlen",
+        "desc": "Wo möglich, wird der Fortschritt von Drittorganisationen oder Citizen Scientists gemessen, nicht allein von den Projektteams."
+      },
+      {
+        "title": "Öffentliche Beteiligungsnachweise",
+        "desc": "Teilnahmezahlen und Veranstaltungsnachweise werden offen veröffentlicht und zeigen, wer wie beteiligt ist."
+      },
+      {
+        "title": "SDG-Rechenschaft",
+        "desc": "Alle SDG-Zuordnungen werden mit spezifischen, messbaren Zielen begründet und jährlich überprüft."
+      },
+      {
+        "title": "Feedback-Integration",
+        "desc": "Bürger-Feedback wird nachverfolgt und sichtbar in Projekt-Iterationsentscheidungen einbezogen."
+      },
+      {
+        "title": "Jährliche Berichterstattung",
+        "desc": "Das ZOE-Programm veröffentlicht einen Jahresbericht mit allen Projektdaten, Beteiligungsstatistiken und Umweltergebnissen."
+      }
+    ],
+    "footerLabel": "Forschungstransparenz:",
+    "footerText": "Dies ist eine Prototyp-Plattform für ein Design-Science-Research-Projekt. Alle gezeigten Daten sind fiktiv und dienen nur der Demonstration der Informationsarchitektur und UX-Konzepte. Ein produktiver Einsatz würde eine verifizierte Datenpipeline aus echten Projektmanagementsystemen erfordern."
   }
 }
