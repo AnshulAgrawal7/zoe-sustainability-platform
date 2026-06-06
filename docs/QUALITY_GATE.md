@@ -31,7 +31,7 @@ Diese Abnahme kombiniert die **Praxis-Anforderungen** der Vize-Bürgermeisterin 
 | B2 | Jede Wirkungsaussage durch Typ-A-Quelle belegt; Typ-B korrekt formuliert | ✅ | `literature-review.md` (A/B je Quelle); Reports nutzen „Studie zeigt …" (A) vs. „Rahmenwerk empfiehlt …" (B); Thiel 2016 [B] als Warnung formuliert |
 | B3 | Vergleich mit anderen Kommunen/EU vorhanden | ✅ | `MATRIX.md` §„Vergleichbare kommunale Lösungen" (Decide Madrid/Consul, Schottland, Malta, ES/HU/GR); Reports §3 |
 | B4 | DSR-Methodik korrekt referenziert (Peffers, Hevner, Gregor & Jones, Gregor & Hevner; Venable) | ✅ | beide `*.tex` §2; `literature-review.md` §A |
-| B5 | KEINE halluzinierten Quellen; alle Zitate aus den PDFs nachvollziehbar | ✅ | Alle 42 Quellen aus `Projektseminar_Literatur/`; unsichere Angaben mit ⚠️ markiert (`literature-index.md`); Cronholm & Göbel 2018 als **nicht im Korpus** offengelegt |
+| B5 | KEINE halluzinierten Quellen; alle Zitate aus den PDFs nachvollziehbar | ✅ | Alle **43** Quellen aus `Projektseminar_Literatur/`; unsichere Angaben mit ⚠️ markiert (`literature-index.md`); Cronholm & Göbel 2018 nachträglich ergänzt (#4b) und als DP-Form-Quelle eingebaut |
 | B6 | APA7 in beiden .tex korrekt; Referenzlisten vollständig | ✅ | beide kompilieren (pdflatex); Referenzliste mit hängendem Einzug, alle in-text-Zitate gelistet |
 | B7 | „gebaut" vs. „konzipiert" überall sauber getrennt | ✅ | `MATRIX.md`, `DEVLOG.md` Iteration 7, `handover` §1, beide Reports §4/§6 |
 | B8 | main unangetastet; additiv auf `claude/nightly-run`; Tests grün | ✅ | `git log main` = `fe9af07` (unverändert); 7 additive Commits; `vitest` 44/44, `tsc --noEmit` ok, `vite build` ok |
@@ -69,5 +69,5 @@ Diese Abnahme kombiniert die **Praxis-Anforderungen** der Vize-Bürgermeisterin 
 
 Alle Praxis- und Wissenschaftskriterien sind erfüllt; `main` ist unangetastet; alle Änderungen additiv und getestet; keine halluzinierten Quellen. Der einzige Hinweis betrifft die **Endlänge der Berichte** (10/9 S. reiner Text statt 15): Die Berichte sind strukturell, inhaltlich und zitatorisch vollständig; die verbleibende Länge entsteht durch das Einsetzen der vorgesehenen Screenshots und die fachliche Vertiefung durch die Autor:innen — bewusst **nicht** durch KI-Fülltext, da dies der Eigenleistungspflicht widerspräche. Konkrete Ausbau-Hooks stehen in `STATUS_anshul.md` und `STATUS_marieclaire.md`.
 
-Offene ⚠️-Punkte (bibliografische Details, Cronholm & Göbel 2018, Preprint-Vorsicht) sind in `literature-index.md` und `_SUMMARY.md` gesammelt.
+Offene ⚠️-Punkte (bibliografische Details, Preprint-Vorsicht) sind in `literature-index.md` und `_SUMMARY.md` gesammelt. *(Cronholm & Göbel 2018 nachträglich ergänzt — erledigt.)*
 </content>

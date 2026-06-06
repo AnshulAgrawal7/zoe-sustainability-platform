@@ -85,7 +85,7 @@ Für TP5/TP7/TP8 und persistente Funktionen ist ein produktives Backend nötig:
 ## 6. Offene ⚠️-Punkte (an das Team)
 
 - Bibliografische Details prüfen: Chokki (Jahr/Band), Saldivar (Jahr), Navarro Galera (Jahr/Heft), Grimmelikhuijsen & Welch (Band/Jahr), Pina, Leite, Tsatsani, Diamantopoulou — siehe [`literature-index.md`](../literature-index.md).
-- **Cronholm & Göbel (2018)** war im Briefing als DP-Form genannt, ist aber **nicht im Korpus** → bislang nur Gregor & Jones (2007) verwendet; ggf. Quelle beschaffen.
+- ✅ **Cronholm & Göbel (2018)** beschafft und als DP-Form-Quelle (Typ B) eingebaut (neben Gregor & Jones 2007) — *erledigt*.
 - Preprints (Chokki, Çetintürk) nur vorsichtig (Typ B) verwenden.
 - Reports auf ~15 Seiten ausbauen; Bildplatzhalter mit echten Screenshots ersetzen.
 </content>

@@ -31,7 +31,7 @@
 ## 2. Offene ⚠️-TODOs (zuerst verifizieren)
 
 1. **Bibliografische Details** prüfen: Chokki (Jahr/Band, bildbasiertes PDF), Saldivar (Jahr), Navarro Galera (Jahr/Heft), Grimmelikhuijsen & Welch (Band/Jahr 2012 vs. 78), Pina, Leite, Tsatsani, Diamantopoulou — siehe `literature-index.md`.
-2. **Cronholm & Göbel (2018)** im Briefing genannt, **nicht im Korpus** → bislang nur Gregor & Jones (2007); Quelle ggf. beschaffen.
+2. ✅ **Cronholm & Göbel (2018)** beschafft und als DP-Form-Quelle (Typ B) eingebaut (Index #4b) — *erledigt*.
 3. **Preprints** (Chokki, Çetintürk) nur vorsichtig (Typ B), keine harten Wirkungsaussagen.
 4. **Raliphaswa (2025)** thematisch ausgeschlossen (Workplace Deviance) — nicht verwenden.
 5. **Reports auf ~15 S.** ausbauen (Eigenleistung) + echte Screenshots an die Bildplatzhalter; **kein KI-Padding**.
@@ -46,7 +46,7 @@
 
 **Marieclaire (Phase 3 — Design):**
 1. Jede **Designprinzip** als eigener Unterabschnitt im Muster „To achieve X for U in C, provide M, because J" ausformulieren.
-2. **Cronholm & Göbel (2018)** klären (beschaffen oder DP-Form quellenneutral begründen).
+2. DP-Form ist jetzt durch Gregor & Jones (2007) + Cronholm & Göbel (2018) belegt — optional jede DP strikt im Muster „To achieve X for U in C, provide M, because J" ausformulieren.
 3. **Abbildungen** ergänzen (Matrix-Auszug, Ableitungs-Diagramm, Iterations-Zeitstrahl) + „Verworfene Entscheidungen" im DEVLOG füllen.
 
 **Gemeinsam:**

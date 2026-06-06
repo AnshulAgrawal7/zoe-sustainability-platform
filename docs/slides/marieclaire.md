@@ -46,7 +46,7 @@ Marieclaire · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ## Folie 4 — Von Problem zu Designprinzip — und in 4 Iterationen
 
-- Kette: **Problem → Ziel → Designprinzip → Beleg** (Form n. Gregor & Jones 2007)
+- Kette: **Problem → Ziel → Designprinzip → Beleg** (Form n. Gregor & Jones 2007 / Cronholm & Göbel 2018)
 - Beispiel **TP2:** keine Anlaufstelle → Einreichung ohne Account → **DP2a** → Saldivar **[A]**, Arana-Catania 2021 **[A]**
 - Das Design entstand in **4 problemgetriebenen Iterationen** (Hevner *Design Cycle*)
 - Iter 1 Sichtbarkeit · 2 SDG-Transparenz · 3 Beteiligung & Zielgruppen · 4 Tourist:innen & Community
@@ -110,9 +110,9 @@ Marieclaire · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ## Folie 10 — Quellen (Auswahl, APA7)
 
-- Gregor & Jones (2007); Gregor & Hevner (2013); Peffers et al. (2007); Hevner (2007)
+- DSR-Methodik: Gregor & Jones (2007); Cronholm & Göbel (2018); Gregor & Hevner (2013); Peffers et al. (2007); Hevner (2007)
 - Simelio-Solà 2021; Simonofski 2022; Grimmelikhuijsen & Welch 2012; Csontos & Heckl 2021/2025; Pontus 2021
 - Saldivar; Yang & Wu 2025; Thiel 2016; Laksmi 2026; Vegas Macias 2023
 
-> Vollständig + A/B-Klassifikation: `docs/literature-review.md`. **Hinweis:** Cronholm & Göbel (2018) war im Briefing genannt, ist aber nicht im Korpus → nur Gregor & Jones (2007) für die DP-Form verwendet.
+> Vollständig + A/B-Klassifikation: `docs/literature-review.md`. **DP-Form:** Gregor & Jones (2007) + Cronholm & Göbel (2018) — beide im Korpus.
 </content>

@@ -18,11 +18,11 @@ Dieser Index katalogisiert **alle** PDFs in `Projektseminar_Literatur/`. Er ist 
 | `DSRM (1).pdf` | Exakte Kopie von `DSRM.pdf` (md5 identisch) → ignoriert |
 | `s13132-025-02728-3 (1).pdf`, `s13132-025-02728-3 (2).pdf` | Exakte Kopien von `s13132-025-02728-3.pdf` → ignoriert |
 
-→ **45 Dateien, 42 eindeutige Dokumente.**
+→ **46 Dateien, 43 eindeutige Dokumente.**
 
 ---
 
-## Index (42 eindeutige Quellen)
+## Index (43 eindeutige Quellen)
 
 Legende Status: **VT** = Volltext vorhanden · **PP** = Preprint/nicht peer-reviewed · **⚠️** = Angabe zu prüfen.
 
@@ -32,6 +32,7 @@ Legende Status: **VT** = Volltext vorhanden · **PP** = Preprint/nicht peer-revi
 | 2 | `Hevner2007_ThreeCycleView-DSR.pdf` | `A_Three_Cycle_View_of_Design_Science_Research.pdf` | Hevner, A. R. (2007). A three cycle view of design science research. *Scandinavian Journal of Information Systems, 19*(2), 87–92. | — | VT |
 | 3 | `GregorHevner2013_Positioning-DSR.pdf` | `GregorHevnerMISQ2013.pdf` | Gregor, S., & Hevner, A. R. (2013). Positioning and presenting design science research for maximum impact. *MIS Quarterly, 37*(2), 337–355. | 10.25300/MISQ/2013/37.2.01 | VT |
 | 4 | `GregorJones2007_AnatomyOfDesignTheory.pdf` | `The Anatomy of a Design Theory.pdf` | Gregor, S., & Jones, D. (2007). The anatomy of a design theory. *Journal of the Association for Information Systems, 8*(5), 312–335. | 10.17705/1jais.00129 | VT |
+| 4b | `CronholmGoebel2018_Guidelines-DesignPrinciples.pdf` | `GuidelinesSupportingtheFormulationofDesignPrinciples.pdf` | Cronholm, S., & Göbel, H. (2018). Guidelines supporting the formulation of design principles. In *Proceedings of the 29th Australasian Conference on Information Systems (ACIS 2018)*. Sydney, Australia. | — (ACIS/AISeL) | VT |
 | 5 | `Venable2016_FEDS-Evaluation-DSR.pdf` | `ejis.2014.36.pdf` | Venable, J., Pries-Heje, J., & Baskerville, R. (2016). FEDS: A framework for evaluation in design science research. *European Journal of Information Systems, 25*(1), 77–89. | 10.1057/ejis.2014.36 | VT |
 | 6 | `Simonofski2022_OGD-Gamification-LayCitizens.pdf` | `1-s2.0-S0268401222000421-main.pdf` | Simonofski, A., Zuiderwijk, A., Clarinval, A., & Hammedi, W. (2022). Tailoring open government data portals for lay citizens: A gamification theory approach. *International Journal of Information Management, 65*, 102511. | 10.1016/j.ijinfomgt.2022.102511 | VT |
 | 7 | `Chokki_OGD-Dashboards-CitizenEngagement.pdf` | `Engaging_Citizens_with_OGD_DGOV_Paper_Preprint.pdf` | Chokki, A. P., Simonofski, A., Frénay, B., & Vanderose, B. (⚠️ Jahr). Engaging citizens with open government data: The value of dashboards compared to individual visualizations. *Digital Government: Research and Practice* (Preprint). | ⚠️ | PP, ⚠️ bildbasiertes PDF (visuell gelesen); Jahr/Band prüfen |
@@ -72,13 +73,13 @@ Legende Status: **VT** = Volltext vorhanden · **PP** = Preprint/nicht peer-revi
 | 41 | `Vare2025_StudentLed-Sustainability-Schools.pdf` | `Exploring_the_Impacts_of_Student-Led_Sustainabilit.pdf` | Vare, P. (2025). Exploring the impacts of student-led sustainability projects with secondary school students and teachers. *Proceedings Series on Social Sciences & Humanities, 21*, ⚠️. | 10.30595/pssh.v21i.1507 | VT (kurz, 3 S.) |
 | 42 | `Raliphaswa2025_ProceduralJustice-WorkplaceDeviance_OUTOFSCOPE.pdf` | `WRP-IJARBM-Raliphaswa...pdf` | Raliphaswa, F., Dzansi, D. Y., & Dzansi, W. L. (2025). Reassessing procedural justice and workplace deviance: The unexpected role of gender and tenure. *International Journal of Applied Research in Business and Management, 6*(1). | 10.51137/wrp.ijarbm.2025.frrt.45789 | VT — ⚠️ **THEMATISCH AUSSERHALB DES SCOPE** (Workplace Deviance, öffentl. Sektor Südafrika; Predatory-Publisher-Verdacht) → **nicht in der Argumentation verwenden** |
 
-> Hinweis zur Nummerierung: #39 ist absichtlich ein Querverweis (JainEspey erscheint einmal als #21). Insgesamt **42 eindeutige Dokumente**.
+> Hinweis zur Nummerierung: #39 ist absichtlich ein Querverweis (JainEspey erscheint einmal als #21); #4b (Cronholm & Göbel) wurde nachträglich ergänzt. Insgesamt **43 eindeutige Dokumente**.
 
 ---
 
 ## Thematische Cluster (für Review & Matrix)
 
-- **DSR-Methodik (Wissensbasis/Rigor):** #1 Peffers, #2 Hevner, #3 Gregor & Hevner, #4 Gregor & Jones, #5 Venable (FEDS).
+- **DSR-Methodik (Wissensbasis/Rigor):** #1 Peffers, #2 Hevner, #3 Gregor & Hevner, #4 Gregor & Jones, #4b Cronholm & Göbel (DP-Formulierung), #5 Venable (FEDS).
 - **E-Partizipation & Bürgerbeteiligung (TP2):** #8 Shin, #12 Saldivar, #13 Aichholzer, #14 Mariani, #15 Arana-Catania, #16 Royo 2020, #17 Royo 2024, #18 Pina, #19 Atzmanstorfer, #10 Thiel.
 - **Gamification / Engagement-Design (TP2, TP4):** #6 Simonofski, #9 Krath, #10 Thiel, #11 Yang.
 - **Vergleichbare Kommunen / EU-Best-Practice:** #15/#16/#17/#18 Decide Madrid (Consul), #17 Schottland, #27 Marsaxlokk (Malta), #38 spanische Kommunen, #26/#25 Griechenland.

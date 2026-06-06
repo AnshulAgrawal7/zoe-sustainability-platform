@@ -18,6 +18,7 @@
 | Quelle (Typ) | Verwendet in Phase-3-Argument |
 |---|---|
 | Gregor & Jones 2007 **[B]** | **Form jeder Designprinzip-Formulierung** (§2, §4.1, Folie 3) |
+| Cronholm & Göbel 2018 **[B]** | **DP-Formulierungs-Guidelines** (ergänzend zur DP-Form) (§2, §3) |
 | Peffers 2007 **[B]**, Hevner 2007 **[B]** | DSR-Prozess + drei Zyklen (Design Cycle = Phase 3) (§2, Folie 7) |
 | Gregor & Hevner 2013 **[B]** | Beitragstyp Improvement/Exaptation (§2, Folie 2) |
 | Saldivar **[A]**, Arana-Catania 2021 **[A]** | DP2a Herleitung (§4.1, Folie 3) |
@@ -43,7 +44,7 @@
 ## 4. Wo noch Verbesserungs-/Recherchebedarf besteht
 
 1. **⚠️ Bericht auf ~15 Seiten ausbauen.** Aktuell 8 S. Konkrete Hebel: Hauptteil §4.1 jede DP als eigener Unterabschnitt mit voller Herleitung; §3 Related Work je Feld vertiefen; Matrix-Auszug + Ableitungsdiagramm als Abbildungen.
-2. **⚠️ Cronholm & Göbel (2018)** war im Briefing als DP-Form genannt, ist aber **nicht im Korpus**. Aktuell nur Gregor & Jones (2007) verwendet. → Quelle beschaffen und DP-Form ggf. ergänzen, **nicht** ungeprüft zitieren.
+2. ✅ **Cronholm & Göbel (2018)** beschafft (`GuidelinesSupporting…pdf`, Index #4b) und als DP-Form-Quelle (Typ B) **eingebaut** — neben Gregor & Jones (2007). *(erledigt)*
 3. **DP-Formalisierung** schärfen: optional jede DP strikt im Muster „To achieve X for users U in context C, provide M, because J" ausformulieren.
 4. **Screenshots:** Matrix-Auszug, Ableitungsketten-Diagramm (TP2), Iterations-Zeitstrahl, Peffers-Diagramm (Phase 3 markiert).
 5. **Iterations-Doku** (DEVLOG) als Quelle für den Design-Cycle weiter ausschmücken (verworfene Ansätze ergänzen — Abschnitt „Verworfene Entscheidungen" ist noch leer).

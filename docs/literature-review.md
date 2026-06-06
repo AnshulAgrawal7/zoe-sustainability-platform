@@ -46,6 +46,13 @@ Pro Quelle: **APA7-Vollzitat**, **Kernaussage** (ausschließlich aus dem PDF ext
 - **Stützt:** **Form jeder Designprinzip-Formulierung** in [`MATRIX.md`](MATRIX.md) (Marieclaires Hauptinstrument).
 - **Fundstelle:** Abstract; „eight components" (Komponentenliste). — **VT**
 
+### [4b] Cronholm & Göbel (2018) — Guidelines for Formulating Design Principles
+- **Zitat:** Cronholm, S., & Göbel, H. (2018). Guidelines supporting the formulation of design principles. In *Proceedings of the 29th Australasian Conference on Information Systems (ACIS 2018)*. Sydney, Australia.
+- **Kernaussage:** Bestehende Designprinzipien variieren stark in **Struktur, Inhalt und Abstraktionsgrad**, was ihre **Wiederverwendbarkeit** behindert. Die Autoren schlagen **drei Guidelines** vor, um generalisierbare, verständliche und wiederverwendbare Designprinzipien zu formulieren (abgeleitet aus der Analyse theoretischer Aussagen, bestehender Guidelines und bestehender Designprinzipien).
+- **Typ:** **B** (methodisches Rahmenwerk / Guidelines).
+- **Stützt:** **Form der Designprinzip-Formulierung** in [`MATRIX.md`](MATRIX.md) — ergänzend zu Gregor & Jones (2007); zentrale Methodengrundlage für Marieclaires Phase 3.
+- **Fundstelle:** Abstract; „three guidelines"-Abschnitt. — **VT**
+
 ### [5] Venable et al. (2016) — FEDS
 - **Zitat:** Venable, J., Pries-Heje, J., & Baskerville, R. (2016). FEDS: A framework for evaluation in design science research. *European Journal of Information Systems, 25*(1), 77–89.
 - **Kernaussage:** FEDS charakterisiert Evaluation entlang zweier Dimensionen — Zweck (**formativ/summativ**) und Paradigma (**artificial/naturalistic**) — und gibt einen 4-Schritte-Prozess („why, when, how, what to evaluate"); benennt Strategien wie *Human Risk & Effectiveness* und *Technical Risk & Efficacy*.
@@ -374,6 +381,7 @@ Pro Quelle: **APA7-Vollzitat**, **Kernaussage** (ausschließlich aus dem PDF ext
 | Hevner 2007 [2] | **B** | Methode | 3 Zyklen |
 | Gregor & Hevner 2013 [3] | **B** | Methode | Wissensbeitragstypen |
 | Gregor & Jones 2007 [4] | **B** | Methode | Designtheorie-Anatomie |
+| Cronholm & Göbel 2018 [4b] | **B** | Methode | DP-Formulierungs-Guidelines |
 | Venable 2016 [5] | **B** | Methode | FEDS-Evaluation |
 | Krath 2021 [9] | **B** | TP2/4 | Gamification-Prinzipien |
 | Thiel 2016 [10] | **B** | TP2 | Warnung: reward-based |
@@ -387,6 +395,6 @@ Pro Quelle: **APA7-Vollzitat**, **Kernaussage** (ausschließlich aus dem PDF ext
 | Diamantopoulou 2019 ⚠️ [34] | **B** | Future | GDPR e-participation |
 | Pina 2024 ⚠️ [18] | **A** | TP2 | Decide-Madrid-Barrieren |
 
-**Bilanz:** ~24 Typ-A- und ~14 Typ-B-Quellen (eine ausgeschlossen). Jedes TP (TP1–TP4, TP6) wird durch **mindestens eine Typ-A-Quelle** gestützt; die DSR-Methodik ist vollständig durch Typ-B-Methodenquellen abgedeckt.
+**Bilanz:** ~24 Typ-A- und ~15 Typ-B-Quellen (eine ausgeschlossen). Jedes TP (TP1–TP4, TP6) wird durch **mindestens eine Typ-A-Quelle** gestützt; die DSR-Methodik ist vollständig durch Typ-B-Methodenquellen abgedeckt.
 </content>
 </invoke>
