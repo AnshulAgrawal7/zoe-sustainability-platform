@@ -1,51 +1,103 @@
 import { useState } from 'react';
-import { Award, Star, Users, ChevronDown, ChevronUp, CheckCircle, Circle, TrendingUp } from 'lucide-react';
-import { rewardTiers, rewardActivities, communityMilestones } from '../data/rewards';
+import {
+  Award,
+  Star,
+  Users,
+  ChevronDown,
+  ChevronUp,
+  CheckCircle,
+  Circle,
+  TrendingUp,
+} from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import {
+  rewardTiers,
+  rewardActivities,
+  communityMilestones,
+} from '../data/rewards';
 import type { RewardTier } from '../types';
 
 const DEMO_POINTS = 130;
 
-function TierCard({ tier, isCurrent }: { tier: RewardTier; isActive: boolean; isCurrent: boolean }) {
+const categoryColors: Record<string, string> = {
+  Action:
+    'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300',
+  Training: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
+  Participation:
+    'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300',
+  Community:
+    'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
+  Business:
+    'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300',
+  Education: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300',
+  Ongoing: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/40 dark:text-cyan-300',
+};
+
+function TierCard({
+  tier,
+  isCurrent,
+}: {
+  tier: RewardTier;
+  isCurrent: boolean;
+}) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(isCurrent);
   return (
     <div
       className={`rounded-xl border-2 transition-all ${tier.colorClasses} ${
-        isCurrent ? 'ring-2 ring-offset-2 ring-green-500 shadow-md' : 'opacity-70'
+        isCurrent
+          ? 'shadow-md ring-2 ring-green-500 ring-offset-2'
+          : 'opacity-70'
       }`}
     >
       <button
-        className="w-full flex items-center justify-between p-4 text-left"
+        className="flex w-full items-center justify-between p-4 text-left"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >
         <div className="flex items-center gap-3">
-          <span className="text-2xl" aria-hidden="true">{tier.icon}</span>
+          <span className="text-2xl" aria-hidden="true">
+            {tier.icon}
+          </span>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-base">{tier.greekName}</span>
-              <span className="text-sm font-medium opacity-70">— {tier.name}</span>
+              <span className="text-base font-bold">{tier.greekName}</span>
+              <span className="text-sm font-medium opacity-70">
+                — {tier.name}
+              </span>
               {isCurrent && (
-                <span className="text-xs bg-green-600 text-white rounded-full px-2 py-0.5 font-semibold">
-                  Your tier
+                <span className="rounded-full bg-green-600 px-2 py-0.5 text-xs font-semibold text-white">
+                  {t('rewards.yourTier')}
                 </span>
               )}
             </div>
-            <p className="text-xs opacity-70 mt-0.5">
+            <p className="mt-0.5 text-xs opacity-70">
               {tier.pointsMax
-                ? `${tier.pointsMin}–${tier.pointsMax} points`
-                : `${tier.pointsMin}+ points`}
+                ? t('rewards.pointsRange', {
+                    min: tier.pointsMin,
+                    max: tier.pointsMax,
+                  })
+                : t('rewards.pointsMin', { min: tier.pointsMin })}
             </p>
           </div>
         </div>
-        {open ? <ChevronUp size={16} aria-hidden="true" /> : <ChevronDown size={16} aria-hidden="true" />}
+        {open ? (
+          <ChevronUp size={16} aria-hidden="true" />
+        ) : (
+          <ChevronDown size={16} aria-hidden="true" />
+        )}
       </button>
       {open && (
-        <div className="px-4 pb-4 border-t border-current/10 pt-3">
-          <p className="text-sm mb-3 opacity-80">{tier.description}</p>
+        <div className="border-current/10 border-t px-4 pb-4 pt-3">
+          <p className="mb-3 text-sm opacity-80">{tier.description}</p>
           <ul className="space-y-1.5">
             {tier.rewards.map((r) => (
               <li key={r} className="flex items-start gap-2 text-sm">
-                <Star size={13} className="mt-0.5 flex-shrink-0 opacity-60" aria-hidden="true" />
+                <Star
+                  size={13}
+                  className="mt-0.5 flex-shrink-0 opacity-60"
+                  aria-hidden="true"
+                />
                 <span>{r}</span>
               </li>
             ))}
@@ -57,76 +109,100 @@ function TierCard({ tier, isCurrent }: { tier: RewardTier; isActive: boolean; is
 }
 
 export default function RewardsPage() {
+  const { t } = useTranslation();
   const currentTier = rewardTiers.find(
-    (t) => DEMO_POINTS >= t.pointsMin && (t.pointsMax === null || DEMO_POINTS <= t.pointsMax)
+    (tier) =>
+      DEMO_POINTS >= tier.pointsMin &&
+      (tier.pointsMax === null || DEMO_POINTS <= tier.pointsMax)
   )!;
-  const nextTier = rewardTiers.find((t) => t.pointsMin > DEMO_POINTS) ?? null;
+  const nextTier =
+    rewardTiers.find((tier) => tier.pointsMin > DEMO_POINTS) ?? null;
   const pointsToNext = nextTier ? nextTier.pointsMin - DEMO_POINTS : 0;
   const progressInTier = currentTier.pointsMax
-    ? ((DEMO_POINTS - currentTier.pointsMin) / (currentTier.pointsMax - currentTier.pointsMin)) * 100
+    ? ((DEMO_POINTS - currentTier.pointsMin) /
+        (currentTier.pointsMax - currentTier.pointsMin)) *
+      100
     : 100;
 
-  const categoryColors: Record<string, string> = {
-    Action: 'bg-green-100 text-green-800',
-    Training: 'bg-blue-100 text-blue-800',
-    Participation: 'bg-purple-100 text-purple-800',
-    Community: 'bg-amber-100 text-amber-800',
-    Business: 'bg-orange-100 text-orange-800',
-    Education: 'bg-teal-100 text-teal-800',
-    Ongoing: 'bg-cyan-100 text-cyan-800',
-  };
+  const why = t('rewards.why', { returnObjects: true }) as {
+    title: string;
+    desc: string;
+  }[];
+  const whyIcons = [
+    <Users size={22} className="text-green-600" aria-hidden="true" />,
+    <Award size={22} className="text-teal-600" aria-hidden="true" />,
+    <TrendingUp size={22} className="text-cyan-600" aria-hidden="true" />,
+  ];
 
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-green-700 to-teal-700 text-white py-14">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 text-green-200 text-sm mb-3">
+      <section className="bg-gradient-to-br from-green-700 to-teal-700 py-14 text-white">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-3 flex items-center gap-2 text-sm text-green-200">
             <Award size={14} aria-hidden="true" />
-            <span>ZOE Community Rewards</span>
+            <span>{t('rewards.heroEyebrow')}</span>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-4">Earn Recognition for Your Impact</h1>
-          <p className="text-xl text-green-100 leading-relaxed max-w-2xl">
-            Every action you take for Northern Corfu earns points. Rise through five Greek-named tiers —
-            from Σπόρος (Seed) to Θεματοφύλακας (Steward) — and unlock real recognition from the
-            municipality and local community.
+          <h1 className="mb-4 text-4xl font-bold text-white">
+            {t('rewards.heroTitle')}
+          </h1>
+          <p className="max-w-2xl text-xl leading-relaxed text-green-100">
+            {t('rewards.heroSubtitle')}
           </p>
         </div>
       </section>
 
       {/* Demo progress tracker */}
-      <section className="py-10 bg-white border-b border-gray-200">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-amber-50 rounded-xl border border-amber-200 p-4 mb-6 text-sm text-amber-800">
-            <span className="font-semibold">Prototype demo:</span> The tracker below shows a sample participant
-            at {DEMO_POINTS} points. In the live platform, this reflects your real activity log.
+      <section className="border-b border-gray-200 bg-white py-10 dark:border-gray-700 dark:bg-gray-900">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-300">
+            <span className="font-semibold">{t('rewards.demoLabel')}</span>{' '}
+            {t('rewards.demoText', { points: DEMO_POINTS })}
           </div>
 
-          <div className="bg-gray-50 rounded-xl border border-gray-200 p-6">
-            <div className="flex items-start justify-between mb-4 gap-4">
+          <div className="rounded-xl border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
+            <div className="mb-4 flex items-start justify-between gap-4">
               <div>
-                <p className="text-sm text-gray-500 mb-1">Current tier</p>
+                <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+                  {t('rewards.currentTier')}
+                </p>
                 <div className="flex items-center gap-2">
-                  <span className="text-3xl" aria-hidden="true">{currentTier.icon}</span>
+                  <span className="text-3xl" aria-hidden="true">
+                    {currentTier.icon}
+                  </span>
                   <div>
-                    <p className="font-bold text-gray-900 text-lg">{currentTier.greekName}</p>
-                    <p className="text-sm text-gray-500">{currentTier.name}</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white">
+                      {currentTier.greekName}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {currentTier.name}
+                    </p>
                   </div>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-sm text-gray-500 mb-1">Total points</p>
-                <p className="text-3xl font-bold text-green-700">{DEMO_POINTS}</p>
+                <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+                  {t('rewards.totalPoints')}
+                </p>
+                <p className="text-3xl font-bold text-green-700 dark:text-green-400">
+                  {DEMO_POINTS}
+                </p>
               </div>
             </div>
 
-            <div className="mb-2 flex justify-between text-xs text-gray-500">
-              <span>{currentTier.pointsMin} pts</span>
-              {currentTier.pointsMax && <span>{currentTier.pointsMax} pts</span>}
+            <div className="mb-2 flex justify-between text-xs text-gray-500 dark:text-gray-400">
+              <span>
+                {currentTier.pointsMin} {t('rewards.ptsShort')}
+              </span>
+              {currentTier.pointsMax && (
+                <span>
+                  {currentTier.pointsMax} {t('rewards.ptsShort')}
+                </span>
+              )}
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-3 mb-3">
+            <div className="mb-3 h-3 w-full rounded-full bg-gray-200 dark:bg-gray-700">
               <div
-                className="bg-green-600 h-3 rounded-full transition-all"
+                className="h-3 rounded-full bg-green-600 transition-all"
                 style={{ width: `${Math.min(progressInTier, 100)}%` }}
                 role="progressbar"
                 aria-valuenow={DEMO_POINTS}
@@ -136,15 +212,26 @@ export default function RewardsPage() {
             </div>
 
             {nextTier ? (
-              <p className="text-sm text-gray-600 flex items-center gap-1.5">
-                <TrendingUp size={14} className="text-green-600" aria-hidden="true" />
+              <p className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300">
+                <TrendingUp
+                  size={14}
+                  className="text-green-600 dark:text-green-400"
+                  aria-hidden="true"
+                />
                 <span>
-                  <strong>{pointsToNext} more points</strong> to reach {nextTier.greekName} ({nextTier.name}) {nextTier.icon}
+                  <strong>
+                    {t('rewards.morePoints', { count: pointsToNext })}
+                  </strong>{' '}
+                  {t('rewards.toReach', {
+                    tier: nextTier.greekName,
+                    name: nextTier.name,
+                  })}{' '}
+                  {nextTier.icon}
                 </span>
               </p>
             ) : (
-              <p className="text-sm text-green-700 font-semibold">
-                You have reached the highest tier. Thank you, Θεματοφύλακας!
+              <p className="text-sm font-semibold text-green-700 dark:text-green-400">
+                {t('rewards.highestTier')}
               </p>
             )}
           </div>
@@ -152,116 +239,170 @@ export default function RewardsPage() {
       </section>
 
       {/* Tiers */}
-      <section className="py-14 bg-gray-50">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">The Five ZOE Tiers</h2>
-            <p className="text-gray-600">Each tier unlocks real, tangible recognition from the municipality and local partners.</p>
+      <section className="bg-gray-50 py-14 dark:bg-gray-900/50">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+              {t('rewards.tiersTitle')}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300">
+              {t('rewards.tiersSubtitle')}
+            </p>
           </div>
           <div className="space-y-3">
             {rewardTiers.map((tier) => (
               <TierCard
                 key={tier.id}
                 tier={tier}
-                isActive={DEMO_POINTS >= tier.pointsMin}
                 isCurrent={tier.id === currentTier.id}
               />
             ))}
           </div>
-          <p className="text-xs text-gray-400 mt-4 text-center">
-            All rewards listed are indicative for this prototype and subject to formal programme approval.
+          <p className="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
+            {t('rewards.tiersNote')}
           </p>
         </div>
       </section>
 
       {/* How to earn points */}
-      <section className="py-14 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">How to Earn Points</h2>
-            <p className="text-gray-600">Points are awarded for verified participation. Every contribution counts.</p>
+      <section className="bg-white py-14 dark:bg-gray-900">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+              {t('rewards.earnTitle')}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300">
+              {t('rewards.earnSubtitle')}
+            </p>
           </div>
-          <div className="overflow-x-auto rounded-xl border border-gray-200">
+          <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-left px-4 py-3 text-gray-600 font-semibold">Activity</th>
-                  <th className="text-left px-4 py-3 text-gray-600 font-semibold hidden sm:table-cell">Category</th>
-                  <th className="text-right px-4 py-3 text-gray-600 font-semibold">Points</th>
+                <tr className="border-b border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+                  <th className="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-300">
+                    {t('rewards.thActivity')}
+                  </th>
+                  <th className="hidden px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-300 sm:table-cell">
+                    {t('rewards.thCategory')}
+                  </th>
+                  <th className="px-4 py-3 text-right font-semibold text-gray-600 dark:text-gray-300">
+                    {t('rewards.thPoints')}
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {rewardActivities.map((activity, i) => (
                   <tr
                     key={activity.id}
-                    className={`border-b border-gray-100 last:border-0 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}`}
+                    className={`border-b border-gray-100 last:border-0 dark:border-gray-700/60 ${
+                      i % 2 === 0
+                        ? 'bg-white dark:bg-gray-900'
+                        : 'bg-gray-50/50 dark:bg-gray-800/40'
+                    }`}
                   >
-                    <td className="px-4 py-3">
-                      <span className="mr-2" aria-hidden="true">{activity.icon}</span>
+                    <td className="px-4 py-3 text-gray-700 dark:text-gray-200">
+                      <span className="mr-2" aria-hidden="true">
+                        {activity.icon}
+                      </span>
                       {activity.label}
                     </td>
-                    <td className="px-4 py-3 hidden sm:table-cell">
-                      <span className={`text-xs font-medium rounded-full px-2 py-0.5 ${categoryColors[activity.category] ?? 'bg-gray-100 text-gray-700'}`}>
-                        {activity.category}
+                    <td className="hidden px-4 py-3 sm:table-cell">
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                          categoryColors[activity.category] ??
+                          'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+                        }`}
+                      >
+                        {t(`rewards.categories.${activity.category}`)}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-right font-semibold text-green-700">+{activity.points}</td>
+                    <td className="px-4 py-3 text-right font-semibold text-green-700 dark:text-green-400">
+                      +{activity.points}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <p className="text-xs text-gray-400 mt-3 text-center">
-            Points are illustrative. Final values will be confirmed with municipality partners.
+          <p className="mt-3 text-center text-xs text-gray-400 dark:text-gray-500">
+            {t('rewards.earnNote')}
           </p>
         </div>
       </section>
 
       {/* Community milestones */}
-      <section className="py-14 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Community Milestones</h2>
-            <p className="text-gray-600 max-w-xl mx-auto">
-              When the whole community reaches a goal together, everyone benefits. These shared milestones
-              reward collective action.
+      <section className="bg-gray-50 py-14 dark:bg-gray-900/50">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+              {t('rewards.milestonesTitle')}
+            </h2>
+            <p className="mx-auto max-w-xl text-gray-600 dark:text-gray-300">
+              {t('rewards.milestonesSubtitle')}
             </p>
           </div>
           <div className="space-y-4">
             {communityMilestones.map((milestone) => {
-              const pct = Math.min((milestone.current / milestone.target) * 100, 100);
+              const pct = Math.min(
+                (milestone.current / milestone.target) * 100,
+                100
+              );
               return (
                 <div
                   key={milestone.label}
                   className={`rounded-xl border p-5 ${
                     milestone.unlocked
-                      ? 'bg-green-50 border-green-200'
-                      : 'bg-white border-gray-200'
+                      ? 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20'
+                      : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-4 mb-3">
+                  <div className="mb-3 flex items-start justify-between gap-4">
                     <div className="flex items-start gap-2">
                       {milestone.unlocked ? (
-                        <CheckCircle size={18} className="text-green-600 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                        <CheckCircle
+                          size={18}
+                          className="mt-0.5 flex-shrink-0 text-green-600 dark:text-green-400"
+                          aria-hidden="true"
+                        />
                       ) : (
-                        <Circle size={18} className="text-gray-400 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                        <Circle
+                          size={18}
+                          className="mt-0.5 flex-shrink-0 text-gray-400"
+                          aria-hidden="true"
+                        />
                       )}
                       <div>
-                        <p className={`font-semibold text-sm ${milestone.unlocked ? 'text-green-900' : 'text-gray-900'}`}>
+                        <p
+                          className={`text-sm font-semibold ${
+                            milestone.unlocked
+                              ? 'text-green-900 dark:text-green-300'
+                              : 'text-gray-900 dark:text-white'
+                          }`}
+                        >
                           {milestone.label}
                         </p>
-                        <p className="text-xs text-gray-500 mt-0.5">
-                          Reward: {milestone.reward}
+                        <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+                          {t('rewards.rewardPrefix')} {milestone.reward}
                         </p>
                       </div>
                     </div>
-                    <span className={`text-xs font-bold whitespace-nowrap ${milestone.unlocked ? 'text-green-700' : 'text-gray-500'}`}>
-                      {milestone.unlocked ? 'Unlocked!' : `${milestone.current} / ${milestone.target}`}
+                    <span
+                      className={`whitespace-nowrap text-xs font-bold ${
+                        milestone.unlocked
+                          ? 'text-green-700 dark:text-green-400'
+                          : 'text-gray-500 dark:text-gray-400'
+                      }`}
+                    >
+                      {milestone.unlocked
+                        ? t('rewards.unlocked')
+                        : `${milestone.current} / ${milestone.target}`}
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
                     <div
-                      className={`h-2 rounded-full transition-all ${milestone.unlocked ? 'bg-green-500' : 'bg-teal-400'}`}
+                      className={`h-2 rounded-full transition-all ${
+                        milestone.unlocked ? 'bg-green-500' : 'bg-teal-400'
+                      }`}
                       style={{ width: `${pct}%` }}
                       role="progressbar"
                       aria-valuenow={milestone.current}
@@ -273,38 +414,34 @@ export default function RewardsPage() {
               );
             })}
           </div>
-          <div className="mt-6 bg-blue-50 rounded-xl border border-blue-100 p-4 text-sm text-blue-800 text-center">
-            <span className="font-semibold">Prototype note:</span> Milestone progress shown here is illustrative dummy data.
+          <div className="mt-6 rounded-xl border border-blue-100 bg-blue-50 p-4 text-center text-sm text-blue-800 dark:border-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
+            <span className="font-semibold">
+              {t('rewards.milestonesNoteLabel')}
+            </span>{' '}
+            {t('rewards.milestonesNote')}
           </div>
         </div>
       </section>
 
       {/* Why this system */}
-      <section className="py-14 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Why a Points System?</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {[
-              {
-                icon: <Users size={22} className="text-green-600" aria-hidden="true" />,
-                title: 'Low cost to the municipality',
-                desc: 'Most rewards are recognition, certificates, and partnerships with local producers — not cash. The stewardship map and annual report cost almost nothing to operate.',
-              },
-              {
-                icon: <Award size={22} className="text-teal-600" aria-hidden="true" />,
-                title: 'Grounded in local culture',
-                desc: 'Greek names and tangible local rewards (olive oil, compost, named map markers) resonate with Corfu residents far more than generic digital badges.',
-              },
-              {
-                icon: <TrendingUp size={22} className="text-cyan-600" aria-hidden="true" />,
-                title: 'Encourages long-term participation',
-                desc: 'Monthly stewardship points and co-design access at the top tier give residents ongoing reasons to stay engaged — not just one-off event attendance.',
-              },
-            ].map((item) => (
-              <div key={item.title} className="bg-gray-50 rounded-xl p-5 border border-gray-200">
-                <div className="mb-3">{item.icon}</div>
-                <h3 className="font-semibold text-gray-900 mb-2 text-sm">{item.title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+      <section className="bg-white py-14 dark:bg-gray-900">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <h2 className="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
+            {t('rewards.whyTitle')}
+          </h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {why.map((item, i) => (
+              <div
+                key={item.title}
+                className="rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-700 dark:bg-gray-800"
+              >
+                <div className="mb-3">{whyIcons[i]}</div>
+                <h3 className="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+                  {item.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>

@@ -70,19 +70,60 @@
     "alreadyParticipating": "You are already participating in this project."
   },
   "rewards": {
-    "title": "Rewards & Badges",
-    "yourPoints": "Your Points",
-    "badges": "Badges",
-    "leaderboard": "Leaderboard",
-    "nextBadge": "Next badge",
-    "pointsToGo": "{{points}} points to go",
-    "earnedBadge": "Badge earned!",
-    "allBadges": "All badges",
-    "rank": "Rank",
-    "participations": "Participations",
-    "noBadges": "No badges yet. Join a project to earn your first badge!",
-    "badges_earned": "Badges earned",
-    "points_label": "points"
+    "heroEyebrow": "ZOE Community Rewards",
+    "heroTitle": "Earn Recognition for Your Impact",
+    "heroSubtitle": "Every action you take for Northern Corfu earns points. Rise through five Greek-named tiers — from Σπόρος (Seed) to Θεματοφύλακας (Steward) — and unlock real recognition from the municipality and local community.",
+    "yourTier": "Your tier",
+    "pointsRange": "{{min}}–{{max}} points",
+    "pointsMin": "{{min}}+ points",
+    "demoLabel": "Prototype demo:",
+    "demoText": "The tracker below shows a sample participant at {{points}} points. In the live platform, this reflects your real activity log.",
+    "currentTier": "Current tier",
+    "totalPoints": "Total points",
+    "ptsShort": "pts",
+    "morePoints_one": "{{count}} more point",
+    "morePoints_other": "{{count}} more points",
+    "toReach": "to reach {{tier}} ({{name}})",
+    "highestTier": "You have reached the highest tier. Thank you, Θεματοφύλακας!",
+    "tiersTitle": "The Five ZOE Tiers",
+    "tiersSubtitle": "Each tier unlocks real, tangible recognition from the municipality and local partners.",
+    "tiersNote": "All rewards listed are indicative for this prototype and subject to formal programme approval.",
+    "earnTitle": "How to Earn Points",
+    "earnSubtitle": "Points are awarded for verified participation. Every contribution counts.",
+    "thActivity": "Activity",
+    "thCategory": "Category",
+    "thPoints": "Points",
+    "categories": {
+      "Action": "Action",
+      "Training": "Training",
+      "Participation": "Participation",
+      "Community": "Community",
+      "Business": "Business",
+      "Education": "Education",
+      "Ongoing": "Ongoing"
+    },
+    "earnNote": "Points are illustrative. Final values will be confirmed with municipality partners.",
+    "milestonesTitle": "Community Milestones",
+    "milestonesSubtitle": "When the whole community reaches a goal together, everyone benefits. These shared milestones reward collective action.",
+    "rewardPrefix": "Reward:",
+    "unlocked": "Unlocked!",
+    "milestonesNoteLabel": "Prototype note:",
+    "milestonesNote": "Milestone progress shown here is illustrative dummy data.",
+    "whyTitle": "Why a Points System?",
+    "why": [
+      {
+        "title": "Low cost to the municipality",
+        "desc": "Most rewards are recognition, certificates, and partnerships with local producers — not cash. The stewardship map and annual report cost almost nothing to operate."
+      },
+      {
+        "title": "Grounded in local culture",
+        "desc": "Greek names and tangible local rewards (olive oil, compost, named map markers) resonate with Corfu residents far more than generic digital badges."
+      },
+      {
+        "title": "Encourages long-term participation",
+        "desc": "Monthly stewardship points and co-design access at the top tier give residents ongoing reasons to stay engaged — not just one-off event attendance."
+      }
+    ]
   },
   "dashboard": {
     "title": "My Dashboard",

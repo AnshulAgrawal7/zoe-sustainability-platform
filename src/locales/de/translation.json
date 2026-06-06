@@ -70,19 +70,60 @@
     "alreadyParticipating": "Sie nehmen bereits an diesem Projekt teil."
   },
   "rewards": {
-    "title": "Belohnungen & Abzeichen",
-    "yourPoints": "Ihre Punkte",
-    "badges": "Abzeichen",
-    "leaderboard": "Rangliste",
-    "nextBadge": "Nächstes Abzeichen",
-    "pointsToGo": "Noch {{points}} Punkte",
-    "earnedBadge": "Abzeichen verdient!",
-    "allBadges": "Alle Abzeichen",
-    "rank": "Rang",
-    "participations": "Teilnahmen",
-    "noBadges": "Noch keine Abzeichen. Treten Sie einem Projekt bei!",
-    "badges_earned": "Verdiente Abzeichen",
-    "points_label": "Punkte"
+    "heroEyebrow": "ZOE Community-Belohnungen",
+    "heroTitle": "Anerkennung für Ihre Wirkung verdienen",
+    "heroSubtitle": "Jede Aktion für Nord-Korfu bringt Punkte. Steigen Sie durch fünf griechisch benannte Stufen auf — von Σπόρος (Samen) bis Θεματοφύλακας (Hüter) — und schalten Sie echte Anerkennung der Gemeinde und der lokalen Gemeinschaft frei.",
+    "yourTier": "Ihre Stufe",
+    "pointsRange": "{{min}}–{{max}} Punkte",
+    "pointsMin": "{{min}}+ Punkte",
+    "demoLabel": "Prototyp-Demo:",
+    "demoText": "Der Tracker unten zeigt eine:n Beispielteilnehmer:in mit {{points}} Punkten. In der Live-Plattform spiegelt dies Ihr echtes Aktivitätsprotokoll wider.",
+    "currentTier": "Aktuelle Stufe",
+    "totalPoints": "Gesamtpunkte",
+    "ptsShort": "Pkt.",
+    "morePoints_one": "{{count}} weiterer Punkt",
+    "morePoints_other": "{{count}} weitere Punkte",
+    "toReach": "bis zur Stufe {{tier}} ({{name}})",
+    "highestTier": "Sie haben die höchste Stufe erreicht. Danke, Θεματοφύλακας!",
+    "tiersTitle": "Die fünf ZOE-Stufen",
+    "tiersSubtitle": "Jede Stufe schaltet echte, greifbare Anerkennung der Gemeinde und lokaler Partner frei.",
+    "tiersNote": "Alle aufgeführten Belohnungen sind für diesen Prototyp indikativ und stehen unter dem Vorbehalt der formellen Programmgenehmigung.",
+    "earnTitle": "So verdienen Sie Punkte",
+    "earnSubtitle": "Punkte werden für verifizierte Teilnahme vergeben. Jeder Beitrag zählt.",
+    "thActivity": "Aktivität",
+    "thCategory": "Kategorie",
+    "thPoints": "Punkte",
+    "categories": {
+      "Action": "Aktion",
+      "Training": "Schulung",
+      "Participation": "Beteiligung",
+      "Community": "Gemeinschaft",
+      "Business": "Wirtschaft",
+      "Education": "Bildung",
+      "Ongoing": "Laufend"
+    },
+    "earnNote": "Die Punkte sind illustrativ. Endgültige Werte werden mit den Gemeindepartnern bestätigt.",
+    "milestonesTitle": "Gemeinschafts-Meilensteine",
+    "milestonesSubtitle": "Wenn die ganze Gemeinschaft gemeinsam ein Ziel erreicht, profitieren alle. Diese gemeinsamen Meilensteine belohnen kollektives Handeln.",
+    "rewardPrefix": "Belohnung:",
+    "unlocked": "Freigeschaltet!",
+    "milestonesNoteLabel": "Prototyp-Hinweis:",
+    "milestonesNote": "Der hier gezeigte Meilenstein-Fortschritt sind illustrative Beispieldaten.",
+    "whyTitle": "Warum ein Punktesystem?",
+    "why": [
+      {
+        "title": "Geringe Kosten für die Gemeinde",
+        "desc": "Die meisten Belohnungen sind Anerkennung, Zertifikate und Partnerschaften mit lokalen Produzent:innen — kein Geld. Die Stewardship-Karte und der Jahresbericht kosten im Betrieb fast nichts."
+      },
+      {
+        "title": "In der lokalen Kultur verankert",
+        "desc": "Griechische Namen und greifbare lokale Belohnungen (Olivenöl, Kompost, benannte Kartenmarkierungen) sprechen die Korfioten weit mehr an als generische digitale Abzeichen."
+      },
+      {
+        "title": "Fördert langfristige Beteiligung",
+        "desc": "Monatliche Stewardship-Punkte und Co-Design-Zugang in der höchsten Stufe geben den Einwohner:innen fortlaufende Gründe, engagiert zu bleiben — nicht nur einmalige Teilnahme."
+      }
+    ]
   },
   "dashboard": {
     "title": "Mein Dashboard",
