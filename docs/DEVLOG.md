@@ -27,6 +27,7 @@ Ziel: den iterativen Design-Develop-Demonstrate-Zyklus nachvollziehbar dokumenti
 | 5 | 2026-05-25 | TP4 | WCAG 2.1 AA Barrierefreiheit + axe-core-Tests | ✅ |
 | 6 | 2026-05-27 | übergreifend | Playwright E2E (49 Tests), Test-Setup, Doku-Update | ✅ |
 | 7 | 2026-06-06 | TP1, TP4, TP6 | Additive Features: Initiative-Tabs, Tourist:innen-Beitrag, Newsletter-Opt-in (`/get-involved`) | ✅ |
+| 8 | 2026-06-06 | TP4 | Durchgängige i18n (alle 7 Altseiten EN/EL/DE) + Flaggen-Sprachwechsler + DeepL-Auto-Übersetzung (Admin) | ✅ |
 
 > Datumsangaben aus der Git-History abgeleitet (Commit-Daten). Eine Iteration kann mehrere Commits umfassen.
 
@@ -142,6 +143,23 @@ Für **beide Vorträge** (gemeinsame Iterations-Achse) und die Berichte werden d
   - **TP6 erstmals adressiert**, weil die ursprüngliche MATRIX nur TP1–TP4 abdeckte, der Stakeholder-/Phase-1-Input Tourismus aber als zentrales Thema nennt.
 - **DSR-Bezug:** Designprinzipien DP1 (zentral/gruppiert), DP6 (Tourist:innen als Ressource) aus [`MATRIX.md`](MATRIX.md); belegt durch Simelio 2021 [A] (DP1), Laksmi 2026 [A] + Vegas Macias 2023 [A] (DP6); Engagement-Design nach Yang & Wu 2025 [A]/Krath 2021 [B].
 - **Status:** ✅ Implementiert & getestet (additiv auf `claude/nightly-run`).
+
+---
+
+### Iteration 8 — Durchgängige Mehrsprachigkeit + DeepL-Auto-Übersetzung
+- **Datum:** 2026-06-06 (Branch `claude/nightly-run`)
+- **Adressiertes Teilproblem:** TP4 (Mehrsprachigkeit/Barrierefreiheit) — schließt die i18n-Lücke
+- **Was wurde implementiert (additiv):**
+  - **i18n aller 7 zuvor hartkodierten Seiten** auf `t()` (EN/EL/DE): `AboutPage`, `AudiencesPage`, `EventsPage`, `RewardsPage`, `RoadmapPage`, `SDGDashboardPage`, `TransparencyPage` — inkl. Dark-Mode-Klassen, i18next-Plurals und lokalisierten Datumsangaben. Inhaltsdaten aus `src/data/` bleiben (Content-Ebene).
+  - **Flaggen-Sprachwechsler** `components/layout/LanguageSwitcher.tsx` (Inline-SVG-Flaggen GB/GR/DE statt Emoji → OS-unabhängig) ersetzt das Dropdown in `Header.tsx`.
+  - **DeepL-Auto-Übersetzung** (Admin): `backend/src/services/translationService.ts` (Free/Pro-Endpoint per `:fx`-Suffix, Key nur in `.env`, pluggable, Fallback), Route `POST /api/admin/translate` (adminOnly), Frontend `components/admin/AutoTranslatePanel.tsx` in New/Edit-Project — eine Sprache eingeben, die anderen zwei werden befüllt (editierbar). Das DB-Modell war bereits dreisprachig (`titleEn/El/De`, `descriptionEn/El/De`); die öffentlichen Seiten zeigen Inhalte bereits nach UI-Sprache.
+- **Technische Entscheidung & Begründung:**
+  - **DeepL als pluggable Service, Key in `.env`** — kein Key im Code; Free→Pro durch Key-Tausch (keine Code-Änderung). Ohne Key sauberer „not configured"-Fallback (App/Tests laufen).
+  - **Inline-SVG-Flaggen** statt Emoji-Flaggen, weil letztere auf Windows nicht rendern.
+  - **UI-Text via i18n, Inhaltsdaten getrennt** — der Admin-Auto-Übersetzer adressiert die Content-Ebene (neue Projekte), statische `src/data/` bleiben vorerst englisch (Future Work).
+  - **Test-Isolation-Fix:** `backend/**` aus dem Frontend-Vitest-Lauf ausgeschlossen (lief vorher versehentlich im jsdom-Run mit).
+- **DSR-Bezug:** DP4 (Pontus 2021 [A]: alle Sprachfassungen) ist nun durchgängig erfüllt; Csontos & Heckl [A] (WCAG) bleibt evaluierbar.
+- **Status:** ✅ Implementiert & getestet — Backend 37/37, Frontend 15/15, `tsc`/`vite build` grün.
 
 ---
 

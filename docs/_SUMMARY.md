@@ -35,7 +35,7 @@
 3. **Preprints** (Chokki, Çetintürk) nur vorsichtig (Typ B), keine harten Wirkungsaussagen.
 4. **Raliphaswa (2025)** thematisch ausgeschlossen (Workplace Deviance) — nicht verwenden.
 5. **Reports auf ~15 S.** ausbauen (Eigenleistung) + echte Screenshots an die Bildplatzhalter; **kein KI-Padding**.
-6. **i18n-Altseiten** (`AudiencesPage`, `SDGDashboardPage`, `TransparencyPage`) auf `t()` umstellen (Pontus 2021 [A]).
+6. ✅ **i18n-Altseiten erledigt** — alle 7 Seiten auf `t()` (EN/EL/DE); plus DeepL-Auto-Übersetzung (Admin) + Flaggen-Sprachwechsler.
 
 ## 3. Drei wichtigste nächste Schritte je Person
 

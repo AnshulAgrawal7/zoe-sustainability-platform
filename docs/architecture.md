@@ -75,6 +75,7 @@ Full documentation: `docs/api.md`
 | `GET /api/admin/users` | All users | ADMIN |
 | `PUT /api/admin/users/:id/role` | Change role | ADMIN |
 | `GET /api/admin/stats` | Dashboard stats | ADMIN |
+| `POST /api/admin/translate` | Auto-translate fields via DeepL | ADMIN |
 
 ---
 
@@ -147,6 +148,10 @@ RefreshToken
 - Fallback: `en`
 - Files: `src/locales/{en,el,de}/translation.json`
 - Initialized in: `src/utils/i18n.ts` (imported before App)
+- **All public pages** use `t()` (no hardcoded JSX text); switching language updates `document.documentElement.lang`
+- **Language switcher:** `components/layout/LanguageSwitcher.tsx` — flag pills (inline SVG GB/GR/DE, OS-independent) in the header
+- **Content i18n:** the `Project` model stores `titleEn/El/De` + `descriptionEn/El/De`; public pages render the field for the current UI language
+- **DeepL auto-translation:** `backend/src/services/translationService.ts` + `POST /api/admin/translate` (adminOnly). The admin `AutoTranslatePanel` fills the other languages from one input. Key in `DEEPL_API_KEY` (`.env`); Free vs Pro endpoint auto-detected via the `:fx` suffix; graceful `503 translation_not_configured` fallback when unset.
 
 ---
 

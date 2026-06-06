@@ -17,7 +17,7 @@ Diese Abnahme kombiniert die **Praxis-Anforderungen** der Vize-Bürgermeisterin 
 | A4 | Score / Wirkungsanzeige von Initiativen | ✅ | `TransparencyPage.tsx` (KPIs + `ProgressBar`), Wirkungswerte als **fiktive Prototyp-Daten gekennzeichnet** |
 | A5 | Bürger-Kommunikationskanal (Ideen einreichen) + Admin-Konzept (Gemeinde editiert) | ✅ | `ParticipationPage.tsx` (ohne Account); Admin-CRUD `pages/admin/*` (JWT) |
 | A6 | Newsletter-/Update-Option (mind. konzipiert) | ✅ | `NewsletterSignup.tsx` (Opt-in-Konzept, **kein Versand** — bewusst); Versand = Future Work |
-| A7 | Erreicht möglichst alle Zielgruppen (Mehrsprachigkeit/Barrierefreiheit) | 🟡 | i18n EN/EL/DE + WCAG-2.1-AA-Setup + axe-Tests vorhanden; **Hinweis:** i18n auf einigen Altseiten noch hartkodiert (offen, dokumentiert in `MATRIX.md` TP4 + STATUS) |
+| A7 | Erreicht möglichst alle Zielgruppen (Mehrsprachigkeit/Barrierefreiheit) | ✅ | i18n EN/EL/DE **durchgängig** (alle 7 Altseiten + neue Seiten), Flaggen-Sprachwechsler, **DeepL-Auto-Übersetzung** im Admin; WCAG-2.1-AA-Setup + axe-Tests |
 
 **Kokkali-Votum:** Alle harten Praxis-Anforderungen sind erfüllt oder bewusst als Konzept ausgewiesen. Einzige Einschränkung (A7) ist transparent dokumentiert und priorisiert.
 

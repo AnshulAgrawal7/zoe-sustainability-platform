@@ -39,7 +39,7 @@
 - **Designprinzipien vollständig hergeleitet** (DP1–DP6) und in der Matrix mit Beleg + A/B versehen.
 - **Instanziiert** (über Iterationen 1–7): siehe Implementierungsspalte der Matrix.
 - **Bewusste Designentscheidungen** (ohne Wirkungsbeleg) explizit markiert: Tech-Stack, grünes Design, kein Beta-Backend für freie Einreichungen, Newsletter ohne Versand (§4.3, Brücke §3).
-- **Teilweise/konzipiert:** durchgängige i18n (Altseiten), offizielle SDG-Icons, Schulprogramm, interaktive Karte.
+- **Teilweise/konzipiert:** offizielle SDG-Icons, Schulprogramm, interaktive Karte. *(durchgängige i18n jetzt erledigt ✓ — alle Seiten EN/EL/DE + DeepL-Auto-Übersetzung)*
 
 ## 4. Wo noch Verbesserungs-/Recherchebedarf besteht
 

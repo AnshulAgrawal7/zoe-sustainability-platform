@@ -191,6 +191,38 @@ Dashboard statistics.
 }
 ```
 
+### POST /admin/translate
+Auto-translate project fields (e.g. `title`, `description`) from one language
+into the others via **DeepL**. Used by the admin "auto-translate" button.
+
+Requires `DEEPL_API_KEY` in `backend/.env` (Free keys end with `:fx` and use the
+free endpoint automatically; swap for a Pro key to upgrade — no code change). If
+the key is missing the endpoint returns `503 translation_not_configured`.
+
+**Request:**
+```json
+{
+  "fields": { "title": "Beach cleanup", "description": "Join us at Sidari." },
+  "sourceLang": "EN",
+  "targetLangs": ["EL", "DE"]   // optional; defaults to the other two languages
+}
+```
+
+**Response 200:**
+```json
+{
+  "success": true,
+  "data": {
+    "sourceLang": "EN",
+    "translations": {
+      "EL": { "title": "Καθαρισμός παραλίας", "description": "..." },
+      "DE": { "title": "Strandsäuberung", "description": "..." }
+    }
+  }
+}
+```
+Errors: `400` (invalid `sourceLang`/fields, field too long), `503 translation_not_configured` (no key).
+
 ---
 
 ## Error Codes

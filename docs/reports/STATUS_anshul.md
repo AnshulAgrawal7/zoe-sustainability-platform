@@ -34,7 +34,7 @@
 ## 3. Implementiert vs. konzipiert (Demonstrationsbasis)
 
 - **Implementiert & demonstrierbar:** Aktionsübersicht + Detailseite (TP1), Initiative-Tabs + Tourist:innen-Sektion + Newsletter-Konzept (TP1/TP6, NEU), Beteiligungsformular ohne Account (TP2, ohne Persistenz), SDG-Dashboard/Badges + Transparenz-KPIs (TP3), i18n EN/EL/DE + WCAG-Setup (TP4), Admin-CRUD.
-- **Konzipiert (in der Demo als Future Work benennen):** Persistenz der Einreichungen, offizielle SDG-Icons, durchgängige i18n der Altseiten, Schulprogramm, interaktive Karte, persistente Gamification, Newsletter-Versand.
+- **Konzipiert (in der Demo als Future Work benennen):** Persistenz der Einreichungen, offizielle SDG-Icons, Schulprogramm, interaktive Karte, persistente Gamification, Newsletter-Versand. *(i18n der Altseiten jetzt erledigt ✓)*
 
 ## 4. Wo noch Verbesserungs-/Recherchebedarf besteht
 
@@ -43,7 +43,7 @@
 3. **Lighthouse-/axe-Lauf** tatsächlich durchführen und Zahlen in §5 eintragen (derzeit nur Methode beschrieben).
 4. **⚠️ Heuristische Evaluation:** Nielsen-Heuristiken sind **nicht im Korpus** — entweder Quelle beschaffen oder Methode quellenneutral beschreiben.
 5. **TP2-Persistenz**-Demo: aktuell nur lokaler State; in der Demo klar als Prototyp-Grenze ansagen.
-6. **i18n-Lücke** der Altseiten vor der Live-Demo möglichst schließen, sonst in Szenario D offen ansprechen (ist im Bericht bereits ehrlich vermerkt).
+6. ✅ **i18n-Lücke geschlossen** — alle 7 Altseiten EN/EL/DE. In der Demo zusätzlich den **Flaggen-Sprachwechsler** und die **DeepL-Auto-Übersetzung** (Admin → Projekt anlegen) zeigen.
 
 ## 5. ⚠️ Offene TODOs (Quellen)
 

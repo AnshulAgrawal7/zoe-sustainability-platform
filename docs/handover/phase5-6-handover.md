@@ -17,7 +17,8 @@ Dieses Dokument übergibt den Stand nach Phase 3/4 an die Evaluation (Phase 5) u
 | Beteiligung ohne Account | TP2 | 🔨 gebaut (ohne Persistenz) | `ParticipationPage.tsx` |
 | SDG-Dashboard + Badges | TP3 | 🔨 gebaut (keine offiziellen Icons) | `SDGDashboardPage.tsx`, `SDGBadge.tsx` |
 | Transparenz-/KPI-Seite | TP3 | ✅ gebaut (fiktive Daten) | `TransparencyPage.tsx`, `ProgressBar.tsx` |
-| i18n EN/EL/DE | TP4 | 🔨 gebaut (nicht durchgängig) | `utils/i18n.ts`, `locales/` |
+| i18n EN/EL/DE | TP4 | ✅ gebaut (durchgängig, alle Seiten) | `utils/i18n.ts`, `locales/`, `LanguageSwitcher.tsx` |
+| DeepL-Auto-Übersetzung (Admin) | TP4 | ✅ gebaut | `backend/.../translationService.ts`, `AutoTranslatePanel.tsx` |
 | WCAG 2.1 AA Setup + axe-Tests | TP4 | ✅ gebaut | `AccessibilityPage.tsx`, `__tests__/accessibility/` |
 | Dark Mode | TP4 | ✅ gebaut | `themeStore.ts` |
 | Tourist:innen-Beitrag | TP6 | 🔨 gebaut (NEU) | `components/engagement/TouristContribution.tsx` |
@@ -25,7 +26,7 @@ Dieses Dokument übergibt den Stand nach Phase 3/4 an die Evaluation (Phase 5) u
 | Admin-CRUD (Gemeinde) | TP1 | ✅ gebaut | `pages/admin/*`, JWT |
 | **Persistenz freie Einreichungen** | TP2 | ❌ konzipiert | Future Work |
 | **Offizielle UN-SDG-Icons** | TP3 | ❌ konzipiert | Future Work |
-| **Durchgängige i18n (Altseiten)** | TP4 | ❌ offen | `AudiencesPage`, `SDGDashboardPage`, `TransparencyPage` |
+| ~~Durchgängige i18n (Altseiten)~~ | TP4 | ✅ **erledigt** | alle 7 Seiten auf `t()` (EN/EL/DE) |
 | **Schulprogramm** | TP4 | ❌ konzipiert | Future Work |
 | **Interaktive Karte** | TP1/TP2 | ❌ konzipiert | Future Work (vgl. Atzmanstorfer 2025 [A]) |
 | **Persistente Gamification** | TP5 | ❌ konzipiert | Future Work |

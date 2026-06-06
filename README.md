@@ -70,7 +70,8 @@ See [`docs/dsr-methodology.md`](docs/dsr-methodology.md) for full DSR mapping.
 | `/admin/users` | Manage citizens (view, promote to admin) |
 
 ### Platform Features
-- **i18n** — English / Ελληνικά / Deutsch via react-i18next (100% `t()` compliant, no hardcoded JSX text)
+- **i18n** — English / Ελληνικά / Deutsch via react-i18next (all public pages `t()`-compliant), flag-based language switcher
+- **DeepL auto-translation** — an admin writes a project in one language; title + description are auto-filled in the other two (`POST /api/admin/translate`; requires `DEEPL_API_KEY` in `backend/.env`, Free/Pro auto-detected via the `:fx` suffix)
 - **Dark mode** — Tailwind `class` strategy, persisted in localStorage, system-preference default
 - **WCAG 2.1 AA** — Full compliance pass: keyboard navigation, aria labels, focus indicators, lang attribute, reduced motion
 - **Gamification** — Point system for citizen participation (comment=5, vote=10, attend=20, volunteer=50, submit=100)

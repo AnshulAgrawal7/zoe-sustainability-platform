@@ -101,10 +101,10 @@ Marieclaire · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 - **Bewusste Designentscheidungen:** Tech-Stack, grünes Design, kein Beta-Backend für Einreichungen
 - **Status quo:** Designprinzipien als kohärentes Set instanziiert
-- Grenzen (z. B. i18n-Altseiten) = **Designwissen** für den nächsten Zyklus
+- Grenzen (z. B. offizielle SDG-Icons, Persistenz) = **Designwissen** für den nächsten Zyklus
 - **Übergang:** Anshul demonstriert, **DASS** die Prinzipien funktionieren (Phase 4)
 
-**Speaker Notes (DE):** Zum Abschluss die Architektur: bewusste Designentscheidungen ohne Wirkungsbeleg — Tech-Stack, grünes Design, und bewusst kein produktives Backend für freie Einreichungen in der Beta (Datenschutz; Future Work). Der Status quo: die Designprinzipien sind als kohärentes Set instanziiert; offene Grenzen wie die i18n-Altseiten sind selbst Designwissen. Damit übergebe ich an Anshul, der dieselben vier Iterationen aus der Demonstrations-Perspektive zeigt.
+**Speaker Notes (DE):** Zum Abschluss die Architektur: bewusste Designentscheidungen ohne Wirkungsbeleg — Tech-Stack, grünes Design, und bewusst kein produktives Backend für freie Einreichungen in der Beta (Datenschutz; Future Work). Der Status quo: die Designprinzipien sind als kohärentes Set instanziiert; die i18n ist inzwischen durchgängig (alle Seiten EN/EL/DE, plus DeepL-Auto-Übersetzung); offene Grenzen (offizielle SDG-Icons, Persistenz) sind selbst Designwissen. Damit übergebe ich an Anshul, der dieselben vier Iterationen aus der Demonstrations-Perspektive zeigt.
 
 ---
 
