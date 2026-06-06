@@ -12,10 +12,24 @@ import adminRouter from './routes/admin';
 const app = express();
 
 app.use(helmet());
-app.use(cors({
-  origin: process.env['CORS_ORIGIN'] || 'http://localhost:5173',
-  credentials: true,
-}));
+
+const corsOrigin = process.env['CORS_ORIGIN'] || 'http://localhost:5173';
+const isProd = process.env['NODE_ENV'] === 'production';
+const localhostOrigin = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+
+app.use(
+  cors({
+    // In dev, accept any localhost port (Vite may fall back to 5174, 5175, …);
+    // in production, only the configured CORS_ORIGIN. Non-browser clients send
+    // no Origin and are allowed (curl, server-to-server).
+    origin: (origin: string | undefined, cb: (err: Error | null, allow?: boolean) => void) => {
+      if (!origin || origin === corsOrigin) return cb(null, true);
+      if (!isProd && localhostOrigin.test(origin)) return cb(null, true);
+      return cb(null, false);
+    },
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(cookieParser());
 
