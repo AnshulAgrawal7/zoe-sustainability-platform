@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft } from 'lucide-react';
 import { getProject, updateProject } from '../../services/projectService';
+import AutoTranslatePanel from '../../components/admin/AutoTranslatePanel';
 import type { ApiProject } from '../../types';
 
 const CATEGORIES = [
@@ -125,6 +126,8 @@ export default function EditProjectPage() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        <AutoTranslatePanel values={form} onChange={set} />
+
         {/* Titles */}
         <section className="space-y-4 rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -136,7 +139,11 @@ export default function EditProjectPage() {
                 htmlFor={`edit-title-${lang.toLowerCase()}`}
                 className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
               >
-                {lang === 'En' ? 'English' : lang === 'El' ? 'Ελληνικά' : 'Deutsch'}
+                {lang === 'En'
+                  ? 'English'
+                  : lang === 'El'
+                    ? 'Ελληνικά'
+                    : 'Deutsch'}
               </label>
               <input
                 id={`edit-title-${lang.toLowerCase()}`}
@@ -160,12 +167,18 @@ export default function EditProjectPage() {
                 htmlFor={`edit-desc-${lang.toLowerCase()}`}
                 className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
               >
-                {lang === 'En' ? 'English' : lang === 'El' ? 'Ελληνικά' : 'Deutsch'}
+                {lang === 'En'
+                  ? 'English'
+                  : lang === 'El'
+                    ? 'Ελληνικά'
+                    : 'Deutsch'}
               </label>
               <textarea
                 id={`edit-desc-${lang.toLowerCase()}`}
                 rows={3}
-                value={form[`description${lang}` as keyof typeof form] as string}
+                value={
+                  form[`description${lang}` as keyof typeof form] as string
+                }
                 onChange={(e) => set(`description${lang}`, e.target.value)}
                 className="w-full resize-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
@@ -258,7 +271,8 @@ export default function EditProjectPage() {
           </div>
           {selectedSdgs.length > 0 && (
             <p className="mt-2 text-xs text-green-600 dark:text-green-400">
-              {t('admin.formSdgSelected')} {selectedSdgs.sort((a, b) => a - b).join(', ')}
+              {t('admin.formSdgSelected')}{' '}
+              {selectedSdgs.sort((a, b) => a - b).join(', ')}
             </p>
           )}
         </section>

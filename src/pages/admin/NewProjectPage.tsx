@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft } from 'lucide-react';
 import { createProject } from '../../services/projectService';
+import AutoTranslatePanel from '../../components/admin/AutoTranslatePanel';
 
 const CATEGORIES = [
   'ENVIRONMENT',
@@ -101,6 +102,8 @@ export default function NewProjectPage() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        <AutoTranslatePanel values={form} onChange={set} />
+
         {/* Titles */}
         <section className="space-y-4 rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">

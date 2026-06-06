@@ -123,7 +123,17 @@
     "formUnlimited": "Unlimited",
     "validationTitlesRequired": "All three titles are required.",
     "validationDescriptionsRequired": "All three descriptions are required.",
-    "validationSdgRequired": "Select at least one SDG."
+    "validationSdgRequired": "Select at least one SDG.",
+    "autoTranslate": {
+      "inputLang": "Input language",
+      "button": "Translate to the other languages",
+      "running": "Translating…",
+      "hint": "Type the title and description in the input language; DeepL fills the other two (still editable).",
+      "needSource": "Please fill in the title and description in the input language first.",
+      "notConfigured": "Auto-translation is not configured (DEEPL_API_KEY missing on the backend).",
+      "failed": "Translation failed. Please try again.",
+      "done": "Translated ✓ — please review"
+    }
   },
   "participate": {
     "title": "Citizen Participation",

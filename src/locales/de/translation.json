@@ -123,7 +123,17 @@
     "formUnlimited": "Unbegrenzt",
     "validationTitlesRequired": "Alle drei Titel sind erforderlich.",
     "validationDescriptionsRequired": "Alle drei Beschreibungen sind erforderlich.",
-    "validationSdgRequired": "Wählen Sie mindestens ein SDG aus."
+    "validationSdgRequired": "Wählen Sie mindestens ein SDG aus.",
+    "autoTranslate": {
+      "inputLang": "Eingabesprache",
+      "button": "In die anderen Sprachen übersetzen",
+      "running": "Übersetze…",
+      "hint": "Titel und Beschreibung in der Eingabesprache eingeben; DeepL füllt die anderen beiden (weiterhin editierbar).",
+      "needSource": "Bitte zuerst Titel und Beschreibung in der Eingabesprache ausfüllen.",
+      "notConfigured": "Auto-Übersetzung ist nicht konfiguriert (DEEPL_API_KEY fehlt im Backend).",
+      "failed": "Übersetzung fehlgeschlagen. Bitte erneut versuchen.",
+      "done": "Übersetzt ✓ — bitte prüfen"
+    }
   },
   "participate": {
     "title": "Bürgerbeteiligung",
