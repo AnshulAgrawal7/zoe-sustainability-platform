@@ -466,5 +466,32 @@
     ],
     "ctaText": "Machen Sie beim ZOE-Programm mit — zu welcher Gruppe Sie auch gehören, es gibt eine Rolle für Sie.",
     "ctaButton": "Finden Sie Ihre Beteiligungsmöglichkeit"
+  },
+  "events": {
+    "title": "Veranstaltungen & Initiativen",
+    "intro": "Anstehende Veranstaltungen, Workshops, Säuberungstage und Gemeinde-Foren. Finden Sie eine Aktivität in Ihrer Nähe und machen Sie mit.",
+    "prototypeNote": "Prototyp: Alle Veranstaltungsdaten und Termine sind illustrative Beispieldaten.",
+    "filterBy": "Filtern nach:",
+    "all": "Alle",
+    "categories": {
+      "Biodiversity": "Biodiversität",
+      "Circular Economy": "Kreislaufwirtschaft",
+      "Waste Reduction": "Abfallreduktion",
+      "Education": "Bildung",
+      "Water Protection": "Gewässerschutz",
+      "Sustainable Tourism": "Nachhaltiger Tourismus",
+      "Community Action": "Gemeinschaftsaktion"
+    },
+    "eventsFound_one": "{{count}} Veranstaltung gefunden",
+    "eventsFound_other": "{{count}} Veranstaltungen gefunden",
+    "noEventsMatch": "Keine Veranstaltungen passen zu Ihrem Filter.",
+    "showAll": "Alle Veranstaltungen anzeigen",
+    "relatedProject": "→ Zugehöriges Projekt",
+    "fullyBooked": "Ausgebucht",
+    "spotsLeft_one": "{{count}} Platz frei",
+    "spotsLeft_other": "{{count}} Plätze frei",
+    "register": "Anmelden",
+    "suggestText": "Möchten Sie eine neue Veranstaltung oder Initiative vorschlagen?",
+    "suggestLink": "Reichen Sie Ihre Idee auf der Beteiligungsseite ein →"
   }
 }

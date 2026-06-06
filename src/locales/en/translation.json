@@ -466,5 +466,32 @@
     ],
     "ctaText": "Participate in the ZOE programme — whichever group you belong to, there is a role for you.",
     "ctaButton": "Find your participation option"
+  },
+  "events": {
+    "title": "Events & Initiatives",
+    "intro": "Upcoming events, workshops, cleanup days and community forums. Find an activity near you and get involved.",
+    "prototypeNote": "Prototype: all event data and dates are illustrative dummy data.",
+    "filterBy": "Filter by:",
+    "all": "All",
+    "categories": {
+      "Biodiversity": "Biodiversity",
+      "Circular Economy": "Circular Economy",
+      "Waste Reduction": "Waste Reduction",
+      "Education": "Education",
+      "Water Protection": "Water Protection",
+      "Sustainable Tourism": "Sustainable Tourism",
+      "Community Action": "Community Action"
+    },
+    "eventsFound_one": "{{count}} event found",
+    "eventsFound_other": "{{count}} events found",
+    "noEventsMatch": "No events match your filter.",
+    "showAll": "Show all events",
+    "relatedProject": "→ Related project",
+    "fullyBooked": "Fully booked",
+    "spotsLeft_one": "{{count}} spot left",
+    "spotsLeft_other": "{{count}} spots left",
+    "register": "Register",
+    "suggestText": "Want to suggest a new event or initiative?",
+    "suggestLink": "Submit your idea on the Participation page →"
   }
 }
