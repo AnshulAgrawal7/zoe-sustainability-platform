@@ -14,15 +14,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../stores/authStore';
 import { useThemeStore } from '../../stores/themeStore';
-import { useLanguageStore } from '../../stores/languageStore';
 import { logout } from '../../services/authService';
-import type { Language } from '../../stores/languageStore';
-
-const LANGUAGES: { code: Language; label: string }[] = [
-  { code: 'en', label: 'English' },
-  { code: 'el', label: 'Ελληνικά' },
-  { code: 'de', label: 'Deutsch' },
-];
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Header() {
   const { t } = useTranslation();
@@ -31,7 +24,6 @@ export default function Header() {
 
   const { user, isAuthenticated, isAdmin, clearAuth } = useAuthStore();
   const { theme, toggleTheme } = useThemeStore();
-  const { language, setLanguage } = useLanguageStore();
 
   const navLinks = [
     { to: '/about', label: t('nav.about') },
@@ -90,19 +82,8 @@ export default function Header() {
 
           {/* Controls */}
           <div className="hidden items-center gap-2 lg:flex">
-            {/* Language selector */}
-            <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value as Language)}
-              aria-label={t('common.language')}
-              className="cursor-pointer rounded-md border-0 bg-transparent px-2 py-2 text-sm text-gray-500 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 dark:text-gray-400 dark:hover:bg-gray-800"
-            >
-              {LANGUAGES.map((lang) => (
-                <option key={lang.code} value={lang.code}>
-                  {lang.label}
-                </option>
-              ))}
-            </select>
+            {/* Language selector (flags) */}
+            <LanguageSwitcher size="sm" />
 
             {/* Dark mode toggle */}
             <button
@@ -214,20 +195,7 @@ export default function Header() {
               </NavLink>
             ))}
             <div className="mt-2 flex items-center gap-2 border-t border-gray-100 pt-2 dark:border-gray-800">
-              {LANGUAGES.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => setLanguage(lang.code)}
-                  aria-pressed={language === lang.code}
-                  className={`rounded px-2 py-1 text-xs font-semibold ${
-                    language === lang.code
-                      ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-400'
-                      : 'text-gray-500 dark:text-gray-400'
-                  }`}
-                >
-                  {lang.code.toUpperCase()}
-                </button>
-              ))}
+              <LanguageSwitcher size="md" />
               <button
                 onClick={toggleTheme}
                 aria-label={
