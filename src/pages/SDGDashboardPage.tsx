@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Globe, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { sdgs, sdgProgressData } from '../data/sdgs';
 import { projects } from '../data/projects';
 import ProgressBar from '../components/ui/ProgressBar';
@@ -10,54 +11,76 @@ function getProjectsForSdg(sdgNumber: SDGNumber) {
 }
 
 export default function SDGDashboardPage() {
+  const { t } = useTranslation();
+
+  const stats = [
+    {
+      label: t('sdgDashboard.statSdgsAddressed'),
+      value: sdgs.length,
+      unit: t('sdgDashboard.unitOf17'),
+    },
+    {
+      label: t('sdgDashboard.statActiveProjects'),
+      value: projects.filter((p) => p.status === 'Active').length,
+      unit: t('sdgDashboard.unitProjects'),
+    },
+    {
+      label: t('sdgDashboard.statCompletedProjects'),
+      value: projects.filter((p) => p.status === 'Completed').length,
+      unit: t('sdgDashboard.unitProjects'),
+    },
+    {
+      label: t('sdgDashboard.statAvgProgress'),
+      value: Math.round(
+        sdgProgressData.reduce((a, b) => a + b.progressPercent, 0) /
+          sdgProgressData.length
+      ),
+      unit: t('sdgDashboard.unitPercentPrototype'),
+    },
+  ];
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center gap-2 text-gray-500 text-sm mb-2">
+        <div className="mb-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
           <Globe size={16} aria-hidden="true" />
-          <span>UN Sustainable Development Goals</span>
+          <span>{t('sdgDashboard.eyebrow')}</span>
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-3">
-          SDG Dashboard
+        <h1 className="mb-3 text-3xl font-bold text-gray-900 dark:text-white">
+          {t('sdgDashboard.title')}
         </h1>
-        <p className="text-gray-600 max-w-2xl leading-relaxed">
-          The ZOE programme aligns all projects to relevant UN Sustainable
-          Development Goals. This dashboard shows which goals are addressed,
-          how many projects contribute to each, and illustrative progress
-          estimates.
+        <p className="max-w-2xl leading-relaxed text-gray-600 dark:text-gray-300">
+          {t('sdgDashboard.intro')}
         </p>
-        <div className="mt-3 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2.5 text-sm text-amber-800 inline-block">
-          <strong>Prototype note:</strong> All percentages and figures are
-          fictional dummy data for demonstration purposes only.
+        <div className="mt-3 inline-block rounded-lg border border-amber-200 bg-amber-50 px-4 py-2.5 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-300">
+          <strong>{t('sdgDashboard.prototypeNoteLabel')}</strong>{' '}
+          {t('sdgDashboard.prototypeNote')}
         </div>
       </div>
 
       {/* Overview row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
-        {[
-          { label: 'SDGs Addressed', value: sdgs.length, unit: 'of 17' },
-          { label: 'Active Projects', value: projects.filter((p) => p.status === 'Active').length, unit: 'projects' },
-          { label: 'Completed Projects', value: projects.filter((p) => p.status === 'Completed').length, unit: 'projects' },
-          { label: 'Avg SDG Progress', value: Math.round(sdgProgressData.reduce((a, b) => a + b.progressPercent, 0) / sdgProgressData.length), unit: '% (prototype)' },
-        ].map((item) => (
+      <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {stats.map((item) => (
           <div
             key={item.label}
-            className="bg-white rounded-xl border border-gray-200 p-4 text-center"
+            className="rounded-xl border border-gray-200 bg-white p-4 text-center dark:border-gray-700 dark:bg-gray-800"
           >
-            <p className="text-2xl font-bold text-green-700">
+            <p className="text-2xl font-bold text-green-700 dark:text-green-400">
               {item.value}
-              <span className="text-sm font-normal text-gray-500 ml-1">
+              <span className="ml-1 text-sm font-normal text-gray-500 dark:text-gray-400">
                 {item.unit}
               </span>
             </p>
-            <p className="text-xs text-gray-600 mt-1">{item.label}</p>
+            <p className="mt-1 text-xs text-gray-600 dark:text-gray-300">
+              {item.label}
+            </p>
           </div>
         ))}
       </div>
 
       {/* SDG cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {sdgs.map((sdg) => {
           const progressEntry = sdgProgressData.find(
             (d) => d.sdg === sdg.number
@@ -68,7 +91,7 @@ export default function SDGDashboardPage() {
           return (
             <div
               key={sdg.number}
-              className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+              className="overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
             >
               {/* SDG color header */}
               <div
@@ -77,29 +100,30 @@ export default function SDGDashboardPage() {
                 aria-hidden="true"
               />
               <div className="p-5">
-                <div className="flex items-start justify-between gap-2 mb-3">
+                <div className="mb-3 flex items-start justify-between gap-2">
                   <span
-                    className="text-sm font-bold text-white rounded px-2 py-0.5"
+                    className="rounded px-2 py-0.5 text-sm font-bold text-white"
                     style={{ backgroundColor: sdg.color }}
                   >
                     SDG {sdg.number}
                   </span>
-                  <span className="text-xs text-gray-500">
-                    {linkedProjects.length} project
-                    {linkedProjects.length !== 1 ? 's' : ''}
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {t('sdgDashboard.projectsCount', {
+                      count: linkedProjects.length,
+                    })}
                   </span>
                 </div>
-                <h2 className="font-semibold text-gray-900 mb-2">
+                <h2 className="mb-2 font-semibold text-gray-900 dark:text-white">
                   {sdg.title}
                 </h2>
-                <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                <p className="mb-4 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                   {sdg.description}
                 </p>
 
                 {/* Progress */}
                 <div className="mb-4">
-                  <div className="flex justify-between text-xs text-gray-500 mb-1">
-                    <span>Programme progress (prototype)</span>
+                  <div className="mb-1 flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                    <span>{t('sdgDashboard.programmeProgress')}</span>
                     <span>{progress}%</span>
                   </div>
                   <ProgressBar
@@ -112,20 +136,17 @@ export default function SDGDashboardPage() {
                 {/* Linked projects */}
                 {linkedProjects.length > 0 && (
                   <div>
-                    <p className="text-xs font-medium text-gray-500 mb-2">
-                      Contributing projects:
+                    <p className="mb-2 text-xs font-medium text-gray-500 dark:text-gray-400">
+                      {t('sdgDashboard.contributingProjects')}
                     </p>
                     <ul className="space-y-1">
                       {linkedProjects.map((p) => (
                         <li key={p.id}>
                           <Link
                             to={`/projects/${p.id}`}
-                            className="text-xs text-green-700 hover:text-green-900 hover:underline flex items-center gap-1"
+                            className="flex items-center gap-1 text-xs text-green-700 hover:text-green-900 hover:underline dark:text-green-400 dark:hover:text-green-300"
                           >
-                            <ArrowRight
-                              size={10}
-                              aria-hidden="true"
-                            />
+                            <ArrowRight size={10} aria-hidden="true" />
                             {p.title}
                           </Link>
                         </li>
@@ -140,16 +161,12 @@ export default function SDGDashboardPage() {
       </div>
 
       {/* Footer note */}
-      <div className="mt-10 bg-gray-50 rounded-xl border border-gray-200 p-6 text-center">
-        <h2 className="font-semibold text-gray-900 mb-2">
-          About this dashboard
+      <div className="mt-10 rounded-xl border border-gray-200 bg-gray-50 p-6 text-center dark:border-gray-700 dark:bg-gray-800/50">
+        <h2 className="mb-2 font-semibold text-gray-900 dark:text-white">
+          {t('sdgDashboard.aboutTitle')}
         </h2>
-        <p className="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed">
-          SDG alignment is self-reported by project coordinators and reviewed
-          by the ZOE team. Progress percentages represent the municipality's
-          own assessment against locally-defined targets. This dashboard is a
-          prototype — a real system would pull live data from verified project
-          reports.
+        <p className="mx-auto max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+          {t('sdgDashboard.aboutText')}
         </p>
       </div>
     </div>

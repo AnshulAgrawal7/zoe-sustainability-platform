@@ -339,5 +339,25 @@
       "success": "Danke! In der Vollversion würden Sie nun eine Bestätigungs-E-Mail erhalten.",
       "prototypeNotice": "Prototyp: Es wird keine E-Mail gespeichert oder versendet. Dies veranschaulicht das geplante Newsletter-Opt-in."
     }
+  },
+  "sdgDashboard": {
+    "eyebrow": "UN-Ziele für nachhaltige Entwicklung",
+    "title": "SDG-Dashboard",
+    "intro": "Das ZOE-Programm ordnet alle Projekte den relevanten UN-Zielen für nachhaltige Entwicklung zu. Dieses Dashboard zeigt, welche Ziele adressiert werden, wie viele Projekte zu jedem beitragen, und veranschaulichende Fortschrittsschätzungen.",
+    "prototypeNoteLabel": "Prototyp-Hinweis:",
+    "prototypeNote": "Alle Prozentsätze und Zahlen sind ausschließlich fiktive Beispieldaten zu Demonstrationszwecken.",
+    "statSdgsAddressed": "Adressierte SDGs",
+    "statActiveProjects": "Aktive Projekte",
+    "statCompletedProjects": "Abgeschlossene Projekte",
+    "statAvgProgress": "Ø SDG-Fortschritt",
+    "unitOf17": "von 17",
+    "unitProjects": "Projekte",
+    "unitPercentPrototype": "% (Prototyp)",
+    "projectsCount_one": "{{count}} Projekt",
+    "projectsCount_other": "{{count}} Projekte",
+    "programmeProgress": "Programm-Fortschritt (Prototyp)",
+    "contributingProjects": "Beitragende Projekte:",
+    "aboutTitle": "Über dieses Dashboard",
+    "aboutText": "Die SDG-Zuordnung wird von den Projektkoordinator:innen selbst angegeben und vom ZOE-Team geprüft. Die Fortschritts-Prozentsätze sind die Einschätzung der Gemeinde gegenüber lokal definierten Zielen. Dieses Dashboard ist ein Prototyp — ein echtes System würde Live-Daten aus verifizierten Projektberichten beziehen."
   }
 }
