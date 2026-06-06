@@ -493,5 +493,97 @@
     "register": "Register",
     "suggestText": "Want to suggest a new event or initiative?",
     "suggestLink": "Submit your idea on the Participation page →"
+  },
+  "roadmap": {
+    "title": "Platform Roadmap",
+    "intro": "The ZOE platform follows an iterative Design Science Research process. This roadmap describes the planned phases from the current MVP prototype through to a full production system.",
+    "statusLabel": "Current status:",
+    "statusNote": "Phase 1 (MVP Prototype) is complete. Future phases depend on evaluation findings and municipality decisions.",
+    "status": {
+      "completed": "Completed",
+      "current": "In Progress",
+      "upcoming": "Planned"
+    },
+    "backendTitle": "Backend architecture concept",
+    "backendText": "The technical design for the future backend (Phases 4–5) is documented in the project repository. It covers database schema, API layer, admin interface, and security/privacy considerations.",
+    "linkImpact": "View current impact data",
+    "linkFeedback": "Give feedback on the roadmap",
+    "phases": [
+      {
+        "phase": "Phase 1 — MVP Prototype",
+        "period": "Spring 2025",
+        "description": "Build and demonstrate the core frontend prototype as a Design Science Research artefact. Establish information architecture, dummy data, and core participation workflows.",
+        "items": [
+          "Vite + React + TypeScript project setup",
+          "Tailwind CSS design system",
+          "Landing, About, and Projects pages",
+          "SDG Dashboard",
+          "Citizen Participation page with mock form",
+          "Events & Initiatives listing",
+          "Transparency / Impact metrics page",
+          "Responsive navigation and layout",
+          "Prototype data clearly labelled",
+          "DSR documentation (methodology, architecture, evaluation)"
+        ]
+      },
+      {
+        "phase": "Phase 2 — UX & Content Improvement",
+        "period": "Summer–Autumn 2025",
+        "description": "Improve UI polish, content quality and accessibility based on initial user feedback. Conduct formative evaluation with municipality staff and citizen focus groups.",
+        "items": [
+          "Expert UI/UX review and iterations",
+          "Accessibility audit (WCAG 2.1 AA)",
+          "Greek language support / internationalisation",
+          "Improved mobile experience",
+          "Enhanced SDG visualisations and charts",
+          "Content reviewed by municipality communications team",
+          "User testing sessions with 5–10 participants",
+          "Formative evaluation report"
+        ]
+      },
+      {
+        "phase": "Phase 3 — DSR Evaluation & Iteration",
+        "period": "Autumn–Winter 2025",
+        "description": "Conduct structured evaluation against DSR criteria. Iterate on findings. Prepare evaluation report for academic submission and stakeholder presentation.",
+        "items": [
+          "Structured evaluation interviews (n ≥ 10)",
+          "Survey-based usability assessment (SUS score)",
+          "Expert walkthroughs with DSR researchers",
+          "Platform iteration based on evaluation findings",
+          "Updated artifact description and architecture docs",
+          "Formal evaluation report for academic submission",
+          "Stakeholder presentation to municipality"
+        ]
+      },
+      {
+        "phase": "Phase 4 — Backend Concept & Pilot",
+        "period": "2026",
+        "description": "Design and prototype a real backend to replace dummy data. Establish database schema, API layer, admin interface, and citizen submission workflows.",
+        "items": [
+          "Database schema design (projects, events, users, submissions)",
+          "REST / GraphQL API design",
+          "Authentication & role management (citizen vs admin)",
+          "Admin dashboard for municipality staff",
+          "Citizen submission moderation workflow",
+          "Data migration from dummy to real data",
+          "Security & privacy assessment (GDPR)",
+          "Pilot deployment with selected municipality staff"
+        ]
+      },
+      {
+        "phase": "Phase 5 — Production Deployment",
+        "period": "2026–2027",
+        "description": "Full production deployment for public use by Northern Corfu residents and municipality. Ongoing maintenance, analytics, and further feature development.",
+        "items": [
+          "Production infrastructure setup",
+          "Public launch and communications campaign",
+          "Citizen onboarding and tutorials",
+          "Analytics and reporting dashboard",
+          "API integrations (e.g., municipal systems, open data)",
+          "Mobile app exploration",
+          "Ongoing summative evaluation"
+        ]
+      }
+    ]
   }
 }

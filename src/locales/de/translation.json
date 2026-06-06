@@ -493,5 +493,97 @@
     "register": "Anmelden",
     "suggestText": "Möchten Sie eine neue Veranstaltung oder Initiative vorschlagen?",
     "suggestLink": "Reichen Sie Ihre Idee auf der Beteiligungsseite ein →"
+  },
+  "roadmap": {
+    "title": "Plattform-Roadmap",
+    "intro": "Die ZOE-Plattform folgt einem iterativen Design-Science-Research-Prozess. Diese Roadmap beschreibt die geplanten Phasen vom aktuellen MVP-Prototyp bis zum vollständigen Produktivsystem.",
+    "statusLabel": "Aktueller Stand:",
+    "statusNote": "Phase 1 (MVP-Prototyp) ist abgeschlossen. Künftige Phasen hängen von den Evaluationsergebnissen und Entscheidungen der Gemeinde ab.",
+    "status": {
+      "completed": "Abgeschlossen",
+      "current": "In Arbeit",
+      "upcoming": "Geplant"
+    },
+    "backendTitle": "Backend-Architekturkonzept",
+    "backendText": "Das technische Design für das künftige Backend (Phasen 4–5) ist im Projekt-Repository dokumentiert. Es umfasst Datenbankschema, API-Schicht, Admin-Oberfläche und Sicherheits-/Datenschutzaspekte.",
+    "linkImpact": "Aktuelle Wirkungsdaten ansehen",
+    "linkFeedback": "Feedback zur Roadmap geben",
+    "phases": [
+      {
+        "phase": "Phase 1 — MVP-Prototyp",
+        "period": "Frühjahr 2025",
+        "description": "Den zentralen Frontend-Prototyp als Design-Science-Research-Artefakt bauen und demonstrieren. Informationsarchitektur, Beispieldaten und zentrale Beteiligungs-Workflows etablieren.",
+        "items": [
+          "Projekt-Setup mit Vite + React + TypeScript",
+          "Tailwind-CSS-Designsystem",
+          "Startseite, Über-uns- und Projektseiten",
+          "SDG-Dashboard",
+          "Bürgerbeteiligungsseite mit Mock-Formular",
+          "Veranstaltungs- & Initiativenliste",
+          "Transparenz-/Wirkungsseite",
+          "Responsive Navigation und Layout",
+          "Prototyp-Daten klar gekennzeichnet",
+          "DSR-Dokumentation (Methodik, Architektur, Evaluation)"
+        ]
+      },
+      {
+        "phase": "Phase 2 — UX- & Inhaltsverbesserung",
+        "period": "Sommer–Herbst 2025",
+        "description": "UI-Feinschliff, Inhaltsqualität und Barrierefreiheit anhand von erstem Nutzerfeedback verbessern. Formative Evaluation mit Gemeindemitarbeitenden und Bürger-Fokusgruppen.",
+        "items": [
+          "Experten-UI/UX-Review und Iterationen",
+          "Barrierefreiheits-Audit (WCAG 2.1 AA)",
+          "Griechische Sprachunterstützung / Internationalisierung",
+          "Verbesserte mobile Erfahrung",
+          "Erweiterte SDG-Visualisierungen und Diagramme",
+          "Inhalte vom Kommunikationsteam der Gemeinde geprüft",
+          "Nutzertests mit 5–10 Teilnehmenden",
+          "Formativer Evaluationsbericht"
+        ]
+      },
+      {
+        "phase": "Phase 3 — DSR-Evaluation & Iteration",
+        "period": "Herbst–Winter 2025",
+        "description": "Strukturierte Evaluation anhand der DSR-Kriterien durchführen. Auf Basis der Ergebnisse iterieren. Evaluationsbericht für akademische Einreichung und Stakeholder-Präsentation vorbereiten.",
+        "items": [
+          "Strukturierte Evaluationsinterviews (n ≥ 10)",
+          "Umfragebasierte Usability-Bewertung (SUS-Score)",
+          "Experten-Walkthroughs mit DSR-Forschenden",
+          "Plattform-Iteration auf Basis der Evaluationsergebnisse",
+          "Aktualisierte Artefakt-Beschreibung und Architektur-Doku",
+          "Formaler Evaluationsbericht für akademische Einreichung",
+          "Stakeholder-Präsentation für die Gemeinde"
+        ]
+      },
+      {
+        "phase": "Phase 4 — Backend-Konzept & Pilot",
+        "period": "2026",
+        "description": "Ein echtes Backend entwerfen und prototypisieren, um Beispieldaten zu ersetzen. Datenbankschema, API-Schicht, Admin-Oberfläche und Bürger-Einreichungs-Workflows etablieren.",
+        "items": [
+          "Datenbankschema-Design (Projekte, Events, Nutzer, Einreichungen)",
+          "REST-/GraphQL-API-Design",
+          "Authentifizierung & Rollenverwaltung (Bürger vs. Admin)",
+          "Admin-Dashboard für Gemeindemitarbeitende",
+          "Moderations-Workflow für Bürgereinreichungen",
+          "Datenmigration von Beispiel- zu echten Daten",
+          "Sicherheits- & Datenschutzbewertung (DSGVO)",
+          "Pilot-Deployment mit ausgewählten Gemeindemitarbeitenden"
+        ]
+      },
+      {
+        "phase": "Phase 5 — Produktiver Einsatz",
+        "period": "2026–2027",
+        "description": "Vollständiger produktiver Einsatz zur öffentlichen Nutzung durch die Einwohner:innen Nord-Korfus und die Gemeinde. Laufende Wartung, Analytics und weitere Funktionsentwicklung.",
+        "items": [
+          "Aufbau der Produktiv-Infrastruktur",
+          "Öffentlicher Launch und Kommunikationskampagne",
+          "Bürger-Onboarding und Tutorials",
+          "Analytics- und Reporting-Dashboard",
+          "API-Integrationen (z. B. kommunale Systeme, Open Data)",
+          "Erkundung einer mobilen App",
+          "Laufende summative Evaluation"
+        ]
+      }
+    ]
   }
 }
