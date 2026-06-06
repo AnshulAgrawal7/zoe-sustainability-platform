@@ -35,3 +35,7 @@ export function conflict(res: Response, error: string) {
 export function serverError(res: Response, error = 'Internal server error') {
   return res.status(500).json({ success: false, error });
 }
+
+export function serviceUnavailable(res: Response, error = 'Service unavailable') {
+  return res.status(503).json({ success: false, error });
+}
