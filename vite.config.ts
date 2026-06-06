@@ -9,6 +9,8 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./src/__tests__/setup.ts'],
-    exclude: [...defaultExclude, 'e2e/**'],
+    // backend/** has its own vitest config (node env + DB setup); keep it out
+    // of the frontend (jsdom) run.
+    exclude: [...defaultExclude, 'e2e/**', 'backend/**'],
   },
 })
