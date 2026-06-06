@@ -409,5 +409,62 @@
     ],
     "footerLabel": "Research transparency:",
     "footerText": "This is a prototype platform built for a Design Science Research academic project. All data shown is fictional and intended to demonstrate the information architecture and UX concepts only. A production deployment would require a verified data pipeline from real project management systems."
+  },
+  "audiences": {
+    "title": "Who We Reach — Target Audiences & Sensitization",
+    "intro": "Environmental change in Northern Corfu requires reaching very different groups of people — each with distinct concerns, channels, and motivations. ZOE uses a multi-audience, multi-channel approach because no single message or medium works for everyone.",
+    "researchNote": "This analysis is based on demographic research into Northern Corfu and the Ionian islands, civic engagement studies in Greek municipalities, and fieldwork by the Ionian Environment Foundation (IEF). The platform itself is a prototype — not yet live with real reach data.",
+    "context": [
+      {
+        "stat": "~102,000",
+        "label": "permanent residents on Corfu",
+        "note": "majority in working age, ageing rapidly"
+      },
+      {
+        "stat": "4 million",
+        "label": "visitors per year",
+        "note": "40× the permanent population in peak season"
+      },
+      {
+        "stat": "78%",
+        "label": "rural household internet penetration",
+        "note": "offline channels still essential"
+      }
+    ],
+    "keyConcerns": "Key concerns",
+    "effectiveChannels": "Effective channels",
+    "onlineChannel": "Online channel",
+    "offlineChannel": "Offline channel",
+    "entryPoint": "Entry point",
+    "watchOut": "Watch out for",
+    "principlesHeading": "Sensitization Principles",
+    "principles": [
+      {
+        "title": "Local and concrete",
+        "desc": "Name real places — Antinioti Lagoon, Erimitis, Kassiopi beach. Abstract 'sustainability' messaging fails where tangible, local threats succeed."
+      },
+      {
+        "title": "Multi-channel by design",
+        "desc": "Digital-only misses 40%+ of Northern Corfu's rural population. Every programme must include offline channels: radio, community meetings, church networks."
+      },
+      {
+        "title": "Seasonal timing",
+        "desc": "Launch engagement in shoulder season (April–May, September–October). Summer is for tourists and working — not for launching new civic programmes to residents."
+      },
+      {
+        "title": "Trusted intermediaries",
+        "desc": "In village settings, a respected local farmer or fisherman is more persuasive than municipal communications. Identify and support these natural advocates."
+      },
+      {
+        "title": "Visible results first",
+        "desc": "Post-crisis trust in Greek municipalities is low. Show tangible results — a cleaned beach, a restored terrace wall, a saved forest — before asking for sustained commitment."
+      },
+      {
+        "title": "Frame around livelihood, not ideology",
+        "desc": "For farmers, fishermen and businesses, sustainability must be an economic argument before it is a moral one. Show how it protects income, not just the environment."
+      }
+    ],
+    "ctaText": "Participate in the ZOE programme — whichever group you belong to, there is a role for you.",
+    "ctaButton": "Find your participation option"
   }
 }

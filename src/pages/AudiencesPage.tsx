@@ -13,6 +13,7 @@ import {
   Info,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { targetAudiences } from '../data/audiences';
 
 const iconMap: Record<string, React.ElementType> = {
@@ -25,65 +26,84 @@ const iconMap: Record<string, React.ElementType> = {
 };
 
 const audienceColors: Record<string, string> = {
-  residents: 'border-green-300 bg-green-50',
-  farmers: 'border-lime-300 bg-lime-50',
-  fishermen: 'border-blue-300 bg-blue-50',
-  'tourism-businesses': 'border-teal-300 bg-teal-50',
-  'young-people': 'border-violet-300 bg-violet-50',
-  tourists: 'border-amber-300 bg-amber-50',
+  residents:
+    'border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-900/20',
+  farmers:
+    'border-lime-300 bg-lime-50 dark:border-lime-800 dark:bg-lime-900/20',
+  fishermen:
+    'border-blue-300 bg-blue-50 dark:border-blue-800 dark:bg-blue-900/20',
+  'tourism-businesses':
+    'border-teal-300 bg-teal-50 dark:border-teal-800 dark:bg-teal-900/20',
+  'young-people':
+    'border-violet-300 bg-violet-50 dark:border-violet-800 dark:bg-violet-900/20',
+  tourists:
+    'border-amber-300 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20',
 };
 
 const audienceIconColors: Record<string, string> = {
-  residents: 'bg-green-100 text-green-700',
-  farmers: 'bg-lime-100 text-lime-700',
-  fishermen: 'bg-blue-100 text-blue-700',
-  'tourism-businesses': 'bg-teal-100 text-teal-700',
-  'young-people': 'bg-violet-100 text-violet-700',
-  tourists: 'bg-amber-100 text-amber-700',
+  residents:
+    'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
+  farmers: 'bg-lime-100 text-lime-700 dark:bg-lime-900/40 dark:text-lime-300',
+  fishermen: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
+  'tourism-businesses':
+    'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
+  'young-people':
+    'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',
+  tourists:
+    'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',
 };
 
 export default function AudiencesPage() {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | null>(null);
+  const context = t('audiences.context', { returnObjects: true }) as {
+    stat: string;
+    label: string;
+    note: string;
+  }[];
+  const principles = t('audiences.principles', { returnObjects: true }) as {
+    title: string;
+    desc: string;
+  }[];
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="mb-10">
-        <h1 className="text-3xl font-bold text-gray-900 mb-3">
-          Who We Reach — Target Audiences & Sensitization
+        <h1 className="mb-3 text-3xl font-bold text-gray-900 dark:text-white">
+          {t('audiences.title')}
         </h1>
-        <p className="text-gray-600 max-w-2xl leading-relaxed">
-          Environmental change in Northern Corfu requires reaching very
-          different groups of people — each with distinct concerns, channels,
-          and motivations. ZOE uses a multi-audience, multi-channel approach
-          because no single message or medium works for everyone.
+        <p className="max-w-2xl leading-relaxed text-gray-600 dark:text-gray-300">
+          {t('audiences.intro')}
         </p>
-        <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 flex items-start gap-3">
-          <Info size={18} className="text-blue-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
-          <p className="text-sm text-blue-800 leading-relaxed">
-            This analysis is based on demographic research into Northern Corfu
-            and the Ionian islands, civic engagement studies in Greek
-            municipalities, and fieldwork by the Ionian Environment Foundation
-            (IEF). The platform itself is a prototype — not yet live with real
-            reach data.
+        <div className="mt-4 flex items-start gap-3 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 dark:border-blue-800 dark:bg-blue-900/20">
+          <Info
+            size={18}
+            className="mt-0.5 flex-shrink-0 text-blue-600 dark:text-blue-400"
+            aria-hidden="true"
+          />
+          <p className="text-sm leading-relaxed text-blue-800 dark:text-blue-300">
+            {t('audiences.researchNote')}
           </p>
         </div>
       </div>
 
       {/* Context strip */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-        {[
-          { stat: '~102,000', label: 'permanent residents on Corfu', note: 'majority in working age, ageing rapidly' },
-          { stat: '4 million', label: 'visitors per year', note: '40× the permanent population in peak season' },
-          { stat: '78%', label: 'rural household internet penetration', note: 'offline channels still essential' },
-        ].map((item) => (
+      <div className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {context.map((item) => (
           <div
             key={item.label}
-            className="bg-white rounded-xl border border-gray-200 p-4 text-center"
+            className="rounded-xl border border-gray-200 bg-white p-4 text-center dark:border-gray-700 dark:bg-gray-800"
           >
-            <p className="text-2xl font-bold text-green-700">{item.stat}</p>
-            <p className="text-sm font-medium text-gray-900 mt-0.5">{item.label}</p>
-            <p className="text-xs text-gray-500 mt-1">{item.note}</p>
+            <p className="text-2xl font-bold text-green-700 dark:text-green-400">
+              {item.stat}
+            </p>
+            <p className="mt-0.5 text-sm font-medium text-gray-900 dark:text-white">
+              {item.label}
+            </p>
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              {item.note}
+            </p>
           </div>
         ))}
       </div>
@@ -93,8 +113,12 @@ export default function AudiencesPage() {
         {targetAudiences.map((audience) => {
           const Icon = iconMap[audience.icon] ?? Home;
           const isOpen = expanded === audience.id;
-          const borderColor = audienceColors[audience.id] ?? 'border-gray-200 bg-white';
-          const iconColor = audienceIconColors[audience.id] ?? 'bg-gray-100 text-gray-600';
+          const borderColor =
+            audienceColors[audience.id] ??
+            'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800';
+          const iconColor =
+            audienceIconColors[audience.id] ??
+            'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300';
 
           return (
             <div
@@ -104,41 +128,56 @@ export default function AudiencesPage() {
               {/* Summary row — always visible */}
               <button
                 onClick={() => setExpanded(isOpen ? null : audience.id)}
-                className="w-full text-left px-5 py-4 flex items-center gap-4"
+                className="flex w-full items-center gap-4 px-5 py-4 text-left"
                 aria-expanded={isOpen}
               >
-                <div className={`p-2.5 rounded-lg flex-shrink-0 ${iconColor}`}>
+                <div className={`flex-shrink-0 rounded-lg p-2.5 ${iconColor}`}>
                   <Icon size={20} aria-hidden="true" />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h2 className="font-semibold text-gray-900">{audience.name}</h2>
-                  <p className="text-sm text-gray-600 mt-0.5">{audience.tagline}</p>
+                <div className="min-w-0 flex-1">
+                  <h2 className="font-semibold text-gray-900 dark:text-white">
+                    {audience.name}
+                  </h2>
+                  <p className="mt-0.5 text-sm text-gray-600 dark:text-gray-300">
+                    {audience.tagline}
+                  </p>
                 </div>
                 {isOpen ? (
-                  <ChevronUp size={18} className="text-gray-400 flex-shrink-0" aria-hidden="true" />
+                  <ChevronUp
+                    size={18}
+                    className="flex-shrink-0 text-gray-400"
+                    aria-hidden="true"
+                  />
                 ) : (
-                  <ChevronDown size={18} className="text-gray-400 flex-shrink-0" aria-hidden="true" />
+                  <ChevronDown
+                    size={18}
+                    className="flex-shrink-0 text-gray-400"
+                    aria-hidden="true"
+                  />
                 )}
               </button>
 
               {/* Expanded detail */}
               {isOpen && (
-                <div className="px-5 pb-6 border-t border-white/60 grid grid-cols-1 md:grid-cols-2 gap-6 pt-5">
+                <div className="grid grid-cols-1 gap-6 border-t border-black/5 px-5 pb-6 pt-5 dark:border-white/10 md:grid-cols-2">
                   {/* Left: description + concerns */}
                   <div>
-                    <p className="text-sm text-gray-700 leading-relaxed mb-4">
+                    <p className="mb-4 text-sm leading-relaxed text-gray-700 dark:text-gray-200">
                       {audience.description}
                     </p>
-                    <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                      Key concerns
+                    <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      {t('audiences.keyConcerns')}
                     </h3>
                     <ul className="space-y-1.5">
                       {audience.keyConcerns.map((concern) => (
                         <li
                           key={concern}
-                          className="flex items-start gap-2 text-sm text-gray-700"
+                          className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-200"
                         >
-                          <span className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0" aria-hidden="true" />
+                          <span
+                            className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gray-400"
+                            aria-hidden="true"
+                          />
                           {concern}
                         </li>
                       ))}
@@ -147,37 +186,47 @@ export default function AudiencesPage() {
 
                   {/* Right: channels + strategy */}
                   <div>
-                    <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                      Effective channels
+                    <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      {t('audiences.effectiveChannels')}
                     </h3>
-                    <ul className="space-y-1.5 mb-4">
+                    <ul className="mb-4 space-y-1.5">
                       {audience.channels.map((ch) => (
                         <li
                           key={ch.label}
-                          className="flex items-start gap-2 text-sm text-gray-700"
+                          className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-200"
                         >
                           {ch.type === 'online' ? (
-                            <Wifi size={13} className="text-blue-500 flex-shrink-0 mt-0.5" aria-label="Online channel" />
+                            <Wifi
+                              size={13}
+                              className="mt-0.5 flex-shrink-0 text-blue-500"
+                              aria-label={t('audiences.onlineChannel')}
+                            />
                           ) : (
-                            <WifiOff size={13} className="text-orange-500 flex-shrink-0 mt-0.5" aria-label="Offline channel" />
+                            <WifiOff
+                              size={13}
+                              className="mt-0.5 flex-shrink-0 text-orange-500"
+                              aria-label={t('audiences.offlineChannel')}
+                            />
                           )}
                           {ch.label}
                         </li>
                       ))}
                     </ul>
 
-                    <div className="bg-white/70 rounded-lg p-3 border border-white mb-3">
-                      <p className="text-xs font-semibold text-green-700 mb-1">Entry point</p>
-                      <p className="text-sm text-gray-700 leading-relaxed">
+                    <div className="mb-3 rounded-lg border border-white bg-white/70 p-3 dark:border-gray-700 dark:bg-gray-900/40">
+                      <p className="mb-1 text-xs font-semibold text-green-700 dark:text-green-400">
+                        {t('audiences.entryPoint')}
+                      </p>
+                      <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-200">
                         {audience.entryPoint}
                       </p>
                     </div>
 
-                    <div className="bg-amber-50 rounded-lg p-3 border border-amber-100">
-                      <p className="text-xs font-semibold text-amber-700 mb-1">
-                        Watch out for
+                    <div className="rounded-lg border border-amber-100 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-900/20">
+                      <p className="mb-1 text-xs font-semibold text-amber-700 dark:text-amber-400">
+                        {t('audiences.watchOut')}
                       </p>
-                      <p className="text-sm text-amber-900 leading-relaxed">
+                      <p className="text-sm leading-relaxed text-amber-900 dark:text-amber-200">
                         {audience.barrierNote}
                       </p>
                     </div>
@@ -191,58 +240,40 @@ export default function AudiencesPage() {
 
       {/* Sensitization principles */}
       <div className="mt-12">
-        <h2 className="text-xl font-semibold text-gray-900 mb-5">
-          Sensitization Principles
+        <h2 className="mb-5 text-xl font-semibold text-gray-900 dark:text-white">
+          {t('audiences.principlesHeading')}
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            {
-              title: 'Local and concrete',
-              desc: "Name real places — Antinioti Lagoon, Erimitis, Kassiopi beach. Abstract 'sustainability' messaging fails where tangible, local threats succeed.",
-            },
-            {
-              title: 'Multi-channel by design',
-              desc: "Digital-only misses 40%+ of Northern Corfu's rural population. Every programme must include offline channels: radio, community meetings, church networks.",
-            },
-            {
-              title: 'Seasonal timing',
-              desc: 'Launch engagement in shoulder season (April–May, September–October). Summer is for tourists and working — not for launching new civic programmes to residents.',
-            },
-            {
-              title: 'Trusted intermediaries',
-              desc: 'In village settings, a respected local farmer or fisherman is more persuasive than municipal communications. Identify and support these natural advocates.',
-            },
-            {
-              title: 'Visible results first',
-              desc: 'Post-crisis trust in Greek municipalities is low. Show tangible results — a cleaned beach, a restored terrace wall, a saved forest — before asking for sustained commitment.',
-            },
-            {
-              title: 'Frame around livelihood, not ideology',
-              desc: "For farmers, fishermen and businesses, sustainability must be an economic argument before it is a moral one. Show how it protects income, not just the environment.",
-            },
-          ].map((item) => (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {principles.map((item) => (
             <div
               key={item.title}
-              className="bg-white rounded-xl border border-gray-200 p-5"
+              className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800"
             >
-              <div className="w-1 h-5 bg-green-500 rounded mb-3" aria-hidden="true" />
-              <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+              <div
+                className="mb-3 h-5 w-1 rounded bg-green-500"
+                aria-hidden="true"
+              />
+              <h3 className="mb-2 font-semibold text-gray-900 dark:text-white">
+                {item.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                {item.desc}
+              </p>
             </div>
           ))}
         </div>
       </div>
 
       {/* CTA */}
-      <div className="mt-10 bg-green-50 rounded-xl border border-green-200 p-6 text-center">
-        <p className="text-gray-700 text-sm mb-4">
-          Participate in the ZOE programme — whichever group you belong to, there is a role for you.
+      <div className="mt-10 rounded-xl border border-green-200 bg-green-50 p-6 text-center dark:border-green-800 dark:bg-green-900/20">
+        <p className="mb-4 text-sm text-gray-700 dark:text-gray-200">
+          {t('audiences.ctaText')}
         </p>
         <Link
           to="/participate"
-          className="inline-flex items-center gap-2 bg-green-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-green-700 transition-colors text-sm"
+          className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
         >
-          Find your participation option
+          {t('audiences.ctaButton')}
         </Link>
       </div>
     </div>

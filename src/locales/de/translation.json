@@ -409,5 +409,62 @@
     ],
     "footerLabel": "Forschungstransparenz:",
     "footerText": "Dies ist eine Prototyp-Plattform für ein Design-Science-Research-Projekt. Alle gezeigten Daten sind fiktiv und dienen nur der Demonstration der Informationsarchitektur und UX-Konzepte. Ein produktiver Einsatz würde eine verifizierte Datenpipeline aus echten Projektmanagementsystemen erfordern."
+  },
+  "audiences": {
+    "title": "Wen wir erreichen — Zielgruppen & Sensibilisierung",
+    "intro": "Umweltveränderung in Nord-Korfu erfordert das Erreichen sehr unterschiedlicher Gruppen — jede mit eigenen Anliegen, Kanälen und Motivationen. ZOE verfolgt einen Mehrgruppen-, Mehrkanal-Ansatz, weil keine einzelne Botschaft oder ein einzelnes Medium für alle funktioniert.",
+    "researchNote": "Diese Analyse basiert auf demografischer Forschung zu Nord-Korfu und den Ionischen Inseln, Studien zur Bürgerbeteiligung in griechischen Kommunen und Feldarbeit der Ionian Environment Foundation (IEF). Die Plattform selbst ist ein Prototyp — noch nicht mit echten Reichweitendaten im Einsatz.",
+    "context": [
+      {
+        "stat": "~102.000",
+        "label": "ständige Einwohner:innen auf Korfu",
+        "note": "mehrheitlich im erwerbsfähigen Alter, schnell alternd"
+      },
+      {
+        "stat": "4 Millionen",
+        "label": "Besucher:innen pro Jahr",
+        "note": "40× der ständigen Bevölkerung in der Hochsaison"
+      },
+      {
+        "stat": "78 %",
+        "label": "Internetdurchdringung ländlicher Haushalte",
+        "note": "Offline-Kanäle bleiben unverzichtbar"
+      }
+    ],
+    "keyConcerns": "Zentrale Anliegen",
+    "effectiveChannels": "Wirksame Kanäle",
+    "onlineChannel": "Online-Kanal",
+    "offlineChannel": "Offline-Kanal",
+    "entryPoint": "Einstiegspunkt",
+    "watchOut": "Vorsicht bei",
+    "principlesHeading": "Sensibilisierungsprinzipien",
+    "principles": [
+      {
+        "title": "Lokal und konkret",
+        "desc": "Echte Orte benennen — Antinioti-Lagune, Erimitis, Strand von Kassiopi. Abstrakte „Nachhaltigkeits\"-Botschaften scheitern dort, wo greifbare, lokale Bedrohungen überzeugen."
+      },
+      {
+        "title": "Mehrkanalig per Design",
+        "desc": "Rein digital verfehlt über 40 % der ländlichen Bevölkerung Nord-Korfus. Jedes Programm muss Offline-Kanäle einschließen: Radio, Gemeindetreffen, Kirchennetzwerke."
+      },
+      {
+        "title": "Saisonales Timing",
+        "desc": "Beteiligung in der Nebensaison starten (April–Mai, September–Oktober). Der Sommer gehört Tourist:innen und Arbeit — nicht dem Start neuer Bürgerprogramme."
+      },
+      {
+        "title": "Vertrauenswürdige Mittler",
+        "desc": "Im Dorf ist ein respektierter Landwirt oder Fischer überzeugender als kommunale Kommunikation. Solche natürlichen Fürsprecher:innen identifizieren und unterstützen."
+      },
+      {
+        "title": "Sichtbare Ergebnisse zuerst",
+        "desc": "Das Vertrauen in griechische Kommunen ist nach der Krise niedrig. Greifbare Ergebnisse zeigen — ein gesäuberter Strand, eine restaurierte Terrassenmauer, ein geretteter Wald — bevor man dauerhaftes Engagement verlangt."
+      },
+      {
+        "title": "Über Lebensgrundlage statt Ideologie framen",
+        "desc": "Für Landwirt:innen, Fischer:innen und Unternehmen muss Nachhaltigkeit zuerst ein ökonomisches und dann ein moralisches Argument sein. Zeigen, wie sie Einkommen schützt, nicht nur die Umwelt."
+      }
+    ],
+    "ctaText": "Machen Sie beim ZOE-Programm mit — zu welcher Gruppe Sie auch gehören, es gibt eine Rolle für Sie.",
+    "ctaButton": "Finden Sie Ihre Beteiligungsmöglichkeit"
   }
 }
