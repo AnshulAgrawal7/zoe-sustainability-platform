@@ -32,6 +32,23 @@ Ziel: den iterativen Design-Develop-Demonstrate-Zyklus nachvollziehbar dokumenti
 
 ---
 
+## Konsolidierung für die Präsentation (7 → 4 narrative Iterationen)
+
+Für **beide Vorträge** (gemeinsame Iterations-Achse) und die Berichte werden die **7 realen Entwicklungs-Iterationen** (oben) zu **4 problemgetriebenen Iterationen** gebündelt — nach der *wissenschaftlichen Logik des Problemraums*, **nicht** streng chronologisch. **Keine Iteration ist erfunden**; dies ist eine rein didaktische Konsolidierung (Nachvollziehbarkeit hier dokumentiert).
+
+| Narrative Iteration (Vortrag/Bericht) | TP | Designprinzip | aus realen Iterationen (oben) |
+|---|---|---|---|
+| **1 — Sichtbarkeit** | TP1 | DP1 | 1 (MVP-Katalog), 2 (Korfu-Kontext), 3 (datengetrieben) |
+| **2 — SDG-Transparenz** | TP3 | DP3a/b | 1 (SDG-Dashboard + Transparenz) |
+| **3 — Beteiligung & Zielgruppen** | TP2, TP4 | DP2a/b, DP4 | 1 (Beteiligung), 4 (i18n/Dark Mode), 5 (WCAG) |
+| **4 — Tourist:innen & Community** | TP6 | DP6, DP1-Gruppierung | 7 (Get Involved) |
+| **Status quo** | alle | — | 6 (E2E/Qualität) + Integration aller Features |
+
+- **Marieclaire (Phase 3):** je Iteration die **Design-Begründung** (welches DP, warum + Beleg).
+- **Anshul (Phase 4):** je Iteration die **Demonstration** (dass es funktioniert) + integrierter Status-quo-Walkthrough.
+
+---
+
 ## Bereits implementierte Iterationen
 
 ### Iteration 1 — Frontend-MVP: Projektübersicht, SDG-Dashboard, Transparenz, Beteiligung

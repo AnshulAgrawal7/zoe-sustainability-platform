@@ -2,7 +2,8 @@
 
 > ZOE-Plattform Nord-Korfu · DSR nach Peffers et al. (2007) · FAU SoSe 2026, Gruppe 1
 > Vortrag: ~10 Min (Deutsch) + 5 Min Diskussion · Design-Grundlage: FAU-Template (`PP-Master-FAU_WiSo_16zu9_v2.pptx`)
-> Backup-Outline zur `.pptx` — falls die Folien-Generierung typografisch hakt, ist dies die maßgebliche Quelle.
+> Backup-Outline zur `.pptx` — maßgebliche Quelle, falls die Folien-Generierung typografisch hakt.
+> **Struktur:** gemeinsame 4-Iterations-Achse mit Anshul; ich = **Design-Perspektive**, Anshul = **Demonstrations-Perspektive**.
 
 ---
 
@@ -14,7 +15,7 @@ Marieclaire · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 - DSR nach Peffers et al. (2007): 6 Phasen — **hier Phase 3**
 - *Platzhalter: Screenshot Peffers-Prozessdiagramm, Phase 3 markieren*
 
-**Speaker Notes (DE):** Guten Tag. Mein Teil ist Phase 3 des Design-Science-Research-Prozesses nach Peffers et al. (2007) — also *Design & Development*. Auf dem Diagramm sehen Sie die sechs Phasen; ich bin für die markierte zuständig: die Übersetzung der in Phase 1 und 2 vom Team erarbeiteten Probleme und Ziele in begründete Designprinzipien und ein lauffähiges Artefakt. Anshul übernimmt danach Phase 4, die Demonstration.
+**Speaker Notes (DE):** Guten Tag. Mein Teil ist Phase 3 des DSR-Prozesses nach Peffers et al. (2007) — *Design & Development*. Ich übersetze die in Phase 1/2 erarbeiteten Probleme in begründete Designprinzipien und ein lauffähiges Artefakt — präsentiert als vier problemgetriebene Design-Iterationen. Anshul zeigt danach dieselben vier Iterationen aus der Demonstrations-Sicht.
 
 ---
 
@@ -23,105 +24,95 @@ Marieclaire · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 **Mein Beitrag = das Designwissen**
 
 - Beitrag = begründete, übertragbare **Designprinzipien** (DP1–DP6)
-- **Ebene 2** nach Gregor & Hevner (2013): „nascent design theory" — präskriptiv (das *Wie* und *Warum*)
-- Form nach Gregor & Jones (2007); **Matrix** als Ableitungsinstrument (Problem → Ziel → DP → Beleg)
-- Gemeinsames Dach beider Beiträge: **Improvement / Exaptation** — bewährte Lösungen → Kontext Nord-Korfu
+- **Ebene 2** nach Gregor & Hevner (2013): „nascent design theory" — präskriptiv
+- Form nach Gregor & Jones (2007); **Matrix** als Ableitungsinstrument
+- Gemeinsames Dach: **Improvement / Exaptation** → Kontext Nord-Korfu
 - Abgrenzung: Anshuls Beitrag = Instanziierung + Demonstration (Phase 4)
 
-**Speaker Notes (DE):** Was ist mein individueller DSR-Beitrag? Es ist das Designwissen. Nach Gregor und Hevner (2013) ist das ein Ebene-2-Beitrag — eine „nascent design theory", also präskriptive Designprinzipien, die über Korfu hinaus gelten. Konkret: die Prinzipien DP1 bis DP6 in der Form nach Gregor und Jones (2007), abgeleitet in der Matrix von Problem über Ziel zum Prinzip mit Beleg. Das gemeinsame Dach über beiden Beiträgen ist eine Improvement- bzw. Exaptation-Forschung: bewährte Lösungen in den unterversorgten Kontext Nord-Korfu übertragen. Davon abzugrenzen ist Anshuls Beitrag in Phase 4 — die Instanziierung und Demonstration. Zusammen ergeben wir einen vollständigen DSR-Zyklus.
+**Speaker Notes (DE):** Mein individueller DSR-Beitrag ist das Designwissen. Nach Gregor und Hevner (2013) ein Ebene-2-Beitrag — präskriptive Designprinzipien DP1 bis DP6 in der Form nach Gregor und Jones (2007), abgeleitet in der Matrix. Gemeinsames Dach mit Anshul: Improvement bzw. Exaptation in den Kontext Nord-Korfu.
 
 ---
 
-## Folie 3 — Was ist das Artefakt? (zweistufig)
+## Folie 3 — Das Artefakt & die Matrix (zentrales Instrument)
 
-- **Stufe 1 — die Website:** zentrale Plattform für die ZOE-Umweltaktionen (React/TypeScript, mehrsprachig EN/EL/DE, barrierefrei)
-- **Stufe 2 — die Designprinzipien:** das eigentliche, übertragbare *Designwissen* hinter der Website
-- Beitragstyp: **Improvement / Exaptation** (Gregor & Hevner, 2013)
-
-**Speaker Notes (DE):** Wichtig für DSR: Das Artefakt ist nicht nur die Website. Es hat zwei Stufen. Stufe 1 ist die sichtbare, lauffähige Plattform. Stufe 2 — und das ist der wissenschaftliche Kern — sind die Designprinzipien: präskriptive Aussagen, die auch über Korfu hinaus gelten. Nach Gregor und Hevner (2013) ist unser Beitrag ein *Improvement* bzw. eine *Exaptation*: Wir übertragen bewährte Lösungen aus der E-Partizipation und Transparenzforschung in einen bislang unterversorgten Kontext — eine kleine Mittelmeer-Inselgemeinde.
-
----
-
-## Folie 4 — Von Problem zu Designprinzip (Beispiel TP2)
-
-Kette: **Problem → Ziel → Designprinzip → Beleg**
-
-- **Problem (TP2):** keine niedrigschwellige Anlaufstelle; Beteiligung hängt an persönlichen Netzwerken
-- **Ziel (Phase 2):** Einreichung *ohne Pflicht-Account*
-- **DP2a:** „Senke Beteiligungshürden — Beiträge ohne Account, Inhalte gegen Informationsüberflutung kuratieren"
-- **Beleg:** Saldivar et al. **[A]**, Arana-Catania et al. 2021 **[A]**
-- *Platzhalter: Diagramm der Ableitungskette*
-
-**Speaker Notes (DE):** So leiten wir jedes Feature ab — getreu dem Leitsatz unseres Betreuers: erst das Problem, dann das Feature. Beispiel Partizipationsbarriere: Das Problem ist, dass es keine niedrigschwellige Anlaufstelle gibt. Das Phase-2-Ziel ist Einreichung ohne Pflicht-Account. Daraus folgt Designprinzip 2a. Belegt ist es durch zwei Typ-A-Quellen — also gemessene Effekte: Saldivar et al. zeigen, dass Registrierungszwang eine messbare Hürde ist, und Arana-Catania et al. (2021) zeigen am Beispiel Decide Madrid, dass Informationsüberflutung Beteiligung behindert.
-
----
-
-## Folie 5 — Die Matrix (zentrales Instrument)
-
-Spalten: Teilproblem · Lösungsziel · **Designprinzip** · **Quelle (A/B)** · Umsetzung Design · Umsetzung Implementierung · Evaluierbarkeit · Urheber:in
-
-- macht das Designrationale in **beide Richtungen nachvollziehbar**
-- erzwingt Ehrlichkeit: **gebaut / teilweise / konzipiert** + **A/B**-Regel
+- **Stufe 1:** die Website (mehrsprachig, barrierefrei) · **Stufe 2:** die Designprinzipien
+- **Matrix:** Problem → Ziel → Designprinzip → Quelle (A/B) → Umsetzung → Evaluierbarkeit
+- in **beide Richtungen** nachvollziehbar; erzwingt „gebaut/teilweise/konzipiert" + **A/B-Regel**
 - *Platzhalter: Auszug aus `docs/MATRIX.md`*
 
-**Speaker Notes (DE):** Das zentrale Instrument meiner Phase ist diese Matrix. Jede Zeile ist ein Teilproblem, jede Spalte ein Schritt der Begründung. Sie ist in beide Richtungen lesbar: Zu jedem Feature finde ich das Prinzip und die Quelle, und zu jedem Prinzip sehe ich, ob und wie es umgesetzt wurde. Die Matrix erzwingt zwei Ehrlichkeitsregeln: Die Implementierungsspalte trennt gebaut, teilweise und nur konzipiert; und die Quellenspalte unterscheidet Typ A — gemessener Effekt — von Typ B — Rahmenwerk. Eine Typ-B-Quelle dürfen wir nie als gemessenen Effekt verkaufen.
+**Speaker Notes (DE):** Das Artefakt ist zweistufig: die Website (Stufe 1) und die Designprinzipien (Stufe 2 — der wissenschaftliche Kern). Mein zentrales Instrument ist die Matrix: Sie verbindet Problem, Ziel, Designprinzip, Quelle mit A/B-Typ, Umsetzung und Evaluierbarkeit, ist in beide Richtungen lesbar und erzwingt Ehrlichkeit (gebaut vs. konzipiert; Typ A nie als Typ B verkaufen).
 
 ---
 
-## Folie 6 — Designprinzipien im Detail (Auswahl)
+## Folie 4 — Von Problem zu Designprinzip — und in 4 Iterationen
 
-- **DP1 (Sichtbarkeit):** zentraler, strukturierter, gruppierbarer Ort — Simelio-Solà et al. 2021 **[A]**, Tsatsani et al. 2024 **[A]**
-- **DP3a (SDG-Transparenz):** verständliches Dashboard mit aussagekräftigen Metriken — Chokki et al. **[A, Preprint]**, Simonofski et al. 2022 **[A]**
-- **DP4 (Zielgruppen):** Mehrsprachigkeit **und** WCAG 2.1 AA in **jeder** Sprachfassung — Csontos & Heckl 2021/2025 **[A]**, Pontus & Rodríguez Vázquez 2021 **[A]**
+- Kette: **Problem → Ziel → Designprinzip → Beleg** (Form n. Gregor & Jones 2007)
+- Beispiel **TP2:** keine Anlaufstelle → Einreichung ohne Account → **DP2a** → Saldivar **[A]**, Arana-Catania 2021 **[A]**
+- Das Design entstand in **4 problemgetriebenen Iterationen** (Hevner *Design Cycle*)
+- Iter 1 Sichtbarkeit · 2 SDG-Transparenz · 3 Beteiligung & Zielgruppen · 4 Tourist:innen & Community
 
-**Speaker Notes (DE):** Drei weitere Prinzipien exemplarisch. DP1: ein zentraler, strukturierter Ort — belegt dadurch, dass unstrukturierte kommunale Information nachweislich fundierte Entscheidungen verhindert (Simelio-Solà et al. 2021 über 605 Kommunen; Tsatsani et al. 2024 für griechische Kommunen). DP3a: ein laienverständliches Dashboard — Chokki et al. zeigen experimentell, dass gut gestaltete Dashboards das Engagement erhöhen; das ist allerdings ein Preprint, also mit Vorsicht. DP4 ist besonders wichtig: Mehrsprachigkeit allein reicht nicht — Pontus und Rodríguez Vázquez zeigen, dass lokalisierte Sprachfassungen oft *weniger* barrierefrei sind. Deshalb muss WCAG 2.1 AA in jeder Sprache gelten.
-
----
-
-## Folie 7 — Architektur & Tech-Entscheidungen
-
-- Frontend React 19 / TypeScript / Tailwind · `react-i18next` (EN/EL/DE) · Zustand
-- Backend Node/Express/Prisma/SQLite · JWT (Admin = Gemeinde)
-- **Bewusste Designentscheidung:** *kein* produktives Backend für freie Einreichungen in der Beta
-- Trennung UI ↔ Service-Layer → API später austauschbar
-
-**Speaker Notes (DE):** Zur Architektur: ein Full-Stack-Web-Artefakt. Diese Wahl ist eine bewusste Designentscheidung — pragmatisch, ohne Wirkungsbehauptung, deshalb ohne Literaturbeleg. Zwei Punkte sind aber designrelevant. Erstens die strikte Trennung von Oberfläche und Datenzugriff: Komponenten rufen nie direkt das Netzwerk, sondern gehen über eine Service-Schicht — das erlaubte den Wechsel von statischen Daten zur echten API ohne UI-Umbau. Zweitens: Wir betreiben in der Beta *bewusst kein* produktives Backend für die freie Einreichung von Bürgerinitiativen. Das ist keine Lücke, sondern eine Entscheidung — denn personenbezogene Daten erfordern Privacy-by-Design (Diamantopoulou et al. 2019; Spannungsfeld bei Paguay-Chimarro et al. 2025). Das ist Future Work.
+**Speaker Notes (DE):** So leiten wir jedes Feature ab — erst Problem, dann Feature, in der Form nach Gregor und Jones (2007). Beispiel TP2. Methodisch entstand das Design im Design Cycle (Hevner) in vier problemgetriebenen Iterationen, die ich jetzt durchgehe. **Wichtiger Hinweis:** Das ist die *didaktische Konsolidierung* unserer real sieben Entwicklungsiterationen (Mapping im `DEVLOG.md`) — die Reihenfolge ist nach wissenschaftlicher Logik gewählt, nicht streng chronologisch.
 
 ---
 
-## Folie 8 — Iterationen (Design Cycle)
+## Folie 5 — Iteration 1 (Design): Sichtbarkeit → DP1
 
-Aus `docs/DEVLOG.md` — 7 Iterationen:
+- **Problem TP1:** verstreute Kommunikation (v. a. FB-Profil der Vize-Bürgermeisterin)
+- **DP1:** zentraler, strukturierter, gruppierbarer, durchsuchbarer Ort
+- **Beleg:** Simelio-Solà 2021 **[A]** (605 Kommunen), Tsatsani 2024 **[A]** (griech. Kommunen < 55 %)
+- **Designentscheidung:** Daten ausgelagert → API später austauschbar
 
-1. Frontend-MVP → 2. Korfu-Kontext + Zielgruppen → 3. Full-Stack + Auth → 4. i18n/Dark Mode → 5. WCAG 2.1 AA + axe → 6. E2E-Tests → **7. „Get Involved" (Initiative-Tabs, Tourist:innen, Newsletter)**
-
-- jede Iteration: TP · Entscheidung · Begründung · Status (inkl. *ehrlicher Grenzen*)
-- *Platzhalter: Zeitstrahl der Iterationen*
-
-**Speaker Notes (DE):** Der Design-Cycle nach Hevner ist die enge Schleife aus Konstruieren und Bewerten. Unser Entwicklungsprotokoll dokumentiert sieben Iterationen — vom Frontend-MVP über den Full-Stack-Schritt und die Barrierefreiheit bis zur jüngsten, additiven „Get Involved"-Iteration mit Initiative-Tabs, der Tourist:innen-Sektion und dem Newsletter-Konzept. Wichtig: Wir protokollieren auch ehrliche Grenzen — etwa, dass mehrere ältere Seiten noch hartkodierten Text enthalten. Solche Befunde sind selbst Designwissen für den nächsten Zyklus.
+**Speaker Notes (DE):** Iteration 1 adressiert die Sichtbarkeit. Problem TP1: die Aktionen sind nicht zentral auffindbar. Daraus DP1 — ein zentraler, strukturierter, gruppierbarer Ort. Belegt durch Simelio-Solà (2021), die über 605 Kommunen zeigen, dass unstrukturierte Information fundierte Entscheidungen verhindert, und Tsatsani (2024) für griechische Kommunen. Designentscheidung: Daten in eine Fallback-Schicht ausgelagert, damit später eine API ohne UI-Umbau anschließt.
 
 ---
 
-## Folie 9 — Übergang zu Phase 4 (Anshul)
+## Folie 6 — Iteration 2 (Design): SDG-Transparenz → DP3
 
-- Designprinzipien sind **abgeleitet, begründet, instanziiert** — aber noch nicht *evaluiert*
-- Phase 4 (Anshul): **Demonstration** der Prinzipien in Szenarien
-- Phase 5: Evaluation nach FEDS (Venable et al., 2016) → Übergabe
+- **Problem TP3:** SDG-Beitrag und Wirkung vergangener Aktionen unsichtbar
+- **DP3a:** verständliches Dashboard mit aussagekräftigen Metriken · **DP3b:** SMART-KPIs, Wirkung zurückspielen
+- **Beleg:** Chokki **[A, Preprint]**, Simonofski 2022 **[A]**, Grimmelikhuijsen & Welch 2012 **[A]** (Outcome-Transparenz)
 
-**Speaker Notes (DE):** Damit ist meine Phase abgeschlossen: Die Designprinzipien sind abgeleitet, literaturbasiert begründet und in einem lauffähigen Artefakt instanziiert. Was sie noch nicht sind: evaluiert mit echten Nutzer:innen. Genau dort setzt Anshul mit Phase 4 an — der Demonstration der Prinzipien in konkreten Szenarien — und bereitet die Evaluation nach dem FEDS-Rahmen vor. Ich übergebe an Anshul. Vielen Dank.
+**Speaker Notes (DE):** Iteration 2: SDG-Transparenz. Problem TP3 — der SDG-Beitrag und die Wirkung sind nicht sichtbar. Daraus DP3a (verständliches Dashboard) und DP3b (SMART-KPIs, Wirkung an Bürger:innen zurückspielen). Belegt durch Chokki et al. (Dashboards erhöhen Engagement, allerdings Preprint), Simonofski (2022) und Grimmelikhuijsen und Welch (2012), die Outcome-Transparenz als eigene Dimension etablieren.
+
+---
+
+## Folie 7 — Iteration 3 (Design): Beteiligung & Zielgruppen → DP2/DP4
+
+- **Problem TP2** (Hürde) **+ TP4** (heterogene Gruppen)
+- **DP2a:** ohne Account · **DP2b:** Engagement — aber **NICHT** rein belohnungsbasiert (Vorbehalt)
+- **DP4:** Mehrsprachigkeit **UND** WCAG 2.1 AA in jeder Sprachfassung
+- **Beleg:** Saldivar **[A]**, Yang & Wu 2025 **[A]**, Thiel 2016 **[B]**; Csontos & Heckl **[A]**, Pontus 2021 **[A]**
+
+**Speaker Notes (DE):** Iteration 3: Beteiligung und Zielgruppen. Probleme TP2 und TP4. DP2a (ohne Account) und DP2b (Engagement-Mechaniken — aber nicht rein belohnungsbasiert; Thiel 2016 warnt vor Kurzfrist-Effekten). DP4: Mehrsprachigkeit und WCAG 2.1 AA in jeder Sprachfassung — Pontus (2021) zeigt, dass lokalisierte Fassungen oft weniger barrierefrei sind. Belege: Saldivar, Yang und Wu (2025), Csontos und Heckl.
+
+---
+
+## Folie 8 — Iteration 4 (Design): Tourist:innen & Community → DP6
+
+- **Problem TP6:** Tourismus bislang nur als Belastung gesehen
+- **DP6:** Besucher:innen als Ressource (niedrigschwellig, Storytelling) + DP1-Gruppierung (Initiative-Tabs)
+- **Beleg:** Laksmi 2026 **[A]** (Community β=0,42 + Digital β=0,38, p<0,001), Vegas Macias 2023 **[A]** (Malta)
+
+**Speaker Notes (DE):** Iteration 4: Tourist:innen und Community. Problem TP6 — Tourismus wird nur als Belastung gesehen. DP6 verwandelt Besucher:innen in eine Ressource (niedrigschwellige Beiträge, Storytelling), kombiniert mit der Initiative-Gruppierung aus DP1. Belegt durch Laksmi (2026) — Community-Partizipation und digitale Strategie verbessern die Nachhaltigkeit messbar — und Vegas Macias (2023) aus dem analogen Fischerdorf Marsaxlokk.
+
+---
+
+## Folie 9 — Architektur, Status quo & Übergang zu Anshul
+
+- **Bewusste Designentscheidungen:** Tech-Stack, grünes Design, kein Beta-Backend für Einreichungen
+- **Status quo:** Designprinzipien als kohärentes Set instanziiert
+- Grenzen (z. B. i18n-Altseiten) = **Designwissen** für den nächsten Zyklus
+- **Übergang:** Anshul demonstriert, **DASS** die Prinzipien funktionieren (Phase 4)
+
+**Speaker Notes (DE):** Zum Abschluss die Architektur: bewusste Designentscheidungen ohne Wirkungsbeleg — Tech-Stack, grünes Design, und bewusst kein produktives Backend für freie Einreichungen in der Beta (Datenschutz; Future Work). Der Status quo: die Designprinzipien sind als kohärentes Set instanziiert; offene Grenzen wie die i18n-Altseiten sind selbst Designwissen. Damit übergebe ich an Anshul, der dieselben vier Iterationen aus der Demonstrations-Perspektive zeigt.
 
 ---
 
 ## Folie 10 — Quellen (Auswahl, APA7)
 
-- Gregor, S., & Jones, D. (2007). The anatomy of a design theory. *JAIS, 8*(5), 312–335.
-- Gregor, S., & Hevner, A. R. (2013). Positioning and presenting DSR for maximum impact. *MIS Quarterly, 37*(2), 337–355.
-- Peffers, K., et al. (2007). A design science research methodology. *JMIS, 24*(3), 45–77.
-- Simelio-Solà, N., et al. (2021). Transparent information and access to citizen participation on municipal websites. *El Profesional de la Información, 30*(2).
-- Simonofski, A., et al. (2022). Tailoring open government data portals for lay citizens. *IJIM, 65*, 102511.
-- Csontos, B., & Heckl, I. (2021/2025). Accessibility … Hungarian government websites. *UAIS.*
-- Pontus, V., & Rodríguez Vázquez, S. (2021). Language-related criteria … multilingual websites. *BfC 2020.*
-- Diamantopoulou, V., et al. (2019). Preserving digital privacy in e-participation … GDPR.
+- Gregor & Jones (2007); Gregor & Hevner (2013); Peffers et al. (2007); Hevner (2007)
+- Simelio-Solà 2021; Simonofski 2022; Grimmelikhuijsen & Welch 2012; Csontos & Heckl 2021/2025; Pontus 2021
+- Saldivar; Yang & Wu 2025; Thiel 2016; Laksmi 2026; Vegas Macias 2023
 
-> Vollständige Liste + A/B-Klassifikation: `docs/literature-review.md`. **Hinweis:** Cronholm & Göbel (2018) war im Briefing genannt, ist aber nicht im Korpus → nur Gregor & Jones (2007) verwendet.
+> Vollständig + A/B-Klassifikation: `docs/literature-review.md`. **Hinweis:** Cronholm & Göbel (2018) war im Briefing genannt, ist aber nicht im Korpus → nur Gregor & Jones (2007) für die DP-Form verwendet.
 </content>
