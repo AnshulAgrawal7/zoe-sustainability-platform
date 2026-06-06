@@ -13,6 +13,7 @@ Legende Machbarkeit: ✅ machbar/empfohlen · 🟡 machbar mit Einschränkungen 
 | 1 | Datenbank (Supabase) anbinden | ✅ | S–M | **Ja** — als gehostetes Postgres via Prisma; eigene Auth behalten; Supabase Storage für Bilder |
 | 2a | Bilder/Texte automatisch von Frau Kokkalis FB-Seite extrahieren | ❌ / ⚠️ | — | **Nicht automatisiert** (FB-ToS/API-Hürden). Stattdessen: manuell mit Erlaubnis sammeln + per Admin (mit DeepL) eintragen |
 | 2b | Abgeschlossene Projekte auf der Website zeigen | ✅ | S–M | **Ja** — DB unterstützt das bereits (`status: COMPLETED`); Bildfeld ergänzen, OPEN-Filter erweitern |
+| 3 | Komplett online auf eigener Domain schalten | 🟡 | M–L | **Technisch machbar** (Supabase + Hosting + Domain); **rechtlich** Betreiber/DSGVO/Impressum/Bildrechte/Barrierefreiheit klären |
 
 ---
 
@@ -92,4 +93,45 @@ Ihr habt **bereits eine Datenbank**: Backend mit **Prisma + SQLite**, vollständ
 - Ziel: **nur Präsentation** (dann reicht SQLite lokal) oder **echter Pilot/öffentlicher Link** (dann Supabase + Hosting)?
 
 > Wenn ihr grünes Licht gebt, setze ich Schritt 1 (Supabase) und 2 (abgeschlossene Projekte + Bildfeld) additiv um — Schritt für Schritt, getestet, mit Docs.
+
+---
+
+## 3. Komplett online auf eigener Domain schalten — was geht, was fehlt (technisch + rechtlich)
+
+> ⚠️ **Keine Rechtsberatung** — Orientierung. Für eine echte öffentliche Schaltung (v. a. im Namen der Gemeinde) juristische Prüfung einholen.
+
+**Kurzantwort:** Die Architektur ist „deploy-fähig". Mit **Supabase** (DB + Storage) + einem **Host fürs Backend** + **Vercel/Netlify fürs Frontend** + **Domain** bekommt ihr es online. Aber „nur noch die Domain schalten" stimmt nur *fast* — davor liegt eine überschaubare **Production-Readiness-Phase**. **Rechtlich** ist mehr nötig — das ist der größere Brocken.
+
+### Zwei Szenarien (bestimmen Aufwand & Recht)
+- **A) Akademische Demo** unter neutraler Domain (z. B. `zoe-corfu-demo.org`), klar als Studienprojekt/Prototyp gekennzeichnet, **ohne echte personenbezogene Daten** → rechtlich leicht, technisch schnell.
+- **B) Echte offizielle Plattform der Gemeinde** → braucht **Autorisierung der Gemeinde** + volle DSGVO-/Impressum-/Barrierefreiheits-Compliance. Deutlich mehr.
+
+### Technische Go-Live-Checkliste (✅ vorhanden · 🟡 teils · ❌ fehlt)
+- ✅ Frontend (SPA) deploybar (Vercel/Netlify/Cloudflare Pages)
+- ✅ Backend (Express/Prisma) lauffähig → **Host nötig** (Render/Fly/Railway; Vercel-Serverless eher nicht, da Monolith-Server)
+- 🟡 DB → Supabase (siehe #1) · 🟡 Bild-Storage → Supabase Storage (siehe #2)
+- ❌ **Prod-Secrets** in Host-Env (nicht im Repo): starkes `JWT_SECRET`, `DEEPL_API_KEY`, `DATABASE_URL`, `CORS_ORIGIN=<echte Domain>` *(unser CORS bleibt in Prod strikt ✓)*
+- ❌ **Cookie-Härtung:** Refresh-Token-Cookie `secure: true` + korrektes `SameSite` (Frontend-Domain ↔ API-Domain)
+- ❌ **Prototype-Banner entfernen** + Dummy-Daten durch **echte, verifizierte Inhalte** ersetzen (die ganze Seite ist aktuell als „Prototyp/fiktiv" gekennzeichnet)
+- ❌ **Persistenz + Moderation** der Bürger-Einreichungen (aktuell nicht gespeichert)
+- ❌ **Newsletter-Versand** real (Double-Opt-in, E-Mail-Provider) — aktuell nur Konzept
+- ❌ **Passwort-Reset / E-Mail-Verifikation** für echte Nutzer
+- 🟡 **Monitoring/Backups** (z. B. Sentry, DB-Backups), Uptime · 🟡 **WCAG/Lighthouse-Audit** (Phase 5) durchführen
+→ Aufwand Szenario B: realistisch **mehrere Tage** über Supabase hinaus.
+
+### Rechtliche Checkliste (DE/EU/GR)
+- ❌ **Betreiber/Verantwortlicher klären:** Wer betreibt die Seite rechtlich? Studierende ≠ Gemeinde. Ohne Mandat **nicht** als „offizielle Seite der Gemeinde" auftreten.
+- ❌ **Impressum** (Anbieterkennzeichnung) — Pflicht für geschäftsmäßige/öffentliche Websites.
+- ❌ **Datenschutzerklärung (DSGVO):** Rechtsgrundlagen, Zwecke, Speicherdauer; **Auftragsverarbeitungsverträge (AVV/DPA)** mit **Supabase** und **DeepL** (beide = Auftragsverarbeiter; EU-Region wählen).
+- ⚠️ **DeepL & personenbezogene Daten:** Projekttexte i. d. R. unkritisch; sobald **personenbezogene** Texte übersetzt werden → DPA / DeepL Pro.
+- 🟡 **Cookies:** httpOnly-Refresh-Cookie = „technisch notwendig" (kein Consent); **Tracking/Analytics** → Cookie-Consent-Banner.
+- ❌ **Bild-/Inhaltsrechte** (Urheber + abgebildete Personen, „Recht am eigenen Bild") — Erlaubnis nötig (siehe #2).
+- ❌ **Barrierefreiheit rechtlich:** als öffentliche/öffentlich-nahe Seite greifen **EU 2016/2102 + EN 301 549 (WCAG 2.1 AA)**, EAA/BFSG (Juni 2025) → **Barrierefreiheitserklärung** + Feedback-Mechanismus (Seite vorhanden, formaler Audit nötig).
+- ⚠️ **Domain:** neutraler Name frei wählbar; ein Name, der **amtlichen Status suggeriert**, nur mit Autorisierung.
+
+### Empfehlung
+- **Für jetzt / Präsentation → Szenario A:** Ihr könnt **technisch alles verknüpfen** (Supabase + Hosting + neutrale Domain) und einen **echten Demo-Link** zeigen, ohne die volle Rechts-Last. Prototype-Banner bleibt, keine echten personenbezogenen Daten, Bilder nur mit Erlaubnis.
+- **Für „echt offiziell" → Szenario B:** zusätzlich Gemeinde-Mandat + Impressum + Datenschutz + AVV + Bildrechte + Barrierefreiheitserklärung. Eigene **Phase 6/Beyond**, juristisch begleiten.
+
+> **Fazit:** „Alles so verknüpfen, dass nur noch die Domain fehlt" ist **technisch realistisch** (mit überschaubarer Hardening-Arbeit). **Rechtlich** fehlt für eine *echte* öffentliche/kommunale Schaltung noch einiges — v. a. Betreiber-Klärung, DSGVO-Doku (Impressum/Datenschutz/AVV), Bildrechte und Barrierefreiheitserklärung.
 </content>
