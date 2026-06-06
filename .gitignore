@@ -49,3 +49,6 @@ docs/reports/*.aux
 docs/reports/*.log
 docs/reports/*.out
 docs/reports/*.toc
+
+# Team-meeting prep notes (internal, local only)
+docs/team-meeting/
