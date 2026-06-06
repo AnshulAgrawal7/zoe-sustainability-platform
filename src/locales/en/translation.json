@@ -626,5 +626,135 @@
         ]
       }
     ]
+  },
+  "about": {
+    "heroEyebrow": "Municipality of Northern Corfu, Greece",
+    "heroTitle": "About the ZOE Programme",
+    "heroSubtitle": "ZOE (Ζωή — \"life\" in Greek) is the strategic environmental action framework of the Municipality of Northern Corfu. This digital platform is the communication and participation layer of the ZOE programme, built as a Design Science Research artefact.",
+    "whatTitle": "What is the ZOE Programme?",
+    "whatP1": "ZOE is a strategic framework for environmental governance at the municipal level. It coordinates a portfolio of environmental projects spanning biodiversity, circular economy, waste reduction, water protection, education, and sustainable tourism.",
+    "whatP2": "The programme is grounded in the UN Sustainable Development Goals (SDGs) and European Green Deal principles, adapted for the specific ecological and social context of Northern Corfu.",
+    "whatP3": "Key to the ZOE approach is the belief that environmental action cannot succeed without genuine citizen participation and radical transparency. This platform is designed to enable both.",
+    "principlesTitle": "Programme Principles",
+    "principles": [
+      {
+        "title": "Transparency",
+        "desc": "Open progress data for every project"
+      },
+      {
+        "title": "Participation",
+        "desc": "Active citizen involvement in governance"
+      },
+      {
+        "title": "Science-Based",
+        "desc": "Evidence-informed project design"
+      },
+      {
+        "title": "SDG Alignment",
+        "desc": "Linked to global sustainability goals"
+      },
+      {
+        "title": "Long-Term Thinking",
+        "desc": "Planning for 2030 and beyond"
+      },
+      {
+        "title": "Local Knowledge",
+        "desc": "Rooted in community expertise"
+      }
+    ],
+    "dsrTitle": "Design Science Research Context",
+    "dsrIntro": "This platform is a DSR artefact — a prototype designed to address a real-world problem through a structured research process. It follows the Peffers et al. (2007) DSR methodology framework.",
+    "dsrSteps": [
+      {
+        "title": "Problem Identification",
+        "description": "Northern Corfu faces environmental degradation, low citizen awareness of municipal sustainability efforts, and limited transparent communication channels between government and residents."
+      },
+      {
+        "title": "Define Objectives",
+        "description": "Design a digital platform artifact that increases transparency of environmental actions, enables citizen participation, and communicates SDG alignment — all accessible to non-technical users."
+      },
+      {
+        "title": "Design & Development",
+        "description": "Build a frontend MVP prototype using React + TypeScript + Tailwind. Structure information around projects, SDG mapping, events and citizen engagement. Use realistic dummy data."
+      },
+      {
+        "title": "Demonstration",
+        "description": "This prototype demonstrates the artifact to stakeholders — municipality staff, researchers and citizens — showing the intended information architecture and participation workflows."
+      },
+      {
+        "title": "Evaluation",
+        "description": "An evaluation plan (see docs/) defines how the platform should be assessed against criteria: usefulness, usability, completeness, accessibility and participation support."
+      },
+      {
+        "title": "Communication",
+        "description": "Results, design decisions, and lessons learned are documented in DSR methodology, architecture and evaluation documents for academic and stakeholder communication."
+      }
+    ],
+    "researchNoteLabel": "Research note:",
+    "researchNote": "This platform is a prototype (Version 1). Further iterations should follow user testing, expert evaluation, and stakeholder feedback as described in the evaluation plan.",
+    "contextTitle": "Northern Corfu: Context & Challenges",
+    "contextStats": [
+      {
+        "stat": "~102,000",
+        "label": "Permanent residents",
+        "note": "Corfu island (ELSTAT 2021)"
+      },
+      {
+        "stat": "4 million",
+        "label": "Visitors per year",
+        "note": "40× the permanent population"
+      },
+      {
+        "stat": "350–400t",
+        "label": "Waste per day (summer)",
+        "note": "vs. ~170t in winter"
+      },
+      {
+        "stat": "3.5 million",
+        "label": "Olive trees",
+        "note": "many abandoned since 1960s"
+      }
+    ],
+    "issues": [
+      {
+        "title": "Waste crisis",
+        "desc": "Corfu's only landfill at Temploni filled to capacity and was blockaded in 2018, creating a visible garbage crisis during peak tourist season. A new waste treatment unit is planned for 2027."
+      },
+      {
+        "title": "Olive grove abandonment",
+        "desc": "The post-1960s shift to tourism left thousands of hectares of terraced olive groves in Northern Corfu's hill villages abandoned, accelerating soil erosion and fire risk."
+      },
+      {
+        "title": "Antinioti Lagoon under pressure",
+        "desc": "The Natura 2000 protected lagoon between Kassiopi and Roda faces agricultural runoff and habitat degradation. It supports 44+ migratory bird species."
+      },
+      {
+        "title": "Erimitis development threat",
+        "desc": "A major hotel and marina development proposed for the last virgin forested headland in NE Corfu has triggered the most significant civic environmental campaign in recent Corfu history."
+      }
+    ],
+    "partnersTitle": "Existing partners & initiatives ZOE builds on",
+    "partners": [
+      {
+        "name": "Ionian Environment Foundation (IEF)",
+        "desc": "Island-wide environmental charity funding 18+ projects including Posidonia mapping, marine cleanup and school education."
+      },
+      {
+        "name": "SIN.PRAXI — Sinies Small Green Spot",
+        "desc": "Community cooperative in NE Corfu running the only licensed recycling hub on the island. ZOE replicates this model."
+      },
+      {
+        "name": "Save Erimitis Coalition",
+        "desc": "Citizen campaign opposing development on the Erimitis Peninsula — a model for community-led environmental advocacy."
+      },
+      {
+        "name": "All For Blue",
+        "desc": "NGO conducting seasonal beach and underwater cleanups at Palaiokastritsa and other Corfu beaches."
+      }
+    ],
+    "ctaTitle": "Ready to explore the platform?",
+    "ctaProjects": "View Projects",
+    "ctaAudiences": "Who We Reach",
+    "ctaSdg": "SDG Dashboard"
   }
 }

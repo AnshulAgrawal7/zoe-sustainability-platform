@@ -626,5 +626,135 @@
         ]
       }
     ]
+  },
+  "about": {
+    "heroEyebrow": "Gemeinde Nord-Korfu, Griechenland",
+    "heroTitle": "Über das ZOE-Programm",
+    "heroSubtitle": "ZOE (Ζωή — „Leben\" auf Griechisch) ist das strategische Umweltaktions-Rahmenwerk der Gemeinde Nord-Korfu. Diese digitale Plattform ist die Kommunikations- und Beteiligungsebene des ZOE-Programms, gebaut als Design-Science-Research-Artefakt.",
+    "whatTitle": "Was ist das ZOE-Programm?",
+    "whatP1": "ZOE ist ein strategisches Rahmenwerk für Umwelt-Governance auf kommunaler Ebene. Es koordiniert ein Portfolio von Umweltprojekten in den Bereichen Biodiversität, Kreislaufwirtschaft, Abfallreduktion, Gewässerschutz, Bildung und nachhaltiger Tourismus.",
+    "whatP2": "Das Programm basiert auf den UN-Zielen für nachhaltige Entwicklung (SDGs) und den Prinzipien des European Green Deal, angepasst an den spezifischen ökologischen und sozialen Kontext Nord-Korfus.",
+    "whatP3": "Zentral für den ZOE-Ansatz ist die Überzeugung, dass Umweltaktion ohne echte Bürgerbeteiligung und radikale Transparenz nicht gelingen kann. Diese Plattform soll beides ermöglichen.",
+    "principlesTitle": "Programm-Prinzipien",
+    "principles": [
+      {
+        "title": "Transparenz",
+        "desc": "Offene Fortschrittsdaten für jedes Projekt"
+      },
+      {
+        "title": "Beteiligung",
+        "desc": "Aktive Bürgerbeteiligung an der Governance"
+      },
+      {
+        "title": "Wissenschaftsbasiert",
+        "desc": "Evidenzinformiertes Projektdesign"
+      },
+      {
+        "title": "SDG-Ausrichtung",
+        "desc": "Verknüpft mit globalen Nachhaltigkeitszielen"
+      },
+      {
+        "title": "Langfristiges Denken",
+        "desc": "Planung für 2030 und darüber hinaus"
+      },
+      {
+        "title": "Lokales Wissen",
+        "desc": "Verwurzelt in der Expertise der Gemeinschaft"
+      }
+    ],
+    "dsrTitle": "Design-Science-Research-Kontext",
+    "dsrIntro": "Diese Plattform ist ein DSR-Artefakt — ein Prototyp, der ein reales Problem durch einen strukturierten Forschungsprozess adressiert. Sie folgt dem DSR-Methodik-Rahmen von Peffers et al. (2007).",
+    "dsrSteps": [
+      {
+        "title": "Problemidentifikation",
+        "description": "Nord-Korfu ist mit Umweltdegradation, geringem Bürgerbewusstsein für kommunale Nachhaltigkeitsbemühungen und begrenzten transparenten Kommunikationskanälen zwischen Verwaltung und Einwohner:innen konfrontiert."
+      },
+      {
+        "title": "Ziele definieren",
+        "description": "Ein digitales Plattform-Artefakt entwerfen, das die Transparenz von Umweltaktionen erhöht, Bürgerbeteiligung ermöglicht und die SDG-Ausrichtung kommuniziert — alles für nicht-technische Nutzer:innen zugänglich."
+      },
+      {
+        "title": "Design & Entwicklung",
+        "description": "Einen Frontend-MVP-Prototyp mit React + TypeScript + Tailwind bauen. Informationen rund um Projekte, SDG-Zuordnung, Veranstaltungen und Bürgerengagement strukturieren. Realistische Beispieldaten verwenden."
+      },
+      {
+        "title": "Demonstration",
+        "description": "Dieser Prototyp demonstriert das Artefakt gegenüber Stakeholdern — Gemeindemitarbeitenden, Forschenden und Bürger:innen — und zeigt die geplante Informationsarchitektur und Beteiligungs-Workflows."
+      },
+      {
+        "title": "Evaluation",
+        "description": "Ein Evaluationsplan (siehe docs/) definiert, wie die Plattform anhand von Kriterien bewertet werden soll: Nützlichkeit, Usability, Vollständigkeit, Barrierefreiheit und Beteiligungsunterstützung."
+      },
+      {
+        "title": "Kommunikation",
+        "description": "Ergebnisse, Designentscheidungen und gewonnene Erkenntnisse werden in DSR-Methodik-, Architektur- und Evaluationsdokumenten für die akademische und Stakeholder-Kommunikation dokumentiert."
+      }
+    ],
+    "researchNoteLabel": "Forschungshinweis:",
+    "researchNote": "Diese Plattform ist ein Prototyp (Version 1). Weitere Iterationen sollten Nutzertests, Experten-Evaluation und Stakeholder-Feedback folgen, wie im Evaluationsplan beschrieben.",
+    "contextTitle": "Nord-Korfu: Kontext & Herausforderungen",
+    "contextStats": [
+      {
+        "stat": "~102.000",
+        "label": "Ständige Einwohner:innen",
+        "note": "Insel Korfu (ELSTAT 2021)"
+      },
+      {
+        "stat": "4 Millionen",
+        "label": "Besucher:innen pro Jahr",
+        "note": "40× der ständigen Bevölkerung"
+      },
+      {
+        "stat": "350–400 t",
+        "label": "Abfall pro Tag (Sommer)",
+        "note": "vs. ~170 t im Winter"
+      },
+      {
+        "stat": "3,5 Millionen",
+        "label": "Olivenbäume",
+        "note": "viele seit den 1960ern verlassen"
+      }
+    ],
+    "issues": [
+      {
+        "title": "Abfallkrise",
+        "desc": "Korfus einzige Deponie in Temploni war voll ausgelastet und wurde 2018 blockiert, was während der Hochsaison eine sichtbare Müllkrise auslöste. Eine neue Abfallbehandlungsanlage ist für 2027 geplant."
+      },
+      {
+        "title": "Aufgabe der Olivenhaine",
+        "desc": "Der Wandel zum Tourismus nach den 1960ern ließ Tausende Hektar terrassierter Olivenhaine in den Bergdörfern Nord-Korfus verlassen zurück, was Bodenerosion und Brandrisiko beschleunigt."
+      },
+      {
+        "title": "Antinioti-Lagune unter Druck",
+        "desc": "Die Natura-2000-geschützte Lagune zwischen Kassiopi und Roda ist von landwirtschaftlichem Abfluss und Habitatdegradation betroffen. Sie beherbergt über 44 Zugvogelarten."
+      },
+      {
+        "title": "Erimitis-Entwicklungsbedrohung",
+        "desc": "Ein großes Hotel- und Marina-Projekt für die letzte unberührte bewaldete Landzunge im NO Korfus hat die bedeutendste bürgerliche Umweltkampagne der jüngeren Korfu-Geschichte ausgelöst."
+      }
+    ],
+    "partnersTitle": "Bestehende Partner & Initiativen, auf denen ZOE aufbaut",
+    "partners": [
+      {
+        "name": "Ionian Environment Foundation (IEF)",
+        "desc": "Inselweite Umweltstiftung, die über 18 Projekte fördert, darunter Posidonia-Kartierung, Meeresreinigung und Schulbildung."
+      },
+      {
+        "name": "SIN.PRAXI — Sinies Small Green Spot",
+        "desc": "Gemeinschaftskooperative im NO Korfus, die die einzige lizenzierte Recyclingstation der Insel betreibt. ZOE überträgt dieses Modell."
+      },
+      {
+        "name": "Save-Erimitis-Koalition",
+        "desc": "Bürgerkampagne gegen die Bebauung der Halbinsel Erimitis — ein Modell für bürgergeführte Umwelt-Advocacy."
+      },
+      {
+        "name": "All For Blue",
+        "desc": "NGO, die saisonale Strand- und Unterwasserreinigungen in Palaiokastritsa und an anderen Stränden Korfus durchführt."
+      }
+    ],
+    "ctaTitle": "Bereit, die Plattform zu erkunden?",
+    "ctaProjects": "Projekte ansehen",
+    "ctaAudiences": "Wen wir erreichen",
+    "ctaSdg": "SDG-Dashboard"
   }
 }

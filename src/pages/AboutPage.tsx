@@ -9,117 +9,97 @@ import {
   FlaskConical,
   Globe,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-const dsrSteps = [
-  {
-    number: '01',
-    title: 'Problem Identification',
-    description:
-      'Northern Corfu faces environmental degradation, low citizen awareness of municipal sustainability efforts, and limited transparent communication channels between government and residents.',
-    icon: Target,
-  },
-  {
-    number: '02',
-    title: 'Define Objectives',
-    description:
-      'Design a digital platform artifact that increases transparency of environmental actions, enables citizen participation, and communicates SDG alignment — all accessible to non-technical users.',
-    icon: Milestone,
-  },
-  {
-    number: '03',
-    title: 'Design & Development',
-    description:
-      'Build a frontend MVP prototype using React + TypeScript + Tailwind. Structure information around projects, SDG mapping, events and citizen engagement. Use realistic dummy data.',
-    icon: FlaskConical,
-  },
-  {
-    number: '04',
-    title: 'Demonstration',
-    description:
-      'This prototype demonstrates the artifact to stakeholders — municipality staff, researchers and citizens — showing the intended information architecture and participation workflows.',
-    icon: BookOpen,
-  },
-  {
-    number: '05',
-    title: 'Evaluation',
-    description:
-      'An evaluation plan (see docs/) defines how the platform should be assessed against criteria: usefulness, usability, completeness, accessibility and participation support.',
-    icon: Globe,
-  },
-  {
-    number: '06',
-    title: 'Communication',
-    description:
-      'Results, design decisions, and lessons learned are documented in DSR methodology, architecture and evaluation documents for academic and stakeholder communication.',
-    icon: Leaf,
-  },
+// Structural metadata (step number + icon) stays in code; titles/descriptions
+// come from i18n.
+const stepMeta = [
+  { number: '01', icon: Target },
+  { number: '02', icon: Milestone },
+  { number: '03', icon: FlaskConical },
+  { number: '04', icon: BookOpen },
+  { number: '05', icon: Globe },
+  { number: '06', icon: Leaf },
 ];
 
 export default function AboutPage() {
+  const { t } = useTranslation();
+  const steps = t('about.dsrSteps', { returnObjects: true }) as {
+    title: string;
+    description: string;
+  }[];
+  const principles = t('about.principles', { returnObjects: true }) as {
+    title: string;
+    desc: string;
+  }[];
+  const contextStats = t('about.contextStats', { returnObjects: true }) as {
+    stat: string;
+    label: string;
+    note: string;
+  }[];
+  const issues = t('about.issues', { returnObjects: true }) as {
+    title: string;
+    desc: string;
+  }[];
+  const partners = t('about.partners', { returnObjects: true }) as {
+    name: string;
+    desc: string;
+  }[];
+
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-teal-700 to-green-700 text-white py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 text-teal-200 text-sm mb-4">
+      <section className="bg-gradient-to-br from-teal-700 to-green-700 py-16 text-white">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-4 flex items-center gap-2 text-sm text-teal-200">
             <MapPin size={14} aria-hidden="true" />
-            <span>Municipality of Northern Corfu, Greece</span>
+            <span>{t('about.heroEyebrow')}</span>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-6">
-            About the ZOE Programme
+          <h1 className="mb-6 text-4xl font-bold text-white">
+            {t('about.heroTitle')}
           </h1>
-          <p className="text-xl text-teal-100 leading-relaxed">
-            ZOE (Ζωή — "life" in Greek) is the strategic environmental action
-            framework of the Municipality of Northern Corfu. This digital
-            platform is the communication and participation layer of the ZOE
-            programme, built as a Design Science Research artefact.
+          <p className="text-xl leading-relaxed text-teal-100">
+            {t('about.heroSubtitle')}
           </p>
         </div>
       </section>
 
       {/* What is ZOE */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+      <section className="bg-white py-16 dark:bg-gray-900">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                What is the ZOE Programme?
+              <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+                {t('about.whatTitle')}
               </h2>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                ZOE is a strategic framework for environmental governance at the
-                municipal level. It coordinates a portfolio of environmental
-                projects spanning biodiversity, circular economy, waste
-                reduction, water protection, education, and sustainable tourism.
+              <p className="mb-4 leading-relaxed text-gray-700 dark:text-gray-300">
+                {t('about.whatP1')}
               </p>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                The programme is grounded in the UN Sustainable Development
-                Goals (SDGs) and European Green Deal principles, adapted for the
-                specific ecological and social context of Northern Corfu.
+              <p className="mb-4 leading-relaxed text-gray-700 dark:text-gray-300">
+                {t('about.whatP2')}
               </p>
-              <p className="text-gray-700 leading-relaxed">
-                Key to the ZOE approach is the belief that environmental action
-                cannot succeed without genuine citizen participation and radical
-                transparency. This platform is designed to enable both.
+              <p className="leading-relaxed text-gray-700 dark:text-gray-300">
+                {t('about.whatP3')}
               </p>
             </div>
-            <div className="bg-green-50 rounded-xl p-6 border border-green-100">
-              <h3 className="font-semibold text-green-800 mb-4">
-                Programme Principles
+            <div className="rounded-xl border border-green-100 bg-green-50 p-6 dark:border-green-800 dark:bg-green-900/20">
+              <h3 className="mb-4 font-semibold text-green-800 dark:text-green-300">
+                {t('about.principlesTitle')}
               </h3>
               <ul className="space-y-3">
-                {[
-                  ['Transparency', 'Open progress data for every project'],
-                  ['Participation', 'Active citizen involvement in governance'],
-                  ['Science-Based', 'Evidence-informed project design'],
-                  ['SDG Alignment', 'Linked to global sustainability goals'],
-                  ['Long-Term Thinking', 'Planning for 2030 and beyond'],
-                  ['Local Knowledge', 'Rooted in community expertise'],
-                ].map(([title, desc]) => (
-                  <li key={title} className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0" />
+                {principles.map((p) => (
+                  <li key={p.title} className="flex items-start gap-3">
+                    <span
+                      className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-green-500"
+                      aria-hidden="true"
+                    />
                     <div>
-                      <span className="font-medium text-gray-900">{title}:</span>{' '}
-                      <span className="text-gray-600">{desc}</span>
+                      <span className="font-medium text-gray-900 dark:text-white">
+                        {p.title}:
+                      </span>{' '}
+                      <span className="text-gray-600 dark:text-gray-300">
+                        {p.desc}
+                      </span>
                     </div>
                   </li>
                 ))}
@@ -130,127 +110,120 @@ export default function AboutPage() {
       </section>
 
       {/* DSR Context */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Design Science Research Context
+      <section className="bg-gray-50 py-16 dark:bg-gray-900/50">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+              {t('about.dsrTitle')}
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              This platform is a <strong>DSR artefact</strong> — a prototype
-              designed to address a real-world problem through a structured
-              research process. It follows the Peffers et al. (2007) DSR
-              methodology framework.
+            <p className="mx-auto max-w-2xl leading-relaxed text-gray-600 dark:text-gray-300">
+              {t('about.dsrIntro')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {dsrSteps.map((step) => (
-              <div
-                key={step.number}
-                className="bg-white rounded-xl p-5 border border-gray-200 hover:border-green-300 transition-colors"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-xs font-bold text-green-600 bg-green-50 rounded px-2 py-0.5">
-                    {step.number}
-                  </span>
-                  <step.icon
-                    size={18}
-                    className="text-gray-500"
-                    aria-hidden="true"
-                  />
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {stepMeta.map((meta, i) => {
+              const content = steps[i];
+              if (!content) return null;
+              const Icon = meta.icon;
+              return (
+                <div
+                  key={meta.number}
+                  className="rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-green-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700"
+                >
+                  <div className="mb-3 flex items-center gap-3">
+                    <span className="rounded bg-green-50 px-2 py-0.5 text-xs font-bold text-green-600 dark:bg-green-900/30 dark:text-green-400">
+                      {meta.number}
+                    </span>
+                    <Icon
+                      size={18}
+                      className="text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <h3 className="mb-2 font-semibold text-gray-900 dark:text-white">
+                    {content.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                    {content.description}
+                  </p>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          <div className="mt-8 bg-amber-50 rounded-xl p-5 border border-amber-200 text-center">
-            <p className="text-amber-800 text-sm">
-              <span className="font-semibold">Research note:</span> This
-              platform is a prototype (Version 1). Further iterations should
-              follow user testing, expert evaluation, and stakeholder feedback
-              as described in the evaluation plan.
+          <div className="mt-8 rounded-xl border border-amber-200 bg-amber-50 p-5 text-center dark:border-amber-800 dark:bg-amber-900/20">
+            <p className="text-sm text-amber-800 dark:text-amber-300">
+              <span className="font-semibold">
+                {t('about.researchNoteLabel')}
+              </span>{' '}
+              {t('about.researchNote')}
             </p>
           </div>
         </div>
       </section>
 
       {/* Northern Corfu context */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-            Northern Corfu: Context & Challenges
+      <section className="bg-white py-16 dark:bg-gray-900">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <h2 className="mb-6 text-center text-2xl font-bold text-gray-900 dark:text-white">
+            {t('about.contextTitle')}
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            {[
-              { stat: '~102,000', label: 'Permanent residents', note: 'Corfu island (ELSTAT 2021)' },
-              { stat: '4 million', label: 'Visitors per year', note: '40× the permanent population' },
-              { stat: '350–400t', label: 'Waste per day (summer)', note: 'vs. ~170t in winter' },
-              { stat: '3.5 million', label: 'Olive trees', note: 'many abandoned since 1960s' },
-            ].map((item) => (
+          <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {contextStats.map((item) => (
               <div
                 key={item.label}
-                className="text-center bg-gray-50 rounded-xl p-4 border border-gray-100"
+                className="rounded-xl border border-gray-100 bg-gray-50 p-4 text-center dark:border-gray-700 dark:bg-gray-800"
               >
-                <p className="text-2xl font-bold text-green-700 mb-1">
+                <p className="mb-1 text-2xl font-bold text-green-700 dark:text-green-400">
                   {item.stat}
                 </p>
-                <p className="font-medium text-gray-900 text-xs">{item.label}</p>
-                <p className="text-xs text-gray-500 mt-1">{item.note}</p>
+                <p className="text-xs font-medium text-gray-900 dark:text-white">
+                  {item.label}
+                </p>
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  {item.note}
+                </p>
               </div>
             ))}
           </div>
 
           {/* Real issues */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-            {[
-              {
-                title: 'Waste crisis',
-                desc: "Corfu's only landfill at Temploni filled to capacity and was blockaded in 2018, creating a visible garbage crisis during peak tourist season. A new waste treatment unit is planned for 2027.",
-              },
-              {
-                title: 'Olive grove abandonment',
-                desc: 'The post-1960s shift to tourism left thousands of hectares of terraced olive groves in Northern Corfu\'s hill villages abandoned, accelerating soil erosion and fire risk.',
-              },
-              {
-                title: 'Antinioti Lagoon under pressure',
-                desc: 'The Natura 2000 protected lagoon between Kassiopi and Roda faces agricultural runoff and habitat degradation. It supports 44+ migratory bird species.',
-              },
-              {
-                title: 'Erimitis development threat',
-                desc: 'A major hotel and marina development proposed for the last virgin forested headland in NE Corfu has triggered the most significant civic environmental campaign in recent Corfu history.',
-              },
-            ].map((item) => (
-              <div key={item.title} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <h3 className="font-semibold text-gray-900 mb-1.5 text-sm">{item.title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+          <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {issues.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800"
+              >
+                <h3 className="mb-1.5 text-sm font-semibold text-gray-900 dark:text-white">
+                  {item.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
 
           {/* Partners */}
-          <div className="bg-green-50 rounded-xl border border-green-100 p-5">
-            <h3 className="font-semibold text-green-800 mb-3 text-sm">
-              Existing partners & initiatives ZOE builds on
+          <div className="rounded-xl border border-green-100 bg-green-50 p-5 dark:border-green-800 dark:bg-green-900/20">
+            <h3 className="mb-3 text-sm font-semibold text-green-800 dark:text-green-300">
+              {t('about.partnersTitle')}
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
-              {[
-                ['Ionian Environment Foundation (IEF)', 'Island-wide environmental charity funding 18+ projects including Posidonia mapping, marine cleanup and school education.'],
-                ['SIN.PRAXI — Sinies Small Green Spot', 'Community cooperative in NE Corfu running the only licensed recycling hub on the island. ZOE replicates this model.'],
-                ['Save Erimitis Coalition', 'Citizen campaign opposing development on the Erimitis Peninsula — a model for community-led environmental advocacy.'],
-                ['All For Blue', 'NGO conducting seasonal beach and underwater cleanups at Palaiokastritsa and other Corfu beaches.'],
-              ].map(([name, desc]) => (
-                <div key={name} className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0" aria-hidden="true" />
+            <div className="grid grid-cols-1 gap-3 text-sm text-gray-700 dark:text-gray-300 sm:grid-cols-2">
+              {partners.map((p) => (
+                <div key={p.name} className="flex items-start gap-2">
+                  <span
+                    className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-green-500"
+                    aria-hidden="true"
+                  />
                   <div>
-                    <span className="font-medium text-gray-900">{name}:</span>{' '}
-                    <span className="text-gray-600">{desc}</span>
+                    <span className="font-medium text-gray-900 dark:text-white">
+                      {p.name}:
+                    </span>{' '}
+                    <span className="text-gray-600 dark:text-gray-300">
+                      {p.desc}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -260,29 +233,31 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-green-700 text-white py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">
-            Ready to explore the platform?
+      <section className="bg-green-700 py-12 text-white">
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+          <h2 className="mb-4 text-2xl font-bold text-white">
+            {t('about.ctaTitle')}
           </h2>
-          <div className="flex flex-wrap gap-4 justify-center">
+          <div className="flex flex-wrap justify-center gap-4">
             <Link
               to="/projects"
-              className="bg-white text-green-700 px-5 py-2.5 rounded-lg font-semibold hover:bg-green-50 transition-colors flex items-center gap-2"
+              className="flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 font-semibold text-green-700 transition-colors hover:bg-green-50"
             >
-              View Projects <ArrowRight size={16} aria-hidden="true" />
+              {t('about.ctaProjects')}{' '}
+              <ArrowRight size={16} aria-hidden="true" />
             </Link>
             <Link
               to="/audiences"
-              className="bg-white text-green-700 px-5 py-2.5 rounded-lg font-semibold hover:bg-green-50 transition-colors flex items-center gap-2"
+              className="flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 font-semibold text-green-700 transition-colors hover:bg-green-50"
             >
-              Who We Reach <ArrowRight size={16} aria-hidden="true" />
+              {t('about.ctaAudiences')}{' '}
+              <ArrowRight size={16} aria-hidden="true" />
             </Link>
             <Link
               to="/sdg-dashboard"
-              className="border-2 border-white/60 text-white px-5 py-2.5 rounded-lg font-semibold hover:border-white hover:bg-white/10 transition-colors"
+              className="rounded-lg border-2 border-white/60 px-5 py-2.5 font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
             >
-              SDG Dashboard
+              {t('about.ctaSdg')}
             </Link>
           </div>
         </div>
