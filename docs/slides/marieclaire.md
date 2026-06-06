@@ -18,7 +18,21 @@ Marieclaire · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ---
 
-## Folie 2 — Was ist das Artefakt? (zweistufig)
+## Folie 2 — Mein DSR-Beitrag (Phase 3)
+
+**Mein Beitrag = das Designwissen**
+
+- Beitrag = begründete, übertragbare **Designprinzipien** (DP1–DP6)
+- **Ebene 2** nach Gregor & Hevner (2013): „nascent design theory" — präskriptiv (das *Wie* und *Warum*)
+- Form nach Gregor & Jones (2007); **Matrix** als Ableitungsinstrument (Problem → Ziel → DP → Beleg)
+- Gemeinsames Dach beider Beiträge: **Improvement / Exaptation** — bewährte Lösungen → Kontext Nord-Korfu
+- Abgrenzung: Anshuls Beitrag = Instanziierung + Demonstration (Phase 4)
+
+**Speaker Notes (DE):** Was ist mein individueller DSR-Beitrag? Es ist das Designwissen. Nach Gregor und Hevner (2013) ist das ein Ebene-2-Beitrag — eine „nascent design theory", also präskriptive Designprinzipien, die über Korfu hinaus gelten. Konkret: die Prinzipien DP1 bis DP6 in der Form nach Gregor und Jones (2007), abgeleitet in der Matrix von Problem über Ziel zum Prinzip mit Beleg. Das gemeinsame Dach über beiden Beiträgen ist eine Improvement- bzw. Exaptation-Forschung: bewährte Lösungen in den unterversorgten Kontext Nord-Korfu übertragen. Davon abzugrenzen ist Anshuls Beitrag in Phase 4 — die Instanziierung und Demonstration. Zusammen ergeben wir einen vollständigen DSR-Zyklus.
+
+---
+
+## Folie 3 — Was ist das Artefakt? (zweistufig)
 
 - **Stufe 1 — die Website:** zentrale Plattform für die ZOE-Umweltaktionen (React/TypeScript, mehrsprachig EN/EL/DE, barrierefrei)
 - **Stufe 2 — die Designprinzipien:** das eigentliche, übertragbare *Designwissen* hinter der Website
@@ -28,7 +42,7 @@ Marieclaire · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ---
 
-## Folie 3 — Von Problem zu Designprinzip (Beispiel TP2)
+## Folie 4 — Von Problem zu Designprinzip (Beispiel TP2)
 
 Kette: **Problem → Ziel → Designprinzip → Beleg**
 
@@ -42,7 +56,7 @@ Kette: **Problem → Ziel → Designprinzip → Beleg**
 
 ---
 
-## Folie 4 — Die Matrix (zentrales Instrument)
+## Folie 5 — Die Matrix (zentrales Instrument)
 
 Spalten: Teilproblem · Lösungsziel · **Designprinzip** · **Quelle (A/B)** · Umsetzung Design · Umsetzung Implementierung · Evaluierbarkeit · Urheber:in
 
@@ -54,7 +68,7 @@ Spalten: Teilproblem · Lösungsziel · **Designprinzip** · **Quelle (A/B)** ·
 
 ---
 
-## Folie 5 — Designprinzipien im Detail (Auswahl)
+## Folie 6 — Designprinzipien im Detail (Auswahl)
 
 - **DP1 (Sichtbarkeit):** zentraler, strukturierter, gruppierbarer Ort — Simelio-Solà et al. 2021 **[A]**, Tsatsani et al. 2024 **[A]**
 - **DP3a (SDG-Transparenz):** verständliches Dashboard mit aussagekräftigen Metriken — Chokki et al. **[A, Preprint]**, Simonofski et al. 2022 **[A]**
@@ -64,7 +78,7 @@ Spalten: Teilproblem · Lösungsziel · **Designprinzip** · **Quelle (A/B)** ·
 
 ---
 
-## Folie 6 — Architektur & Tech-Entscheidungen
+## Folie 7 — Architektur & Tech-Entscheidungen
 
 - Frontend React 19 / TypeScript / Tailwind · `react-i18next` (EN/EL/DE) · Zustand
 - Backend Node/Express/Prisma/SQLite · JWT (Admin = Gemeinde)
@@ -75,7 +89,7 @@ Spalten: Teilproblem · Lösungsziel · **Designprinzip** · **Quelle (A/B)** ·
 
 ---
 
-## Folie 7 — Iterationen (Design Cycle)
+## Folie 8 — Iterationen (Design Cycle)
 
 Aus `docs/DEVLOG.md` — 7 Iterationen:
 
@@ -88,7 +102,7 @@ Aus `docs/DEVLOG.md` — 7 Iterationen:
 
 ---
 
-## Folie 8 — Übergang zu Phase 4 (Anshul)
+## Folie 9 — Übergang zu Phase 4 (Anshul)
 
 - Designprinzipien sind **abgeleitet, begründet, instanziiert** — aber noch nicht *evaluiert*
 - Phase 4 (Anshul): **Demonstration** der Prinzipien in Szenarien
@@ -98,7 +112,7 @@ Aus `docs/DEVLOG.md` — 7 Iterationen:
 
 ---
 
-## Folie 9 — Quellen (Auswahl, APA7)
+## Folie 10 — Quellen (Auswahl, APA7)
 
 - Gregor, S., & Jones, D. (2007). The anatomy of a design theory. *JAIS, 8*(5), 312–335.
 - Gregor, S., & Hevner, A. R. (2013). Positioning and presenting DSR for maximum impact. *MIS Quarterly, 37*(2), 337–355.

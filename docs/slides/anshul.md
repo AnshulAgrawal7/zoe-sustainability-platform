@@ -18,7 +18,21 @@ Anshul Agrawal · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ---
 
-## Folie 2 — Was ist Demonstration? (Abgrenzung zur Evaluation)
+## Folie 2 — Mein DSR-Beitrag (Phase 4)
+
+**Mein Beitrag = Instanziierung + Wirksamkeits-Nachweis**
+
+- Beitrag = **Instanziierung + Demonstration** der Designprinzipien (das *Dass-es-funktioniert*)
+- **Ebene 1** nach Gregor & Hevner (2013): lauffähiges Artefakt + *expository instantiation* (Gregor & Jones 2007)
+- Demonstration in realistischen Szenarien (TP1/6, TP2, TP3, TP4)
+- Brücke zur Evaluation: ex-ante (WCAG/Lighthouse) machbar, ex-post nach FEDS (Venable et al., 2016) konzipiert
+- Abgrenzung: Marieclaires Beitrag = Designprinzipien (Phase 3)
+
+**Speaker Notes (DE):** Was ist mein individueller DSR-Beitrag? Es ist die Instanziierung und Demonstration. Nach Gregor und Hevner (2013) ist das ein Ebene-1-Beitrag — das lauffähige Artefakt, an dem die abstrakten Prinzipien beobachtbar werden (expository instantiation nach Gregor und Jones 2007). Ich zeige in vier Szenarien, dass die Designprinzipien die Teilprobleme tatsächlich adressieren, und bereite die Evaluation nach dem FEDS-Rahmen vor. Davon abzugrenzen ist Marieclaires Beitrag in Phase 3 — die Herleitung der Designprinzipien. Das gemeinsame Dach ist eine Improvement- bzw. Exaptation-Forschung.
+
+---
+
+## Folie 3 — Was ist Demonstration? (Abgrenzung zur Evaluation)
 
 - **Demonstration:** zeigt, **dass** das Artefakt das Problem lösen *kann* (Instanziierung in Szenarien)
 - **Evaluation (Phase 5):** misst, **wie gut** es löst (mit echten Nutzer:innen)
@@ -28,7 +42,7 @@ Anshul Agrawal · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ---
 
-## Folie 3 — Artefakt-Überblick
+## Folie 4 — Artefakt-Überblick
 
 - Full-Stack: React/TypeScript-Frontend, Express/Prisma-Backend, JWT-Admin
 - mehrsprachig (EN/EL/DE), WCAG-2.1-AA-Setup, 44 Unit-/Integration- + 49 E2E-Tests
@@ -39,7 +53,7 @@ Anshul Agrawal · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ---
 
-## Folie 4 — Demo-Szenario A: Aktionen finden & als Gast beitragen (TP1, TP6)
+## Folie 5 — Demo-Szenario A: Aktionen finden & als Gast beitragen (TP1, TP6)
 
 - **Persona:** Tourist:in bei Acharavi, eine Woche da
 - Weg: Aktionsübersicht → „Get Involved" → Initiative-Tab *Meer & Küste* → „Wie Besucher:innen beitragen"
@@ -51,7 +65,7 @@ Anshul Agrawal · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ---
 
-## Folie 5 — Demo-Szenario B: Idee einreichen ohne Account (TP2)
+## Folie 6 — Demo-Szenario B: Idee einreichen ohne Account (TP2)
 
 - **Persona:** Anwohner:in aus Kassiopi mit Idee für regelmäßige Säuberung
 - Weg: Beteiligungsseite → „Idee einreichen" → Formular **ohne Registrierung** → Bestätigung
@@ -64,7 +78,7 @@ Anshul Agrawal · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ---
 
-## Folie 6 — Demo-Szenario C: SDG-Beitrag & Wirkung verstehen (TP3)
+## Folie 7 — Demo-Szenario C: SDG-Beitrag & Wirkung verstehen (TP3)
 
 - **Persona:** Lehrer:in bereitet Unterricht vor
 - Weg: SDG-Badges am Projekt → SDG-Dashboard → Transparenz-KPIs
@@ -76,7 +90,7 @@ Anshul Agrawal · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ---
 
-## Folie 7 — Demo-Szenario D: Heterogene Zielgruppen erreichen (TP4)
+## Folie 8 — Demo-Szenario D: Heterogene Zielgruppen erreichen (TP4)
 
 - **Persona:** griechischsprachige ältere Anwohnerin & deutschsprachiger Gast mit Screenreader
 - Weg: Sprachumschaltung EN/EL/DE → reine Tastaturnavigation → Fokus-Indikatoren → Accessibility-Erklärung
@@ -88,7 +102,7 @@ Anshul Agrawal · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ---
 
-## Folie 8 — Brücke zur Evaluation (Phase 5)
+## Folie 9 — Brücke zur Evaluation (Phase 5)
 
 - **Jetzt machbar (ex-ante / artificial):** WCAG-Audit (axe + manuell, Methodik Csontos & Heckl), Lighthouse (wie Tsatsani et al. 2024), heuristischer Walkthrough
 - **Konzipiert (ex-post / naturalistic):** Task-Tests, SUS, Verständnis-/Transparenz-Maße
@@ -99,7 +113,7 @@ Anshul Agrawal · Projektseminar Wirtschaftsinformatik · FAU Erlangen-Nürnberg
 
 ---
 
-## Folie 9 — Quellen (Auswahl, APA7)
+## Folie 10 — Quellen (Auswahl, APA7)
 
 - Peffers, K., et al. (2007). A design science research methodology. *JMIS, 24*(3), 45–77.
 - Gregor, S., & Jones, D. (2007). The anatomy of a design theory. *JAIS, 8*(5), 312–335.
