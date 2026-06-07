@@ -8,6 +8,33 @@ import type { AuthRequest } from '../middleware/auth';
 
 const prisma = new PrismaClient();
 
+const REFRESH_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
+
+/**
+ * Cookie options for the refresh token.
+ *
+ * In production the frontend (e.g. Vercel) and backend (e.g. Render) usually
+ * live on *different* sites, so the cookie must be `SameSite=None; Secure` to
+ * be sent on credentialed cross-site requests. In development (same-site
+ * localhost over http) we use `lax` and drop `secure` so login works without TLS.
+ */
+function refreshCookieOptions() {
+  const isProd = process.env.NODE_ENV === 'production';
+  return {
+    httpOnly: true,
+    secure: isProd, // SameSite=None requires Secure
+    sameSite: isProd ? ('none' as const) : ('lax' as const),
+    path: '/',
+    maxAge: REFRESH_MAX_AGE_MS,
+  };
+}
+
+/** Matching attributes (minus maxAge) so clearCookie reliably removes it. */
+function clearRefreshCookieOptions() {
+  const { maxAge: _maxAge, ...rest } = refreshCookieOptions();
+  return rest;
+}
+
 export async function register(req: Request, res: Response) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -48,12 +75,7 @@ export async function register(req: Request, res: Response) {
       data: { token: refreshToken, userId: user.id, expiresAt: getRefreshExpiresAt() },
     });
 
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    res.cookie('refreshToken', refreshToken, refreshCookieOptions());
 
     created(res, { user, accessToken });
   } catch {
@@ -90,12 +112,7 @@ export async function login(req: Request, res: Response) {
       data: { token: refreshToken, userId: user.id, expiresAt: getRefreshExpiresAt() },
     });
 
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    res.cookie('refreshToken', refreshToken, refreshCookieOptions());
 
     ok(res, {
       user: {
@@ -140,6 +157,6 @@ export async function logout(req: AuthRequest, res: Response) {
   if (token) {
     await prisma.refreshToken.deleteMany({ where: { token } }).catch(() => null);
   }
-  res.clearCookie('refreshToken');
+  res.clearCookie('refreshToken', clearRefreshCookieOptions());
   ok(res, null, 'Logged out');
 }

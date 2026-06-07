@@ -1,0 +1,40 @@
+# Render Blueprint for the ZOE backend (Szenario A).
+# Docs: https://render.com/docs/blueprint-spec  ·  Guide: docs/deployment/deploy.md
+#
+# The frontend is deployed separately on Vercel (Vite static build) — see
+# docs/deployment/deploy.md §Frontend. This file provisions only the API.
+#
+# Secrets marked `sync: false` are NOT stored in git; set them in the Render
+# dashboard after the first deploy (Environment tab):
+#   DATABASE_URL, DIRECT_URL  → from Supabase (EU region)
+#   CORS_ORIGIN               → exact frontend origin, e.g. https://your-domain
+#   DEEPL_API_KEY             → optional
+services:
+  - type: web
+    name: zoe-backend
+    runtime: node
+    rootDir: backend
+    plan: free
+    # `prisma migrate deploy` applies committed migrations against the prod DB.
+    # On paid plans, prefer moving it to `preDeployCommand` instead of build.
+    buildCommand: npm install && npx prisma generate && npx prisma migrate deploy && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true # Render generates a strong value once and persists it
+      - key: JWT_EXPIRES_IN
+        value: 15m
+      - key: REFRESH_TOKEN_EXPIRES_IN
+        value: 7d
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
+      - key: DEEPL_API_KEY
+        sync: false
