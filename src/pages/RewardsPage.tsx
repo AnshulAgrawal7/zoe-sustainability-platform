@@ -63,7 +63,7 @@ function TierCard({
             <div className="flex items-center gap-2">
               <span className="text-base font-bold">{tier.greekName}</span>
               <span className="text-sm font-medium opacity-70">
-                — {tier.name}
+                — {t(`rewardData.tiers.${tier.id}.name`)}
               </span>
               {isCurrent && (
                 <span className="rounded-full bg-green-600 px-2 py-0.5 text-xs font-semibold text-white">
@@ -89,9 +89,15 @@ function TierCard({
       </button>
       {open && (
         <div className="border-current/10 border-t px-4 pb-4 pt-3">
-          <p className="mb-3 text-sm opacity-80">{tier.description}</p>
+          <p className="mb-3 text-sm opacity-80">
+            {t(`rewardData.tiers.${tier.id}.description`)}
+          </p>
           <ul className="space-y-1.5">
-            {tier.rewards.map((r) => (
+            {(
+              t(`rewardData.tiers.${tier.id}.rewards`, {
+                returnObjects: true,
+              }) as string[]
+            ).map((r) => (
               <li key={r} className="flex items-start gap-2 text-sm">
                 <Star
                   size={13}
@@ -175,7 +181,7 @@ export default function RewardsPage() {
                       {currentTier.greekName}
                     </p>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {currentTier.name}
+                      {t(`rewardData.tiers.${currentTier.id}.name`)}
                     </p>
                   </div>
                 </div>
@@ -224,7 +230,7 @@ export default function RewardsPage() {
                   </strong>{' '}
                   {t('rewards.toReach', {
                     tier: nextTier.greekName,
-                    name: nextTier.name,
+                    name: t(`rewardData.tiers.${nextTier.id}.name`),
                   })}{' '}
                   {nextTier.icon}
                 </span>
@@ -304,7 +310,7 @@ export default function RewardsPage() {
                       <span className="mr-2" aria-hidden="true">
                         {activity.icon}
                       </span>
-                      {activity.label}
+                      {t(`rewardData.activities.${activity.id}`)}
                     </td>
                     <td className="hidden px-4 py-3 sm:table-cell">
                       <span
@@ -349,7 +355,7 @@ export default function RewardsPage() {
               );
               return (
                 <div
-                  key={milestone.label}
+                  key={milestone.id}
                   className={`rounded-xl border p-5 ${
                     milestone.unlocked
                       ? 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20'
@@ -379,10 +385,11 @@ export default function RewardsPage() {
                               : 'text-gray-900 dark:text-white'
                           }`}
                         >
-                          {milestone.label}
+                          {t(`rewardData.milestones.${milestone.id}.label`)}
                         </p>
                         <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
-                          {t('rewards.rewardPrefix')} {milestone.reward}
+                          {t('rewards.rewardPrefix')}{' '}
+                          {t(`rewardData.milestones.${milestone.id}.reward`)}
                         </p>
                       </div>
                     </div>

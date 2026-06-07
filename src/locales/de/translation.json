@@ -146,6 +146,263 @@
       "actionLabel": "Feedback teilen"
     }
   },
+  "rewardData": {
+    "tiers": {
+      "sporos": {
+        "name": "Samen",
+        "description": "Du hast deinen ersten Samen in der ZOE-Gemeinschaft gepflanzt.",
+        "rewards": [
+          "Digitales ZOE-Samen-Badge",
+          "ZOE-Community-Mitgliedskarte (digital)",
+          "Monatlicher ZOE-Newsletter"
+        ]
+      },
+      "phyllo": {
+        "name": "Blatt",
+        "description": "Du wächst und trägst zu einem grüneren Nordkorfu bei.",
+        "rewards": [
+          "Digitales ZOE-Blatt-Badge",
+          "Bevorzugte Anmeldung für ZOE-Veranstaltungen",
+          "Vorstellung im ZOE-Community-Newsletter"
+        ]
+      },
+      "kladi": {
+        "name": "Zweig",
+        "description": "Ein stabiler Zweig des ZOE-Baums — dein Beitrag ist sichtbar.",
+        "rewards": [
+          "Vom Bürgermeister unterzeichnetes kommunales Zertifikat",
+          "Glas ZOE-Olivenöl aus einem Partner-Hain in Agios Markos",
+          "Jährliche Kompost-Zuteilung aus dem Community-Kompostnetzwerk",
+          "ZOE-Zweig-Badge"
+        ]
+      },
+      "fylakas": {
+        "name": "Wächter:in",
+        "description": "Du schützt die Landschaft und Gemeinschaft Nordkorfus.",
+        "rewards": [
+          "Benannte Patenschaft auf der öffentlichen ZOE-Karte (z. B. „Der Strandabschnitt Papadopoulos“)",
+          "10 % Rabatt bei ZOE-zertifizierten lokalen Betrieben",
+          "Einladung zum jährlichen ZOE-Forum mit der Gemeindeführung",
+          "ZOE-Wächter-Badge"
+        ]
+      },
+      "thematofylakas": {
+        "name": "Hüter:in",
+        "description": "Die höchste Ehre — du gestaltest die Zukunft Nordkorfus mit.",
+        "rewards": [
+          "Namentliche Nennung im ZOE-Jahresbericht",
+          "Patenschaftsplakette der Gemeinde Nordkorfu",
+          "Freier Zugang zu allen inselweiten ZOE-Umweltveranstaltungen",
+          "Co-Design-Session: Hilf, die ZOE-Projektprioritäten des nächsten Jahres festzulegen",
+          "ZOE-Hüter-Badge"
+        ]
+      }
+    },
+    "activities": {
+      "cleanup-event": "An einem Strand- oder Hain-Cleanup teilnehmen",
+      "water-cert": "Zertifizierung zur Wasserüberwachung abschließen",
+      "submit-idea": "Eine Projektidee einreichen",
+      "report-issue": "Ein Umweltproblem melden",
+      "volunteer-day": "An einem Projekttag mithelfen",
+      "attend-workshop": "An einem ZOE-Workshop teilnehmen",
+      "steward-monthly": "Aktive Patenschaft (pro Monat)",
+      "recruit-neighbour": "Eine:n Nachbar:in für ZOE gewinnen",
+      "give-feedback": "Strukturiertes Projekt-Feedback geben",
+      "eco-business": "Betrieb im Öko-Programm registrieren",
+      "school-session": "Eine Umwelt-Schulstunde leiten",
+      "photo-doc": "Fotodokumentation eines Problems einreichen"
+    },
+    "milestones": {
+      "residents-100": {
+        "label": "100 Einwohner:innen bei ZOE registriert",
+        "reward": "ZOE-Willkommensbanner am Hafen von Kassiopi installiert"
+      },
+      "volunteer-hours-500": {
+        "label": "500 Freiwilligenstunden bei Cleanups erfasst",
+        "reward": "20 neue Bäume entlang des Antinioti-Pfads gepflanzt"
+      },
+      "eco-businesses-10": {
+        "label": "10 lokale Betriebe öko-zertifiziert",
+        "reward": "„Dorf des Monats“-Beitrag im kommunalen Amtsblatt Korfus"
+      },
+      "feedback-200": {
+        "label": "200 Projekt-Feedback-Einreichungen",
+        "reward": "Gemeinschaftsbank an der Strandpromenade von Roda installiert"
+      },
+      "participants-1000": {
+        "label": "1.000 Teilnehmende über alle Veranstaltungen",
+        "reward": "Jährliches ZOE-Community-Fest, mitfinanziert von der Gemeinde"
+      }
+    }
+  },
+  "eventData": {
+    "evt-cleanup-jun25": {
+      "title": "Küstenreinigungstag Nordküste",
+      "location": "Strand von Kassiopi, Nordkorfu",
+      "description": "Mach mit bei unserer monatlichen Küstenreinigung! Wir stellen die gesamte Ausrüstung (Handschuhe, Säcke, Greifer) und ein Citizen-Science-Datenblatt zur Müllerfassung. Nach der Reinigung gibt es ein gemeinsames Frühstück und eine Nachbesprechung. Für alle Altersgruppen geeignet."
+    },
+    "evt-biodiversity-workshop": {
+      "title": "Workshop Feuchtgebiets-Biodiversität",
+      "location": "Besucherpunkt Korisia-Lagune",
+      "description": "Ein halbtägiger Bildungsworkshop unter Leitung der Hellenischen Ornithologischen Gesellschaft. Lerne mit Bestimmungsbüchern Feuchtgebietsvögel, Amphibien und Pflanzenarten zu erkennen. Inklusive geführtem Spaziergang durch das Renaturierungsgebiet der Lagune."
+    },
+    "evt-recycling-hub": {
+      "title": "Große Eröffnung des Recycling-Hubs — Acharavi",
+      "location": "Dorfplatz Acharavi",
+      "description": "Feiere die Eröffnung des 9. ZOE-Recycling-Hubs mit Vorführungen, Sortierspielen für Kinder und einer kurzen Präsentation der Ergebnisse des Projekts Circular Waste Network. Kostenloser Kaffee und lokale Snacks."
+    },
+    "evt-school-garden": {
+      "title": "Pflanztag im Schulgarten",
+      "location": "Grundschule Acharavi",
+      "description": "Hilf Schüler:innen, ihren Gemüse- und Kräutergarten anzulegen! Freiwillige unterstützen 60 Kinder beim Pflanzen und beim Lernen über Bodengesundheit und Kompostierung. Eltern willkommen. Alle Alters- und Erfahrungsstufen eingeladen."
+    },
+    "evt-water-monitoring": {
+      "title": "Schulungstag für Bürger-Wasserwächter:innen",
+      "location": "Akharavi-Fluss (nahe der Brücke)",
+      "description": "Ganztägige Schulung für neue freiwillige Wasserqualitäts-Monitore. Lerne den Umgang mit Testkits, GPS-Dateneingabe und dem ZOE-Meldeprotokoll. Zertifizierung nach Abschluss. Grundkenntnisse in Griechisch oder Englisch nötig. 15 Plätze verfügbar."
+    },
+    "evt-olive-harvest": {
+      "title": "Traditionelles Olivenernte-Fest",
+      "location": "Dorf Agios Markos",
+      "description": "Erlebe mit lokalen Bäuer:innen und Freiwilligen eine traditionelle Olivenernte. Lerne über agroökologischen Olivenanbau, probiere lokale Produkte und feiere das kulturelle Erbe des korfiotischen Olivenanbaus. Mittagessen für angemeldete Teilnehmende inklusive."
+    },
+    "evt-sdg-forum": {
+      "title": "Jährliches ZOE-SDG-Forum",
+      "location": "Städtisches Kulturzentrum, Kassiopi",
+      "description": "Jährliches öffentliches Forum mit den Ergebnissen des ZOE-Programms, dem SDG-Fortschritt und den Gemeinde-Prioritäten für das nächste Jahr. Alle Bürger:innen willkommen. Vormittags: Projektpräsentationen. Nachmittags: partizipative Workshops zu künftigen Prioritäten. Übersetzung verfügbar."
+    },
+    "evt-sustainable-tourism": {
+      "title": "Stakeholder-Konsultation Nachhaltiger Tourismus",
+      "location": "Konferenzraum, Roda Beach Hotel",
+      "description": "Bürgerkonsultation für das Projekt Sustainable Blue Economy Tourism. Tourismusbetriebe, Einwohner:innen und Besucher:innen sind eingeladen, ihre Sicht auf Nachhaltigkeits-Standards im Tourismus und Vorschläge für Öko-Routen einzubringen."
+    },
+    "evt-composting-expansion": {
+      "title": "Planungstreffen Kompostierungs-Ausbau",
+      "location": "Gemeindehalle Kassiopi",
+      "description": "Offenes Planungstreffen für Gemeinden, die die nächste Welle von ZOE-Kompostieranlagen aufnehmen möchten. Höre die Ergebnisse des abgeschlossenen Pilotprojekts, stelle Fragen und bekunde Interesse, Kompostierung in dein Dorf zu bringen."
+    },
+    "evt-youth-eco": {
+      "title": "Jugend-Camp für Umwelt-Leadership",
+      "location": "Umweltbildungszentrum Paleokastritsa",
+      "description": "Ein 3-tägiges Camp mit Übernachtung für junge Menschen von 14–18 Jahren. Themen: Klimawissenschaft, Projektmanagement, digitale Kommunikation und Umwelt-Engagement. Bewerbungen offen für alle Schüler:innen in Nordkorfu."
+    }
+  },
+  "audienceData": {
+    "residents": {
+      "name": "Dauerhafte Einwohner:innen",
+      "tagline": "Die Menschen, die ganzjährig mit den Folgen leben",
+      "description": "Die rund 25.000 dauerhaften Einwohner:innen Nordkorfus erleben sowohl die Umweltbelastungen als auch die Lösungen aus erster Hand. Sie erinnern sich an die Temploni-Deponiekrise 2018, gehen an verlassenen Oliventerrassen vorbei und bemerken, wenn die Strände sauberer oder schmutziger sind als im Vorjahr. Ihr langfristiges Interesse macht sie zum Kern jedes dauerhaften Programms.",
+      "keyConcerns": [
+        "Lebensqualität und lokale Umwelt für Familien",
+        "Abfallwirtschaft — die Temploni-Deponiekrise ist noch präsent",
+        "Erhalt der Landschaft und des Kulturerbes der Olivenhaine",
+        "Zugang zu sauberen Stränden und Gewässern"
+      ],
+      "channels": [
+        "Facebook-Gruppen (Corfu Forum, lokale Dorfgruppen)",
+        "Mundpropaganda im Kafeneion (Dorfcafé)",
+        "Lokales Radio (Radio Corfu, lokale UKW-Sender)",
+        "Aushänge in Kirchen und Gemeinden",
+        "Gemeinde-Website und postalische Mitteilungen"
+      ],
+      "entryPoint": "Rahme ZOE um Gemeinschaftsstolz und praktische Verbesserung — sauberere Strände, weniger Deponie, bessere Dorfumgebungen. Vermeide abstrakte Nachhaltigkeitssprache.",
+      "barrierNote": "Historisch hohes Misstrauen gegenüber kommunalen Institutionen nach der Finanzkrise von 2010. Transparenz und sichtbare Ergebnisse zählen mehr als Versprechen."
+    },
+    "farmers": {
+      "name": "Bäuer:innen & Olivenbauern",
+      "tagline": "Hüter von 3,5 Millionen Olivenbäumen und jahrhundertealter Terrassenlandschaft",
+      "description": "Korfu hat rund 3,5 Millionen Olivenbäume — eine der höchsten Dichten Griechenlands —, doch der kommerzielle Anbau ist seit den 1960ern stark zurückgegangen. Viele Haine in den Bergdörfern Nordkorfus (Agios Markos, Spartilas, Sokraki) sind verlassen oder schlecht gepflegt. Bäuer:innen erreicht man über wirtschaftliche Tragfähigkeit, Familienerbe und praktisches Landmanagement — nicht über abstrakten Umweltschutz.",
+      "keyConcerns": [
+        "Wirtschaftliche Tragfähigkeit des Olivenanbaus vs. Tourismuslöhne",
+        "Bodenerosion und Einsturz von Terrassenmauern bei verlassenen Hainen",
+        "Brandgefahr durch ungepflegte Macchia-Vegetation",
+        "EU-Agrarpolitik und ihre lokalen Auswirkungen"
+      ],
+      "channels": [
+        "Agrar-Genossenschaften und Bauernverbände",
+        "Kafeneion in Agios Markos, Spartilas, Sokraki",
+        "Von Bauer zu Bauer über angesehene Landwirt:innen",
+        "Kontakte zur regionalen Agrarbehörde (OPEKEPE)"
+      ],
+      "entryPoint": "Beginne mit Schutz des Bodenwerts, Bodengesundheit und Olivenöl-Qualität/g.U.-Zertifizierung — nicht mit dem Wort „Umwelt“. Zeige den wirtschaftlichen vor dem ökologischen Nutzen.",
+      "barrierNote": "Skeptisch gegenüber „grünen“ EU-Vorgaben, die als externe Zwänge empfunden werden. Muss über vertrauenswürdige lokale Vermittler angegangen werden, nicht über kommunale Top-down-Kommunikation."
+    },
+    "fishermen": {
+      "name": "Fischer:innen & Küstenarbeiter:innen",
+      "tagline": "Erste Zeug:innen der Veränderungen im Meeresumfeld",
+      "description": "Das nördliche Ionische Meer hat die höchste Konzentration kleiner Fischerboote Griechenlands. Korfus Fischer:innen beobachten die Meeresverschlechterung direkt — Plastik in den Netzen, sinkende Fänge, geschädigte Posidonia-Seegraswiesen. Die Ionian Environment Foundation hat bereits Partnerschaften nach dem Modell „Fischer als Hüter“ gezeigt, bei denen Fischtrawler im Rahmen geförderter Reinigungsprogramme Meeresmüll bergen.",
+      "keyConcerns": [
+        "Sinkende Fischfänge und Veränderungen der Artenverteilung",
+        "Meeresmüll, der die Fanggeräte verschmutzt",
+        "Schädigung der Posidonia-oceanica-Seegraswiesen",
+        "Konkurrenz durch Aquakultur und Freizeitbootsverkehr"
+      ],
+      "channels": [
+        "Hafenverbände und Fischerei-Genossenschaften",
+        "Direkte Ansprache in den Häfen von Kassiopi und Agios Spyridon",
+        "IEF-Programm „Fischer als Hüter“ (bewährtes Modell)"
+      ],
+      "entryPoint": "Beginne mit dem Modell „Fischer als Hüter“ — Meeresreinigung wird vergütet oder anerkannt. Rahme Naturschutz als Schutz ihrer Lebensgrundlage, nicht als Einschränkung.",
+      "barrierNote": "Misstrauen gegenüber „grünen“ NGOs ist verbreitet. Das IEF-Trawler-Reinigungsmodell funktioniert, weil es Fischer:innen als aktive Partner mit anerkanntem Fachwissen einbindet, nicht als passive Empfänger:innen."
+    },
+    "tourism-businesses": {
+      "name": "Tourismusbetriebe",
+      "tagline": "Wirtschaftsmotor — und Sektor mit der höchsten saisonalen Abfallwirkung",
+      "description": "Hotels, Restaurants, Vermietungsagenturen und Reiseveranstalter treiben Nordkorfus Wirtschaft an, verursachen aber auch den größten saisonalen Umwelt-Fußabdruck. Die Deponiekrise 2018 — als sich der Müll während der Hochsaison sichtbar türmte — war eine direkte Reputationsgefahr für den Tourismus. Das schafft Motivation und Widerstand zugleich: Die Branche weiß, dass die Umwelt ihr Produkt ist, steht aber unter Wettbewerbsdruck, der kurzfristige Kostensteigerungen erschwert.",
+      "keyConcerns": [
+        "Ruf des Reiseziels und Treue wiederkehrender Gäste",
+        "Eine weitere Müllkrise wie 2018, die dem Image der Insel schadet",
+        "Steigende Öko-Zertifizierungs-Erwartungen europäischer Tourist:innen",
+        "Kosten für Abfallwirtschaft und Energie"
+      ],
+      "channels": [
+        "Hotel- und Gastronomieverbände (SETE, lokale Sektionen)",
+        "B2B-Treffen und Empfehlungen unter Kolleg:innen",
+        "Fachmedien (Publikationen des griechischen Tourismusverbands)",
+        "Kommunale Wirtschafts-Newsletter und -Veranstaltungen"
+      ],
+      "entryPoint": "Beginne mit dem Business-Case: Öko-Zertifizierung senkt Abfallkosten, erhöht Buchungen umweltbewusster Reisender und schafft Resilienz gegen eine weitere „Müllinsel“-Story in europäischen Medien.",
+      "barrierNote": "Kurze saisonale Betriebsfenster erzeugen Zeitdruck; Nachhaltigkeitsinvestitionen werden zurückgestellt, wenn das Personal ausgelastet ist. Einfachheit und geringer Verwaltungsaufwand sind entscheidend für die Akzeptanz."
+    },
+    "young-people": {
+      "name": "Junge Menschen (16–30)",
+      "tagline": "Die Generation, die am längsten mit den heutigen Umweltentscheidungen leben wird",
+      "description": "Junge Menschen in Nordkorfu stehen in einem besonderen Spannungsfeld: Sie wachsen an einem Ort von außergewöhnlicher Naturschönheit auf, der unter messbarem Druck steht, in einer lokalen Wirtschaft mit begrenzten langfristigen Perspektiven außerhalb des Saisontourismus. Viele empfinden Klimaangst, haben aber keine lokalen Strukturen für wirksames Handeln. ZOEs Schulprogramm und Jugend-Events sollen einen Weg von Bewusstsein zu Handlungsfähigkeit schaffen.",
+      "keyConcerns": [
+        "Zukunft der Insel und ihrer Umwelt",
+        "Bereits sichtbare Klimawandelfolgen auf Korfu (Brände, Stranderosion)",
+        "Begrenzte lokale wirtschaftliche Alternativen zum Saisontourismus",
+        "Gefühl, von der zivilen Entscheidungsfindung ausgeschlossen zu sein"
+      ],
+      "channels": [
+        "Instagram und Facebook (visuelle, teilbare Inhalte)",
+        "Schul-Öko-Räte und Universitätsnetzwerke",
+        "Events und Beach-Cleanups mit Social-Media-Sichtbarkeit",
+        "ZOE-Jugend-Leadership-Camp und -Workshops"
+      ],
+      "entryPoint": "Biete konkrete, sichtbare Rollen: ein Beach-Cleanup leiten, einen Öko-Rat führen, Biodiversität an der Antinioti-Lagune kartieren. Die Teilbarkeit der Teilnahme in sozialen Medien ist für diese Gruppe wichtig.",
+      "barrierNote": "Risiko performativen Engagements („Instagram-Umweltschutz“) ohne dauerhafte Bindung. Gestalte Aktivitäten mit echter Verantwortung und Nachverfolgung, keine Einmal-Events."
+    },
+    "tourists": {
+      "name": "Besucher:innen & Tourist:innen",
+      "tagline": "4 Millionen Besucher:innen pro Jahr — Teil des Problems und möglicher Teil der Lösung",
+      "description": "Korfu empfängt jährlich über 4 Millionen Besucher:innen, mehr als das 40-Fache seiner dauerhaften Bevölkerung. Besucher:innen sind eine Schlüsselzielgruppe der ZOE-Plattform: Viele ärgern sich bereits über Strandmüll, viele kommen gerade wegen der Naturschönheit der Insel, und viele sind offen für verantwortungsvolle Reiseentscheidungen, wenn diese klar präsentiert werden. Die Plattform dient zugleich als Bildung und als Beteiligungskanal für Gäste, die während ihres Aufenthalts etwas Positives beitragen möchten.",
+      "keyConcerns": [
+        "Unberührte Strände und Naturlandschaften erleben",
+        "Frust über sichtbaren Plastikmüll",
+        "Verantwortungsvoll reisen wollen, ohne komplizierte Logistik",
+        "Lokale Betriebe unterstützen, denen die Umwelt am Herzen liegt"
+      ],
+      "channels": [
+        "Check-in-Materialien im Hotel und QR-Codes",
+        "Tourismus-Infozentren in Kassiopi und Roda",
+        "Google und TripAdvisor (Öko-Tourismus-Suchbegriffe)",
+        "All For Blue Social Media (Beach-Cleanups)"
+      ],
+      "entryPoint": "Einfache, mehrsprachige Aktionen im Moment: bei einem Beach-Cleanup mitmachen, Müll melden, einen ZOE-zertifizierten lokalen Betrieb wählen. Reduziere die Hürde auf nahezu null.",
+      "barrierNote": "Flüchtiges Engagement — Besucher:innen bleiben 1–2 Wochen. Fokus auf einprägsame Einzelaktionen, nicht auf dauerhafte Bindung. Mehrsprachige Inhalte (Englisch, Deutsch, Italienisch) sind essenziell."
+    }
+  },
   "prototype": {
     "banner": "Forschungsprototyp — Diese Plattform enthält fiktive Daten für akademische Zwecke (DSR, FAU SoSe 2026). Kein echter kommunaler Dienst."
   },

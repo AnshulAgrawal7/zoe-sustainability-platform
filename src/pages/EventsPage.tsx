@@ -150,10 +150,10 @@ export default function EventsPage() {
                       )}
                     </div>
                     <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-                      {event.title}
+                      {t(`eventData.${event.id}.title`)}
                     </h2>
                     <p className="mb-4 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                      {event.description}
+                      {t(`eventData.${event.id}.description`)}
                     </p>
 
                     {/* Meta row */}
@@ -168,7 +168,7 @@ export default function EventsPage() {
                       </div>
                       <div className="flex items-center gap-1.5">
                         <MapPin size={14} aria-hidden="true" />
-                        <span>{event.location}</span>
+                        <span>{t(`eventData.${event.id}.location`)}</span>
                       </div>
                     </div>
                   </div>

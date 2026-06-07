@@ -62,14 +62,12 @@ export interface TransparencyMetric {
   unit: string;
 }
 
+// Text (title/description/location) is translated — see i18n: eventData.<id>.*
 export interface Event {
   id: string;
-  title: string;
   category: ProjectCategory;
   date: string;
   time: string;
-  location: string;
-  description: string;
   participantsMax: number;
   participantsRegistered: number;
   projectId?: string;
@@ -95,44 +93,40 @@ export interface ParticipationOption {
   icon: string;
 }
 
+// Text (name/description/rewards) is translated — see i18n: rewardData.tiers.<id>.*
+// greekName is the canonical Greek tier name and is shown in every language.
 export interface RewardTier {
   id: string;
-  name: string;
   greekName: string;
   pointsMin: number;
   pointsMax: number | null;
   icon: string;
   colorClasses: string;
-  description: string;
-  rewards: string[];
 }
 
+// Text (label) is translated — see i18n: rewardData.activities.<id>
 export interface RewardActivity {
   id: string;
-  label: string;
   points: number;
   icon: string;
   category: string;
 }
 
+// Text (label/reward) is translated — see i18n: rewardData.milestones.<id>.*
 export interface CommunityMilestone {
-  label: string;
+  id: string;
   target: number;
   current: number;
-  reward: string;
   unlocked: boolean;
 }
 
+// Text (name/tagline/description/keyConcerns/channel labels/entryPoint/barrierNote)
+// is translated — see i18n: audienceData.<id>.*. `channels` here keeps only the type
+// (for the online/offline icon); labels come from audienceData.<id>.channels (by index).
 export interface TargetAudience {
   id: string;
-  name: string;
   icon: string;
-  tagline: string;
-  description: string;
-  keyConcerns: string[];
-  channels: { label: string; type: 'online' | 'offline' }[];
-  entryPoint: string;
-  barrierNote: string;
+  channels: { type: 'online' | 'offline' }[];
 }
 
 // --- Auth & User types (backend-connected) ---

@@ -136,10 +136,10 @@ export default function AudiencesPage() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <h2 className="font-semibold text-gray-900 dark:text-white">
-                    {audience.name}
+                    {t(`audienceData.${audience.id}.name`)}
                   </h2>
                   <p className="mt-0.5 text-sm text-gray-600 dark:text-gray-300">
-                    {audience.tagline}
+                    {t(`audienceData.${audience.id}.tagline`)}
                   </p>
                 </div>
                 {isOpen ? (
@@ -163,13 +163,17 @@ export default function AudiencesPage() {
                   {/* Left: description + concerns */}
                   <div>
                     <p className="mb-4 text-sm leading-relaxed text-gray-700 dark:text-gray-200">
-                      {audience.description}
+                      {t(`audienceData.${audience.id}.description`)}
                     </p>
                     <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
                       {t('audiences.keyConcerns')}
                     </h3>
                     <ul className="space-y-1.5">
-                      {audience.keyConcerns.map((concern) => (
+                      {(
+                        t(`audienceData.${audience.id}.keyConcerns`, {
+                          returnObjects: true,
+                        }) as string[]
+                      ).map((concern) => (
                         <li
                           key={concern}
                           className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-200"
@@ -190,9 +194,9 @@ export default function AudiencesPage() {
                       {t('audiences.effectiveChannels')}
                     </h3>
                     <ul className="mb-4 space-y-1.5">
-                      {audience.channels.map((ch) => (
+                      {audience.channels.map((ch, i) => (
                         <li
-                          key={ch.label}
+                          key={i}
                           className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-200"
                         >
                           {ch.type === 'online' ? (
@@ -208,7 +212,13 @@ export default function AudiencesPage() {
                               aria-label={t('audiences.offlineChannel')}
                             />
                           )}
-                          {ch.label}
+                          {
+                            (
+                              t(`audienceData.${audience.id}.channels`, {
+                                returnObjects: true,
+                              }) as string[]
+                            )[i]
+                          }
                         </li>
                       ))}
                     </ul>
@@ -218,7 +228,7 @@ export default function AudiencesPage() {
                         {t('audiences.entryPoint')}
                       </p>
                       <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-200">
-                        {audience.entryPoint}
+                        {t(`audienceData.${audience.id}.entryPoint`)}
                       </p>
                     </div>
 
@@ -227,7 +237,7 @@ export default function AudiencesPage() {
                         {t('audiences.watchOut')}
                       </p>
                       <p className="text-sm leading-relaxed text-amber-900 dark:text-amber-200">
-                        {audience.barrierNote}
+                        {t(`audienceData.${audience.id}.barrierNote`)}
                       </p>
                     </div>
                   </div>
