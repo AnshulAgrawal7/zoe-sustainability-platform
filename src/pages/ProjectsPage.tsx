@@ -13,6 +13,10 @@ const CATEGORIES = [
   'CULTURE',
 ] as const;
 
+// Status filter: 'OPEN' (default), 'COMPLETED', or 'ALL' (every status).
+const STATUS_FILTERS = ['OPEN', 'COMPLETED', 'ALL'] as const;
+type StatusFilter = (typeof STATUS_FILTERS)[number];
+
 export default function ProjectsPage() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language.slice(0, 2);
@@ -22,6 +26,7 @@ export default function ProjectsPage() {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [categoryFilter, setCategoryFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('OPEN');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [retryCount, setRetryCount] = useState(0);
@@ -36,7 +41,7 @@ export default function ProjectsPage() {
           page,
           limit: 12,
           category: categoryFilter || undefined,
-          status: 'OPEN',
+          status: statusFilter,
         });
         if (!cancelled) {
           setProjects(data.projects);
@@ -53,7 +58,7 @@ export default function ProjectsPage() {
     return () => {
       cancelled = true;
     };
-  }, [page, categoryFilter, t, retryCount]);
+  }, [page, categoryFilter, statusFilter, t, retryCount]);
 
   function getTitle(p: ApiProject): string {
     if (lang === 'el') return p.titleEl;
@@ -72,6 +77,16 @@ export default function ProjectsPage() {
   function handleCategoryChange(cat: string) {
     setCategoryFilter(cat);
     setPage(1);
+  }
+
+  function handleStatusChange(status: StatusFilter) {
+    setStatusFilter(status);
+    setPage(1);
+  }
+
+  function statusLabel(status: StatusFilter): string {
+    if (status === 'ALL') return t('projects.allStatuses');
+    return t(`projects.status.${status}`);
   }
 
   return (
@@ -120,6 +135,31 @@ export default function ProjectsPage() {
             </button>
           ))}
         </div>
+
+        {/* Status filter — Open (default) · Completed · All */}
+        <div
+          className="mt-4 flex flex-wrap gap-2 border-t border-gray-100 pt-4 dark:border-gray-700"
+          role="group"
+          aria-label={t('projects.filterStatus')}
+        >
+          <span className="self-center text-sm font-medium text-gray-700 dark:text-gray-300">
+            {t('projects.filterStatus')}:
+          </span>
+          {STATUS_FILTERS.map((s) => (
+            <button
+              key={s}
+              onClick={() => handleStatusChange(s)}
+              aria-pressed={statusFilter === s}
+              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                statusFilter === s
+                  ? 'bg-green-600 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+              }`}
+            >
+              {statusLabel(s)}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Grid */}
@@ -158,6 +198,15 @@ export default function ProjectsPage() {
                   to={`/projects/${project.id}`}
                   className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:border-green-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700"
                 >
+                  {/* Cover image (optional) */}
+                  {project.imageUrl && (
+                    <img
+                      src={project.imageUrl}
+                      alt={getTitle(project)}
+                      loading="lazy"
+                      className="h-40 w-full object-cover"
+                    />
+                  )}
                   {/* Color bar by category */}
                   <div
                     className={`h-1.5 ${
@@ -175,8 +224,21 @@ export default function ProjectsPage() {
                   />
                   <div className="flex flex-1 flex-col p-5">
                     <div className="mb-3 flex items-start justify-between gap-2">
-                      <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                        {t(`projects.category.${project.category}`)}
+                      <span className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                          {t(`projects.category.${project.category}`)}
+                        </span>
+                        {project.status !== 'OPEN' && (
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
+                              project.status === 'COMPLETED'
+                                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                                : 'bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
+                            }`}
+                          >
+                            {t(`projects.status.${project.status}`)}
+                          </span>
+                        )}
                       </span>
                       <span className="flex shrink-0 items-center gap-1 text-xs font-semibold text-amber-600 dark:text-amber-400">
                         <Star size={12} aria-hidden="true" />

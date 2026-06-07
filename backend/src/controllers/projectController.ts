@@ -21,18 +21,20 @@ interface ProjectBody {
   rewardPoints?: number;
   location?: string;
   maxParticipants?: number;
+  imageUrl?: string;
 }
 
 export async function getProjects(req: Request, res: Response) {
   const page = Math.max(1, parseInt(req.query['page'] as string) || 1);
   const limit = Math.min(50, parseInt(req.query['limit'] as string) || 12);
   const category = req.query['category'] as string | undefined;
+  // Default to OPEN; 'ALL' returns every status (Open + Completed + …).
   const status = (req.query['status'] as string) || 'OPEN';
 
   try {
     const where = {
       ...(category ? { category } : {}),
-      status,
+      ...(status && status !== 'ALL' ? { status } : {}),
     };
 
     const [projects, total] = await Promise.all([
@@ -88,6 +90,7 @@ export async function createProject(req: AuthRequest, res: Response) {
         rewardPoints: rest.rewardPoints ?? 50,
         location: rest.location,
         maxParticipants: rest.maxParticipants,
+        imageUrl: rest.imageUrl ?? null,
         createdById: req.user!.userId,
       },
     });
@@ -122,6 +125,7 @@ export async function updateProject(req: AuthRequest, res: Response) {
         ...(rest.status !== undefined ? { status: rest.status } : {}),
         ...(rest.location !== undefined ? { location: rest.location } : {}),
         ...(rest.rewardPoints !== undefined ? { rewardPoints: rest.rewardPoints } : {}),
+        ...(rest.imageUrl !== undefined ? { imageUrl: rest.imageUrl || null } : {}),
         ...(sdgIds !== undefined ? { sdgIds: JSON.stringify(sdgIds) } : {}),
       },
     });

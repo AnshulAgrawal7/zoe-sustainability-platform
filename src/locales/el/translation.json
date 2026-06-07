@@ -68,7 +68,9 @@
     "loadMore": "Φόρτωση περισσότερων",
     "joinSuccess": "Συμμετείχατε στο έργο και κερδίσατε {{points}} πόντους!",
     "withdrawSuccess": "Αποχωρήσατε από το έργο.",
-    "alreadyParticipating": "Ήδη συμμετέχετε σε αυτό το έργο."
+    "alreadyParticipating": "Ήδη συμμετέχετε σε αυτό το έργο.",
+    "filterStatus": "Κατάσταση",
+    "allStatuses": "Όλα"
   },
   "rewards": {
     "heroEyebrow": "Επιβραβεύσεις Κοινότητας ZOE",
@@ -175,7 +177,9 @@
       "notConfigured": "Η αυτόματη μετάφραση δεν έχει ρυθμιστεί (λείπει το DEEPL_API_KEY στο backend).",
       "failed": "Η μετάφραση απέτυχε. Δοκιμάστε ξανά.",
       "done": "Μεταφράστηκε ✓ — ελέγξτε"
-    }
+    },
+    "formImageUrl": "URL εικόνας εξωφύλλου",
+    "formImageUrlHint": "Προαιρετικό. Επικολλήστε δημόσιο URL εικόνας (π.χ. Supabase Storage). Χρησιμοποιήστε μόνο δικές σας ή αδειοδοτημένες εικόνες."
   },
   "participate": {
     "title": "Συμμετοχή Πολιτών",

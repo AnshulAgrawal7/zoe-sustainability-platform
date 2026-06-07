@@ -68,7 +68,9 @@
     "loadMore": "Mehr laden",
     "joinSuccess": "Sie haben am Projekt teilgenommen und {{points}} Punkte erhalten!",
     "withdrawSuccess": "Sie haben das Projekt verlassen.",
-    "alreadyParticipating": "Sie nehmen bereits an diesem Projekt teil."
+    "alreadyParticipating": "Sie nehmen bereits an diesem Projekt teil.",
+    "filterStatus": "Status",
+    "allStatuses": "Alle"
   },
   "rewards": {
     "heroEyebrow": "ZOE Community-Belohnungen",
@@ -175,7 +177,9 @@
       "notConfigured": "Auto-Übersetzung ist nicht konfiguriert (DEEPL_API_KEY fehlt im Backend).",
       "failed": "Übersetzung fehlgeschlagen. Bitte erneut versuchen.",
       "done": "Übersetzt ✓ — bitte prüfen"
-    }
+    },
+    "formImageUrl": "Titelbild-URL",
+    "formImageUrlHint": "Optional. Öffentliche Bild-URL einfügen (z. B. Supabase Storage). Nur eigene oder lizenzierte Bilder verwenden."
   },
   "participate": {
     "title": "Bürgerbeteiligung",

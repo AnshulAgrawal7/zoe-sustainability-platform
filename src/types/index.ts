@@ -157,6 +157,7 @@ export interface ApiProject {
   rewardPoints: number;
   location: string | null;
   maxParticipants: number | null;
+  imageUrl: string | null;
   createdAt: string;
   _count?: { participations: number };
 }

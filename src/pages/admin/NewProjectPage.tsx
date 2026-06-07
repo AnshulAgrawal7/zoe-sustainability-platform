@@ -31,6 +31,7 @@ export default function NewProjectPage() {
     rewardPoints: 50,
     location: '',
     maxParticipants: '',
+    imageUrl: '',
   });
   const [selectedSdgs, setSelectedSdgs] = useState<number[]>([]);
   const [error, setError] = useState('');
@@ -70,6 +71,7 @@ export default function NewProjectPage() {
           ? Number(form.maxParticipants)
           : undefined,
         location: form.location || undefined,
+        imageUrl: form.imageUrl || undefined,
         sdgIds: selectedSdgs,
       } as Parameters<typeof createProject>[0]);
       navigate('/admin/projects');
@@ -262,6 +264,26 @@ export default function NewProjectPage() {
                 placeholder="e.g. Kassiopi, NE Corfu"
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
+            </div>
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="new-image-url"
+                className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
+              >
+                {t('admin.formImageUrl')}
+              </label>
+              <input
+                id="new-image-url"
+                type="url"
+                inputMode="url"
+                value={form.imageUrl}
+                onChange={(e) => set('imageUrl', e.target.value)}
+                placeholder="https://…/image.jpg"
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              />
+              <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+                {t('admin.formImageUrlHint')}
+              </p>
             </div>
           </div>
         </section>

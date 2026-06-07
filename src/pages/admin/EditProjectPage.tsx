@@ -33,6 +33,7 @@ export default function EditProjectPage() {
     status: 'OPEN' as (typeof STATUSES)[number],
     rewardPoints: 50,
     location: '',
+    imageUrl: '',
   });
   const [selectedSdgs, setSelectedSdgs] = useState<number[]>([]);
   const [error, setError] = useState('');
@@ -55,6 +56,7 @@ export default function EditProjectPage() {
           status: p.status as (typeof STATUSES)[number],
           rewardPoints: p.rewardPoints,
           location: p.location ?? '',
+          imageUrl: p.imageUrl ?? '',
         });
         try {
           setSelectedSdgs(JSON.parse(p.sdgIds) as number[]);
@@ -246,6 +248,33 @@ export default function EditProjectPage() {
                 onChange={(e) => set('location', e.target.value)}
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
+            </div>
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="edit-image-url"
+                className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
+              >
+                {t('admin.formImageUrl')}
+              </label>
+              <input
+                id="edit-image-url"
+                type="url"
+                inputMode="url"
+                value={form.imageUrl}
+                onChange={(e) => set('imageUrl', e.target.value)}
+                placeholder="https://…/image.jpg"
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              />
+              {form.imageUrl && (
+                <img
+                  src={form.imageUrl}
+                  alt=""
+                  className="mt-2 h-28 w-full rounded-lg object-cover"
+                />
+              )}
+              <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+                {t('admin.formImageUrlHint')}
+              </p>
             </div>
           </div>
         </section>

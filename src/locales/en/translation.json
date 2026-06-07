@@ -68,7 +68,9 @@
     "loadMore": "Load more",
     "joinSuccess": "You joined the project and earned {{points}} points!",
     "withdrawSuccess": "You withdrew from the project.",
-    "alreadyParticipating": "You are already participating in this project."
+    "alreadyParticipating": "You are already participating in this project.",
+    "filterStatus": "Status",
+    "allStatuses": "All"
   },
   "rewards": {
     "heroEyebrow": "ZOE Community Rewards",
@@ -175,7 +177,9 @@
       "notConfigured": "Auto-translation is not configured (DEEPL_API_KEY missing on the backend).",
       "failed": "Translation failed. Please try again.",
       "done": "Translated ✓ — please review"
-    }
+    },
+    "formImageUrl": "Cover image URL",
+    "formImageUrlHint": "Optional. Paste a public image URL (e.g. Supabase Storage). Use only your own or licensed images."
   },
   "participate": {
     "title": "Citizen Participation",

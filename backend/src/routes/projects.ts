@@ -20,7 +20,7 @@ router.get(
     query('page').optional().isInt({ min: 1 }),
     query('limit').optional().isInt({ min: 1, max: 50 }),
     query('category').optional().isIn(['ENVIRONMENT', 'MOBILITY', 'COMMUNITY', 'EDUCATION', 'CULTURE']),
-    query('status').optional().isIn(['DRAFT', 'OPEN', 'CLOSED', 'COMPLETED']),
+    query('status').optional().isIn(['DRAFT', 'OPEN', 'CLOSED', 'COMPLETED', 'ALL']),
   ],
   getProjects
 );
@@ -40,6 +40,7 @@ router.post(
     body('descriptionDe').trim().notEmpty(),
     body('category').isIn(['ENVIRONMENT', 'MOBILITY', 'COMMUNITY', 'EDUCATION', 'CULTURE']),
     body('rewardPoints').optional().isInt({ min: 0 }),
+    body('imageUrl').optional({ values: 'falsy' }).isURL({ require_protocol: true }).isLength({ max: 2048 }),
     body('sdgIds').isArray(),
   ],
   createProject
@@ -54,6 +55,7 @@ router.put(
     body('titleEl').optional().trim().notEmpty(),
     body('titleDe').optional().trim().notEmpty(),
     body('status').optional().isIn(['DRAFT', 'OPEN', 'CLOSED', 'COMPLETED']),
+    body('imageUrl').optional({ values: 'falsy' }).isURL({ require_protocol: true }).isLength({ max: 2048 }),
   ],
   updateProject
 );
