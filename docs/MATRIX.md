@@ -65,5 +65,6 @@ Stakeholder-Anforderung „Vergleich mit anderen Kommunen/EU": die Plattform ist
 7. 🔨 **TP6 Tourist:innen-Angebot** ausbauen (Iteration 7 additiv begonnen).
 
 > Detaillierte Evaluierbarkeit je Feature: [`evaluation-plan.md`](evaluation-plan.md) und [`handover/phase5-6-handover.md`](handover/phase5-6-handover.md).
+> **Konsolidierte, transparente Übersicht aller bewusst offenen Punkte** (Recht, E-Mail-Verifizierung, Persistenz, Newsletter, SDG-Icons, Schulprogramm, Rewards): [`limitations-and-future-work.md`](limitations-and-future-work.md).
 </content>
 </invoke>

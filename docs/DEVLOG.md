@@ -235,4 +235,8 @@ Abgeleitet aus den Lücken in [`MATRIX.md`](MATRIX.md):
 
 ## Verworfene Entscheidungen
 
-_(Leer — wird manuell befüllt, sobald ein Designansatz bewusst verworfen wird. Beispielschema: **Was wurde verworfen** · **Warum** · **Alternative** · **Datum**.)_
+### Altersbasierte Rewards → zugunsten profil-/interessenbasiert verworfen
+- **Was wurde verworfen:** Belohnungen je **Altersklasse** (inkl. Pflicht-**Altersabfrage** bei der Registrierung).
+- **Warum:** Alter/Geburtsdatum = personenbezogene Daten; die Zielgruppe umfasst **Minderjährige (<18)**. Für die DSGVO-Einwilligung bei Online-Diensten gilt in DE die **16-Jahres-Schwelle** (Art. 8 DSGVO) → darunter **Eltern-Einwilligung** nötig. Widerspricht der bewussten **Datensparsamkeit** (Szenario A) und verschiebt **DP2b** stärker ins rein Extrinsische (entgegen SDT/Thiel-Begründung).
+- **Alternative (gewählt, konzipiert):** **profil-/interessenbasierte** Rewards — freiwillig, datensparsam, anknüpfend an `AudiencesPage`/**DP4**. Altersvariante als **Future Work** mit u18-Limitation dokumentiert.
+- **Datum:** 2026-06-08. Details: [`limitations-and-future-work.md`](limitations-and-future-work.md) §7.
