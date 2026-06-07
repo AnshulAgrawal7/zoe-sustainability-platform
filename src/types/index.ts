@@ -11,13 +11,30 @@ export type ProjectCategory =
 
 export type ProjectStatus = 'Planning' | 'Active' | 'Completed' | 'Paused';
 
-export type SDGNumber = 3 | 4 | 6 | 7 | 8 | 11 | 12 | 13 | 14 | 15 | 17;
+export type SDGNumber =
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17;
 
+// Title and "how ZOE contributes" text are translated (i18n: sdgCatalog.*).
 export interface SDG {
   number: SDGNumber;
-  title: string;
-  color: string;
-  description: string;
+  color: string; // official UN goal color
+  unUrl: string; // official UN goal page
 }
 
 export interface Project {
@@ -58,12 +75,11 @@ export interface Event {
   projectId?: string;
 }
 
+// Text (label/unit/description) is translated — see i18n: impactMetrics.<id>.*
 export interface ImpactMetric {
-  label: string;
+  id: string;
   value: string | number;
-  unit: string;
   icon: string;
-  description: string;
   trend?: 'up' | 'down' | 'stable';
 }
 
@@ -73,12 +89,10 @@ export interface SDGProgress {
   progressPercent: number;
 }
 
+// Text (title/description/actionLabel) is translated — see i18n: participationOpts.<id>.*
 export interface ParticipationOption {
   id: string;
-  title: string;
-  description: string;
   icon: string;
-  actionLabel: string;
 }
 
 export interface RewardTier {

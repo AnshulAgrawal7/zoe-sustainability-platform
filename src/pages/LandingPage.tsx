@@ -117,15 +117,15 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-6 text-center sm:grid-cols-4">
             {impactMetrics.slice(0, 4).map((m) => (
-              <div key={m.label}>
+              <div key={m.id}>
                 <p className="text-2xl font-bold text-green-700 dark:text-green-400 sm:text-3xl">
                   {m.value}
                   <span className="ml-1 text-sm font-normal text-gray-500 dark:text-gray-400">
-                    {m.unit}
+                    {t(`impactMetrics.${m.id}.unit`)}
                   </span>
                 </p>
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                  {m.label}
+                  {t(`impactMetrics.${m.id}.label`)}
                 </p>
               </div>
             ))}

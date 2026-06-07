@@ -20,6 +20,132 @@
       "reward": "As a volunteer you earn for organising and leading — coordinate actions and bring others along. Aim for the Ambassador tier."
     }
   },
+  "sdgGrid": {
+    "heading": "All 17 Sustainable Development Goals",
+    "intro": "ZOE maps its actions to the UN SDGs. Highlighted goals are addressed by ZOE projects; select any goal to open its official UN page.",
+    "addressed": "Addressed by ZOE",
+    "notAddressed": "Not yet addressed",
+    "openOnUn": "Open SDG {{number}} on the UN website",
+    "addressedOfTotal": "{{count}} of 17 goals addressed"
+  },
+  "sdgCatalog": {
+    "1": { "title": "No Poverty" },
+    "2": { "title": "Zero Hunger" },
+    "3": {
+      "title": "Good Health and Well-Being",
+      "contribution": "Healthy ecosystems and clean environments contribute to community well-being."
+    },
+    "4": {
+      "title": "Quality Education",
+      "contribution": "Environmental education programmes build long-term sustainability literacy."
+    },
+    "5": { "title": "Gender Equality" },
+    "6": {
+      "title": "Clean Water and Sanitation",
+      "contribution": "Protecting water sources and coastal zones ensures clean water for all."
+    },
+    "7": { "title": "Affordable and Clean Energy" },
+    "8": {
+      "title": "Decent Work and Economic Growth",
+      "contribution": "Sustainable tourism and local green initiatives support decent work and the regional economy."
+    },
+    "9": { "title": "Industry, Innovation and Infrastructure" },
+    "10": { "title": "Reduced Inequalities" },
+    "11": {
+      "title": "Sustainable Cities and Communities",
+      "contribution": "Green urban planning and community engagement foster sustainable local governance."
+    },
+    "12": {
+      "title": "Responsible Consumption and Production",
+      "contribution": "Circular economy and waste-reduction actions promote sustainable patterns."
+    },
+    "13": {
+      "title": "Climate Action",
+      "contribution": "Local climate mitigation and adaptation measures address the climate crisis."
+    },
+    "14": {
+      "title": "Life Below Water",
+      "contribution": "Protecting coastal and marine ecosystems is central to Corfu's environment."
+    },
+    "15": {
+      "title": "Life on Land",
+      "contribution": "Biodiversity conservation and reforestation protect terrestrial ecosystems."
+    },
+    "16": { "title": "Peace, Justice and Strong Institutions" },
+    "17": {
+      "title": "Partnerships for the Goals",
+      "contribution": "Multi-stakeholder collaboration is essential to achieving all other goals."
+    }
+  },
+  "impactMetrics": {
+    "active-projects": {
+      "label": "Active Projects",
+      "unit": "projects",
+      "description": "Environmental action projects currently running or recently completed under the ZOE programme."
+    },
+    "citizens-engaged": {
+      "label": "Citizens Engaged",
+      "unit": "participants",
+      "description": "Unique participants across all ZOE project activities, events and monitoring programmes (cumulative)."
+    },
+    "waste-diverted": {
+      "label": "Waste Diverted",
+      "unit": "tonnes/month",
+      "description": "Solid waste diverted from landfill through recycling and composting programmes."
+    },
+    "coastline-monitored": {
+      "label": "Coastline Monitored",
+      "unit": "km",
+      "description": "Kilometres of Northern Corfu coastline covered by regular ZOE litter monitoring and cleanup programmes."
+    },
+    "habitats-restored": {
+      "label": "Habitats Restored",
+      "unit": "hectares",
+      "description": "Terrestrial and wetland habitat restored or under active restoration management."
+    },
+    "ghg-avoided": {
+      "label": "GHG Avoided",
+      "unit": "tCO₂eq/year",
+      "description": "Estimated greenhouse-gas emissions avoided through organic-waste diversion (composting programme)."
+    },
+    "students-reached": {
+      "label": "Students Reached",
+      "unit": "students",
+      "description": "Students in Northern Corfu primary schools currently receiving structured environmental education through ZOE."
+    },
+    "sdgs-addressed": {
+      "label": "SDGs Addressed",
+      "unit": "SDGs",
+      "description": "UN Sustainable Development Goals directly addressed by one or more ZOE project activities."
+    }
+  },
+  "participationOpts": {
+    "submit-idea": {
+      "title": "Submit an Idea",
+      "description": "Have an idea for a new environmental initiative in your community? Share it with the ZOE team. All ideas are reviewed by the municipal coordination committee.",
+      "actionLabel": "Submit Your Idea"
+    },
+    "volunteer": {
+      "title": "Volunteer",
+      "description": "Lend your time, skills or local knowledge to an active project. Opportunities range from field restoration work to data entry, event organisation and school presentations.",
+      "actionLabel": "Sign Up to Volunteer"
+    },
+    "join-event": {
+      "title": "Join an Event",
+      "description": "Attend one of the regular ZOE events: cleanup days, biodiversity walks, workshops, community forums, and more. Family-friendly options available.",
+      "actionLabel": "Browse Events"
+    },
+    "report-issue": {
+      "title": "Report an Environmental Issue",
+      "description": "Spotted illegal dumping, water pollution, or habitat damage? Report it through the platform and the municipality will be notified. Each report is tracked and responded to.",
+      "actionLabel": "Report an Issue"
+    },
+    "feedback": {
+      "title": "Give Feedback",
+      "description": "Tell us what you think about the ZOE programme, which projects matter most to you, or how we can improve citizen participation. Your input shapes future iterations.",
+      "actionLabel": "Share Feedback"
+    }
+  },
   "prototype": {
     "banner": "Research Prototype — This platform contains fictional data for academic purposes (DSR, FAU SoSe 2026). Not a real municipal service."
   },
@@ -231,6 +357,8 @@
     "learnMore": "Learn more"
   },
   "common": {
+    "role": "Role",
+    "pts": "Pts",
     "loading": "Loading...",
     "error": "Something went wrong.",
     "retry": "Try again",

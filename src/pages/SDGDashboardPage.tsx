@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Globe, ArrowRight } from 'lucide-react';
+import { Globe, ArrowRight, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { sdgs, sdgProgressData } from '../data/sdgs';
+import { sdgs, sdgProgressData, getSdgByNumber } from '../data/sdgs';
 import { projects } from '../data/projects';
 import ProgressBar from '../components/ui/ProgressBar';
 import type { SDGNumber } from '../types';
@@ -13,10 +13,17 @@ function getProjectsForSdg(sdgNumber: SDGNumber) {
 export default function SDGDashboardPage() {
   const { t } = useTranslation();
 
+  // The set of addressed goals is DERIVED from the project data (single source of
+  // truth) — not a hand-maintained number.
+  const addressed = Array.from(new Set(projects.flatMap((p) => p.sdgs))).sort(
+    (a, b) => a - b
+  ) as SDGNumber[];
+  const addressedSet = new Set<number>(addressed);
+
   const stats = [
     {
       label: t('sdgDashboard.statSdgsAddressed'),
-      value: sdgs.length,
+      value: addressed.length,
       unit: t('sdgDashboard.unitOf17'),
     },
     {
@@ -79,96 +86,137 @@ export default function SDGDashboardPage() {
         ))}
       </div>
 
-      {/* SDG cards */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {sdgs.map((sdg) => {
-          const progressEntry = sdgProgressData.find(
-            (d) => d.sdg === sdg.number
-          );
-          const linkedProjects = getProjectsForSdg(sdg.number as SDGNumber);
-          const progress = progressEntry?.progressPercent ?? 0;
-
-          return (
-            <div
-              key={sdg.number}
-              className="overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
-            >
-              {/* SDG color header */}
-              <div
-                className="h-2"
-                style={{ backgroundColor: sdg.color }}
-                aria-hidden="true"
-              />
-              <div className="p-5">
-                <div className="mb-3 flex items-start justify-between gap-2">
-                  <span
-                    className="rounded px-2 py-0.5 text-sm font-bold text-white"
-                    style={{ backgroundColor: sdg.color }}
-                  >
-                    SDG {sdg.number}
-                  </span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
-                    {t('sdgDashboard.projectsCount', {
-                      count: linkedProjects.length,
-                    })}
-                  </span>
-                </div>
-                <h2 className="mb-2 font-semibold text-gray-900 dark:text-white">
-                  {sdg.title}
-                </h2>
-                <p className="mb-4 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                  {sdg.description}
-                </p>
-
-                {/* Progress */}
-                <div className="mb-4">
-                  <div className="mb-1 flex justify-between text-xs text-gray-500 dark:text-gray-400">
-                    <span>{t('sdgDashboard.programmeProgress')}</span>
-                    <span>{progress}%</span>
-                  </div>
-                  <ProgressBar
-                    value={progress}
-                    color="bg-green-500"
-                    showLabel={false}
-                  />
-                </div>
-
-                {/* Linked projects */}
-                {linkedProjects.length > 0 && (
-                  <div>
-                    <p className="mb-2 text-xs font-medium text-gray-500 dark:text-gray-400">
-                      {t('sdgDashboard.contributingProjects')}
-                    </p>
-                    <ul className="space-y-1">
-                      {linkedProjects.map((p) => (
-                        <li key={p.id}>
-                          <Link
-                            to={`/projects/${p.id}`}
-                            className="flex items-center gap-1 text-xs text-green-700 hover:text-green-900 hover:underline dark:text-green-400 dark:hover:text-green-300"
-                          >
-                            <ArrowRight size={10} aria-hidden="true" />
-                            {p.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Footer note */}
-      <div className="mt-10 rounded-xl border border-gray-200 bg-gray-50 p-6 text-center dark:border-gray-700 dark:bg-gray-800/50">
-        <h2 className="mb-2 font-semibold text-gray-900 dark:text-white">
-          {t('sdgDashboard.aboutTitle')}
+      {/* All 17 SDGs — clickable grid linking to the official UN pages */}
+      <section aria-labelledby="all-sdgs-heading" className="mb-12">
+        <h2
+          id="all-sdgs-heading"
+          className="mb-1 text-xl font-bold text-gray-900 dark:text-white"
+        >
+          {t('sdgGrid.heading')}
         </h2>
-        <p className="mx-auto max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-          {t('sdgDashboard.aboutText')}
+        <p className="mb-4 max-w-3xl text-sm text-gray-600 dark:text-gray-300">
+          {t('sdgGrid.intro')}{' '}
+          <span className="font-medium text-green-700 dark:text-green-400">
+            {t('sdgGrid.addressedOfTotal', { count: addressed.length })}
+          </span>
         </p>
-      </div>
+        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          {sdgs.map((sdg) => {
+            const isAddressed = addressedSet.has(sdg.number);
+            return (
+              <li key={sdg.number}>
+                <a
+                  href={sdg.unUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t('sdgGrid.openOnUn', { number: sdg.number })}
+                  className={`flex h-full min-h-[112px] flex-col justify-between rounded-lg p-3 text-white transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 motion-safe:hover:scale-[1.03] ${
+                    isAddressed
+                      ? 'opacity-100 shadow-sm'
+                      : 'opacity-40 grayscale'
+                  }`}
+                  style={{ backgroundColor: sdg.color }}
+                >
+                  <span className="text-lg font-extrabold">{sdg.number}</span>
+                  <span className="mt-1 text-xs font-medium leading-snug">
+                    {t(`sdgCatalog.${sdg.number}.title`)}
+                  </span>
+                  <span className="mt-2 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide">
+                    {isAddressed
+                      ? t('sdgGrid.addressed')
+                      : t('sdgGrid.notAddressed')}
+                    <ExternalLink size={10} aria-hidden="true" />
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      {/* Addressed goals — detail cards */}
+      <section aria-label={t('sdgGrid.addressed')}>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {addressed.map((number) => {
+            const sdg = getSdgByNumber(number);
+            if (!sdg) return null;
+            const progressEntry = sdgProgressData.find((d) => d.sdg === number);
+            const linkedProjects = getProjectsForSdg(number);
+            const progress = progressEntry?.progressPercent ?? 0;
+
+            return (
+              <div
+                key={number}
+                className="overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
+              >
+                <div
+                  className="h-2"
+                  style={{ backgroundColor: sdg.color }}
+                  aria-hidden="true"
+                />
+                <div className="p-5">
+                  <div className="mb-3 flex items-start justify-between gap-2">
+                    <span
+                      className="rounded px-2 py-0.5 text-sm font-bold text-white"
+                      style={{ backgroundColor: sdg.color }}
+                    >
+                      SDG {number}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {t('sdgDashboard.projectsCount', {
+                        count: linkedProjects.length,
+                      })}
+                    </span>
+                  </div>
+                  <h3 className="mb-2 font-semibold text-gray-900 dark:text-white">
+                    {t(`sdgCatalog.${number}.title`)}
+                  </h3>
+                  <p className="mb-4 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                    {t(`sdgCatalog.${number}.contribution`, {
+                      defaultValue: '',
+                    })}
+                  </p>
+
+                  {/* Progress */}
+                  <div className="mb-4">
+                    <div className="mb-1 flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                      <span>{t('sdgDashboard.programmeProgress')}</span>
+                      <span>{progress}%</span>
+                    </div>
+                    <ProgressBar
+                      value={progress}
+                      color="bg-green-500"
+                      showLabel={false}
+                    />
+                  </div>
+
+                  {/* Linked projects */}
+                  {linkedProjects.length > 0 && (
+                    <div>
+                      <p className="mb-2 text-xs font-medium text-gray-500 dark:text-gray-400">
+                        {t('sdgDashboard.contributingProjects')}
+                      </p>
+                      <ul className="space-y-1">
+                        {linkedProjects.map((p) => (
+                          <li key={p.id}>
+                            <Link
+                              to={`/projects/${p.id}`}
+                              className="flex items-center gap-1 text-xs text-green-700 hover:text-green-900 hover:underline dark:text-green-400 dark:hover:text-green-300"
+                            >
+                              <ArrowRight size={10} aria-hidden="true" />
+                              {p.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 }

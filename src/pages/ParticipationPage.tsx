@@ -104,10 +104,10 @@ export default function ParticipationPage() {
                 <Icon size={22} aria-hidden="true" />
               </div>
               <h2 className="mb-1.5 font-semibold text-gray-900 dark:text-white">
-                {option.title}
+                {t(`participationOpts.${option.id}.title`)}
               </h2>
               <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                {option.description}
+                {t(`participationOpts.${option.id}.description`)}
               </p>
               <div className="mt-3 flex items-center justify-between">
                 <span
@@ -119,7 +119,7 @@ export default function ParticipationPage() {
                 >
                   {isActive
                     ? t('participate.selected')
-                    : option.actionLabel + ' →'}
+                    : t(`participationOpts.${option.id}.actionLabel`) + ' →'}
                 </span>
                 {optionPoints[option.id] && (
                   <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
@@ -141,8 +141,9 @@ export default function ParticipationPage() {
           <div className="mb-6 flex items-center justify-between">
             <div>
               <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                {participationOptions.find((o) => o.id === activeOption)
-                  ?.title ?? t('participate.submitButton')}
+                {activeOption
+                  ? t(`participationOpts.${activeOption}.title`)
+                  : t('participate.submitButton')}
               </h2>
               <p className="mt-1 inline-block rounded border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-300">
                 {t('participate.prototypeNotice')}

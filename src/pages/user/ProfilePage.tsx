@@ -169,7 +169,8 @@ export default function ProfilePage() {
           <span className="font-semibold text-gray-700 dark:text-gray-200">
             {LANGUAGE_LABELS[user?.language ?? 'EN']}
           </span>
-          {' · '}Role:{' '}
+          {' · '}
+          {t('common.role')}:{' '}
           <span className="font-semibold text-gray-700 dark:text-gray-200">
             {user?.role}
           </span>

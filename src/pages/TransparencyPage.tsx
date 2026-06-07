@@ -78,7 +78,7 @@ export default function TransparencyPage() {
               : 'text-gray-400';
             return (
               <div
-                key={metric.label}
+                key={metric.id}
                 className="rounded-xl border border-gray-200 bg-white p-5 transition-shadow hover:shadow-sm dark:border-gray-700 dark:bg-gray-800"
               >
                 <div className="mb-3 flex items-start justify-between">
@@ -103,13 +103,13 @@ export default function TransparencyPage() {
                   {metric.value}
                 </p>
                 <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
-                  {metric.unit}
+                  {t(`impactMetrics.${metric.id}.unit`)}
                 </p>
                 <p className="mt-2 text-sm font-medium text-gray-700 dark:text-gray-200">
-                  {metric.label}
+                  {t(`impactMetrics.${metric.id}.label`)}
                 </p>
                 <p className="mt-1 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
-                  {metric.description}
+                  {t(`impactMetrics.${metric.id}.description`)}
                 </p>
               </div>
             );

@@ -20,6 +20,132 @@
       "reward": "Als Volontär:in bekommst du fürs Organisieren und Anleiten — Aktionen koordinieren und andere mitnehmen. Ziel: Stufe Botschafter."
     }
   },
+  "sdgGrid": {
+    "heading": "Alle 17 Ziele für nachhaltige Entwicklung",
+    "intro": "ZOE ordnet seine Aktionen den UN-SDGs zu. Hervorgehobene Ziele werden von ZOE-Projekten adressiert; wähle ein Ziel, um die offizielle UN-Seite zu öffnen.",
+    "addressed": "Von ZOE adressiert",
+    "notAddressed": "Noch nicht adressiert",
+    "openOnUn": "SDG {{number}} auf der UN-Website öffnen",
+    "addressedOfTotal": "{{count}} von 17 Zielen adressiert"
+  },
+  "sdgCatalog": {
+    "1": { "title": "Keine Armut" },
+    "2": { "title": "Kein Hunger" },
+    "3": {
+      "title": "Gesundheit und Wohlergehen",
+      "contribution": "Gesunde Ökosysteme und saubere Umwelt fördern das Wohlergehen der Gemeinschaft."
+    },
+    "4": {
+      "title": "Hochwertige Bildung",
+      "contribution": "Umweltbildungsprogramme schaffen langfristige Nachhaltigkeitskompetenz."
+    },
+    "5": { "title": "Geschlechtergleichheit" },
+    "6": {
+      "title": "Sauberes Wasser und Sanitäreinrichtungen",
+      "contribution": "Der Schutz von Wasserquellen und Küstenzonen sichert sauberes Wasser für alle."
+    },
+    "7": { "title": "Bezahlbare und saubere Energie" },
+    "8": {
+      "title": "Menschenwürdige Arbeit und Wirtschaftswachstum",
+      "contribution": "Nachhaltiger Tourismus und lokale grüne Initiativen unterstützen menschenwürdige Arbeit und die regionale Wirtschaft."
+    },
+    "9": { "title": "Industrie, Innovation und Infrastruktur" },
+    "10": { "title": "Weniger Ungleichheiten" },
+    "11": {
+      "title": "Nachhaltige Städte und Gemeinden",
+      "contribution": "Grüne Stadtplanung und Bürgerbeteiligung fördern nachhaltige lokale Governance."
+    },
+    "12": {
+      "title": "Nachhaltiger Konsum und Produktion",
+      "contribution": "Kreislaufwirtschaft und Abfallvermeidung fördern nachhaltige Konsummuster."
+    },
+    "13": {
+      "title": "Maßnahmen zum Klimaschutz",
+      "contribution": "Lokale Klimaschutz- und Anpassungsmaßnahmen begegnen der Klimakrise."
+    },
+    "14": {
+      "title": "Leben unter Wasser",
+      "contribution": "Der Schutz von Küsten- und Meeresökosystemen ist zentral für Korfus Umwelt."
+    },
+    "15": {
+      "title": "Leben an Land",
+      "contribution": "Biodiversitätsschutz und Wiederaufforstung schützen terrestrische Ökosysteme."
+    },
+    "16": { "title": "Frieden, Gerechtigkeit und starke Institutionen" },
+    "17": {
+      "title": "Partnerschaften zur Erreichung der Ziele",
+      "contribution": "Die Zusammenarbeit vieler Akteure ist entscheidend, um alle anderen Ziele zu erreichen."
+    }
+  },
+  "impactMetrics": {
+    "active-projects": {
+      "label": "Aktive Projekte",
+      "unit": "Projekte",
+      "description": "Umweltaktionsprojekte, die derzeit im Rahmen des ZOE-Programms laufen oder kürzlich abgeschlossen wurden."
+    },
+    "citizens-engaged": {
+      "label": "Beteiligte Bürger:innen",
+      "unit": "Teilnehmende",
+      "description": "Eindeutige Teilnehmende über alle ZOE-Aktivitäten, Veranstaltungen und Monitoring-Programme (kumulativ)."
+    },
+    "waste-diverted": {
+      "label": "Vermiedener Abfall",
+      "unit": "Tonnen/Monat",
+      "description": "Feststoffabfall, der durch Recycling- und Kompostierungsprogramme von der Deponie ferngehalten wird."
+    },
+    "coastline-monitored": {
+      "label": "Überwachte Küste",
+      "unit": "km",
+      "description": "Kilometer Küste Nordkorfus, die durch regelmäßiges ZOE-Müllmonitoring und Reinigungen abgedeckt werden."
+    },
+    "habitats-restored": {
+      "label": "Renaturierte Lebensräume",
+      "unit": "Hektar",
+      "description": "Wiederhergestellte oder in aktiver Renaturierung befindliche Land- und Feuchtgebietslebensräume."
+    },
+    "ghg-avoided": {
+      "label": "Vermiedene THG",
+      "unit": "tCO₂eq/Jahr",
+      "description": "Geschätzte vermiedene Treibhausgasemissionen durch Bioabfall-Verwertung (Kompostierungsprogramm)."
+    },
+    "students-reached": {
+      "label": "Erreichte Schüler:innen",
+      "unit": "Schüler:innen",
+      "description": "Schüler:innen an Grundschulen Nordkorfus, die derzeit strukturierte Umweltbildung durch ZOE erhalten."
+    },
+    "sdgs-addressed": {
+      "label": "Adressierte SDGs",
+      "unit": "SDGs",
+      "description": "UN-Ziele für nachhaltige Entwicklung, die durch eine oder mehrere ZOE-Aktivitäten direkt adressiert werden."
+    }
+  },
+  "participationOpts": {
+    "submit-idea": {
+      "title": "Idee einreichen",
+      "description": "Hast du eine Idee für eine neue Umweltinitiative in deiner Gemeinde? Teile sie mit dem ZOE-Team. Alle Ideen werden vom kommunalen Koordinationsausschuss geprüft.",
+      "actionLabel": "Deine Idee einreichen"
+    },
+    "volunteer": {
+      "title": "Mithelfen",
+      "description": "Bring deine Zeit, Fähigkeiten oder Ortskenntnis in ein aktives Projekt ein. Von Renaturierungsarbeit über Dateneingabe bis zu Veranstaltungsorganisation und Schulpräsentationen.",
+      "actionLabel": "Als Freiwillige:r anmelden"
+    },
+    "join-event": {
+      "title": "An einer Veranstaltung teilnehmen",
+      "description": "Nimm an einer der regelmäßigen ZOE-Veranstaltungen teil: Reinigungstage, Biodiversitäts-Spaziergänge, Workshops, Bürgerforen und mehr. Familienfreundliche Optionen verfügbar.",
+      "actionLabel": "Veranstaltungen ansehen"
+    },
+    "report-issue": {
+      "title": "Umweltproblem melden",
+      "description": "Illegale Müllentsorgung, Wasserverschmutzung oder Lebensraumschäden entdeckt? Melde es über die Plattform, die Gemeinde wird benachrichtigt. Jede Meldung wird verfolgt und beantwortet.",
+      "actionLabel": "Problem melden"
+    },
+    "feedback": {
+      "title": "Feedback geben",
+      "description": "Sag uns, was du über das ZOE-Programm denkst, welche Projekte dir am wichtigsten sind oder wie wir die Bürgerbeteiligung verbessern können. Dein Input prägt künftige Iterationen.",
+      "actionLabel": "Feedback teilen"
+    }
+  },
   "prototype": {
     "banner": "Forschungsprototyp — Diese Plattform enthält fiktive Daten für akademische Zwecke (DSR, FAU SoSe 2026). Kein echter kommunaler Dienst."
   },
@@ -231,6 +357,8 @@
     "learnMore": "Mehr erfahren"
   },
   "common": {
+    "role": "Rolle",
+    "pts": "Pkt.",
     "loading": "Laden...",
     "error": "Etwas ist schiefgelaufen.",
     "retry": "Erneut versuchen",

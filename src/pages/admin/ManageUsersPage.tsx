@@ -60,8 +60,8 @@ export default function ManageUsersPage() {
               <tr className="border-b border-gray-200 text-left text-xs text-gray-500 dark:border-gray-700 dark:text-gray-400">
                 <th className="pb-3 pr-4 font-medium">{t('auth.name')}</th>
                 <th className="pb-3 pr-4 font-medium">{t('auth.email')}</th>
-                <th className="pb-3 pr-4 font-medium">Role</th>
-                <th className="pb-3 pr-4 font-medium">Pts</th>
+                <th className="pb-3 pr-4 font-medium">{t('common.role')}</th>
+                <th className="pb-3 pr-4 font-medium">{t('common.pts')}</th>
                 <th className="pb-3 font-medium">{t('admin.changeRole')}</th>
               </tr>
             </thead>
