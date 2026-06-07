@@ -20,7 +20,7 @@
 - [ ] *(für Bilder später)* Storage-Bucket anlegen + API-Keys notieren
 
 ## 2. 🤖+👤 Datenbank umziehen (SQLite → Supabase Postgres)
-- [ ] 🤖 Ich stelle Prisma auf Postgres um (`provider`, `directUrl`) + Migrations-/Seed-Skripte
+- [x] 🤖 Prisma-Umstellung auf Postgres **dokumentiert** (`provider` + `directUrl` + Migrations-Neuerzeugung + Seed) → [`docs/deployment/deploy.md`](docs/deployment/deploy.md) §DB. *Vollzug* sobald dein `DATABASE_URL` steht (Dev/Tests bleiben bis dahin auf SQLite).
 - [ ] 👤 Du trägst `DATABASE_URL` (+ direct) in `backend/.env` ein
 - [ ] 🤖/👤 `npx prisma migrate deploy` + `npm run db:seed` gegen Supabase → Admin-Login + 8 Projekte vorhanden
 - [ ] 👤 Kurz prüfen: lokal gegen Supabase läuft `/api/projects`
@@ -32,7 +32,7 @@
 - [ ] **Start:** `npm start`
 - [ ] **Environment Variables** setzen (siehe Secrets-Tabelle unten)
 - [ ] Nach Deploy: `https://<dein-backend>.onrender.com/api/health` muss `{"success":true}` liefern
-- [ ] 🤖 Ich lege `render.yaml` / Build-Konfig + Prod-`.env.example` an
+- [x] 🤖 `render.yaml` (Blueprint) + Build/Start-Konfig + Prod-`.env.example` angelegt → [`render.yaml`](render.yaml), [`docs/deployment/deploy.md`](docs/deployment/deploy.md)
 
 ## 4. 👤 Frontend hosten (Empfehlung: Vercel)
 - [ ] Account auf https://vercel.com → **Add New → Project** → dein Repo
@@ -47,7 +47,7 @@
 - [ ] 👤 **Wichtig danach:** im Backend-Host `CORS_ORIGIN=https://<deine-domain>` setzen + Frontend `VITE_API_BASE_URL` auf die Backend-Domain
 
 ## 6. 👤 Rechtliches ausfüllen (Szenario A, minimal)
-- [ ] 🤖 Ich erstelle **Impressum-** + **Datenschutz-Seite** als Vorlage (Platzhalter + Prototyp-Hinweis)
+- [x] 🤖 **Impressum-** (`/imprint`) + **Datenschutz-Ausbau** als Vorlage erstellt (Platzhalter + Prototyp-Hinweis, EN/EL/DE; Supabase/DeepL als Auftragsverarbeiter benannt)
 - [ ] 👤 **Impressum** mit *deinen* Daten füllen (du als Betreiber:in — **nicht** die Gemeinde)
 - [ ] 👤 **Datenschutzerklärung** vervollständigen: Supabase + DeepL als **Auftragsverarbeiter** nennen
 - [ ] 👤 **AVV/DPA** abschließen: Supabase (im Dashboard) + DeepL (Pro/Account) — EU-Region
@@ -73,15 +73,18 @@
 | `NODE_ENV` | Backend-Host | `production` |
 | `CORS_ORIGIN` | Backend-Host | `https://<deine-domain>` |
 | `VITE_API_BASE_URL` | Frontend-Host | `https://<backend-domain>/api` |
+| `VITE_ANALYTICS_*` *(optional)* | Frontend-Host | nur falls Analytics gewünscht — `provider`/`domain` etc., siehe [`analytics.md`](docs/deployment/analytics.md) |
 
 ---
 
-## 🤖 Was ich für dich im Repo vorbereite (kein Account nötig)
-- [ ] Prisma auf Postgres umstellbar (`provider` + `directUrl`) + Doku
-- [ ] Prod-`.env.example` (alle Variablen) + **sichere Cookies** in Prod (`secure`/`SameSite`)
-- [ ] `render.yaml` / Dockerfile + Build/Start-Konfig
-- [ ] **Impressum** + **Datenschutz** Template-Seiten (EN/EL/DE, Platzhalter)
-- [ ] *(optional)* Abgeschlossene Projekte: `imageUrl`-Feld + Status-Filter (mit Platzhalter-Bildern)
+## 🤖 Was ich für dich im Repo vorbereite (kein Account nötig) — ✅ erledigt
+- [x] Prisma auf Postgres umstellbar (`provider` + `directUrl`) **dokumentiert** → `docs/deployment/deploy.md` (Vollzug = dein `DATABASE_URL`)
+- [x] Prod-`.env.example` (alle Variablen) + **sichere Cookies** in Prod (`secure` + `SameSite=None` cross-site)
+- [x] `render.yaml` (Blueprint) + Build/Start-Konfig
+- [x] **Impressum** + **Datenschutz** Template-Seiten (EN/EL/DE, Platzhalter)
+- [x] Abgeschlossene Projekte: `imageUrl`-Feld + Status-Filter (Open/Completed/All) + Platzhalter-Bilder
+- [x] **Monitoring/Analytics**: cookielos & datenschutzfreundlich (Plausible/Umami), **default deaktiviert**, + Funnel-Events („Landing → XY") + Doku → `docs/deployment/analytics.md`
+- [x] In-Repo-Fortschrittsprotokoll → `docs/deployment/go-live-progress.md` + DEVLOG Iteration 9
 
 ## 🚫 Bewusst NICHT (Grenzen von Szenario A)
 Facebook-Daten-Import · echte personenbezogene Nutzerdaten · offizielle Repräsentation der Gemeinde · echter Newsletter-Versand. → Future Work / Szenario B (siehe `feature-evaluation.md`).

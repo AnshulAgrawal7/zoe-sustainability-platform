@@ -31,8 +31,13 @@ function refreshCookieOptions() {
 
 /** Matching attributes (minus maxAge) so clearCookie reliably removes it. */
 function clearRefreshCookieOptions() {
-  const { maxAge: _maxAge, ...rest } = refreshCookieOptions();
-  return rest;
+  const isProd = process.env.NODE_ENV === 'production';
+  return {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? ('none' as const) : ('lax' as const),
+    path: '/',
+  };
 }
 
 export async function register(req: Request, res: Response) {

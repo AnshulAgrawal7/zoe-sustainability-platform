@@ -33,8 +33,17 @@ backend/prisma/test.db-journal
 # Claude Code memory (local only)
 memory/
 
-# Claude Code worktrees (local only)
+# Claude Code worktrees + local-only settings (NOT pushed; agents/ IS tracked)
 .claude/worktrees/
+.claude/settings.local.json
+.claude/*.local.json
+
+# Local env variants & build/test caches (never push)
+.env.*.local
+.env.local
+*.tsbuildinfo
+.eslintcache
+coverage/
 
 # Literature corpus — copyrighted publisher PDFs, kept local only (NOT pushed).
 # Cataloged in docs/literature-index.md; the renamed/ folder holds local symlinks.

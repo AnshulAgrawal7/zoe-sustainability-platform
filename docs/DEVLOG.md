@@ -28,6 +28,7 @@ Ziel: den iterativen Design-Develop-Demonstrate-Zyklus nachvollziehbar dokumenti
 | 6 | 2026-05-27 | übergreifend | Playwright E2E (49 Tests), Test-Setup, Doku-Update | ✅ |
 | 7 | 2026-06-06 | TP1, TP4, TP6 | Additive Features: Initiative-Tabs, Tourist:innen-Beitrag, Newsletter-Opt-in (`/get-involved`) | ✅ |
 | 8 | 2026-06-06 | TP4 | Durchgängige i18n (alle 7 Altseiten EN/EL/DE) + Flaggen-Sprachwechsler + DeepL-Auto-Übersetzung (Admin) | ✅ |
+| 9 | 2026-06-07 | TP1, TP4, übergreifend | Go-Live-Vorbereitung (Szenario A): Recht (Impressum/Datenschutz), cookielose Analytics/Monitoring, Prod-Härtung, abgeschlossene Projekte + Bilder | ✅ |
 
 > Datumsangaben aus der Git-History abgeleitet (Commit-Daten). Eine Iteration kann mehrere Commits umfassen.
 
@@ -163,6 +164,25 @@ Für **beide Vorträge** (gemeinsame Iterations-Achse) und die Berichte werden d
 
 ---
 
+### Iteration 9 — Go-Live-Vorbereitung (Szenario A): Recht, Monitoring, Prod-Härtung, abgeschlossene Projekte
+- **Datum:** 2026-06-07 (Branch `claude/nightly-run`)
+- **Adressiertes Teilproblem:** TP1 (Sichtbarkeit — abgeschlossene Projekte), TP4 (Mehrsprachigkeit der neuen Inhalte), übergreifend (Betriebs-/Übergabereife)
+- **Kontext & Abgrenzung:** Ziel ist, die Plattform **so weit wie ohne Drittabhängigkeit (Gemeinde) möglich übergabe-bereit** zu machen — **Szenario A**: öffentliche Demo, neutrale Domain, klar als Prototyp gekennzeichnet, **keine echten personenbezogenen Daten**, keine FB-Inhalte. Alles rein **additiv**, Tests durchgehend grün gehalten. Bewusst **nicht** umgesetzt (Szenario B / Future Work): FB-Import, echter Newsletter-Versand, Einreichungs-Persistenz, offizielle Gemeinde-Repräsentation.
+- **Was wurde implementiert (additiv):**
+  - **Recht (Templates, kein Rechtsrat):** neue `ImprintPage` (`/imprint`) als ausfüllbares Impressum-Template mit Platzhaltern (`[Name]`, `[Anschrift]`, …), Prototyp-Disclaimer, Haftungs-/Urheberrechts-Abschnitten; **Datenschutz-Ausbau** (`PrivacyPage`) um **Webanalyse**- und **Auftragsverarbeiter**-Abschnitte (Supabase, DeepL, EU-Region, AVV durch Betreiber). i18n: neuer `imprint`-Namespace + zusätzliche `privacy`/`nav`/`footer`-Keys, EN/EL/DE-Parität.
+  - **Monitoring/Analytics (cookielos, datenschutzfreundlich, default deaktiviert):** `src/services/analytics.ts` (Plausible + Umami, env-gesteuert; ohne ENV reiner No-op → **kein Cookie-Banner nötig**). Pageviews automatisch über das Provider-Skript (History API); **Conversion-/Funnel-Events** an den relevanten Punkten: Landing-Hero- & Bottom-CTAs, „Idea Submitted" (`ParticipationPage`, nur grobe `type`-Dimension, **keine PII**), „Newsletter Signup". Doku `docs/deployment/analytics.md` (Plausible vs. Umami vs. Vercel, Funnel-Aufbau „Landing → XY", getrackte Events) + `analytics.test.ts` (5 Tests).
+  - **Prod-Härtung:** zentralisierte Refresh-Cookie-Optionen in `authController.ts` — in Produktion `Secure; SameSite=None` (nötig, weil Frontend/Backend auf **verschiedenen** Domains liegen, Vercel ↔ Render), in Dev `Lax` ohne `Secure`. Prod-`.env.example` (Postgres-`DATABASE_URL`+`DIRECT_URL`, starkes `JWT_SECRET`, `CORS_ORIGIN`), `render.yaml`-Blueprint und Deploy-Doku `docs/deployment/deploy.md` inkl. **dokumentierter Prisma-Umstellung SQLite→Postgres** (Provider + `directUrl` + Migrations-Neuerzeugung; bewusst noch **nicht** vollzogen, da der `DATABASE_URL` des Betreibers nötig ist — Dev/Tests bleiben auf SQLite).
+  - **Abgeschlossene Projekte + Bilder (TP1):** `imageUrl` (war bereits im Schema/Migration) durch API & UI verdrahtet (`projectController` create/update, Route-Validatoren); `getProjects`-**Statusfilter** inkl. `ALL`. Frontend: `ProjectsPage` mit Filter **Open/Completed/All**, Cover-Bild und Completed/Closed-Badge; Bild-Feld in New/Edit-Project. Seed: zwei Projekte `COMPLETED` mit Platzhalterbildern (placehold.co) → Feature out-of-the-box demonstrierbar.
+- **Technische Entscheidung & Begründung:**
+  - **Analytics cookielos + default-off:** beantwortet die Monitoring-Frage („wie viele besuchen die Seite, wie viele machen dann XY") **ohne** Einwilligungsbanner und **ohne** personenbezogene Daten — passt zu Szenario A (DSGVO/ePrivacy-schonend). Provider per ENV austauschbar (kein Lock-in).
+  - **Cross-Site-Cookie nur in Prod auf `None`/`Secure`:** korrektes Verhalten für getrennte Hosts, ohne den lokalen http-Login zu brechen.
+  - **Prisma-Provider dokumentiert statt umgestellt:** Prisma bindet einen Provider pro Schema; ein vorzeitiger Wechsel würde Dev/Tests (SQLite) brechen. Die Umstellung ist nicht-brechend vorbereitet und an den Betreiber-Schritt (DATABASE_URL) gekoppelt.
+  - **Recht als Templates mit Platzhaltern:** der Betreiber (nicht die Gemeinde) füllt aus; explizite Prototyp-Kennzeichnung bleibt — Verwechslung mit offizieller Seite ausgeschlossen.
+- **DSR-Bezug:** Überführt das Artefakt von „funktioniert lokal" zu „betriebs-/übergabe-bereit" (Phase-4-Demonstration). Designentscheidungen (cookieloses Monitoring, bewusste Scope-Grenzen von Szenario A) sind dokumentiertes Designwissen; Betriebs-/Rechtsschritte als klare TODO ausgelagert (`to-do.md`, `docs/deployment/`).
+- **Status:** ✅ Implementiert & getestet — Backend **37/37**, Frontend **20/20** (+5 Analytics-Tests), `tsc` (FE+BE) + `vite build` grün, i18n-Parität 435/435/435. Fortschritt protokolliert in [`docs/deployment/go-live-progress.md`](deployment/go-live-progress.md).
+
+---
+
 ## Offene Iterationen (noch zu implementieren)
 
 Abgeleitet aus den Lücken in [`MATRIX.md`](MATRIX.md):
@@ -171,7 +191,7 @@ Abgeleitet aus den Lücken in [`MATRIX.md`](MATRIX.md):
 - **TP3 — Offizielle UN-SDG-Icons:** Ersatz der farbigen Text-Badges (`SDGBadge`) durch offizielle SDG-Iconografie. — ❌ Offen
 - **TP4 — Durchgängige i18n:** Hartkodierten Text in `AudiencesPage.tsx`, `SDGDashboardPage.tsx`, `TransparencyPage.tsx` auf `t()` umstellen + EL/DE-Keys ergänzen. — ❌ Offen
 - **TP4 — Schulprogramm:** Dediziertes zielgruppengerechtes Angebot für Schüler:innen/Kinder (bislang nur erwähnt). — ❌ Offen
-- **TP1 — Statusfilter:** Abgeschlossene Projekte in der Übersicht sichtbar machen (aktuell fix `status: 'OPEN'`). — ❌ Offen
+- **TP1 — Statusfilter:** Abgeschlossene Projekte in der Übersicht sichtbar machen. — ✅ Erledigt (Iteration 9: Filter Open/Completed/All + `imageUrl`-Cover-Bilder)
 - **Phase 5 — Evaluation:** Durchführung gemäß [`docs/evaluation-plan.md`](evaluation-plan.md) (SUS, Aufgaben-Tests, Experten-Walkthroughs). — ❌ Offen
 
 ---
