@@ -16,6 +16,7 @@ import { projects } from '../data/projects';
 import { impactMetrics } from '../data/metrics';
 import StatusBadge from '../components/ui/StatusBadge';
 import ProgressBar from '../components/ui/ProgressBar';
+import { trackEvent, ANALYTICS_EVENTS } from '../services/analytics';
 
 const highlights = projects.filter((p) => p.status === 'Active').slice(0, 3);
 
@@ -54,9 +55,21 @@ export default function LandingPage() {
   ];
 
   const ctaButtons = [
-    { labelKey: 'landing.cta.submitIdea', to: '/participate' },
-    { labelKey: 'landing.cta.joinEvent', to: '/events' },
-    { labelKey: 'landing.cta.seeImpact', to: '/transparency' },
+    {
+      labelKey: 'landing.cta.submitIdea',
+      to: '/participate',
+      event: ANALYTICS_EVENTS.ctaSubmitIdea,
+    },
+    {
+      labelKey: 'landing.cta.joinEvent',
+      to: '/events',
+      event: ANALYTICS_EVENTS.ctaJoinEvent,
+    },
+    {
+      labelKey: 'landing.cta.seeImpact',
+      to: '/transparency',
+      event: ANALYTICS_EVENTS.ctaSeeImpact,
+    },
   ];
 
   return (
@@ -78,6 +91,7 @@ export default function LandingPage() {
             <div className="flex flex-wrap gap-4">
               <Link
                 to="/projects"
+                onClick={() => trackEvent(ANALYTICS_EVENTS.ctaExploreProjects)}
                 className="flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-green-700 transition-colors hover:bg-green-50"
               >
                 {t('landing.hero.exploreProjects')}
@@ -85,6 +99,7 @@ export default function LandingPage() {
               </Link>
               <Link
                 to="/participate"
+                onClick={() => trackEvent(ANALYTICS_EVENTS.ctaGetInvolved)}
                 className="rounded-lg border-2 border-white/60 px-6 py-3 font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
               >
                 {t('landing.hero.getInvolved')}
@@ -245,6 +260,7 @@ export default function LandingPage() {
               <Link
                 key={btn.labelKey}
                 to={btn.to}
+                onClick={() => trackEvent(btn.event)}
                 className="flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 font-semibold text-green-700 transition-colors hover:bg-green-50"
               >
                 <CheckCircle2 size={16} aria-hidden="true" />

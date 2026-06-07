@@ -2,6 +2,7 @@ import { useId, useState, type FormEvent } from 'react';
 import { z } from 'zod';
 import { Mail, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { trackEvent, ANALYTICS_EVENTS } from '../../services/analytics';
 
 const emailSchema = z.string().email();
 
@@ -27,6 +28,7 @@ export default function NewsletterSignup() {
     }
     setError(null);
     setSubmitted(true); // prototype only — nothing is stored or sent
+    trackEvent(ANALYTICS_EVENTS.newsletterSignup); // conversion (no PII sent)
     setEmail('');
   }
 

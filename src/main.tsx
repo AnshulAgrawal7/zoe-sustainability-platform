@@ -3,6 +3,10 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import './utils/i18n'; // must import before App to initialise i18n
 import AppRouter from './app/Router';
+import { loadAnalytics } from './services/analytics';
+
+// Privacy-friendly, cookieless analytics — no-op unless configured via env.
+loadAnalytics();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

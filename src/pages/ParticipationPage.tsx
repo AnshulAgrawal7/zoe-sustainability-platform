@@ -12,13 +12,14 @@ import {
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { participationOptions } from '../data/metrics';
+import { trackEvent, ANALYTICS_EVENTS } from '../services/analytics';
 
 const optionPoints: Record<string, number> = {
   'submit-idea': 15,
-  'volunteer': 25,
+  volunteer: 25,
   'join-event': 20,
   'report-issue': 10,
-  'feedback': 10,
+  feedback: 10,
 };
 
 const iconMap: Record<string, React.ElementType> = {
@@ -47,22 +48,26 @@ export default function ParticipationPage() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitted(true);
+    // Conversion event — only the selected option type, never the message/PII.
+    trackEvent(ANALYTICS_EVENTS.ideaSubmitted, {
+      type: form.type || 'unknown',
+    });
     setForm(emptyForm);
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="mb-10">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
+        <h1 className="mb-3 text-3xl font-bold text-gray-900 dark:text-white">
           {t('participate.title')}
         </h1>
-        <p className="text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed">
+        <p className="max-w-2xl leading-relaxed text-gray-600 dark:text-gray-300">
           {t('participate.subtitle')}
         </p>
         <Link
           to="/rewards"
-          className="inline-flex items-center gap-2 mt-4 bg-green-50 border border-green-200 text-green-800 text-sm font-medium rounded-lg px-4 py-2 hover:bg-green-100 transition-colors dark:bg-green-900/20 dark:border-green-800 dark:text-green-300 dark:hover:bg-green-900/30"
+          className="mt-4 inline-flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-4 py-2 text-sm font-medium text-green-800 transition-colors hover:bg-green-100 dark:border-green-800 dark:bg-green-900/20 dark:text-green-300 dark:hover:bg-green-900/30"
         >
           <Award size={15} aria-hidden="true" />
           {t('participate.rewardsLink')}
@@ -70,7 +75,7 @@ export default function ParticipationPage() {
       </div>
 
       {/* Participation options */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+      <div className="mb-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {participationOptions.map((option) => {
           const Icon = iconMap[option.icon] ?? Lightbulb;
           const isActive = activeOption === option.id;
@@ -82,15 +87,15 @@ export default function ParticipationPage() {
                 setSubmitted(false);
                 setForm((f) => ({ ...f, type: option.id }));
               }}
-              className={`text-left rounded-xl border p-5 transition-all hover:shadow-md ${
+              className={`rounded-xl border p-5 text-left transition-all hover:shadow-md ${
                 isActive
-                  ? 'border-green-400 bg-green-50 shadow-sm dark:bg-green-900/20 dark:border-green-600'
+                  ? 'border-green-400 bg-green-50 shadow-sm dark:border-green-600 dark:bg-green-900/20'
                   : 'border-gray-200 bg-white hover:border-green-200 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700'
               }`}
               aria-pressed={isActive}
             >
               <div
-                className={`inline-flex p-2.5 rounded-lg mb-3 ${
+                className={`mb-3 inline-flex rounded-lg p-2.5 ${
                   isActive
                     ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
                     : 'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
@@ -98,22 +103,26 @@ export default function ParticipationPage() {
               >
                 <Icon size={22} aria-hidden="true" />
               </div>
-              <h2 className="font-semibold text-gray-900 dark:text-white mb-1.5">
+              <h2 className="mb-1.5 font-semibold text-gray-900 dark:text-white">
                 {option.title}
               </h2>
-              <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                 {option.description}
               </p>
               <div className="mt-3 flex items-center justify-between">
                 <span
                   className={`text-sm font-medium ${
-                    isActive ? 'text-green-700 dark:text-green-400' : 'text-gray-400 dark:text-gray-500'
+                    isActive
+                      ? 'text-green-700 dark:text-green-400'
+                      : 'text-gray-400 dark:text-gray-500'
                   }`}
                 >
-                  {isActive ? t('participate.selected') : option.actionLabel + ' →'}
+                  {isActive
+                    ? t('participate.selected')
+                    : option.actionLabel + ' →'}
                 </span>
                 {optionPoints[option.id] && (
-                  <span className="text-xs font-semibold bg-amber-100 text-amber-800 rounded-full px-2 py-0.5 dark:bg-amber-900/30 dark:text-amber-300">
+                  <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
                     {t('participate.pts', { points: optionPoints[option.id] })}
                   </span>
                 )}
@@ -127,21 +136,21 @@ export default function ParticipationPage() {
       {activeOption && (
         <div
           id="participation-form"
-          className="bg-white dark:bg-gray-800 rounded-xl border border-green-200 dark:border-green-800 shadow-sm p-6 sm:p-8 mb-10"
+          className="mb-10 rounded-xl border border-green-200 bg-white p-6 shadow-sm dark:border-green-800 dark:bg-gray-800 sm:p-8"
         >
-          <div className="flex items-center justify-between mb-6">
+          <div className="mb-6 flex items-center justify-between">
             <div>
               <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                 {participationOptions.find((o) => o.id === activeOption)
                   ?.title ?? t('participate.submitButton')}
               </h2>
-              <p className="text-xs text-amber-700 mt-1 bg-amber-50 border border-amber-200 rounded px-2 py-0.5 inline-block dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-300">
+              <p className="mt-1 inline-block rounded border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-300">
                 {t('participate.prototypeNotice')}
               </p>
             </div>
             <button
               onClick={() => setActiveOption(null)}
-              className="text-gray-400 hover:text-gray-600 transition-colors dark:hover:text-gray-200"
+              className="text-gray-400 transition-colors hover:text-gray-600 dark:hover:text-gray-200"
               aria-label={t('common.close')}
             >
               <X size={20} aria-hidden="true" />
@@ -149,16 +158,16 @@ export default function ParticipationPage() {
           </div>
 
           {submitted ? (
-            <div className="text-center py-8">
+            <div className="py-8 text-center">
               <CheckCircle2
                 size={48}
-                className="mx-auto text-green-500 mb-4"
+                className="mx-auto mb-4 text-green-500"
                 aria-hidden="true"
               />
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
                 {t('participate.thankYou')}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-2">
+              <p className="mb-2 text-gray-600 dark:text-gray-300">
                 {t('participate.deploymentNote')}
               </p>
               <p className="text-sm text-amber-700 dark:text-amber-300">
@@ -169,18 +178,18 @@ export default function ParticipationPage() {
                   setSubmitted(false);
                   setActiveOption(null);
                 }}
-                className="mt-6 text-green-700 underline text-sm dark:text-green-400"
+                className="mt-6 text-sm text-green-700 underline dark:text-green-400"
               >
                 {t('common.close')}
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div>
                   <label
                     htmlFor="part-name"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
                     {t('participate.yourName')}
                   </label>
@@ -193,13 +202,13 @@ export default function ParticipationPage() {
                     }
                     required
                     placeholder={t('participate.namePlaceholder')}
-                    className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="part-email"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
                     {t('participate.emailAddress')}
                   </label>
@@ -212,14 +221,14 @@ export default function ParticipationPage() {
                     }
                     required
                     placeholder={t('participate.emailPlaceholder')}
-                    className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
               </div>
               <div>
                 <label
                   htmlFor="part-message"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   {t('participate.yourMessage')}
                 </label>
@@ -232,20 +241,20 @@ export default function ParticipationPage() {
                   }
                   required
                   placeholder={t('participate.messagePlaceholder')}
-                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
+                  className="w-full resize-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
               <div className="flex items-center gap-4">
                 <button
                   type="submit"
-                  className="bg-green-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-green-700 transition-colors"
+                  className="rounded-lg bg-green-600 px-6 py-2.5 font-medium text-white transition-colors hover:bg-green-700"
                 >
                   {t('participate.submitButton')}
                 </button>
                 <button
                   type="button"
                   onClick={() => setForm(emptyForm)}
-                  className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+                  className="text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 >
                   {t('participate.clearButton')}
                 </button>
@@ -256,16 +265,16 @@ export default function ParticipationPage() {
       )}
 
       {/* Events CTA */}
-      <div className="bg-teal-50 dark:bg-teal-900/20 rounded-xl border border-teal-200 dark:border-teal-800 p-6 text-center">
-        <h2 className="font-semibold text-teal-900 dark:text-teal-200 mb-2">
+      <div className="rounded-xl border border-teal-200 bg-teal-50 p-6 text-center dark:border-teal-800 dark:bg-teal-900/20">
+        <h2 className="mb-2 font-semibold text-teal-900 dark:text-teal-200">
           {t('participate.eventsTitle')}
         </h2>
-        <p className="text-teal-700 dark:text-teal-300 text-sm mb-4">
+        <p className="mb-4 text-sm text-teal-700 dark:text-teal-300">
           {t('participate.eventsSubtitle')}
         </p>
         <Link
           to="/events"
-          className="inline-flex items-center gap-2 bg-teal-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-teal-700 transition-colors text-sm"
+          className="inline-flex items-center gap-2 rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-teal-700"
         >
           <Calendar size={16} aria-hidden="true" />
           {t('participate.browseEvents')}
