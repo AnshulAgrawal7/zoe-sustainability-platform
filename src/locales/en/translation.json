@@ -19,7 +19,8 @@
     "logout": "Logout",
     "admin": "Admin",
     "openMenu": "Open menu",
-    "getInvolved": "Get Involved"
+    "getInvolved": "Get Involved",
+    "imprint": "Imprint"
   },
   "auth": {
     "login": "Login",
@@ -236,7 +237,8 @@
     "viewOnGitHub": "View on GitHub",
     "copyright": "© 2026 ZOE Environmental Programme — Municipality of Northern Corfu",
     "accessibility": "Accessibility",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "imprint": "Imprint"
   },
   "accessibility": {
     "title": "Accessibility Statement",
@@ -313,7 +315,11 @@
     "contactTitle": "Contact",
     "contactText": "For privacy-related questions, contact:",
     "lastUpdate": "Last updated",
-    "lastUpdateDate": "May 2026"
+    "lastUpdateDate": "May 2026",
+    "processorsTitle": "Processors / third-party services",
+    "processorsText": "Where this prototype is operated as a live demo, the following processors may be used under data-processing agreements (to be concluded by the operator, EU region): Supabase (database & file-storage hosting) and DeepL (machine translation of project texts). No data is shared with these services beyond what is technically required to provide the platform.",
+    "analyticsTitle": "Web analytics",
+    "analyticsText": "If web analytics are enabled, this prototype uses a privacy-friendly, cookieless analytics service that sets no cookies, collects no personal data and does not track individuals across sites. Only aggregated, anonymous usage statistics (e.g. page views) are recorded. Analytics are disabled by default in this prototype."
   },
   "getInvolved": {
     "title": "Get Involved",
@@ -756,5 +762,32 @@
     "ctaProjects": "View Projects",
     "ctaAudiences": "Who We Reach",
     "ctaSdg": "SDG Dashboard"
+  },
+  "imprint": {
+    "title": "Imprint",
+    "subtitle": "Legal information about this prototype",
+    "prototypeNotice": "This is an academic research prototype (Design Science Research, FAU Erlangen-Nürnberg). It is not an official website of the Municipality of Northern Corfu. The details below are placeholders and must be completed by the operator before any public launch.",
+    "operatorTitle": "Operator",
+    "operatorIntro": "Information pursuant to the applicable disclosure requirements (e.g. § 5 DDG / § 5 TMG in Germany, comparable provisions elsewhere). To be completed by the operator who publishes this demo — not the municipality.",
+    "fieldOperator": "Operator / responsible person",
+    "fieldAddress": "Address",
+    "fieldEmail": "Email",
+    "fieldPhone": "Phone (optional)",
+    "placeholderOperator": "[Full name]",
+    "placeholderAddress": "[Street, postal code, city, country]",
+    "placeholderEmail": "[your-email@example.org]",
+    "placeholderPhone": "[optional]",
+    "responsibleTitle": "Responsible for content",
+    "responsibleText": "[Full name, address] — responsible for the editorial content of this prototype within the meaning of the applicable media law.",
+    "disclaimerTitle": "Disclaimer",
+    "disclaimerText": "The contents of this prototype were created for demonstration and research purposes. All figures, projects and statistics shown are illustrative dummy data and do not represent real, verified information. No liability is assumed for the accuracy, completeness or timeliness of the content.",
+    "liabilityLinksTitle": "Liability for links",
+    "liabilityLinksText": "This prototype may contain links to external websites over which we have no control. We accept no liability for their content; the respective provider is responsible for the content of linked pages.",
+    "copyrightTitle": "Copyright",
+    "copyrightText": "The layout and source code of this prototype are part of an academic project. Third-party content, names and images remain the property of their respective owners and are used here only for illustrative, non-commercial demonstration.",
+    "contactTitle": "Contact",
+    "contactText": "For questions about this research prototype, please contact the operator at the address above.",
+    "lastUpdate": "Last updated",
+    "lastUpdateDate": "June 2026"
   }
 }

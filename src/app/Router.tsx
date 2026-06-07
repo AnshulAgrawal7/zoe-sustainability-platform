@@ -34,6 +34,7 @@ import NewProjectPage from '../pages/admin/NewProjectPage';
 import EditProjectPage from '../pages/admin/EditProjectPage';
 import AccessibilityPage from '../pages/AccessibilityPage';
 import PrivacyPage from '../pages/PrivacyPage';
+import ImprintPage from '../pages/ImprintPage';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,7 @@ const router = createBrowserRouter([
       { path: 'rewards', element: <RewardsPage /> },
       { path: 'accessibility', element: <AccessibilityPage /> },
       { path: 'privacy', element: <PrivacyPage /> },
+      { path: 'imprint', element: <ImprintPage /> },
 
       // Auth
       { path: 'login', element: <LoginPage /> },
