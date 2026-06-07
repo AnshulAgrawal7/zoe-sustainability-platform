@@ -18,11 +18,11 @@ Dieser Index katalogisiert **alle** PDFs in `Projektseminar_Literatur/`. Er ist 
 | `DSRM (1).pdf` | Exakte Kopie von `DSRM.pdf` (md5 identisch) → ignoriert |
 | `s13132-025-02728-3 (1).pdf`, `s13132-025-02728-3 (2).pdf` | Exakte Kopien von `s13132-025-02728-3.pdf` → ignoriert |
 
-→ **46 Dateien, 43 eindeutige Dokumente.**
+→ **52 Dateien, 49 eindeutige Dokumente** (6 neue Quellen ergänzt: Ryan & Deci 2000, Sailer et al. 2017, Hamari et al. 2014, Mekler et al. 2017, Nielsen & Molich 1990, UN-2030-Agenda 2015).
 
 ---
 
-## Index (43 eindeutige Quellen)
+## Index (49 eindeutige Quellen)
 
 Legende Status: **VT** = Volltext vorhanden · **PP** = Preprint/nicht peer-reviewed · **⚠️** = Angabe zu prüfen.
 
@@ -72,18 +72,25 @@ Legende Status: **VT** = Volltext vorhanden · **PP** = Preprint/nicht peer-revi
 | 40 | `Peacock2018_StreetsForPeople-Children-Placemaking.pdf` | `Streets_for_People_Engaging_Children_in_Placemakin.pdf` | Peacock, S., Anderson, R., & Crivellaro, C. (2018). Streets for people: Engaging children in placemaking through a socio-technical process. In *Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems (CHI '18)* (Paper 327). ACM. *(Best Paper Award)* | 10.1145/3173574.3173901 ⚠️ | VT (⚠️ Paper-Nr./DOI prüfen) |
 | 41 | `Vare2025_StudentLed-Sustainability-Schools.pdf` | `Exploring_the_Impacts_of_Student-Led_Sustainabilit.pdf` | Vare, P. (2025). Exploring the impacts of student-led sustainability projects with secondary school students and teachers. *Proceedings Series on Social Sciences & Humanities, 21*, ⚠️. | 10.30595/pssh.v21i.1507 | VT (kurz, 3 S.) |
 | 42 | `Raliphaswa2025_ProceduralJustice-WorkplaceDeviance_OUTOFSCOPE.pdf` | `WRP-IJARBM-Raliphaswa...pdf` | Raliphaswa, F., Dzansi, D. Y., & Dzansi, W. L. (2025). Reassessing procedural justice and workplace deviance: The unexpected role of gender and tenure. *International Journal of Applied Research in Business and Management, 6*(1). | 10.51137/wrp.ijarbm.2025.frrt.45789 | VT — ⚠️ **THEMATISCH AUSSERHALB DES SCOPE** (Workplace Deviance, öffentl. Sektor Südafrika; Predatory-Publisher-Verdacht) → **nicht in der Argumentation verwenden** |
+| 43 | `RyanDeci2000_SelfDeterminationTheory.pdf` | `2000_RyanDeci_SDT.pdf` | Ryan, R. M., & Deci, E. L. (2000). Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being. *American Psychologist, 55*(1), 68–78. | 10.1037/0003-066X.55.1.68 | VT |
+| 44 | `Sailer2017_Gamification-NeedSatisfaction-Experiment.pdf` | `109059.pdf` | Sailer, M., Hense, J. U., Mayr, S. K., & Mandl, H. (2017). How gamification motivates: An experimental study of the effects of specific game design elements on psychological need satisfaction. *Computers in Human Behavior, 69*, 371–380. | 10.1016/j.chb.2016.12.033 | VT (CC-BY-Repository-Version, Volltext identisch zur CHB-Fassung) |
+| 45 | `Hamari2014_DoesGamificationWork-Review.pdf` | `2014-hamari_et_al-does_gamification_work.pdf` | Hamari, J., Koivisto, J., & Sarsa, H. (2014). Does gamification work? — A literature review of empirical studies on gamification. In *Proceedings of the 47th Hawaii International Conference on System Sciences (HICSS)* (pp. 3025–3034). IEEE. | 10.1109/HICSS.2014.377 | VT |
+| 46 | `Mekler2017_GamificationElements-IntrinsicMotivation.pdf` | `1-s2.0-S0747563215301229-main.pdf` | Mekler, E. D., Brühlmann, F., Tuch, A. N., & Opwis, K. (2017). Towards understanding the effects of individual gamification elements on intrinsic motivation and performance. *Computers in Human Behavior, 71*, 525–534. | 10.1016/j.chb.2015.08.048 | VT |
+| 47 | `NielsenMolich1990_HeuristicEvaluation.pdf` | `nielsenheuristicsCHI.pdf` | Nielsen, J., & Molich, R. (1990). Heuristic evaluation of user interfaces. In *Proceedings of the CHI '90 Conference on Human Factors in Computing Systems* (pp. 249–256). ACM. | 10.1145/97243.97281 | VT |
+| 48 | `UN2015_2030Agenda-SDGs-A-RES-70-1.pdf` | `A_RES_70_1_E.pdf` | United Nations General Assembly. (2015). *Transforming our world: The 2030 Agenda for Sustainable Development* (A/RES/70/1). United Nations. | — (UN-Resolution, amtliches Dokument) | VT |
 
-> Hinweis zur Nummerierung: #39 ist absichtlich ein Querverweis (JainEspey erscheint einmal als #21); #4b (Cronholm & Göbel) wurde nachträglich ergänzt. Insgesamt **43 eindeutige Dokumente**.
+> Hinweis zur Nummerierung: #39 ist absichtlich ein Querverweis (JainEspey erscheint einmal als #21); #4b (Cronholm & Göbel) wurde nachträglich ergänzt; #43–#48 wurden in Iteration 10 ergänzt. Insgesamt **49 eindeutige Dokumente**.
 
 ---
 
 ## Thematische Cluster (für Review & Matrix)
 
 - **DSR-Methodik (Wissensbasis/Rigor):** #1 Peffers, #2 Hevner, #3 Gregor & Hevner, #4 Gregor & Jones, #4b Cronholm & Göbel (DP-Formulierung), #5 Venable (FEDS).
+- **Evaluations-/Usability-Methodik (Phase 5):** #5 Venable (FEDS), #47 Nielsen & Molich (heuristische Evaluation, 10 Heuristiken).
 - **E-Partizipation & Bürgerbeteiligung (TP2):** #8 Shin, #12 Saldivar, #13 Aichholzer, #14 Mariani, #15 Arana-Catania, #16 Royo 2020, #17 Royo 2024, #18 Pina, #19 Atzmanstorfer, #10 Thiel.
-- **Gamification / Engagement-Design (TP2, TP4):** #6 Simonofski, #9 Krath, #10 Thiel, #11 Yang.
+- **Gamification / Engagement-Design (TP2, TP4):** #6 Simonofski, #9 Krath, #10 Thiel, #11 Yang, #43 Ryan & Deci (SDT-Fundament), #44 Sailer (Experiment), #45 Hamari (Review), #46 Mekler (Experiment).
 - **Vergleichbare Kommunen / EU-Best-Practice:** #15/#16/#17/#18 Decide Madrid (Consul), #17 Schottland, #27 Marsaxlokk (Malta), #38 spanische Kommunen, #26/#25 Griechenland.
-- **SDG-Transparenz & -Lokalisierung (TP3):** #20 Clement, #21 Jain & Espey, #22 Busch, #23 Leite, #24 Çetintürk (PP), #7 Chokki (Dashboards), #36 Lourenço, #37 Grimmelikhuijsen & Welch, #38 Simelio, #38b Navarro Galera.
+- **SDG-Transparenz & -Lokalisierung (TP3):** #48 UN-2030-Agenda (normative Primärquelle), #20 Clement, #21 Jain & Espey, #22 Busch, #23 Leite, #24 Çetintürk (PP), #7 Chokki (Dashboards), #36 Lourenço, #37 Grimmelikhuijsen & Welch, #38 Simelio, #38b Navarro Galera.
 - **Accessibility / Mehrsprachigkeit (TP4):** #29/#30 Csontos & Heckl, #31 Pontus, #32 Asghari, #33 Chirumavilla.
 - **Zielgruppen: Schüler:innen/Kinder (TP4):** #40 Peacock, #41 Vare.
 - **Tourismus als Ressource (TP6):** #27 Vegas Macias (Malta), #28 Laksmi (Bali).
@@ -102,5 +109,6 @@ Legende Status: **VT** = Volltext vorhanden · **PP** = Preprint/nicht peer-revi
 5. **#18 Pina, #23 Leite, #26 Tsatsani, #33 Chirumavilla, #34 Diamantopoulou** — Seiten-/Venue-Details vervollständigen.
 6. **#24 Çetintürk & #7 Chokki** — Preprint/Nicht-peer-reviewed bzw. Preprint-Status: in Wirkungsaussagen nur vorsichtig (Typ B) verwenden.
 7. **#42 Raliphaswa** — thematisch ausschließen.
+8. **Neue Quellen #43–#48** — bibliografisch vollständig, **keine ⚠️**. Hinweise: **#44 Sailer** ist die **CC-BY-Repository-Version** (LMU), Volltext identisch zur CHB-Fassung (DOI bleibt 10.1016/j.chb.2016.12.033); **#48 UN-2030-Agenda** als amtliche UN-Resolution (A/RES/70/1) zitieren (kein A/B — normatives Primärdokument); **#43 Ryan & Deci** = Typ B (Theorie), **#44 Sailer / #45 Hamari / #46 Mekler** = Typ A (gemessene Effekte), **#47 Nielsen & Molich** = Typ B (Evaluationsmethode).
 </content>
 </invoke>

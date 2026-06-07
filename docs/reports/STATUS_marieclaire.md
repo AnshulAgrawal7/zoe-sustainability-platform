@@ -23,8 +23,10 @@
 | Gregor & Hevner 2013 **[B]** | Beitragstyp Improvement/Exaptation (§2, Folie 2) |
 | Saldivar **[A]**, Arana-Catania 2021 **[A]** | DP2a Herleitung (§4.1, Folie 3) |
 | Yang & Wu 2025 **[A]**, Krath 2021 **[B]**, Thiel 2016 **[B]** | DP2b (Engagement + Warnung) (§3–4, Folie 5) |
+| Ryan & Deci 2000 **[B]**, Sailer 2017 **[A]**, Mekler 2017 **[A]**, Hamari 2014 **[A]** | DP2b-Fundament — SDT (Kompetenz/Autonomie/Relatedness) + Experimente: bedürfnisorientiert statt rein belohnungsbasiert (§3, §4.1, Folie 5) |
 | Simelio-Solà 2021 **[A]**, Tsatsani 2024 **[A]** | DP1 (§4.1, Folie 5) |
 | Chokki **[A,PP]**, Simonofski 2022 **[A]**, Grimmelikhuijsen & Welch 2012 **[A]** | DP3a (§4.1, Folie 5) |
+| United Nations 2015 (Primär) | DP3a — SDG-Primärquelle (2030 Agenda, A/RES/70/1) (§3, §4.1) |
 | Shin 2024 **[A]**, Leite 2026 **[B]**, Clement 2023 **[A]** | DP3b (§3–4) |
 | Csontos & Heckl 2021/2025 **[A]**, Pontus 2021 **[A]**, Asghari 2023 **[A]** | DP4 (§4.1, Folie 5) |
 | Peacock 2018 **[A]**, Vare 2025 **[A]** | DP4 Schulprogramm-Begründung (§4.1) |
@@ -36,7 +38,7 @@
 
 ## 3. Implementiert vs. konzipiert (aus Designsicht)
 
-- **Designprinzipien vollständig hergeleitet** (DP1–DP6) und in der Matrix mit Beleg + A/B versehen.
+- **Designprinzipien vollständig hergeleitet** (DP1–DP6) und in der Matrix mit Beleg + A/B versehen. **NEU (Iteration 10):** DP2b zusätzlich durch **SDT (Ryan & Deci 2000 [B])** + zwei **Experimente (Sailer 2017, Mekler 2017 [A])** + **Review (Hamari 2014 [A])** untermauert — die umstrittenste Designentscheidung ist damit theorie- und evidenzfest.
 - **Instanziiert** (über Iterationen 1–7): siehe Implementierungsspalte der Matrix.
 - **Bewusste Designentscheidungen** (ohne Wirkungsbeleg) explizit markiert: Tech-Stack, grünes Design, kein Beta-Backend für freie Einreichungen, Newsletter ohne Versand (§4.3, Brücke §3).
 - **Teilweise/konzipiert:** offizielle SDG-Icons, Schulprogramm, interaktive Karte. *(durchgängige i18n jetzt erledigt ✓ — alle Seiten EN/EL/DE + DeepL-Auto-Übersetzung)*

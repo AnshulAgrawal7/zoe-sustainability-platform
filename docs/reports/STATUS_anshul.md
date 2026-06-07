@@ -30,6 +30,9 @@
 | Csontos & Heckl 2021/2025 **[A]**, Pontus 2021 **[A]**, Asghari 2023 **[A]** | Szenario D / DP4 + WCAG-Audit-Methode (§4.5, §5, Folie 7–8) |
 | Diamantopoulou 2019 **[B]**, Paguay-Chimarro 2025 **[A]** | Future Work / Datenschutz (§6) |
 | Royo 2020/2024 **[A]** | Related Work (Decide Madrid) (§3) |
+| Sailer et al. 2017 **[A]**, Mekler et al. 2017 **[A]** | Szenario B / DP2b-Vorbehalt — Experimente: Punkte/Badges heben Leistung & Kompetenz, **nicht** intrinsische Motivation (§4.3, Folie 5; Eval-Tabelle DP2) |
+| Nielsen & Molich 1990 **[B]** | Heuristische Evaluation (artificial/ex-ante) im Phase-5-Ausblick (§5, Eval-Tabelle, Folie 8) |
+| United Nations 2015 (Primär) | SDG-Primärquelle (2030 Agenda) für SDG-Bezüge (§1, Szenario C / Iteration 2) |
 
 ## 3. Implementiert vs. konzipiert (Demonstrationsbasis)
 
@@ -41,7 +44,7 @@
 1. **⚠️ Bericht auf ~15 Seiten ausbauen.** Aktuell 9 S. Konkrete Hebel: Related Work (§3) je Vergleichskommune ausführen; jedes Szenario (§4.2–4.5) um Vorbedingungen/erwartetes Ergebnis erweitern; §5 Evaluierbarkeit je Feature tabellarisch; echte Screenshots an die `figplaceholder`-Stellen.
 2. **Screenshots/Live-Demo** für alle vier Szenarien + Peffers-Diagramm (Phase 4 markiert) erstellen.
 3. **Lighthouse-/axe-Lauf** tatsächlich durchführen und Zahlen in §5 eintragen (derzeit nur Methode beschrieben).
-4. **⚠️ Heuristische Evaluation:** Nielsen-Heuristiken sind **nicht im Korpus** — entweder Quelle beschaffen oder Methode quellenneutral beschreiben.
+4. ✅ **Heuristische Evaluation:** Nielsen & Molich (1990) jetzt im Korpus (#47) — heuristischer Walkthrough quellenfest zitierbar. ⚠️ **SUS:** Brooke (1996) bewusst **nicht** aufgenommen (zu alt) → im Bericht als „standardisierter Usability-Fragebogen (System Usability Scale)" führen, **nicht** als Effektbeleg zitieren.
 5. **TP2-Persistenz**-Demo: aktuell nur lokaler State; in der Demo klar als Prototyp-Grenze ansagen.
 6. ✅ **i18n-Lücke geschlossen** — alle 7 Altseiten EN/EL/DE. In der Demo zusätzlich den **Flaggen-Sprachwechsler** und die **DeepL-Auto-Übersetzung** (Admin → Projekt anlegen) zeigen.
 

@@ -16,7 +16,7 @@ Pro Quelle: **APA7-Vollzitat**, **Kernaussage** (ausschließlich aus dem PDF ext
 
 ## A. Wissensbasis — DSR-Methodik (Rigor-Zyklus)
 
-> Diese fünf Quellen begründen **Methode und Wissensbeitrag**, nicht Wirkungsaussagen über Features. Sie sind durchweg **Typ B** (methodische Rahmenwerke).
+> Diese Quellen begründen **Methode, Wissensbeitrag und Evaluations-/Usability-Methodik**, nicht Wirkungsaussagen über Features. Sie sind durchweg **Typ B** (methodische Rahmenwerke).
 
 ### [1] Peffers et al. (2007) — DSRM
 - **Zitat:** Peffers, K., Tuunanen, T., Rothenberger, M. A., & Chatterjee, S. (2007). A design science research methodology for information systems research. *Journal of Management Information Systems, 24*(3), 45–77.
@@ -59,6 +59,13 @@ Pro Quelle: **APA7-Vollzitat**, **Kernaussage** (ausschließlich aus dem PDF ext
 - **Typ:** **B** (Evaluations-Rahmenwerk).
 - **Stützt:** **Phase-5-Brücke** (Anshul): ex-ante/artificial (WCAG/Lighthouse) jetzt machbar; ex-post/naturalistic als Konzept.
 - **Fundstelle:** Abstract; 2×2-Charakterisierung. — **VT**
+
+### [47] Nielsen & Molich (1990) — Heuristic Evaluation of User Interfaces
+- **Zitat:** Nielsen, J., & Molich, R. (1990). Heuristic evaluation of user interfaces. In *Proceedings of the CHI '90 Conference on Human Factors in Computing Systems* (pp. 249–256). ACM.
+- **Kernaussage:** Begründet die **heuristische Evaluation** — eine kostengünstige „Discount-Usability"-Inspektion, bei der wenige Gutachter:innen eine Oberfläche systematisch gegen eine kompakte Liste allgemeiner Usability-Heuristiken prüfen; schon **3–5 Gutachter:innen** decken den Großteil der Usability-Probleme auf.
+- **Typ:** **B** (Evaluations-/Inspektionsmethode).
+- **Stützt:** **Phase-5-Brücke (Anshul)** — methodische Grundlage für den im Bericht genannten **heuristischen Walkthrough** als artificial/ex-ante-Evaluation (ergänzend zu axe-core/Lighthouse), bevor reale Nutzer:innen einbezogen werden. *(Schließt die zuvor offene Lücke „Heuristik-Methode nicht im Korpus".)*
+- **Fundstelle:** Abstract; Methodenbeschreibung. — **VT**
 
 ---
 
@@ -166,9 +173,44 @@ Pro Quelle: **APA7-Vollzitat**, **Kernaussage** (ausschließlich aus dem PDF ext
 - **Stützt:** **TP2/TP3/TP4**; DP „Designmerkmale (Feedback, Offenlegung, Vergleich, Barrierefreiheit) erhöhen Engagement messbar".
 - **Fundstelle:** Abstract; Ergebnisse. — **VT**
 
+### [43] Ryan & Deci (2000) — Self-Determination Theory (SDT)
+- **Zitat:** Ryan, R. M., & Deci, E. L. (2000). Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being. *American Psychologist, 55*(1), 68–78.
+- **Kernaussage:** Selbstbestimmungstheorie: Intrinsische Motivation entsteht aus der Befriedigung **dreier angeborener psychologischer Grundbedürfnisse — Kompetenz, Autonomie und soziale Eingebundenheit (relatedness)**. Externe Belohnungen können intrinsische Motivation unter bestimmten Bedingungen **untergraben** („crowding-out"), während kompetenz- und autonomieunterstützende Kontexte sie fördern.
+- **Typ:** **B** (psychologische Theorie / Rahmenwerk).
+- **Stützt:** **TP2/DP2b** — **theoretisches Fundament** für „Engagement-Mechaniken ja, aber nicht rein belohnungsbasiert": Punkte/Badges sollen v. a. **Kompetenz-Feedback** geben, ohne Autonomie und Relatedness zu verdrängen.
+- **Fundstelle:** Abstract; „three innate psychological needs". — **VT**
+
+### [44] Sailer et al. (2017) — Gamification & Need Satisfaction (Experiment)
+- **Zitat:** Sailer, M., Hense, J. U., Mayr, S. K., & Mandl, H. (2017). How gamification motivates: An experimental study of the effects of specific game design elements on psychological need satisfaction. *Computers in Human Behavior, 69*, 371–380.
+- **Kernaussage:** Randomisiertes Online-Experiment. **Badges, Leaderboards und Performance-Graphen** erhöhen die wahrgenommene **Kompetenz** (sowie über Bedeutungszuschreibung das Sinnerleben); **Avatare, sinnstiftende Geschichten und Teammitglieder** erhöhen die **soziale Eingebundenheit (relatedness)**. Ein Effekt auf **Autonomie** zeigte sich nicht.
+- **Typ:** **A** (randomisiertes Experiment; gemessene Effekte).
+- **Stützt:** **TP2/DP2b** — empirische Konkretisierung der SDT: *welches* Spielelement *welches* Bedürfnis bedient → begründet **bedürfnisorientierte statt rein belohnungsbasierte** Gamification; adressiert direkt die Warnung von Thiel et al. (2016).
+- **Fundstelle:** Abstract; Ergebnisse. — **VT** (CC-BY-Repository-Version, Volltext identisch).
+
+### [45] Hamari et al. (2014) — Does Gamification Work? (Review)
+- **Zitat:** Hamari, J., Koivisto, J., & Sarsa, H. (2014). Does gamification work? — A literature review of empirical studies on gamification. In *Proceedings of the 47th Hawaii International Conference on System Sciences (HICSS)* (pp. 3025–3034). IEEE.
+- **Kernaussage:** Review von 24 empirischen Gamification-Studien. Gamification **kann** positive Effekte erzeugen, diese sind aber **stark kontext- und nutzerabhängig**; mehrere Studien berichten gemischte oder ausbleibende Effekte, die methodische Qualität ist teils begrenzt.
+- **Typ:** **A** (empirischer Review; Synthese gemessener Effekte) — synthetisierende Aussage, vorsichtig formulieren.
+- **Stützt:** **TP2/DP2b** — belegt, dass Gamification **kein Selbstläufer** ist → Begründung, die Punkte-Mechanik als **bewusste, zu evaluierende** Designentscheidung zu führen.
+- **Fundstelle:** Abstract; Findings. — **VT**
+
+### [46] Mekler et al. (2017) — Gamification Elements & Intrinsic Motivation (Experiment)
+- **Zitat:** Mekler, E. D., Brühlmann, F., Tuch, A. N., & Opwis, K. (2017). Towards understanding the effects of individual gamification elements on intrinsic motivation and performance. *Computers in Human Behavior, 71*, 525–534.
+- **Kernaussage:** Experiment zu einzelnen Gamification-Elementen: **Punkte, Levels und Leaderboards steigern die quantitative Leistung** (mehr Output), **nicht** jedoch die **intrinsische Motivation** oder die wahrgenommene Kompetenz gegenüber der Kontrollbedingung.
+- **Typ:** **A** (Experiment; gemessener Effekt). **Kern-Evidenz für „Punkte ja, aber nicht als Selbstzweck".**
+- **Stützt:** **TP2/DP2b** — direkter empirischer Beleg, dass reine Belohnungselemente Leistung, aber **nicht** intrinsische Motivation heben → trägt die bewusste, zu evaluierende DP2b-Entscheidung.
+- **Fundstelle:** Abstract; Ergebnisse. — **VT**
+
 ---
 
 ## D. SDG-Transparenz, -Lokalisierung & kommunale Wirkungsmessung
+
+### [48] United Nations (2015) — Transforming our World: The 2030 Agenda (SDGs)
+- **Zitat:** United Nations General Assembly. (2015). *Transforming our world: The 2030 Agenda for Sustainable Development* (A/RES/70/1). United Nations.
+- **Kernaussage:** Amtliche UN-Resolution, die die **17 Sustainable Development Goals (SDGs)** und 169 Targets verbindlich definiert; ruft alle Ebenen — ausdrücklich auch **lokale/kommunale** Akteure — zur Umsetzung sowie zu Monitoring und Follow-up auf.
+- **Typ:** **Primärdokument / normatives Rahmenwerk** (kein A/B — es wird kein Effekt gemessen).
+- **Stützt:** **TP3** — normative **Primärquelle** für die SDG-Bezüge der Plattform (SDG-Badges, SDG-Dashboard); verankert die in der Sekundärliteratur (Clement 2023, Busch 2025, Leite 2026 …) genutzte SDG-Systematik an der Originalquelle.
+- **Fundstelle:** A/RES/70/1; Präambel; Ziele-Liste. — **VT**
 
 ### [20] Clement et al. (2023) — Smart City Strategies & SDG Localization
 - **Zitat:** Clement, J., Ruysschaert, B., & Crutzen, N. (2023). Smart city strategies — A driver for the localization of the sustainable development goals? *Ecological Economics, 213*, 107941.
@@ -394,7 +436,13 @@ Pro Quelle: **APA7-Vollzitat**, **Kernaussage** (ausschließlich aus dem PDF ext
 | Chirumavilla 2025 [33] | **B** | TP4 | Accessibility-Checkliste |
 | Diamantopoulou 2019 ⚠️ [34] | **B** | Future | GDPR e-participation |
 | Pina 2024 ⚠️ [18] | **A** | TP2 | Decide-Madrid-Barrieren |
+| Sailer 2017 [44] | **A** | TP2 | Experiment — Spielelemente → Kompetenz/Relatedness |
+| Mekler 2017 [46] | **A** | TP2 | Experiment — Punkte → Leistung, **nicht** intrins. Motivation |
+| Hamari 2014 [45] | **A** | TP2 | Review — wirkt, aber kontextabhängig |
+| Ryan & Deci 2000 [43] | **B** | TP2 | SDT-Fundament (Kompetenz/Autonomie/Relatedness) |
+| Nielsen & Molich 1990 [47] | **B** | Methode | Heuristische Evaluation (Phase 5) |
+| UN 2015 [48] | **Primär** | TP3 | SDG-Primärquelle (2030 Agenda, A/RES/70/1) |
 
-**Bilanz:** ~24 Typ-A- und ~15 Typ-B-Quellen (eine ausgeschlossen). Jedes TP (TP1–TP4, TP6) wird durch **mindestens eine Typ-A-Quelle** gestützt; die DSR-Methodik ist vollständig durch Typ-B-Methodenquellen abgedeckt.
+**Bilanz:** ~27 Typ-A- und ~17 Typ-B-Quellen sowie eine normative Primärquelle (UN 2015) (eine ausgeschlossen). Jedes TP (TP1–TP4, TP6) wird durch **mindestens eine Typ-A-Quelle** gestützt; **DP2b** ist nun durch ein **Theorie-Fundament (SDT, Ryan & Deci 2000), zwei Experimente (Sailer 2017, Mekler 2017) und einen Review (Hamari 2014)** getragen; die DSR-Methodik inkl. heuristischer Evaluation (Nielsen & Molich 1990) ist vollständig durch Typ-B-Methodenquellen abgedeckt.
 </content>
 </invoke>
