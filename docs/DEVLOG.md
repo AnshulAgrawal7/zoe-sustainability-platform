@@ -180,6 +180,7 @@ Für **beide Vorträge** (gemeinsame Iterations-Achse) und die Berichte werden d
   - **Recht als Templates mit Platzhaltern:** der Betreiber (nicht die Gemeinde) füllt aus; explizite Prototyp-Kennzeichnung bleibt — Verwechslung mit offizieller Seite ausgeschlossen.
 - **DSR-Bezug:** Überführt das Artefakt von „funktioniert lokal" zu „betriebs-/übergabe-bereit" (Phase-4-Demonstration). Designentscheidungen (cookieloses Monitoring, bewusste Scope-Grenzen von Szenario A) sind dokumentiertes Designwissen; Betriebs-/Rechtsschritte als klare TODO ausgelagert (`to-do.md`, `docs/deployment/`).
 - **Status:** ✅ Implementiert & getestet — Backend **37/37**, Frontend **20/20** (+5 Analytics-Tests), `tsc` (FE+BE) + `vite build` grün, i18n-Parität 435/435/435. Fortschritt protokolliert in [`docs/deployment/go-live-progress.md`](deployment/go-live-progress.md).
+- **Nachtrag — Repository-Pflege (2026-06-07, kein Feature):** Commit-History bereinigt — `Co-Authored-By`-Trailer aus allen Commits entfernt (Inhalt/Trees unverändert, `main` force-gepusht; Autor durchgehend Anshul Agrawal); gemergter Branch `claude/nightly-run` lokal+remote gelöscht (Remote = nur noch `origin/main`); veraltete `session-handoff.md` aus dem Root entfernt (Session-Handoffs jetzt gitignored, der DEVLOG ist die Quelle). Lokaler Sicherungs-Branch `backup/pre-rewrite` hält die alte History (löschbar nach Bestätigung).
 
 ---
 
