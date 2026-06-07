@@ -1,4 +1,25 @@
 {
+  "profiles": {
+    "fieldLabel": "I am a…",
+    "hint": "Optional — tailors your reward focus. No personal data is required.",
+    "rewardFocusTitle": "Your reward focus",
+    "RESIDENT": {
+      "label": "Resident",
+      "reward": "As a resident you earn the most for long-term local action — recurring clean-ups, water-quality monitoring and village recycling. Aim for the Eco Hero tier."
+    },
+    "VISITOR": {
+      "label": "Visitor / Tourist",
+      "reward": "As a visitor you earn quick rewards for low-threshold help during your stay — join a beach clean-up or report litter. Start with the Newcomer badge."
+    },
+    "STUDENT": {
+      "label": "Pupil / Student",
+      "reward": "As a pupil or student you earn extra for learning-by-doing — school solar, citizen-science monitoring and education projects."
+    },
+    "VOLUNTEER": {
+      "label": "Volunteer",
+      "reward": "As a volunteer you earn for organising and leading — coordinate actions and bring others along. Aim for the Ambassador tier."
+    }
+  },
   "prototype": {
     "banner": "Research Prototype — This platform contains fictional data for academic purposes (DSR, FAU SoSe 2026). Not a real municipal service."
   },

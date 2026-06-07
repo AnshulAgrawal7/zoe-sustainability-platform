@@ -125,6 +125,7 @@ export interface TargetAudience {
 
 export type UserRole = 'USER' | 'ADMIN';
 export type UserLanguage = 'EN' | 'EL' | 'DE';
+export type UserProfile = 'RESIDENT' | 'VISITOR' | 'STUDENT' | 'VOLUNTEER';
 export type ApiProjectStatus = 'DRAFT' | 'OPEN' | 'CLOSED' | 'COMPLETED';
 export type ApiProjectCategory =
   | 'ENVIRONMENT'
@@ -141,6 +142,7 @@ export interface AuthUser {
   points: number;
   avatarUrl: string | null;
   language: UserLanguage;
+  profile: UserProfile;
 }
 
 export interface ApiProject {
@@ -211,6 +213,7 @@ export interface RegisterPayload {
   password: string;
   name: string;
   language?: UserLanguage;
+  profile?: UserProfile;
 }
 
 export interface LeaderboardEntry {

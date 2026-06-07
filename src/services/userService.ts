@@ -29,6 +29,7 @@ export async function updateMe(data: {
   name?: string;
   language?: string;
   avatarUrl?: string;
+  profile?: string;
 }): Promise<AuthUser> {
   const res = await api.put<ApiResponse<AuthUser>>('/users/me', data);
   return res.data;

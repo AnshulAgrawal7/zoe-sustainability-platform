@@ -1,4 +1,25 @@
 {
+  "profiles": {
+    "fieldLabel": "Ich bin…",
+    "hint": "Optional — passt deinen Reward-Fokus an. Es sind keine personenbezogenen Daten nötig.",
+    "rewardFocusTitle": "Dein Reward-Fokus",
+    "RESIDENT": {
+      "label": "Einwohner:in",
+      "reward": "Als Einwohner:in bekommst du am meisten für langfristiges lokales Engagement — wiederkehrende Clean-ups, Wasserqualitäts-Monitoring und Dorf-Recycling. Ziel: Stufe Umweltheld."
+    },
+    "VISITOR": {
+      "label": "Besucher:in / Tourist:in",
+      "reward": "Als Besucher:in bekommst du schnelle Rewards für niedrigschwellige Hilfe während deines Aufenthalts — bei einem Beach-Cleanup mitmachen oder Müll melden. Starte mit dem Neuling-Badge."
+    },
+    "STUDENT": {
+      "label": "Schüler:in / Student:in",
+      "reward": "Als Schüler:in oder Student:in bekommst du extra für Learning-by-doing — Schul-Solar, Citizen-Science-Monitoring und Bildungsprojekte."
+    },
+    "VOLUNTEER": {
+      "label": "Volontär:in",
+      "reward": "Als Volontär:in bekommst du fürs Organisieren und Anleiten — Aktionen koordinieren und andere mitnehmen. Ziel: Stufe Botschafter."
+    }
+  },
   "prototype": {
     "banner": "Forschungsprototyp — Diese Plattform enthält fiktive Daten für akademische Zwecke (DSR, FAU SoSe 2026). Kein echter kommunaler Dienst."
   },

@@ -23,6 +23,7 @@ model User {
   points        Int      @default(0)
   avatarUrl     String?
   language      String   @default("EN")
+  profile       String   @default("RESIDENT") // RESIDENT | VISITOR | STUDENT | VOLUNTEER (self-selected, optional)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 

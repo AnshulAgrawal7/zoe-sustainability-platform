@@ -15,26 +15,26 @@ async function main() {
 
   const admin = await prisma.user.upsert({
     where: { email: 'admin@zoe-corfu.gr' },
-    update: {},
-    create: { email: 'admin@zoe-corfu.gr', password: adminHash, name: 'ZOE Admin', role: 'ADMIN', points: 0, language: 'EN' },
+    update: { profile: 'VOLUNTEER' },
+    create: { email: 'admin@zoe-corfu.gr', password: adminHash, name: 'ZOE Admin', role: 'ADMIN', points: 0, language: 'EN', profile: 'VOLUNTEER' },
   });
 
   const citizen1 = await prisma.user.upsert({
     where: { email: 'citizen1@example.com' },
-    update: {},
-    create: { email: 'citizen1@example.com', password: userHash, name: 'Maria Papadopoulou', role: 'USER', points: 320, language: 'EL' },
+    update: { profile: 'RESIDENT' },
+    create: { email: 'citizen1@example.com', password: userHash, name: 'Maria Papadopoulou', role: 'USER', points: 320, language: 'EL', profile: 'RESIDENT' },
   });
 
   const citizen2 = await prisma.user.upsert({
     where: { email: 'citizen2@example.com' },
-    update: {},
-    create: { email: 'citizen2@example.com', password: userHash, name: 'Nikos Stavros', role: 'USER', points: 150, language: 'EL' },
+    update: { profile: 'STUDENT' },
+    create: { email: 'citizen2@example.com', password: userHash, name: 'Nikos Stavros', role: 'USER', points: 150, language: 'EL', profile: 'STUDENT' },
   });
 
   const tourist = await prisma.user.upsert({
     where: { email: 'tourist@example.com' },
-    update: {},
-    create: { email: 'tourist@example.com', password: userHash, name: 'Hans Mueller', role: 'USER', points: 50, language: 'DE' },
+    update: { profile: 'VISITOR' },
+    create: { email: 'tourist@example.com', password: userHash, name: 'Hans Mueller', role: 'USER', points: 50, language: 'DE', profile: 'VISITOR' },
   });
 
   const badges = await Promise.all([

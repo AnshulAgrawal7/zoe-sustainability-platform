@@ -23,7 +23,7 @@ offizieller Gemeinde-Kanal — erfordert die unten genannten Schritte.
 | Newsletter | 🔨 Konzept, kein Versand | ja | Double-Opt-in + Mail-Dienst |
 | Offizielle UN-SDG-Icons | 🔨 farbige Text-Badges | ja | offizielle Iconografie |
 | Schulprogramm (Zielgruppe Schüler:innen) | ❌ konzipiert | ja | zielgruppengerechtes Format |
-| Rewards: profil-/interessenbasiert | 🔨 konzipiert (gewählt) | ja | optionales Profil + Differenzierung |
+| Rewards: profil-/interessenbasiert | ✅ gebaut (Iteration 12) | — | — |
 | Rewards: altersbasiert | ❌ bewusst nicht gebaut | ja | Altersabfrage + Eltern-Einwilligung (<16) |
 | Produktiv-Deployment (öffentlich) | ❌ offen | ja | Recht + AVVs + Kennzeichnung |
 
@@ -70,7 +70,7 @@ Legende: ✅ gebaut · 🔨 teilweise/konzipiert · ❌ nicht umgesetzt
 - **Wirkung:** zielgruppengerechte Inhalte/Anreize (welche Aktionen hervorgehoben werden, passende Beitragswege), ohne neue sensible Daten.
 - **Privacy-by-Design:** **freiwillig**, keine personenbezogene Pflichtangabe, jederzeit änderbar; bleibt in **Szenario A** (datensparsam).
 - **DSR/Beleg:** zielgruppenspezifische **Formate** statt Alters-Gating sind durch die Literatur gestützt (Peacock 2018, Vare 2025); konsistent mit DP4. **Evaluierbarkeit (FEDS):** wahrgenommene Relevanz/Passung je Profil.
-- **Status:** konzipiert, **noch nicht implementiert** (bewusste Entscheidung dieser Iteration).
+- **Status:** ✅ **implementiert** (Iteration 12): Profil-Auswahl bei der Registrierung + editierbar im Profil; Reward-Fokus-Karte; `User.profile` in der DB (RESIDENT/VISITOR/STUDENT/VOLUNTEER); EN/EL/DE. Optional & ohne sensible Daten.
 
 ### 7c. Future Work mit Limitation: altersbasierte Rewards
 - **Bewusst NICHT umgesetzt.** Begründung:

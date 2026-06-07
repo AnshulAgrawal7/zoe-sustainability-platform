@@ -14,6 +14,7 @@ const USER_SELECT = {
   points: true,
   avatarUrl: true,
   language: true,
+  profile: true,
   createdAt: true,
 };
 
@@ -40,16 +41,17 @@ export async function updateMe(req: AuthRequest, res: Response) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) { badRequest(res, 'Validation failed', errors.array()); return; }
 
-  const { name, language, avatarUrl } = req.body as {
+  const { name, language, avatarUrl, profile } = req.body as {
     name?: string;
     language?: 'EN' | 'EL' | 'DE';
     avatarUrl?: string;
+    profile?: 'RESIDENT' | 'VISITOR' | 'STUDENT' | 'VOLUNTEER';
   };
 
   try {
     const user = await prisma.user.update({
       where: { id: req.user!.userId },
-      data: { ...(name && { name }), ...(language && { language }), ...(avatarUrl && { avatarUrl }) },
+      data: { ...(name && { name }), ...(language && { language }), ...(avatarUrl && { avatarUrl }), ...(profile && { profile }) },
       select: USER_SELECT,
     });
     ok(res, user);

@@ -47,11 +47,12 @@ export async function register(req: Request, res: Response) {
     return;
   }
 
-  const { email, password, name, language = 'EN' } = req.body as {
+  const { email, password, name, language = 'EN', profile = 'RESIDENT' } = req.body as {
     email: string;
     password: string;
     name: string;
     language?: 'EN' | 'EL' | 'DE';
+    profile?: 'RESIDENT' | 'VISITOR' | 'STUDENT' | 'VOLUNTEER';
   };
 
   try {
@@ -63,8 +64,8 @@ export async function register(req: Request, res: Response) {
 
     const hashed = await bcrypt.hash(password, 12);
     const user = await prisma.user.create({
-      data: { email, password: hashed, name, language },
-      select: { id: true, email: true, name: true, role: true, points: true, language: true },
+      data: { email, password: hashed, name, language, profile },
+      select: { id: true, email: true, name: true, role: true, points: true, language: true, profile: true },
     });
 
     // Auto-award newcomer badge
@@ -127,6 +128,7 @@ export async function login(req: Request, res: Response) {
         role: user.role,
         points: user.points,
         language: user.language,
+        profile: user.profile,
       },
       accessToken,
     });

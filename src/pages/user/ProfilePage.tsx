@@ -4,7 +4,8 @@ import { useAuthStore } from '../../stores/authStore';
 import { useLanguageStore } from '../../stores/languageStore';
 import { updateMe } from '../../services/userService';
 import type { Language } from '../../stores/languageStore';
-import type { UserLanguage } from '../../types';
+import type { UserLanguage, UserProfile } from '../../types';
+import { PROFILE_OPTIONS, PROFILE_EMOJI } from '../../data/profiles';
 
 const LANGUAGE_LABELS: Record<UserLanguage, string> = {
   EN: 'English',
@@ -24,6 +25,9 @@ export default function ProfilePage() {
 
   const [name, setName] = useState(user?.name ?? '');
   const [lang, setLang] = useState<UserLanguage>(user?.language ?? 'EN');
+  const [profile, setProfile] = useState<UserProfile>(
+    user?.profile ?? 'RESIDENT'
+  );
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -34,7 +38,7 @@ export default function ProfilePage() {
     setSuccess(false);
     setLoading(true);
     try {
-      const updated = await updateMe({ name, language: lang });
+      const updated = await updateMe({ name, language: lang, profile });
       updateUser(updated);
       setLanguage(LANGUAGE_RMAP[lang]);
       setSuccess(true);
@@ -116,6 +120,29 @@ export default function ProfilePage() {
               <option value="DE">Deutsch</option>
             </select>
           </div>
+          <div>
+            <label
+              htmlFor="profile-audience"
+              className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              {t('profiles.fieldLabel')}
+            </label>
+            <select
+              id="profile-audience"
+              value={profile}
+              onChange={(e) => setProfile(e.target.value as UserProfile)}
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            >
+              {PROFILE_OPTIONS.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.emoji} {t(`profiles.${p.id}.label`)}
+                </option>
+              ))}
+            </select>
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              {t('profiles.hint')}
+            </p>
+          </div>
           <button
             type="submit"
             disabled={loading}
@@ -124,6 +151,16 @@ export default function ProfilePage() {
             {loading ? t('common.loading') : t('common.save')}
           </button>
         </form>
+      </div>
+
+      <div className="mt-4 rounded-xl border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20">
+        <p className="text-sm font-semibold text-green-800 dark:text-green-300">
+          {PROFILE_EMOJI[profile]} {t('profiles.rewardFocusTitle')} —{' '}
+          {t(`profiles.${profile}.label`)}
+        </p>
+        <p className="mt-1 text-sm text-green-700 dark:text-green-200/90">
+          {t(`profiles.${profile}.reward`)}
+        </p>
       </div>
 
       <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50">

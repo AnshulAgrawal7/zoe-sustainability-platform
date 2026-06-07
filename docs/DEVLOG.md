@@ -220,6 +220,19 @@ Für **beide Vorträge** (gemeinsame Iterations-Achse) und die Berichte werden d
 
 ---
 
+### Iteration 12 — Profil-/interessenbasierte Rewards (datensparsam)
+- **Datum:** 2026-06-08
+- **Adressiertes Teilproblem:** TP4 (Zielgruppen-Heterogenität) / **DP4** — zielgruppengerechte Anreize **ohne** sensible Daten.
+- **Was wurde gebaut:**
+  - `User.profile` (RESIDENT | VISITOR | STUDENT | VOLUNTEER) + Migration auf Supabase angewandt.
+  - **Profil-Auswahl bei der Registrierung** + editierbar im **Profil**; Backend (register/updateMe) + express-validator; Seed-User mit allen 4 Profilen.
+  - **Reward-Fokus-Karte** im Profil (zielgruppen-spezifischer, live aktualisierter Hinweis); i18n **EN/EL/DE** (`profiles.*`).
+- **Bewusste Entscheidung:** **profil- statt altersbasiert** — freiwillig, keine personenbezogenen/Minderjährigen-Daten (vermeidet Art. 8 DSGVO / Eltern-Einwilligung). Altersvariante bleibt **Future Work** (siehe „Verworfene Entscheidungen" + [`limitations-and-future-work.md`](limitations-and-future-work.md) §7).
+- **DSR-Bezug:** stärkt **DP4** (zielgruppengerechte Formate; Peacock 2018, Vare 2025), ohne DP2b ins rein Extrinsische zu verschieben.
+- **Status:** ✅ Backend-Tests **37/37**, Frontend **build + type-check** grün; Supabase-Demo-User mit Profilen geseedet.
+
+---
+
 ## Offene Iterationen (noch zu implementieren)
 
 Abgeleitet aus den Lücken in [`MATRIX.md`](MATRIX.md):

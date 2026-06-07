@@ -14,6 +14,7 @@ router.put(
     body('name').optional().trim().isLength({ min: 2 }),
     body('language').optional().isIn(['EN', 'EL', 'DE']),
     body('avatarUrl').optional().isURL(),
+    body('profile').optional().isIn(['RESIDENT', 'VISITOR', 'STUDENT', 'VOLUNTEER']),
   ],
   updateMe
 );

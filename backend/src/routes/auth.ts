@@ -12,6 +12,7 @@ router.post(
     body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
     body('name').trim().isLength({ min: 2 }).withMessage('Name must be at least 2 characters'),
     body('language').optional().isIn(['EN', 'EL', 'DE']),
+    body('profile').optional().isIn(['RESIDENT', 'VISITOR', 'STUDENT', 'VOLUNTEER']),
   ],
   register
 );

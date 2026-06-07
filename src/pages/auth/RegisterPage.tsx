@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { UserPlus } from 'lucide-react';
 import { register } from '../../services/authService';
 import { useAuthStore } from '../../stores/authStore';
-import type { UserLanguage } from '../../types';
+import type { UserLanguage, UserProfile } from '../../types';
+import { PROFILE_OPTIONS } from '../../data/profiles';
 
 export default function RegisterPage() {
   const { t } = useTranslation();
@@ -15,6 +16,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [language, setLanguage] = useState<UserLanguage>('EN');
+  const [profile, setProfile] = useState<UserProfile>('RESIDENT');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -28,6 +30,7 @@ export default function RegisterPage() {
         email,
         password,
         language,
+        profile,
       });
       setAuth(user, accessToken);
       navigate('/dashboard', { replace: true });
@@ -142,6 +145,29 @@ export default function RegisterPage() {
                 <option value="EL">Ελληνικά</option>
                 <option value="DE">Deutsch</option>
               </select>
+            </div>
+            <div>
+              <label
+                htmlFor="reg-profile"
+                className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                {t('profiles.fieldLabel')}
+              </label>
+              <select
+                id="reg-profile"
+                value={profile}
+                onChange={(e) => setProfile(e.target.value as UserProfile)}
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              >
+                {PROFILE_OPTIONS.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.emoji} {t(`profiles.${p.id}.label`)}
+                  </option>
+                ))}
+              </select>
+              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                {t('profiles.hint')}
+              </p>
             </div>
             <button
               type="submit"
