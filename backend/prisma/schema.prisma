@@ -1,13 +1,15 @@
 // PROTOTYPE SCHEMA — ZOE Sustainability Platform
-// SQLite: enums replaced with String (validated at application layer)
+// PostgreSQL (Supabase). Enums kept as String (validated at the application
+// layer) for portability — works identically on Postgres and SQLite.
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // pooled (PgBouncer, 6543) — used by the app
+  directUrl = env("DIRECT_URL")   // direct (5432) — used by Prisma migrations
 }
 
 // Role: "USER" | "ADMIN"

@@ -1,0 +1,34 @@
+# Lokale Postgres-Test-DB für die Backend-Tests (und optional lokale Entwicklung).
+# Isoliert von Supabase → das destruktive `db push --force-reset` der Tests kann
+# niemals echte Daten löschen.
+#
+# Nutzung:
+#   docker compose up -d
+#   # dann in backend/.env setzen:
+#   TEST_DATABASE_URL="postgresql://zoe:zoe@localhost:5433/zoe_test"
+#   npm test
+#
+# Stoppen:  docker compose down        (Daten bleiben)
+# Löschen:  docker compose down -v     (Volume + Daten weg)
+
+services:
+  postgres-test:
+    image: postgres:16
+    container_name: zoe-postgres-test
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: zoe
+      POSTGRES_PASSWORD: zoe
+      POSTGRES_DB: zoe_test
+    ports:
+      - "5433:5432" # 5433 lokal, um Konflikte mit einem evtl. vorhandenen Postgres (5432) zu vermeiden
+    volumes:
+      - zoe-pg-test:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U zoe -d zoe_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  zoe-pg-test:

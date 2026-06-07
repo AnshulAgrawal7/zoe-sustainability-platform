@@ -25,41 +25,35 @@ Order: **Supabase (DB) → Prisma→Postgres → Backend (Render) → Frontend (
 
 ---
 
-## DB — switch Prisma from SQLite to Supabase Postgres
+## DB — PostgreSQL (Supabase) ✅ active
 
-The data model is provider-agnostic (only `String`/`Int`/`DateTime`), so the
-**schema** ports cleanly. Only the **migration SQL** must be regenerated, because
-the committed migration in `backend/prisma/migrations/` is SQLite-specific
-(`migration_lock.toml` → `sqlite`). Do this once:
+The project runs on **PostgreSQL** (Supabase, EU/Frankfurt). `schema.prisma` has
+`provider = "postgresql"` with a pooled `DATABASE_URL` (6543) for the app and a
+`DIRECT_URL` (5432) for migrations; the committed migration in
+`backend/prisma/migrations/` is Postgres (`migration_lock.toml` → `postgresql`).
+The data model is provider-agnostic (only `String`/`Int`/`DateTime`).
 
-1. **Edit `backend/prisma/schema.prisma`** — datasource block:
-   ```prisma
-   datasource db {
-     provider  = "postgresql"
-     url       = env("DATABASE_URL") // Supabase pooled URL (port 6543)
-     directUrl = env("DIRECT_URL")   // Supabase direct URL (port 5432)
-   }
-   ```
-2. **Set both URLs** in `backend/.env` (from Supabase → Project Settings →
-   Database → Connection string):
+**To point at a different Postgres** — e.g. the municipality's own Supabase/Postgres
+on handover — **no code change is needed**:
+
+1. Set `DATABASE_URL` + `DIRECT_URL` in `backend/.env` (Supabase → Connect → ORMs →
+   Prisma gives both strings):
    ```
    DATABASE_URL="postgresql://...:6543/postgres?pgbouncer=true"
    DIRECT_URL="postgresql://...:5432/postgres"
    ```
-   `directUrl` is used for migrations; the pooled `DATABASE_URL` for the app.
-3. **Regenerate migrations for Postgres** (the SQLite migration won't run on PG):
+2. Apply schema + (optionally) seed:
    ```bash
    cd backend
-   rm -rf prisma/migrations            # drop the SQLite-only migration
-   npx prisma migrate dev --name init  # creates a fresh Postgres migration
-   npm run db:seed                     # admin + 8 demo projects + badges
+   npx prisma migrate deploy   # applies the committed migrations
+   npm run db:seed             # optional: admin + 8 demo projects + badges
    ```
-4. **Commit** the new `prisma/migrations/` (now `provider = "postgresql"`).
-5. In production the build runs `npx prisma migrate deploy` (see `render.yaml`).
+3. In production the build runs `npx prisma migrate deploy` (see `render.yaml`).
 
-> Dev vs prod DB: Prisma binds **one** provider per schema. After the switch,
-> local dev also uses Postgres — use a second free Supabase project ("dev") or a
-> local Docker Postgres. Keep the SQLite setup only if you revert the provider.
+> **Tests** use a **separate** local Postgres (never the app DB):
+> `backend/docker-compose.yml` → `docker compose up -d`, then set `TEST_DATABASE_URL`
+> in `backend/.env`. The test harness refuses to run if `TEST_DATABASE_URL` points
+> at Supabase (it does a destructive `--force-reset`).
 
 ---
 

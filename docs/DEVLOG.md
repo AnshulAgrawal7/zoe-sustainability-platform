@@ -184,6 +184,42 @@ Für **beide Vorträge** (gemeinsame Iterations-Achse) und die Berichte werden d
 
 ---
 
+### Iteration 10 — Literatur-Rigor: Gamification-Fundament (DP2b), SDG-Primärquelle, Evaluationsmethode
+- **Datum:** 2026-06-07
+- **Adressiertes Teilproblem / Phase:** DP2b (TP2, Gamification), TP3 (SDG), Phase-4/5-Evaluationsmethodik — **Rigor-Zyklus** (Wissensbasis), **kein Code**.
+- **Kontext & Abgrenzung:** Eine Gap-Analyse ergab, dass die umstrittenste Designentscheidung (DP2b: „Punkte ja, aber nicht rein belohnungsbasiert") nur an einer [A]-Quelle (Yang & Wu 2025) + zwei [B] hing und das **theoretische Fundament** fehlte; zudem gab es **keine** Korpusquelle für heuristische Evaluation und nur Sekundärliteratur für die SDGs. Rein **additiv**, keine bestehenden Zitate verändert.
+- **Was wurde ergänzt (6 Quellen, Korpus 43 → 49):**
+  - **DP2b-Fundament:** Ryan & Deci 2000 [B] (Self-Determination Theory), Sailer et al. 2017 [A] (Experiment: Element → Bedürfnis), Mekler et al. 2017 [A] (Experiment: Belohnung → Leistung, nicht intrinsische Motivation), Hamari et al. 2014 [A] (Review) → SDT-basierte Argumentationskette.
+  - **Evaluationsmethode:** Nielsen & Molich 1990 [B] (heuristische Evaluation) — schließt die zuvor offene Methodenlücke (Anshul, Phase 4/5).
+  - **SDG-Primärquelle:** UN-Generalversammlung 2015 (2030 Agenda, A/RES/70/1) — normativer Anker für TP3.
+- **Wo eingearbeitet:** `literature-index.md` (#43–#48 + Cluster/Prüfpunkte), `literature-review.md` (Volleinträge + A/B + Bilanz), `MATRIX.md` (DP2b-Quellenzelle, TP3, Evaluierbarkeit), `reports/STATUS_{anshul,marieclaire}.md`, `reports/{anshul,marieclaire}.tex` (Inline-Zitate + Referenzliste; neu kompiliert: anshul **10 S.**, marieclaire **11 S.**).
+- **Aufgabenteilung gewahrt:** SDT-Fundament + Review (Ryan & Deci, Hamari) in Marieclaires Phase 3 (DP-Herleitung); heuristische Evaluation (Nielsen & Molich) in Anshols Phase 4; Experimente (Sailer, Mekler) und SDG-Primärquelle in **beiden**.
+- **Bewusst nicht aufgenommen:** Brooke 1996 (SUS) + weitere ältere Phase-4-Vorschläge (Alter) → SUS im Bericht quellenneutral als „standardisierter Usability-Fragebogen" geführt; Sonnenberg & vom Brocke 2012 optional offengelassen, da „Demonstration ≠ Evaluation" bereits über Peffers 2007 + Venable 2016 belegt ist.
+- **DSR-Bezug:** Stärkt den **Rigor-Zyklus** (Hevner 2007); DP2b ist nun theorie- und evidenzfest und beantwortet Anshols Feedback-Frage „Gamification behalten oder als Risiko markieren?" evidenzbasiert.
+- **Status:** ✅ Doku aktualisiert, **Halluzinationssperre gewahrt** (alle Quellen als PDF in `Projektseminar_Literatur/` + `renamed/`-Symlinks), beide Berichte kompilieren fehlerfrei.
+
+---
+
+### Iteration 11 — Produktiv-DB: Migration von SQLite auf PostgreSQL (Supabase)
+- **Datum:** 2026-06-07
+- **Adressiertes Teilproblem / Phase:** Betriebs-/Übergabereife (übergreifend) — Vorbereitung Live-Demo + Gemeinde-Handover.
+- **Was wurde gemacht:**
+  - `schema.prisma`: `provider` **sqlite → postgresql** + `directUrl` (Supabase pooled 6543 / direct 5432).
+  - SQLite-Migration verworfen, **frische Postgres-Migration** erzeugt (`migrate diff`) + via `migrate deploy` auf **Supabase (EU/Frankfurt)** angewendet; Seed eingespielt (4 Users, 8 Projekte inkl. 2 COMPLETED, 5 Badges).
+  - **End-to-End verifiziert:** `/api/health`, `/api/projects` (Daten aus Supabase), Admin-Login (JWT/bcrypt) ✅.
+  - **Test-Harness** auf dedizierte **Postgres-Test-DB** umgestellt (`TEST_DATABASE_URL`) + `backend/docker-compose.yml` (postgres:16, Port 5433); **Sicherheits-Guard**: Tests verweigern den Start, wenn `TEST_DATABASE_URL` auf Supabase zeigt (destruktives `--force-reset`).
+  - `.env.example` + `docs/deployment/deploy.md` auf den Postgres-Stand gebracht.
+- **Technische Entscheidung & Begründung:**
+  - **Supabase nur als Postgres** (über Prisma-Connection-String) — **kein** supabase-js/Auth/RLS/Storage → kein Lock-in; DB-Wechsel (z. B. zur Gemeinde) = nur Connection-String tauschen + `migrate deploy`.
+  - **Getrennte Test-DB** statt Tests gegen Supabase: das destruktive Test-`--force-reset` darf nie echte Daten löschen.
+  - **Migration via `migrate diff` + `migrate deploy`** statt `migrate dev`: vermeidet die auf Supabase fehlende Shadow-DB.
+  - **Data API in Supabase deaktiviert**, RLS aktiv: kleinste Angriffsfläche, nur der Postgres-String (Backend) erreicht die DB.
+  - **Test-Isolation (gelernt, wichtig):** Prisma nutzt für Migrationen/`db push` die **`directUrl` (DIRECT_URL)**, nicht `DATABASE_URL`. Die Test-Harness muss daher **beide** Variablen auf die lokale Test-DB überschreiben — sonst lief das destruktive `--force-reset` über `DIRECT_URL` gegen **Supabase** (genau das ist beim ersten Testlauf passiert; Supabase wurde geleert und danach neu geseedet). Zusätzlich Guard, der den Teststart verweigert, wenn die Test-URL auf `supabase.com` zeigt.
+- **DSR-Bezug:** Überführt die Demonstration (Phase 4) von „lokal/SQLite" auf eine produktionsnahe, übergabefähige Postgres-Basis; Portabilität (Gemeinde-Handover) als dokumentiertes Designwissen (`deploy.md`).
+- **Status:** ✅ App läuft gegen Supabase (verifiziert: health/projects/Admin-Login). ✅ **Backend-Tests 37/37 grün** gegen lokale Docker-Postgres (Port 5433); Supabase nachweislich unangetastet.
+
+---
+
 ## Offene Iterationen (noch zu implementieren)
 
 Abgeleitet aus den Lücken in [`MATRIX.md`](MATRIX.md):
