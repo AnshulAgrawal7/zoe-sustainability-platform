@@ -45,6 +45,10 @@ memory/
 .eslintcache
 coverage/
 
+# Ephemeral per-session working notes (kept local; the DEVLOG is the record)
+session-handoff.md
+/*-handoff.md
+
 # Literature corpus — copyrighted publisher PDFs, kept local only (NOT pushed).
 # Cataloged in docs/literature-index.md; the renamed/ folder holds local symlinks.
 Projektseminar_Literatur/
