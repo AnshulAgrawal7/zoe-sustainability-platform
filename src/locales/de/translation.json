@@ -407,6 +407,9 @@
     "banner": "Forschungsprototyp — Diese Plattform enthält fiktive Daten für akademische Zwecke. Kein echter kommunaler Dienst."
   },
   "nav": {
+    "myRewards": "Meine Belohnungen",
+    "account": "Kontomenü",
+    "points": "{{points}} Punkte",
     "home": "Startseite",
     "projects": "Projekte",
     "sdgs": "SDGs",

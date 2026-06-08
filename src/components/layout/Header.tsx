@@ -1,21 +1,12 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import {
-  Leaf,
-  Menu,
-  X,
-  Sun,
-  Moon,
-  Star,
-  LayoutDashboard,
-  LogOut,
-  Shield,
-} from 'lucide-react';
+import { Leaf, Menu, X, Sun, Moon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../stores/authStore';
 import { useThemeStore } from '../../stores/themeStore';
 import { logout } from '../../services/authService';
 import LanguageSwitcher from './LanguageSwitcher';
+import UserMenu from './UserMenu';
 
 export default function Header() {
   const { t } = useTranslation();
@@ -102,35 +93,7 @@ export default function Header() {
 
             {/* Auth area */}
             {isAuthenticated && user ? (
-              <div className="flex items-center gap-2">
-                <span className="flex items-center gap-1 text-sm font-semibold text-amber-600 dark:text-amber-400">
-                  <Star size={14} aria-hidden="true" />
-                  {user.points}
-                </span>
-                {isAdmin && (
-                  <Link
-                    to="/admin"
-                    className="rounded-md p-2 text-gray-500 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
-                    aria-label={t('nav.admin')}
-                  >
-                    <Shield size={18} aria-hidden="true" />
-                  </Link>
-                )}
-                <Link
-                  to="/dashboard"
-                  className="rounded-md p-2 text-gray-500 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
-                  aria-label={t('nav.dashboard')}
-                >
-                  <LayoutDashboard size={18} aria-hidden="true" />
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  aria-label={t('nav.logout')}
-                  className="rounded-md p-2 text-gray-500 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
-                >
-                  <LogOut size={18} aria-hidden="true" />
-                </button>
-              </div>
+              <UserMenu />
             ) : (
               <div className="flex items-center gap-2">
                 <Link
@@ -214,12 +177,31 @@ export default function Header() {
             </div>
             {isAuthenticated ? (
               <div className="space-y-1 pt-1">
+                {user && (
+                  <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
+                    {user.name}
+                  </p>
+                )}
                 <Link
                   to="/dashboard"
                   onClick={() => setMenuOpen(false)}
                   className="block rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
                 >
                   {t('nav.dashboard')}
+                </Link>
+                <Link
+                  to="/my-rewards"
+                  onClick={() => setMenuOpen(false)}
+                  className="block rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
+                >
+                  {t('nav.myRewards')}
+                </Link>
+                <Link
+                  to="/profile"
+                  onClick={() => setMenuOpen(false)}
+                  className="block rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
+                >
+                  {t('nav.profile')}
                 </Link>
                 {isAdmin && (
                   <Link

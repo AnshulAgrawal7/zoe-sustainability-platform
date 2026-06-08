@@ -407,6 +407,9 @@
     "banner": "Research Prototype — This platform contains fictional data for academic purposes. Not a real municipal service."
   },
   "nav": {
+    "myRewards": "My Rewards",
+    "account": "Account menu",
+    "points": "{{points}} points",
     "home": "Home",
     "projects": "Projects",
     "sdgs": "SDGs",
