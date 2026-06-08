@@ -142,6 +142,22 @@ npm run dev                 # → http://localhost:5173
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
+### Quick start (macOS)
+
+For a fresh machine (e.g. running the prototype off another laptop) two helper
+scripts automate the steps above. They are **non-destructive** — they install
+dependencies and generate the Prisma client only, and never run migrations,
+seeds, or resets, so nothing in the shared database is touched or deleted.
+
+```bash
+bash setup-mac.sh     # one-time: checks Node, installs deps, generates Prisma client
+bash start-mac.sh     # starts backend (:3001) + frontend (:5173) together; Ctrl+C stops both
+```
+
+Requirements: Node.js 20.19+ (22 LTS recommended — `brew install node`).
+`backend/.env` is not stored in git; copy it from your main machine into
+`backend/.env` before running `start-mac.sh`.
+
 ---
 
 ## Demo Credentials
