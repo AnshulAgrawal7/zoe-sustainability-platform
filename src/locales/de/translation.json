@@ -404,7 +404,7 @@
     }
   },
   "prototype": {
-    "banner": "Forschungsprototyp — Diese Plattform enthält fiktive Daten für akademische Zwecke (DSR, FAU SoSe 2026). Kein echter kommunaler Dienst."
+    "banner": "Forschungsprototyp — Diese Plattform enthält fiktive Daten für akademische Zwecke. Kein echter kommunaler Dienst."
   },
   "nav": {
     "home": "Startseite",
@@ -1046,7 +1046,7 @@
   "about": {
     "heroEyebrow": "Gemeinde Nord-Korfu, Griechenland",
     "heroTitle": "Über das ZOE-Programm",
-    "heroSubtitle": "ZOE (Ζωή — „Leben\" auf Griechisch) ist das strategische Umweltaktions-Rahmenwerk der Gemeinde Nord-Korfu. Diese digitale Plattform ist die Kommunikations- und Beteiligungsebene des ZOE-Programms, gebaut als Design-Science-Research-Artefakt.",
+    "heroSubtitle": "ZOE (Ζωή — „Leben\" auf Griechisch) ist das strategische Umweltaktions-Rahmenwerk der Gemeinde Nord-Korfu. Diese digitale Plattform ist die Kommunikations- und Beteiligungsebene des ZOE-Programms.",
     "whatTitle": "Was ist das ZOE-Programm?",
     "whatP1": "ZOE ist ein strategisches Rahmenwerk für Umwelt-Governance auf kommunaler Ebene. Es koordiniert ein Portfolio von Umweltprojekten in den Bereichen Biodiversität, Kreislaufwirtschaft, Abfallreduktion, Gewässerschutz, Bildung und nachhaltiger Tourismus.",
     "whatP2": "Das Programm basiert auf den UN-Zielen für nachhaltige Entwicklung (SDGs) und den Prinzipien des European Green Deal, angepasst an den spezifischen ökologischen und sozialen Kontext Nord-Korfus.",

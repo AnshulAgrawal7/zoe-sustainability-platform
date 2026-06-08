@@ -1,33 +1,9 @@
 import { Link } from 'react-router-dom';
-import {
-  Leaf,
-  MapPin,
-  Target,
-  BookOpen,
-  ArrowRight,
-  Milestone,
-  FlaskConical,
-  Globe,
-} from 'lucide-react';
+import { MapPin, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-
-// Structural metadata (step number + icon) stays in code; titles/descriptions
-// come from i18n.
-const stepMeta = [
-  { number: '01', icon: Target },
-  { number: '02', icon: Milestone },
-  { number: '03', icon: FlaskConical },
-  { number: '04', icon: BookOpen },
-  { number: '05', icon: Globe },
-  { number: '06', icon: Leaf },
-];
 
 export default function AboutPage() {
   const { t } = useTranslation();
-  const steps = t('about.dsrSteps', { returnObjects: true }) as {
-    title: string;
-    description: string;
-  }[];
   const principles = t('about.principles', { returnObjects: true }) as {
     title: string;
     desc: string;
@@ -105,60 +81,6 @@ export default function AboutPage() {
                 ))}
               </ul>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* DSR Context */}
-      <section className="bg-gray-50 py-16 dark:bg-gray-900/50">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-              {t('about.dsrTitle')}
-            </h2>
-            <p className="mx-auto max-w-2xl leading-relaxed text-gray-600 dark:text-gray-300">
-              {t('about.dsrIntro')}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {stepMeta.map((meta, i) => {
-              const content = steps[i];
-              if (!content) return null;
-              const Icon = meta.icon;
-              return (
-                <div
-                  key={meta.number}
-                  className="rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-green-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700"
-                >
-                  <div className="mb-3 flex items-center gap-3">
-                    <span className="rounded bg-green-50 px-2 py-0.5 text-xs font-bold text-green-600 dark:bg-green-900/30 dark:text-green-400">
-                      {meta.number}
-                    </span>
-                    <Icon
-                      size={18}
-                      className="text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <h3 className="mb-2 font-semibold text-gray-900 dark:text-white">
-                    {content.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                    {content.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="mt-8 rounded-xl border border-amber-200 bg-amber-50 p-5 text-center dark:border-amber-800 dark:bg-amber-900/20">
-            <p className="text-sm text-amber-800 dark:text-amber-300">
-              <span className="font-semibold">
-                {t('about.researchNoteLabel')}
-              </span>{' '}
-              {t('about.researchNote')}
-            </p>
           </div>
         </div>
       </section>

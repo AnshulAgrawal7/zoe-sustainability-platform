@@ -404,7 +404,7 @@
     }
   },
   "prototype": {
-    "banner": "Research Prototype — This platform contains fictional data for academic purposes (DSR, FAU SoSe 2026). Not a real municipal service."
+    "banner": "Research Prototype — This platform contains fictional data for academic purposes. Not a real municipal service."
   },
   "nav": {
     "home": "Home",
@@ -1046,7 +1046,7 @@
   "about": {
     "heroEyebrow": "Municipality of Northern Corfu, Greece",
     "heroTitle": "About the ZOE Programme",
-    "heroSubtitle": "ZOE (Ζωή — \"life\" in Greek) is the strategic environmental action framework of the Municipality of Northern Corfu. This digital platform is the communication and participation layer of the ZOE programme, built as a Design Science Research artefact.",
+    "heroSubtitle": "ZOE (Ζωή — \"life\" in Greek) is the strategic environmental action framework of the Municipality of Northern Corfu. This digital platform is the communication and participation layer of the ZOE programme.",
     "whatTitle": "What is the ZOE Programme?",
     "whatP1": "ZOE is a strategic framework for environmental governance at the municipal level. It coordinates a portfolio of environmental projects spanning biodiversity, circular economy, waste reduction, water protection, education, and sustainable tourism.",
     "whatP2": "The programme is grounded in the UN Sustainable Development Goals (SDGs) and European Green Deal principles, adapted for the specific ecological and social context of Northern Corfu.",
