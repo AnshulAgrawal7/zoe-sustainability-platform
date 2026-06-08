@@ -9,55 +9,92 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL") // pooled (PgBouncer, 6543) — used by the app
-  directUrl = env("DIRECT_URL")   // direct (5432) — used by Prisma migrations
+  directUrl = env("DIRECT_URL") // direct (5432) — used by Prisma migrations
 }
 
-// Role: "USER" | "ADMIN"
+// Role: "USER" | "ADMIN" | "SCHOOL"  (SCHOOL = school coordinator login)
 // Language: "EN" | "EL" | "DE"
 model User {
-  id            String   @id @default(cuid())
-  email         String   @unique
-  password      String
-  name          String
-  role          String   @default("USER")
-  points        Int      @default(0)
-  avatarUrl     String?
-  language      String   @default("EN")
-  profile       String   @default("RESIDENT") // RESIDENT | VISITOR | STUDENT | VOLUNTEER (self-selected, optional)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("USER")
+  points    Int      @default(0)
+  avatarUrl String?
+  language  String   @default("EN")
+  profile   String   @default("RESIDENT") // RESIDENT | VISITOR | STUDENT | VOLUNTEER (self-selected, optional)
+  schoolId  String? // optional membership: a student belongs to one school
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
+  school          School?         @relation("SchoolMembers", fields: [schoolId], references: [id])
   participations  Participation[]
   userBadges      UserBadge[]
   refreshTokens   RefreshToken[]
   createdProjects Project[]       @relation("CreatedBy")
 }
 
+// A school is a group: students join via `code`, and a SCHOOL-role user logs in
+// to view the school dashboard. The ranking aggregates member points (avg per
+// member, see schoolController). Members and the coordinator share the same FK.
+model School {
+  id        String   @id @default(cuid())
+  name      String
+  code      String   @unique // join code for students, e.g. "KERKYRA-7F"
+  location  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members User[] @relation("SchoolMembers")
+}
+
 // category: "ENVIRONMENT" | "MOBILITY" | "COMMUNITY" | "EDUCATION" | "CULTURE"
 // status:   "DRAFT" | "OPEN" | "CLOSED" | "COMPLETED"
 model Project {
-  id            String   @id @default(cuid())
-  titleEn       String
-  titleEl       String
-  titleDe       String
-  descriptionEn String
-  descriptionEl String
-  descriptionDe String
-  sdgIds        String   // JSON array: "[3, 11, 13]"
-  category      String
-  status        String   @default("OPEN")
+  id              String    @id @default(cuid())
+  titleEn         String
+  titleEl         String
+  titleDe         String
+  descriptionEn   String
+  descriptionEl   String
+  descriptionDe   String
+  sdgIds          String // JSON array: "[3, 11, 13]"
+  category        String
+  status          String    @default("OPEN")
   maxParticipants Int?
-  rewardPoints  Int      @default(50)
-  imageUrl      String?
-  location      String?
-  startDate     DateTime?
-  endDate       DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  rewardPoints    Int       @default(50)
+  imageUrl        String?
+  location        String?
+  startDate       DateTime?
+  endDate         DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
-  createdBy      User          @relation("CreatedBy", fields: [createdById], references: [id])
+  createdBy      User            @relation("CreatedBy", fields: [createdById], references: [id])
   createdById    String
   participations Participation[]
+  posts          Post[]
+}
+
+// News / blog feed. Auto-created when a project goes live (OPEN) or is completed,
+// or written manually by an admin. Trilingual (EN/EL/DE).
+// type: "PROJECT_NEW" | "PROJECT_COMPLETED" | "ANNOUNCEMENT"
+model Post {
+  id        String   @id @default(cuid())
+  type      String   @default("ANNOUNCEMENT")
+  titleEn   String
+  titleEl   String
+  titleDe   String
+  bodyEn    String
+  bodyEl    String
+  bodyDe    String
+  imageUrl  String?
+  published Boolean  @default(true)
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Participation {
@@ -73,7 +110,7 @@ model Participation {
 }
 
 model Badge {
-  id        String    @id @default(cuid())
+  id        String @id @default(cuid())
   nameEn    String
   nameEl    String
   nameDe    String

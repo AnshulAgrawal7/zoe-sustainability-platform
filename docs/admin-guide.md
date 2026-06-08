@@ -103,3 +103,39 @@ Frontend:
 ```bash
 npm run dev   # Vite Dev Server (Port 5173)
 ```
+
+---
+
+## 8. Schulen verwalten (`/admin/schools`)
+
+Schulen sind Gruppen: Schüler:innen treten per **Beitritts-Code** bei, ihre Punkte
+fließen in das **Schulranking** ein (Sortierung nach Ø-Punkten pro Mitglied, mind.
+3 Mitglieder zur Wertung).
+
+**Schule anlegen:**
+1. Name und einen eindeutigen **Code** (z. B. `KERKYRA-7F`) eingeben, optional Ort.
+2. Optional einen **Schul-Login** (Rolle `SCHOOL`) erzeugen: Koordinator-E-Mail
+   (+ optional Name/Passwort). Bleibt das Passwort leer, wird eins generiert.
+3. Nach dem Anlegen werden die Zugangsdaten **einmalig** angezeigt — sofort kopieren.
+
+**Bearbeiten / Löschen:** über die Stift-/Papierkorb-Symbole in der Liste. Beim
+Löschen behalten Mitglieder ihr Konto, verlieren aber die Schul-Zuordnung.
+
+Der Schul-Login sieht unter `/school` ein **schreibgeschütztes** Dashboard
+(Mitglieder, Punkte, Rang, Belohnungsstufe + Beitritts-Code zum Teilen).
+Seed-Logins: `school1..3@zoe-corfu.gr` / `School2026!`.
+
+---
+
+## 9. Neuigkeiten / Blog verwalten (`/admin/posts`)
+
+Der Neuigkeiten-Feed (`/news` + Startseite) speist sich aus Beiträgen.
+
+- **Automatisch:** Beim Veröffentlichen eines Projekts (Status → `OPEN`) entsteht ein
+  `PROJECT_NEW`-Beitrag, beim Abschließen (→ `COMPLETED`) ein `PROJECT_COMPLETED`-Beitrag
+  — dreisprachig aus den Projektfeldern, ohne Doppelte.
+- **Manuell:** Beitrag mit Titel + Text in EN/EL/DE anlegen. Der **Übersetzen-Button**
+  (DeepL) füllt aus einer Sprache die anderen beiden. Typ wählen
+  (`Ankündigung` / `Neues Projekt` / `Abgeschlossen`), optional Bild-URL.
+- **Veröffentlicht**-Häkchen steuert die Sichtbarkeit. Auto-Beiträge sind ganz normal
+  **bearbeitbar/löschbar**.

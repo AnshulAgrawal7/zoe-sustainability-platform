@@ -5,6 +5,7 @@ import type { AuthRequest } from '../middleware/auth';
 import {
   ok, created, badRequest, notFound, conflict, serverError, forbidden,
 } from '../utils/response';
+import { createAutoPost } from '../services/postService';
 
 const prisma = new PrismaClient();
 
@@ -94,6 +95,10 @@ export async function createProject(req: AuthRequest, res: Response) {
         createdById: req.user!.userId,
       },
     });
+    // A project published straight away is news → auto-post (idempotent).
+    if (project.status === 'OPEN') {
+      await createAutoPost(project, 'PROJECT_NEW');
+    }
     created(res, project);
   } catch {
     serverError(res);
@@ -129,6 +134,13 @@ export async function updateProject(req: AuthRequest, res: Response) {
         ...(sdgIds !== undefined ? { sdgIds: JSON.stringify(sdgIds) } : {}),
       },
     });
+    // Lifecycle auto-posts (idempotent): going live (DRAFT→OPEN) or completing.
+    if (project.status !== 'COMPLETED' && updated.status === 'COMPLETED') {
+      await createAutoPost(updated, 'PROJECT_COMPLETED');
+    }
+    if (project.status === 'DRAFT' && updated.status === 'OPEN') {
+      await createAutoPost(updated, 'PROJECT_NEW');
+    }
     ok(res, updated);
   } catch {
     serverError(res);

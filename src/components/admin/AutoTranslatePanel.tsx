@@ -14,19 +14,25 @@ const LANGS: { code: ContentLang; label: string }[] = [
 ];
 
 interface AutoTranslatePanelProps {
-  /** The admin form state (contains titleEn/El/De, descriptionEn/El/De, ...). */
+  /** The admin form state (contains titleEn/El/De, <field>En/El/De, ...). */
   values: Record<string, unknown>;
   /** The form's setter: onChange('titleDe', '…'). */
   onChange: (field: string, value: string) => void;
+  /**
+   * Base field names to translate (each expands to <base>En/El/De).
+   * Defaults to title + description (project form). Posts pass title + body.
+   */
+  fields?: string[];
 }
 
 /**
- * Admin helper: type title + description in one language, then fill the other
- * two via DeepL (results stay editable). Requires DEEPL_API_KEY on the backend.
+ * Admin helper: type the content in one language, then fill the other two via
+ * DeepL (results stay editable). Requires DEEPL_API_KEY on the backend.
  */
 export default function AutoTranslatePanel({
   values,
   onChange,
+  fields = ['title', 'description'],
 }: AutoTranslatePanelProps) {
   const { t } = useTranslation();
   const [sourceLang, setSourceLang] = useState<ContentLang>('EN');
@@ -35,9 +41,11 @@ export default function AutoTranslatePanel({
 
   async function handleTranslate() {
     const sfx = LANG_SUFFIX[sourceLang];
-    const title = String(values[`title${sfx}`] ?? '').trim();
-    const description = String(values[`description${sfx}`] ?? '').trim();
-    if (!title || !description) {
+    const source: Record<string, string> = {};
+    for (const base of fields) {
+      source[base] = String(values[`${base}${sfx}`] ?? '').trim();
+    }
+    if (fields.some((base) => !source[base])) {
       setError(t('admin.autoTranslate.needSource'));
       setStatus('idle');
       return;
@@ -45,15 +53,14 @@ export default function AutoTranslatePanel({
     setError(null);
     setStatus('loading');
     try {
-      const result = await translateFields({ title, description }, sourceLang);
-      for (const [lang, fields] of Object.entries(result.translations)) {
+      const result = await translateFields(source, sourceLang);
+      for (const [lang, translated] of Object.entries(result.translations)) {
         const targetSfx = LANG_SUFFIX[lang as ContentLang];
         if (!targetSfx) continue;
-        if (typeof fields.title === 'string') {
-          onChange(`title${targetSfx}`, fields.title);
-        }
-        if (typeof fields.description === 'string') {
-          onChange(`description${targetSfx}`, fields.description);
+        for (const base of fields) {
+          if (typeof translated[base] === 'string') {
+            onChange(`${base}${targetSfx}`, translated[base]);
+          }
         }
       }
       setStatus('done');

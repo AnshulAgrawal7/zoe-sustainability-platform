@@ -110,18 +110,47 @@ Badges werden automatisch freigeschaltet, wenn Sie die Punkteschwelle erreichen:
 
 ---
 
-## 6. Plattform-Übersicht
+## 6. Schule beitreten & Schulranking
+
+Schüler:innen können ihre Schule unterstützen: Eure gesammelten Punkte zählen zum
+**Schulranking** (`/school-ranking`).
+
+### Einer Schule beitreten
+- **Bei der Registrierung:** Wählen Sie als Profil **Schüler:in** und geben Sie den
+  **Schul-Code** ein (von Ihrer Schule/Lehrkraft, z. B. `KERKYRA-7F`).
+- **Später im Profil:** Unter **Profil → Deine Schule** den Code eingeben und auf
+  **Beitreten** klicken. Mit **Verlassen** treten Sie wieder aus.
+
+### Schulranking
+- Unter `/school-ranking` sehen Sie die Rangfolge. Sortiert wird nach **Ø-Punkten pro
+  Mitglied** (damit kleine und große Schulen fair sind); Gesamtpunkte und Mitgliederzahl
+  werden ebenfalls angezeigt.
+- Eine Schule wird erst ab **3 Mitgliedern** gewertet.
+
+---
+
+## 7. Neuigkeiten verfolgen
+
+Unter **Neuigkeiten** (`/news`) und auf der Startseite sehen Sie, was neu ist: neu
+gestartete und abgeschlossene Projekte sowie Ankündigungen. Mit den Filtern oben
+können Sie nach Typ filtern (Neu / Abgeschlossen / Ankündigung).
+
+---
+
+## 8. Plattform-Übersicht
 
 | Seite | Beschreibung |
 |---|---|
-| `/` | Startseite — Überblick über das ZOE-Programm |
+| `/` | Startseite — Überblick + Neuigkeiten |
 | `/projects` | Alle offenen Projekte |
 | `/projects/:id` | Projektdetails + Teilnahme-Button |
 | `/sdg-dashboard` | SDG-Fortschritte im Überblick |
 | `/events` | Veranstaltungen und Workshops |
+| `/news` | Neuigkeiten: neue/abgeschlossene Projekte, Ankündigungen |
 | `/transparency` | Messdaten und Wirkungsmetriken |
 | `/roadmap` | Zeitplan der 31 ZOE-Maßnahmen |
 | `/rewards` | Öffentliche Rangliste + Badge-Info |
+| `/school-ranking` | Schulranking (Ø-Punkte pro Mitglied) |
 | `/my-rewards` | Persönliche Punkte und Badges (Login) |
 | `/dashboard` | Persönliches Dashboard (Login) |
-| `/profile` | Profil bearbeiten (Login) |
+| `/profile` | Profil bearbeiten + Schule beitreten (Login) |

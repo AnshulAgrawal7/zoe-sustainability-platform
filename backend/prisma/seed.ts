@@ -1,6 +1,8 @@
 // PROTOTYPE SEED DATA — ZOE Sustainability Platform
-// Admin: admin@zoe-corfu.gr / ZoeAdmin2026!
-// Users: citizen1@example.com, citizen2@example.com, tourist@example.com / Test1234!
+// Admin:    admin@zoe-corfu.gr / ZoeAdmin2026!
+// Users:    citizen1@example.com, citizen2@example.com, tourist@example.com / Test1234!
+// Students: student1..9@school.gr / Test1234!
+// Schools:  school1@zoe-corfu.gr, school2@…, school3@… (role SCHOOL) / School2026!
 
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
@@ -12,6 +14,7 @@ async function main() {
 
   const adminHash = await bcrypt.hash('ZoeAdmin2026!', 12);
   const userHash = await bcrypt.hash('Test1234!', 12);
+  const schoolHash = await bcrypt.hash('School2026!', 12);
 
   const admin = await prisma.user.upsert({
     where: { email: 'admin@zoe-corfu.gr' },
@@ -115,9 +118,109 @@ async function main() {
     upsertBadge(tourist.id, badges[0].id),
   ]);
 
-  console.log(`Seeded: ${[p1,p2,p3,p4,p5,p6,p7,p8].length} projects, 4 users, 5 badges`);
-  console.log('Admin: admin@zoe-corfu.gr / ZoeAdmin2026!');
-  console.log('Users: citizen1@example.com, citizen2@example.com, tourist@example.com / Test1234!');
+  // --- Schools (group accounts) ---
+  const schoolGym = await prisma.school.upsert({
+    where: { code: 'KERKYRA-7F' },
+    update: {},
+    create: { name: '1ο Γυμνάσιο Κέρκυρας', code: 'KERKYRA-7F', location: 'Corfu Town' },
+  });
+  const schoolLefkimmi = await prisma.school.upsert({
+    where: { code: 'LEFKIMMI-A2' },
+    update: {},
+    create: { name: 'Lefkimmi High School', code: 'LEFKIMMI-A2', location: 'Lefkimmi' },
+  });
+  const schoolAcharavi = await prisma.school.upsert({
+    where: { code: 'ACHARAVI-3B' },
+    update: {},
+    create: { name: 'Gymnasium Acharavi', code: 'ACHARAVI-3B', location: 'Acharavi' },
+  });
+
+  // Student members (role USER, profile STUDENT) — varying points feed the ranking.
+  const makeStudent = (email: string, name: string, points: number, schoolId: string) =>
+    prisma.user.upsert({
+      where: { email },
+      update: { schoolId, role: 'USER', profile: 'STUDENT' },
+      create: { email, password: userHash, name, role: 'USER', profile: 'STUDENT', points, language: 'EL', schoolId },
+    });
+
+  await Promise.all([
+    // Gymnasium Kerkyra — many members, solid average
+    makeStudent('student1@school.gr', 'Eleni Vlachou', 210, schoolGym.id),
+    makeStudent('student2@school.gr', 'Giorgos Andreou', 160, schoolGym.id),
+    makeStudent('student3@school.gr', 'Sofia Nikolaou', 130, schoolGym.id),
+    makeStudent('student4@school.gr', 'Dimitris Pavlidis', 90, schoolGym.id),
+    // Lefkimmi — fewer members but highest average
+    makeStudent('student5@school.gr', 'Anna Georgiou', 240, schoolLefkimmi.id),
+    makeStudent('student6@school.gr', 'Kostas Rallis', 200, schoolLefkimmi.id),
+    makeStudent('student7@school.gr', 'Maria Spiridou', 180, schoolLefkimmi.id),
+    // Acharavi — only 2 members → below the 3-member minimum, shown as "not yet ranked"
+    makeStudent('student8@school.gr', 'Petros Lazaris', 120, schoolAcharavi.id),
+    makeStudent('student9@school.gr', 'Ioanna Makri', 70, schoolAcharavi.id),
+  ]);
+
+  // School coordinator logins (role SCHOOL) — one per school, read-only dashboard.
+  const makeCoordinator = (email: string, name: string, schoolId: string) =>
+    prisma.user.upsert({
+      where: { email },
+      update: { schoolId, role: 'SCHOOL' },
+      create: { email, password: schoolHash, name, role: 'SCHOOL', profile: 'VOLUNTEER', schoolId, language: 'EL' },
+    });
+
+  await Promise.all([
+    makeCoordinator('school1@zoe-corfu.gr', '1ο Γυμνάσιο Κέρκυρας — Coordinator', schoolGym.id),
+    makeCoordinator('school2@zoe-corfu.gr', 'Lefkimmi High School — Coordinator', schoolLefkimmi.id),
+    makeCoordinator('school3@zoe-corfu.gr', 'Gymnasium Acharavi — Coordinator', schoolAcharavi.id),
+  ]);
+
+  // --- News / blog posts (manual + auto-style, linked to projects where relevant) ---
+  const makePost = (
+    id: string, type: string,
+    titleEn: string, titleEl: string, titleDe: string,
+    bodyEn: string, bodyEl: string, bodyDe: string,
+    projectId: string | null = null, imageUrl: string | null = null,
+  ) =>
+    prisma.post.upsert({
+      where: { id },
+      update: {},
+      create: { id, type, titleEn, titleEl, titleDe, bodyEn, bodyEl, bodyDe, projectId, imageUrl, published: true },
+    });
+
+  await Promise.all([
+    makePost('post-welcome', 'ANNOUNCEMENT',
+      'Welcome to the ZOE platform', 'Καλωσήρθατε στην πλατφόρμα ZOE', 'Willkommen auf der ZOE-Plattform',
+      'ZOE brings transparency and citizen participation to sustainability projects across Northern Corfu. Explore projects, join events, and earn rewards for your community.',
+      'Το ZOE φέρνει διαφάνεια και συμμετοχή των πολιτών στα έργα βιωσιμότητας σε όλη τη Βόρεια Κέρκυρα. Εξερευνήστε έργα, λάβετε μέρος σε εκδηλώσεις και κερδίστε ανταμοιβές.',
+      'ZOE bringt Transparenz und Bürgerbeteiligung in Nachhaltigkeitsprojekte in ganz Nordkorfu. Entdecke Projekte, nimm an Veranstaltungen teil und sammle Belohnungen für deine Gemeinde.'),
+    makePost('post-completed-beach', 'PROJECT_COMPLETED',
+      'Completed: Kassiopi Coastal Clean-Up', 'Ολοκληρώθηκε: Καθαρισμός Ακτής Κασσιωπής', 'Abgeschlossen: Küstenreinigung Kassiopi',
+      'Our monthly beach and underwater clean-up around Kassiopi harbour has wrapped up. Thank you to every volunteer who helped protect the coastline.',
+      'Ο μηνιαίος καθαρισμός παραλίας και βυθού γύρω από το λιμάνι της Κασσιωπής ολοκληρώθηκε. Ευχαριστούμε κάθε εθελοντή.',
+      'Unsere monatliche Strand- und Unterwasserreinigung rund um den Hafen von Kassiopi ist abgeschlossen. Danke an alle Freiwilligen.',
+      p2.id, 'https://placehold.co/800x400/0ea5e9/ffffff?text=Kassiopi+Clean-Up'),
+    makePost('post-completed-waste', 'PROJECT_COMPLETED',
+      'Completed: Waste Separation Network', 'Ολοκληρώθηκε: Δίκτυο Διαχωρισμού Αποβλήτων', 'Abgeschlossen: Mülltrennnetzwerk',
+      'Recycling and composting infrastructure is now live across 12 northern Corfu villages.',
+      'Οι υποδομές ανακύκλωσης και κομποστοποίησης λειτουργούν πλέον σε 12 χωριά.',
+      'Die Recycling- und Kompostierungsinfrastruktur ist nun in 12 Dörfern Nordkorfus aktiv.',
+      p4.id, 'https://placehold.co/800x400/f97316/ffffff?text=Waste+Separation'),
+    makePost('post-new-solar', 'PROJECT_NEW',
+      'New project: Solar Panels for Corfu Schools', 'Νέο έργο: Ηλιακά Πάνελ για τα Σχολεία', 'Neues Projekt: Solaranlagen für Korfu-Schulen',
+      'We are installing solar photovoltaic systems on municipal school rooftops across Northern Corfu. Schools can join and track their impact.',
+      'Εγκαθιστούμε ηλιακά φωτοβολταϊκά συστήματα στις στέγες σχολείων σε όλη τη Βόρεια Κέρκυρα.',
+      'Wir installieren Photovoltaik-Anlagen auf Schuldächern in ganz Nordkorfu. Schulen können mitmachen und ihre Wirkung verfolgen.',
+      p3.id),
+    makePost('post-school-challenge', 'ANNOUNCEMENT',
+      'School Challenge: climb the sustainability ranking', 'Σχολική Πρόκληση: ανεβείτε στην κατάταξη', 'Schul-Challenge: Klettert im Nachhaltigkeits-Ranking',
+      'Schools across Northern Corfu now compete in a friendly sustainability ranking. Join with your school code and help your school reach the top tier.',
+      'Τα σχολεία της Βόρειας Κέρκυρας συναγωνίζονται τώρα σε μια φιλική κατάταξη βιωσιμότητας. Εγγραφείτε με τον κωδικό του σχολείου σας.',
+      'Schulen in ganz Nordkorfu treten jetzt in einem freundschaftlichen Nachhaltigkeits-Ranking an. Tritt mit deinem Schulcode bei und hilf deiner Schule.'),
+  ]);
+
+  console.log(`Seeded: ${[p1,p2,p3,p4,p5,p6,p7,p8].length} projects, 4 users, 9 students, 3 schools (+ logins), 5 badges, 5 posts`);
+  console.log('Admin:    admin@zoe-corfu.gr / ZoeAdmin2026!');
+  console.log('Users:    citizen1@example.com, citizen2@example.com, tourist@example.com / Test1234!');
+  console.log('Students: student1..9@school.gr / Test1234!');
+  console.log('Schools:  school1..3@zoe-corfu.gr / School2026!');
 }
 
 main().catch(console.error).finally(() => prisma.$disconnect());

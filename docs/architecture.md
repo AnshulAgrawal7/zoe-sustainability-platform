@@ -38,16 +38,21 @@ Browser (React SPA)
 | `/transparency` | TransparencyPage | Public |
 | `/roadmap` | RoadmapPage | Public |
 | `/rewards` | RewardsPage | Public |
+| `/school-ranking` | SchoolRankingPage | Public |
+| `/news` | NewsPage | Public |
 | `/login` | LoginPage | Public |
 | `/register` | RegisterPage | Public |
 | `/dashboard` | DashboardPage | USER |
 | `/profile` | ProfilePage | USER |
 | `/my-rewards` | UserRewardsPage | USER |
+| `/school` | SchoolDashboardPage | SCHOOL |
 | `/admin` | AdminDashboardPage | ADMIN |
 | `/admin/projects` | ManageProjectsPage | ADMIN |
 | `/admin/projects/new` | NewProjectPage | ADMIN |
 | `/admin/projects/:id/edit` | EditProjectPage | ADMIN |
 | `/admin/users` | ManageUsersPage | ADMIN |
+| `/admin/schools` | ManageSchoolsPage | ADMIN |
+| `/admin/posts` | ManagePostsPage | ADMIN |
 
 ---
 
@@ -76,20 +81,44 @@ Full documentation: `docs/api.md`
 | `PUT /api/admin/users/:id/role` | Change role | ADMIN |
 | `GET /api/admin/stats` | Dashboard stats | ADMIN |
 | `POST /api/admin/translate` | Auto-translate fields via DeepL | ADMIN |
+| `POST /api/admin/schools` | Create school (+ coordinator) | ADMIN |
+| `PUT /api/admin/schools/:id` | Edit school | ADMIN |
+| `DELETE /api/admin/schools/:id` | Delete school | ADMIN |
+| `GET /api/schools` | List schools | — |
+| `GET /api/schools/leaderboard` | School ranking (avg/member) | — |
+| `GET /api/schools/:id` | School detail | — |
+| `GET /api/schools/me` | Own school dashboard | SCHOOL |
+| `POST /api/schools/join` | Join by code | USER |
+| `POST /api/schools/leave` | Leave school | USER |
+| `GET /api/posts` | News feed (published) | — |
+| `GET /api/posts/:id` | Single post | — |
+| `POST /api/posts` | Create post | ADMIN |
+| `PUT /api/posts/:id` | Edit post | ADMIN |
+| `DELETE /api/posts/:id` | Delete post | ADMIN |
 
 ---
 
-## 4. Database Schema (Prisma / SQLite)
+## 4. Database Schema (Prisma / PostgreSQL)
 
 ```
 User
-  id, email*, password (bcrypt), name, role (USER|ADMIN), points, avatarUrl, language (EN|EL|DE)
-  → participations[], userBadges[], refreshTokens[], createdProjects[]
+  id, email*, password (bcrypt), name, role (USER|ADMIN|SCHOOL), points, avatarUrl,
+  language (EN|EL|DE), profile (RESIDENT|VISITOR|STUDENT|VOLUNTEER), schoolId?
+  → school(School?), participations[], userBadges[], refreshTokens[], createdProjects[]
+
+School
+  id, name, code* (join code), location?
+  → members(User[])   // ranking = avg points of role=USER members, min 3 to rank
 
 Project
   id, titleEn, titleEl, titleDe, descriptionEn, descriptionEl, descriptionDe
   sdgIds (JSON string), category, status, rewardPoints, location, maxParticipants
-  → participations[], createdBy(User)
+  → participations[], createdBy(User), posts[]
+
+Post   // news/blog; auto-created on project OPEN/COMPLETED or written by admin
+  id, type (PROJECT_NEW|PROJECT_COMPLETED|ANNOUNCEMENT)
+  titleEn/El/De, bodyEn/El/De, imageUrl?, published, projectId?
+  → project(Project?)
 
 Participation
   id, userId, projectId, joinedAt, pointsAwarded
@@ -106,6 +135,27 @@ UserBadge
 RefreshToken
   id, token*, userId, expiresAt
 ```
+
+### ADR — School accounts & ranking
+
+- **Group + login (hybrid).** A `School` is a group entity; students join via a
+  `code` (`User.schoolId`). A `SCHOOL`-role login (provisioned by an admin) gives a
+  read-only coordinator dashboard. This satisfies both "school accounts exist" and
+  "students contribute to the school" without a second auth system.
+- **Average per member as the ranking metric**, with a **3-member minimum** to be
+  ranked. Avoids the size bias of summing totals and the noise of 1-student schools.
+  Total points and member count are still shown for transparency.
+- **One school per user** (nullable FK, `ON DELETE SET NULL`) — deliberately simple
+  for the prototype; no membership join-table.
+
+### ADR — News feed & auto-posts
+
+- A `Post` is **trilingual** and either **auto-created** from a project's lifecycle
+  (publish → `PROJECT_NEW`, complete → `PROJECT_COMPLETED`) or written by an admin.
+- Auto-posts are **idempotent** (one per `projectId`+`type`) and built from the
+  project's existing EN/EL/DE fields, so **no extra translation call** is needed.
+  Manual posts reuse the existing DeepL `/admin/translate` panel.
+- Auto-creation is **non-blocking** (failures never break project create/update).
 
 ---
 

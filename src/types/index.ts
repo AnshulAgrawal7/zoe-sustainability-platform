@@ -131,7 +131,7 @@ export interface TargetAudience {
 
 // --- Auth & User types (backend-connected) ---
 
-export type UserRole = 'USER' | 'ADMIN';
+export type UserRole = 'USER' | 'ADMIN' | 'SCHOOL';
 export type UserLanguage = 'EN' | 'EL' | 'DE';
 export type UserProfile = 'RESIDENT' | 'VISITOR' | 'STUDENT' | 'VOLUNTEER';
 export type ApiProjectStatus = 'DRAFT' | 'OPEN' | 'CLOSED' | 'COMPLETED';
@@ -151,6 +151,7 @@ export interface AuthUser {
   avatarUrl: string | null;
   language: UserLanguage;
   profile: UserProfile;
+  schoolId: string | null;
 }
 
 export interface ApiProject {
@@ -230,4 +231,66 @@ export interface LeaderboardEntry {
   points: number;
   avatarUrl: string | null;
   _count: { participations: number };
+}
+
+// --- Schools (group accounts + ranking) ---
+
+export interface SchoolMember {
+  id: string;
+  name: string;
+  points: number;
+}
+
+// Aggregate used by the public list and the ranking table.
+export interface SchoolSummary {
+  id: string;
+  name: string;
+  location: string | null;
+  memberCount: number;
+  totalPoints: number;
+  avgPoints: number;
+  ranked: boolean;
+}
+
+export interface SchoolLeaderboard {
+  schools: SchoolSummary[];
+  minRankedMembers: number;
+}
+
+// The SCHOOL coordinator's own dashboard payload.
+export interface MySchool extends SchoolSummary {
+  code: string;
+  members: SchoolMember[];
+  rank: number | null;
+  totalSchools: number;
+  minRankedMembers: number;
+}
+
+// Text (name/description) is translated — see i18n: schoolRewards.tiers.<id>.*
+export interface SchoolRewardTier {
+  id: string;
+  greekName: string;
+  pointsMin: number;
+  pointsMax: number | null;
+  icon: string;
+  colorClasses: string;
+}
+
+// --- News / blog posts ---
+
+export type PostType = 'PROJECT_NEW' | 'PROJECT_COMPLETED' | 'ANNOUNCEMENT';
+
+export interface Post {
+  id: string;
+  type: PostType;
+  titleEn: string;
+  titleEl: string;
+  titleDe: string;
+  bodyEn: string;
+  bodyEl: string;
+  bodyDe: string;
+  imageUrl: string | null;
+  published: boolean;
+  projectId: string | null;
+  createdAt: string;
 }

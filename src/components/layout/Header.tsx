@@ -13,7 +13,8 @@ export default function Header() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const { user, isAuthenticated, isAdmin, clearAuth } = useAuthStore();
+  const { user, isAuthenticated, isAdmin, isSchool, clearAuth } =
+    useAuthStore();
   const { theme, toggleTheme } = useThemeStore();
 
   const navLinks = [
@@ -21,9 +22,11 @@ export default function Header() {
     { to: '/projects', label: t('nav.projects') },
     { to: '/sdg-dashboard', label: t('nav.sdgs') },
     { to: '/events', label: t('nav.events') },
+    { to: '/news', label: t('nav.news') },
     { to: '/transparency', label: t('nav.transparency') },
     { to: '/get-involved', label: t('nav.getInvolved') },
     { to: '/rewards', label: t('nav.rewards') },
+    { to: '/school-ranking', label: t('nav.schoolRanking') },
   ];
 
   async function handleLogout() {
@@ -181,6 +184,15 @@ export default function Header() {
                   <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
                     {user.name}
                   </p>
+                )}
+                {isSchool && (
+                  <Link
+                    to="/school"
+                    onClick={() => setMenuOpen(false)}
+                    className="block rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
+                  >
+                    {t('nav.schoolDashboard')}
+                  </Link>
                 )}
                 <Link
                   to="/dashboard"

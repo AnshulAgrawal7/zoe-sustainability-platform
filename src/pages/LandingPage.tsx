@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,9 +15,13 @@ import {
 } from 'lucide-react';
 import { projects } from '../data/projects';
 import { impactMetrics } from '../data/metrics';
+import { fallbackPosts } from '../data/posts';
 import StatusBadge from '../components/ui/StatusBadge';
 import ProgressBar from '../components/ui/ProgressBar';
+import PostCard from '../components/news/PostCard';
+import { getPosts } from '../services/postService';
 import { trackEvent, ANALYTICS_EVENTS } from '../services/analytics';
+import type { Post } from '../types';
 
 const highlights = projects.filter((p) => p.status === 'Active').slice(0, 3);
 
@@ -32,6 +37,13 @@ const categoryIcons: Record<string, React.ElementType> = {
 
 export default function LandingPage() {
   const { t } = useTranslation();
+  const [latestPosts, setLatestPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    getPosts({ limit: 3 })
+      .then((posts) => setLatestPosts(posts.slice(0, 3)))
+      .catch(() => setLatestPosts(fallbackPosts.slice(0, 3)));
+  }, []);
 
   const pillars = [
     {
@@ -236,6 +248,36 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* What's new — news feed */}
+      {latestPosts.length > 0 && (
+        <section className="bg-gray-50 py-16 dark:bg-gray-800">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+                  {t('landing.news.heading')}
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {t('landing.news.subheading')}
+                </p>
+              </div>
+              <Link
+                to="/news"
+                className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+              >
+                {t('landing.news.viewAll')}
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {latestPosts.map((post) => (
+                <PostCard key={post.id} post={post} compact />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA — Participate */}
       <section className="bg-green-700 py-16 text-white">

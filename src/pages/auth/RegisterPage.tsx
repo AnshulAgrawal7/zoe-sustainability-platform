@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { UserPlus } from 'lucide-react';
 import { register } from '../../services/authService';
+import { joinSchool } from '../../services/schoolService';
 import { useAuthStore } from '../../stores/authStore';
 import type { UserLanguage, UserProfile } from '../../types';
 import { PROFILE_OPTIONS } from '../../data/profiles';
@@ -11,12 +12,14 @@ export default function RegisterPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const setAuth = useAuthStore((s) => s.setAuth);
+  const updateUser = useAuthStore((s) => s.updateUser);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [language, setLanguage] = useState<UserLanguage>('EN');
   const [profile, setProfile] = useState<UserProfile>('RESIDENT');
+  const [schoolCode, setSchoolCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -33,6 +36,15 @@ export default function RegisterPage() {
         profile,
       });
       setAuth(user, accessToken);
+      // Optional school join (students). An invalid code must not block sign-up.
+      if (profile === 'STUDENT' && schoolCode.trim()) {
+        try {
+          const school = await joinSchool(schoolCode.trim());
+          updateUser({ schoolId: school.id });
+        } catch {
+          /* ignored — user can still join later from their profile */
+        }
+      }
       navigate('/dashboard', { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : t('auth.registerError'));
@@ -161,7 +173,7 @@ export default function RegisterPage() {
               >
                 {PROFILE_OPTIONS.map((p) => (
                   <option key={p.id} value={p.id}>
-                    {p.emoji} {t(`profiles.${p.id}.label`)}
+                    {t(`profiles.${p.id}.label`)}
                   </option>
                 ))}
               </select>
@@ -169,6 +181,28 @@ export default function RegisterPage() {
                 {t('profiles.hint')}
               </p>
             </div>
+            {profile === 'STUDENT' && (
+              <div>
+                <label
+                  htmlFor="reg-school-code"
+                  className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
+                  {t('schools.join.codeLabel')}
+                </label>
+                <input
+                  id="reg-school-code"
+                  type="text"
+                  autoComplete="off"
+                  value={schoolCode}
+                  onChange={(e) => setSchoolCode(e.target.value)}
+                  placeholder={t('schools.join.codePlaceholder')}
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm uppercase text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                />
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  {t('schools.join.codeHintOptional')}
+                </p>
+              </div>
+            )}
             <button
               type="submit"
               disabled={loading}

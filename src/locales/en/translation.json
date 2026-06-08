@@ -29,8 +29,12 @@
     "addressedOfTotal": "{{count}} of 17 goals addressed"
   },
   "sdgCatalog": {
-    "1": { "title": "No Poverty" },
-    "2": { "title": "Zero Hunger" },
+    "1": {
+      "title": "No Poverty"
+    },
+    "2": {
+      "title": "Zero Hunger"
+    },
     "3": {
       "title": "Good Health and Well-Being",
       "contribution": "Healthy ecosystems and clean environments contribute to community well-being."
@@ -39,18 +43,26 @@
       "title": "Quality Education",
       "contribution": "Environmental education programmes build long-term sustainability literacy."
     },
-    "5": { "title": "Gender Equality" },
+    "5": {
+      "title": "Gender Equality"
+    },
     "6": {
       "title": "Clean Water and Sanitation",
       "contribution": "Protecting water sources and coastal zones ensures clean water for all."
     },
-    "7": { "title": "Affordable and Clean Energy" },
+    "7": {
+      "title": "Affordable and Clean Energy"
+    },
     "8": {
       "title": "Decent Work and Economic Growth",
       "contribution": "Sustainable tourism and local green initiatives support decent work and the regional economy."
     },
-    "9": { "title": "Industry, Innovation and Infrastructure" },
-    "10": { "title": "Reduced Inequalities" },
+    "9": {
+      "title": "Industry, Innovation and Infrastructure"
+    },
+    "10": {
+      "title": "Reduced Inequalities"
+    },
     "11": {
       "title": "Sustainable Cities and Communities",
       "contribution": "Green urban planning and community engagement foster sustainable local governance."
@@ -71,7 +83,9 @@
       "title": "Life on Land",
       "contribution": "Biodiversity conservation and reforestation protect terrestrial ecosystems."
     },
-    "16": { "title": "Peace, Justice and Strong Institutions" },
+    "16": {
+      "title": "Peace, Justice and Strong Institutions"
+    },
     "17": {
       "title": "Partnerships for the Goals",
       "contribution": "Multi-stakeholder collaboration is essential to achieving all other goals."
@@ -427,7 +441,10 @@
     "admin": "Admin",
     "openMenu": "Open menu",
     "getInvolved": "Get Involved",
-    "imprint": "Imprint"
+    "imprint": "Imprint",
+    "news": "News",
+    "schoolRanking": "School Ranking",
+    "schoolDashboard": "School Dashboard"
   },
   "auth": {
     "login": "Login",
@@ -586,7 +603,45 @@
       "done": "Translated ✓ — please review"
     },
     "formImageUrl": "Cover image URL",
-    "formImageUrlHint": "Optional. Paste a public image URL (e.g. Supabase Storage). Use only your own or licensed images."
+    "formImageUrlHint": "Optional. Paste a public image URL (e.g. Supabase Storage). Use only your own or licensed images.",
+    "schools": {
+      "title": "Schools",
+      "createTitle": "Create a school",
+      "listTitle": "All schools",
+      "validationRequired": "Name and code are required.",
+      "coordinatorCreated": "Coordinator login created",
+      "coordinatorHint": "Copy these credentials now — the password is shown only once.",
+      "name": "School name",
+      "code": "Join code",
+      "location": "Location",
+      "coordinatorLegend": "School login (optional)",
+      "coordinatorEmail": "Coordinator email",
+      "coordinatorName": "Coordinator name",
+      "coordinatorPassword": "Password (auto-generated if empty)",
+      "create": "Create school",
+      "confirmDelete": "Delete this school? Members will be unlinked but keep their accounts.",
+      "edit": "Edit school",
+      "delete": "Delete school"
+    },
+    "posts": {
+      "title": "News posts",
+      "createTitle": "New post",
+      "editTitle": "Edit post",
+      "listTitle": "All posts",
+      "newPost": "New post",
+      "validationTitles": "A title is required in all three languages.",
+      "validationBodies": "Body text is required in all three languages.",
+      "fieldTitle": "Title",
+      "fieldBody": "Body",
+      "fieldType": "Type",
+      "fieldImageUrl": "Image URL",
+      "published": "Published (visible to everyone)",
+      "draft": "Draft",
+      "create": "Create post",
+      "edit": "Edit post",
+      "delete": "Delete post",
+      "confirmDelete": "Delete this post?"
+    }
   },
   "participate": {
     "title": "Citizen Participation",
@@ -711,6 +766,11 @@
       "submitIdea": "Submit an Idea",
       "joinEvent": "Join an Event",
       "seeImpact": "See Impact Data"
+    },
+    "news": {
+      "heading": "What's new",
+      "subheading": "Latest updates, completed projects and announcements.",
+      "viewAll": "All news"
     }
   },
   "privacy": {
@@ -1202,5 +1262,88 @@
     "contactText": "For questions about this research prototype, please contact the operator at the address above.",
     "lastUpdate": "Last updated",
     "lastUpdateDate": "June 2026"
+  },
+  "news": {
+    "badge": "News & Blog",
+    "title": "News from ZOE",
+    "subtitle": "New and completed projects, plus announcements from the ZOE community in Northern Corfu.",
+    "filterLabel": "Filter news by type",
+    "filterAll": "All",
+    "empty": "No news yet. Check back soon.",
+    "types": {
+      "PROJECT_NEW": "New project",
+      "PROJECT_COMPLETED": "Completed",
+      "ANNOUNCEMENT": "Announcement"
+    }
+  },
+  "schools": {
+    "ranking": {
+      "badge": "School programmes",
+      "title": "School Sustainability Ranking",
+      "subtitle": "Schools across Northern Corfu compete in a friendly ranking. Position is based on the average points per member, so smaller schools compete fairly.",
+      "minMembersNote": "A school needs at least {{count}} members before it enters the ranking.",
+      "colAvg": "avg/member",
+      "colTotal": "total",
+      "members": "{{count}} members",
+      "notRankedHeading": "Not yet ranked",
+      "empty": "No schools are ranked yet.",
+      "joinTitle": "Are you a student?",
+      "joinBody": "Join your school with its code and help it climb the ranking.",
+      "joinCta": "Join your school"
+    },
+    "dashboard": {
+      "error": "Could not load your school dashboard.",
+      "rank": "Rank",
+      "unranked": "Not ranked",
+      "avgPoints": "Avg points",
+      "totalPoints": "Total points",
+      "members": "Members",
+      "joinCodeLabel": "Join code",
+      "joinCodeHint": "Share this code so students can join your school.",
+      "tierTitle": "Reward tier",
+      "toNextTier": "{{points}} points to {{tier}}",
+      "topTier": "Top tier reached — congratulations!",
+      "membersTitle": "Members",
+      "noMembers": "No students have joined yet.",
+      "pointsValue": "{{points}} pts"
+    },
+    "join": {
+      "codeLabel": "School code",
+      "codePlaceholder": "e.g. KERKYRA-7F",
+      "codeHintOptional": "Optional — enter your school code to join the ranking. You can also do this later."
+    },
+    "membership": {
+      "title": "Your school",
+      "hint": "Join a school to contribute to its",
+      "rankingLink": "sustainability ranking",
+      "memberOf": "You are a member of",
+      "leave": "Leave",
+      "join": "Join",
+      "joinError": "Could not join. Check the code and try again."
+    }
+  },
+  "schoolRewards": {
+    "tiers": {
+      "sporeio": {
+        "name": "Seedbed",
+        "desc": "Your school is getting started on its sustainability journey."
+      },
+      "alsos": {
+        "name": "Grove",
+        "desc": "A growing group of engaged students making an impact."
+      },
+      "dasos": {
+        "name": "Forest",
+        "desc": "A strong, established school community for sustainability."
+      },
+      "frouros": {
+        "name": "Nature Guardian",
+        "desc": "Your school is a leading force for the environment in Corfu."
+      },
+      "faros": {
+        "name": "Sustainability Beacon",
+        "desc": "A beacon school inspiring the whole region."
+      }
+    }
   }
 }

@@ -175,7 +175,7 @@ List all users with participation/badge counts.
 ### PUT /admin/users/:id/role
 Change user role.
 
-**Request body:** `{ "role": "USER" | "ADMIN" }`
+**Request body:** `{ "role": "USER" | "ADMIN" | "SCHOOL" }`
 
 ### GET /admin/stats
 Dashboard statistics.
@@ -222,6 +222,81 @@ the key is missing the endpoint returns `503 translation_not_configured`.
 }
 ```
 Errors: `400` (invalid `sourceLang`/fields, field too long), `503 translation_not_configured` (no key).
+
+### POST /admin/schools
+Create a school, optionally with a coordinator login (role `SCHOOL`).
+
+**Request body:**
+```json
+{
+  "name": "1ο Γυμνάσιο Κέρκυρας",
+  "code": "KERKYRA-7F",
+  "location": "Corfu Town",
+  "coordinatorEmail": "school1@zoe-corfu.gr",   // optional
+  "coordinatorName": "…",                         // optional
+  "coordinatorPassword": "…"                      // optional; auto-generated if omitted
+}
+```
+**Response 201:** `{ "school": {...}, "coordinator": { "email", "password" } }`
+(the coordinator password is returned **once**). Errors: `409` (code or email already used).
+
+### PUT /admin/schools/:id
+Edit a school (`name`, `code`, `location`). Errors: `409` (code clash), `404`.
+
+### DELETE /admin/schools/:id
+Delete a school. Members are unlinked (`schoolId` set to `null`) but keep their accounts.
+
+---
+
+## Schools (`/api/schools`)
+
+Ranking is by **average points per member** (only `USER`-role members count); a
+school needs at least **3 members** to be ranked (`minRankedMembers`).
+
+### GET /schools
+Public list: `[{ id, name, location, memberCount, totalPoints, avgPoints, ranked }]`.
+
+### GET /schools/leaderboard
+Public ranking. **Response:** `{ schools: [...], minRankedMembers: 3 }`, ranked
+schools first (by `avgPoints` desc), then unranked.
+
+### GET /schools/:id
+Public detail incl. `members: [{ id, name, points }]`.
+
+### GET /schools/me
+**SCHOOL role.** The coordinator's own school dashboard incl. `code`, `members`,
+`rank`, `totalSchools`, `minRankedMembers`. `403` for non-SCHOOL users.
+
+### POST /schools/join
+**Authenticated.** Join a school by code. **Body:** `{ "code": "KERKYRA-7F" }`
+(case-insensitive). Errors: `404` (unknown code).
+
+### POST /schools/leave
+**Authenticated.** Leave the current school (`schoolId` → `null`).
+
+---
+
+## Posts / News (`/api/posts`)
+
+A news/blog feed. Posts are **auto-created** when a project is published (status →
+`OPEN`, type `PROJECT_NEW`) or completed (→ `COMPLETED`, type `PROJECT_COMPLETED`)
+— idempotent, never duplicated — or written manually by an admin. Trilingual
+(`titleEn/El/De`, `bodyEn/El/De`). Type: `PROJECT_NEW | PROJECT_COMPLETED | ANNOUNCEMENT`.
+
+### GET /posts
+Public list of published posts, newest first. Query: `?type=`, `?limit=` (max 50).
+
+### GET /posts/:id
+Public single post (`404` if not found or unpublished).
+
+### POST /posts
+**ADMIN.** Create a manual post (all `title*`/`body*` required).
+
+### PUT /posts/:id
+**ADMIN.** Edit any post (incl. auto-posts).
+
+### DELETE /posts/:id
+**ADMIN.** Delete a post.
 
 ---
 
