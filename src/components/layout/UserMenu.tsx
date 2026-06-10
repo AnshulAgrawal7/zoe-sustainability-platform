@@ -5,7 +5,6 @@ import {
   Award,
   User,
   Shield,
-  GraduationCap,
   LogOut,
   Star,
   ChevronDown,
@@ -24,7 +23,7 @@ function initials(name: string): string {
 export default function UserMenu() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { user, isAdmin, isSchool, clearAuth } = useAuthStore();
+  const { user, isAdmin, clearAuth } = useAuthStore();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -57,15 +56,6 @@ export default function UserMenu() {
   }
 
   const items = [
-    ...(isSchool
-      ? [
-          {
-            to: '/school',
-            label: t('nav.schoolDashboard'),
-            Icon: GraduationCap,
-          },
-        ]
-      : []),
     { to: '/dashboard', label: t('nav.dashboard'), Icon: LayoutDashboard },
     { to: '/my-rewards', label: t('nav.myRewards'), Icon: Award },
     { to: '/profile', label: t('nav.profile'), Icon: User },

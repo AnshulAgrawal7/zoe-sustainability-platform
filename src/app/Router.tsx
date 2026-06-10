@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
 import AdminRoute from '../components/auth/AdminRoute';
-import SchoolRoute from '../components/auth/SchoolRoute';
 
 // Public pages
 import LandingPage from '../pages/LandingPage';
@@ -16,7 +15,6 @@ import TransparencyPage from '../pages/TransparencyPage';
 import AudiencesPage from '../pages/AudiencesPage';
 import RewardsPage from '../pages/RewardsPage';
 import GetInvolvedPage from '../pages/GetInvolvedPage';
-import SchoolRankingPage from '../pages/SchoolRankingPage';
 import NewsPage from '../pages/NewsPage';
 
 // Auth pages
@@ -28,14 +26,10 @@ import DashboardPage from '../pages/user/DashboardPage';
 import ProfilePage from '../pages/user/ProfilePage';
 import UserRewardsPage from '../pages/user/UserRewardsPage';
 
-// School pages (school-coordinator only)
-import SchoolDashboardPage from '../pages/school/SchoolDashboardPage';
-
 // Admin pages (admin-only)
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
 import ManageProjectsPage from '../pages/admin/ManageProjectsPage';
 import ManageUsersPage from '../pages/admin/ManageUsersPage';
-import ManageSchoolsPage from '../pages/admin/ManageSchoolsPage';
 import ManagePostsPage from '../pages/admin/ManagePostsPage';
 import NewProjectPage from '../pages/admin/NewProjectPage';
 import EditProjectPage from '../pages/admin/EditProjectPage';
@@ -60,7 +54,6 @@ const router = createBrowserRouter([
       { path: 'events', element: <EventsPage /> },
       { path: 'transparency', element: <TransparencyPage /> },
       { path: 'rewards', element: <RewardsPage /> },
-      { path: 'school-ranking', element: <SchoolRankingPage /> },
       { path: 'news', element: <NewsPage /> },
       { path: 'accessibility', element: <AccessibilityPage /> },
       { path: 'privacy', element: <PrivacyPage /> },
@@ -96,16 +89,6 @@ const router = createBrowserRouter([
         ),
       },
 
-      // School coordinator
-      {
-        path: 'school',
-        element: (
-          <SchoolRoute>
-            <SchoolDashboardPage />
-          </SchoolRoute>
-        ),
-      },
-
       // Admin
       {
         path: 'admin',
@@ -128,14 +111,6 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageUsersPage />
-          </AdminRoute>
-        ),
-      },
-      {
-        path: 'admin/schools',
-        element: (
-          <AdminRoute>
-            <ManageSchoolsPage />
           </AdminRoute>
         ),
       },

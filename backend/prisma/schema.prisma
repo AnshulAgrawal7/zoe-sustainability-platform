@@ -12,7 +12,7 @@ datasource db {
   directUrl = env("DIRECT_URL") // direct (5432) — used by Prisma migrations
 }
 
-// Role: "USER" | "ADMIN" | "SCHOOL"  (SCHOOL = school coordinator login)
+// Role: "USER" | "ADMIN"
 // Language: "EN" | "EL" | "DE"
 model User {
   id        String   @id @default(cuid())
@@ -24,29 +24,14 @@ model User {
   avatarUrl String?
   language  String   @default("EN")
   profile   String   @default("RESIDENT") // RESIDENT | VISITOR | STUDENT | VOLUNTEER (self-selected, optional)
-  schoolId  String? // optional membership: a student belongs to one school
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  school          School?         @relation("SchoolMembers", fields: [schoolId], references: [id])
-  participations  Participation[]
-  userBadges      UserBadge[]
-  refreshTokens   RefreshToken[]
-  createdProjects Project[]       @relation("CreatedBy")
-}
-
-// A school is a group: students join via `code`, and a SCHOOL-role user logs in
-// to view the school dashboard. The ranking aggregates member points (avg per
-// member, see schoolController). Members and the coordinator share the same FK.
-model School {
-  id        String   @id @default(cuid())
-  name      String
-  code      String   @unique // join code for students, e.g. "KERKYRA-7F"
-  location  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  members User[] @relation("SchoolMembers")
+  participations     Participation[]
+  eventRegistrations EventRegistration[]
+  userBadges         UserBadge[]
+  refreshTokens      RefreshToken[]
+  createdProjects    Project[]           @relation("CreatedBy")
 }
 
 // category: "ENVIRONMENT" | "MOBILITY" | "COMMUNITY" | "EDUCATION" | "CULTURE"
@@ -107,6 +92,25 @@ model Participation {
   pointsAwarded Int      @default(0)
 
   @@unique([userId, projectId])
+}
+
+// Event RSVP. Events are prototype content (src/data/events.ts), referenced by
+// string `eventId`. Registration is open WITHOUT an account to lower the barrier:
+// guests provide name + email + consent (no points). Logged-in users register via
+// `userId` and earn points. NULL userId rows (guests) are unconstrained by the
+// unique index (Postgres treats NULLs as distinct), so many guests may register.
+model EventRegistration {
+  id            String   @id @default(cuid())
+  eventId       String
+  user          User?    @relation(fields: [userId], references: [id])
+  userId        String?
+  guestName     String?
+  guestEmail    String?
+  pointsAwarded Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  @@unique([userId, eventId])
+  @@index([eventId])
 }
 
 model Badge {

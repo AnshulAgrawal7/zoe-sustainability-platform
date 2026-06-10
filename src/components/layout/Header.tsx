@@ -14,8 +14,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const { user, isAuthenticated, isAdmin, isSchool, clearAuth } =
-    useAuthStore();
+  const { user, isAuthenticated, isAdmin, clearAuth } = useAuthStore();
   const { theme, toggleTheme } = useThemeStore();
 
   // Grouped under dropdowns to keep the bar slim (4 top-level entries).
@@ -34,7 +33,6 @@ export default function Header() {
       links: [
         { to: '/get-involved', label: t('nav.overview') },
         { to: '/rewards', label: t('nav.rewards') },
-        { to: '/school-ranking', label: t('nav.schoolRanking') },
       ],
     },
   ];
@@ -236,15 +234,6 @@ export default function Header() {
                   <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
                     {user.name}
                   </p>
-                )}
-                {isSchool && (
-                  <Link
-                    to="/school"
-                    onClick={() => setMenuOpen(false)}
-                    className="block rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
-                  >
-                    {t('nav.schoolDashboard')}
-                  </Link>
                 )}
                 <Link
                   to="/dashboard"

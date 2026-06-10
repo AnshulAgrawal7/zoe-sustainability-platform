@@ -45,8 +45,9 @@ test.describe('Authentication', () => {
     await page.getByRole('button', { name: /sign in|anmelden/i }).click();
     await page.waitForURL('/dashboard', { timeout: 10000 });
 
-    // Logout — aria-label is translated as "Logout"
-    await page.getByRole('button', { name: 'Logout' }).click();
+    // Open the account menu, then log out (both live inside the UserMenu dropdown)
+    await page.getByRole('button', { name: /account/i }).click();
+    await page.getByRole('menuitem', { name: /logout|abmelden/i }).click();
 
     // After logout, user is redirected away from dashboard (to '/' or '/login')
     await page.waitForURL(/\/(login)?$/, { timeout: 5000 });
@@ -81,8 +82,9 @@ test.describe('Admin authentication', () => {
     await page.getByRole('button', { name: /sign in|log in|anmelden/i }).click();
     await page.waitForURL('/dashboard', { timeout: 10000 });
 
-    // Admin shield icon link in header
-    await page.getByRole('link', { name: /admin/i }).click();
+    // Admin link lives inside the account menu dropdown
+    await page.getByRole('button', { name: /account/i }).click();
+    await page.getByRole('menuitem', { name: /admin/i }).click();
     await expect(page).toHaveURL('/admin', { timeout: 5000 });
     await expect(page.locator('h1')).toBeVisible();
   });

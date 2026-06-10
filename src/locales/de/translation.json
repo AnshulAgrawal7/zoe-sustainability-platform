@@ -443,8 +443,6 @@
     "getInvolved": "Mitmachen",
     "imprint": "Impressum",
     "news": "Neuigkeiten",
-    "schoolRanking": "Schul-Ranking",
-    "schoolDashboard": "Schul-Dashboard",
     "discover": "Entdecken",
     "overview": "Übersicht"
   },
@@ -499,6 +497,12 @@
     "allStatuses": "Alle"
   },
   "rewards": {
+    "title": "Meine Belohnungen",
+    "yourPoints": "Deine Punkte",
+    "nextBadge": "Nächstes Abzeichen",
+    "pointsToGo": "noch {{points}} Punkte",
+    "allBadges": "Alle Abzeichen",
+    "leaderboard": "Bestenliste",
     "heroEyebrow": "ZOE Community-Belohnungen",
     "heroTitle": "Anerkennung für Ihre Wirkung verdienen",
     "heroSubtitle": "Jede Aktion für Nord-Korfu bringt Punkte. Steigen Sie durch fünf griechisch benannte Stufen auf — von Σπόρος (Samen) bis Θεματοφύλακας (Hüter) — und schalten Sie echte Anerkennung der Gemeinde und der lokalen Gemeinschaft frei.",
@@ -606,25 +610,6 @@
     },
     "formImageUrl": "Titelbild-URL",
     "formImageUrlHint": "Optional. Öffentliche Bild-URL einfügen (z. B. Supabase Storage). Nur eigene oder lizenzierte Bilder verwenden.",
-    "schools": {
-      "title": "Schulen",
-      "createTitle": "Schule anlegen",
-      "listTitle": "Alle Schulen",
-      "validationRequired": "Name und Code sind erforderlich.",
-      "coordinatorCreated": "Schul-Login erstellt",
-      "coordinatorHint": "Kopiere die Zugangsdaten jetzt — das Passwort wird nur einmal angezeigt.",
-      "name": "Schulname",
-      "code": "Beitritts-Code",
-      "location": "Ort",
-      "coordinatorLegend": "Schul-Login (optional)",
-      "coordinatorEmail": "E-Mail des Koordinators",
-      "coordinatorName": "Name des Koordinators",
-      "coordinatorPassword": "Passwort (wird generiert, wenn leer)",
-      "create": "Schule anlegen",
-      "confirmDelete": "Diese Schule löschen? Mitglieder werden entkoppelt, behalten aber ihre Konten.",
-      "edit": "Schule bearbeiten",
-      "delete": "Schule löschen"
-    },
     "posts": {
       "title": "Neuigkeiten-Beiträge",
       "createTitle": "Neuer Beitrag",
@@ -1014,7 +999,19 @@
     "spotsLeft_other": "{{count}} Plätze frei",
     "register": "Anmelden",
     "suggestText": "Möchten Sie eine neue Veranstaltung oder Initiative vorschlagen?",
-    "suggestLink": "Reichen Sie Ihre Idee auf der Beteiligungsseite ein →"
+    "suggestLink": "Reichen Sie Ihre Idee auf der Beteiligungsseite ein →",
+    "rsvp": {
+      "guestName": "Dein Name",
+      "guestEmail": "E-Mail-Adresse",
+      "consent": "Ich bin einverstanden, dass mein Name und meine E-Mail zur Anmeldung für diese Veranstaltung gespeichert werden.",
+      "submit": "Anmeldung bestätigen",
+      "cancel": "Abbrechen",
+      "noAccountNote": "Kein Konto nötig — erstelle eins, um Punkte zu sammeln.",
+      "loginPerk": "Du erhältst {{points}} Punkte für die Teilnahme.",
+      "success": "Du bist angemeldet. Bis bald!",
+      "successPoints": "Du hast {{points}} Punkte erhalten!",
+      "error": "Anmeldung fehlgeschlagen. Bitte versuche es erneut."
+    }
   },
   "roadmap": {
     "title": "Plattform-Roadmap",
@@ -1276,76 +1273,6 @@
       "PROJECT_NEW": "Neues Projekt",
       "PROJECT_COMPLETED": "Abgeschlossen",
       "ANNOUNCEMENT": "Ankündigung"
-    }
-  },
-  "schools": {
-    "ranking": {
-      "badge": "Schulprogramme",
-      "title": "Schul-Nachhaltigkeitsranking",
-      "subtitle": "Schulen in ganz Nordkorfu treten in einem freundschaftlichen Ranking an. Die Platzierung basiert auf den Durchschnittspunkten pro Mitglied, damit kleinere Schulen fair mithalten.",
-      "minMembersNote": "Eine Schule braucht mindestens {{count}} Mitglieder, um ins Ranking aufgenommen zu werden.",
-      "colAvg": "Ø/Mitglied",
-      "colTotal": "gesamt",
-      "members": "{{count}} Mitglieder",
-      "notRankedHeading": "Noch nicht gewertet",
-      "empty": "Noch keine Schule gewertet.",
-      "joinTitle": "Bist du Schüler:in?",
-      "joinBody": "Tritt mit dem Code deiner Schule bei und hilf ihr, im Ranking aufzusteigen.",
-      "joinCta": "Schule beitreten"
-    },
-    "dashboard": {
-      "error": "Das Schul-Dashboard konnte nicht geladen werden.",
-      "rank": "Rang",
-      "unranked": "Nicht gewertet",
-      "avgPoints": "Ø Punkte",
-      "totalPoints": "Gesamtpunkte",
-      "members": "Mitglieder",
-      "joinCodeLabel": "Beitritts-Code",
-      "joinCodeHint": "Teile diesen Code, damit Schüler:innen deiner Schule beitreten können.",
-      "tierTitle": "Belohnungsstufe",
-      "toNextTier": "{{points}} Punkte bis {{tier}}",
-      "topTier": "Höchste Stufe erreicht — herzlichen Glückwunsch!",
-      "membersTitle": "Mitglieder",
-      "noMembers": "Noch keine Schüler:innen beigetreten.",
-      "pointsValue": "{{points}} Pkt"
-    },
-    "join": {
-      "codeLabel": "Schul-Code",
-      "codePlaceholder": "z. B. KERKYRA-7F",
-      "codeHintOptional": "Optional — gib deinen Schul-Code ein, um ins Ranking zu kommen. Das geht auch später."
-    },
-    "membership": {
-      "title": "Deine Schule",
-      "hint": "Tritt einer Schule bei und trage zu ihrem",
-      "rankingLink": "Nachhaltigkeitsranking",
-      "memberOf": "Du bist Mitglied von",
-      "leave": "Verlassen",
-      "join": "Beitreten",
-      "joinError": "Beitritt fehlgeschlagen. Prüfe den Code und versuche es erneut."
-    }
-  },
-  "schoolRewards": {
-    "tiers": {
-      "sporeio": {
-        "name": "Saatbeet",
-        "desc": "Eure Schule beginnt ihren Weg in die Nachhaltigkeit."
-      },
-      "alsos": {
-        "name": "Hain",
-        "desc": "Eine wachsende Gruppe engagierter Schüler:innen mit Wirkung."
-      },
-      "dasos": {
-        "name": "Wald",
-        "desc": "Eine starke, etablierte Schulgemeinschaft für Nachhaltigkeit."
-      },
-      "frouros": {
-        "name": "Naturwächter",
-        "desc": "Eure Schule ist eine führende Kraft für die Umwelt auf Korfu."
-      },
-      "faros": {
-        "name": "Leuchtturm der Nachhaltigkeit",
-        "desc": "Eine Leuchtturm-Schule, die die ganze Region inspiriert."
-      }
     }
   }
 }

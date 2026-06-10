@@ -38,15 +38,15 @@ test.describe('Dark mode', () => {
 test.describe('Language switching', () => {
   test('language selector is visible in header', async ({ page }) => {
     await page.goto('/');
-    const langSelect = page.getByRole('combobox', { name: /language|sprache|γλώσσα/i });
-    await expect(langSelect).toBeVisible();
+    // Language switcher is a group of flag toggle buttons (not a <select>)
+    const langGroup = page.getByRole('group', { name: /language|sprache|γλώσσα/i });
+    await expect(langGroup).toBeVisible();
   });
 
   test('switching to German changes UI language', async ({ page }) => {
     await page.goto('/');
 
-    const langSelect = page.getByRole('combobox', { name: /language|sprache|γλώσσα/i });
-    await langSelect.selectOption('de');
+    await page.getByRole('button', { name: 'Deutsch' }).click();
 
     // After selecting German, the html lang attribute should change
     await expect(page.locator('html')).toHaveAttribute('lang', 'de', { timeout: 3000 });
@@ -55,8 +55,7 @@ test.describe('Language switching', () => {
   test('switching to Greek changes UI language', async ({ page }) => {
     await page.goto('/');
 
-    const langSelect = page.getByRole('combobox', { name: /language|sprache|γλώσσα/i });
-    await langSelect.selectOption('el');
+    await page.getByRole('button', { name: 'Ελληνικά' }).click();
 
     await expect(page.locator('html')).toHaveAttribute('lang', 'el', { timeout: 3000 });
   });

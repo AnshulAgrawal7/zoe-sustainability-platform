@@ -9,7 +9,6 @@ interface AuthStore {
   clearAuth: () => void;
   isAuthenticated: boolean;
   isAdmin: boolean;
-  isSchool: boolean;
 }
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
@@ -17,14 +16,12 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   accessToken: null,
   isAuthenticated: false,
   isAdmin: false,
-  isSchool: false,
   setAuth: (user, token) =>
     set({
       user,
       accessToken: token,
       isAuthenticated: true,
       isAdmin: user.role === 'ADMIN',
-      isSchool: user.role === 'SCHOOL',
     }),
   updateUser: (updates) => {
     const current = get().user;
@@ -36,6 +33,5 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       accessToken: null,
       isAuthenticated: false,
       isAdmin: false,
-      isSchool: false,
     }),
 }));

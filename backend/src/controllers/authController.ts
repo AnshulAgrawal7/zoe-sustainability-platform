@@ -65,7 +65,7 @@ export async function register(req: Request, res: Response) {
     const hashed = await bcrypt.hash(password, 12);
     const user = await prisma.user.create({
       data: { email, password: hashed, name, language, profile },
-      select: { id: true, email: true, name: true, role: true, points: true, language: true, profile: true, schoolId: true },
+      select: { id: true, email: true, name: true, role: true, points: true, language: true, profile: true },
     });
 
     // Auto-award newcomer badge
@@ -129,7 +129,6 @@ export async function login(req: Request, res: Response) {
         points: user.points,
         language: user.language,
         profile: user.profile,
-        schoolId: user.schoolId,
       },
       accessToken,
     });

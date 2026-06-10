@@ -15,7 +15,6 @@ const USER_SELECT = {
   avatarUrl: true,
   language: true,
   profile: true,
-  schoolId: true,
   createdAt: true,
 };
 

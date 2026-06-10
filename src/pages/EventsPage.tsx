@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Calendar, MapPin, Users, Clock, ArrowRight } from 'lucide-react';
+import { Calendar, MapPin, Users, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getUpcomingEvents } from '../data/events';
+import EventRegister from '../components/events/EventRegister';
 import type { ProjectCategory } from '../types';
 
 const categories: ProjectCategory[] = [
@@ -196,7 +197,7 @@ export default function EventsPage() {
                         />
                       </div>
                       <p
-                        className={`mb-3 text-xs font-medium ${
+                        className={`text-xs font-medium ${
                           spotsLeft <= 5
                             ? 'text-rose-600 dark:text-rose-400'
                             : 'text-gray-500 dark:text-gray-400'
@@ -206,16 +207,16 @@ export default function EventsPage() {
                           ? t('events.fullyBooked')
                           : t('events.spotsLeft', { count: spotsLeft })}
                       </p>
-                      <Link
-                        to="/participate"
-                        className="block flex items-center justify-center gap-1 rounded-lg bg-green-600 px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-green-700"
-                      >
-                        {t('events.register')}
-                        <ArrowRight size={12} aria-hidden="true" />
-                      </Link>
                     </div>
                   </div>
                 </div>
+
+                {/* Registration — open to guests (no account needed) */}
+                {spotsLeft > 0 && (
+                  <div className="mt-4 border-t border-gray-100 pt-4 dark:border-gray-700">
+                    <EventRegister eventId={event.id} />
+                  </div>
+                )}
               </article>
             );
           })}

@@ -8,7 +8,7 @@ import authRouter from './routes/auth';
 import projectsRouter from './routes/projects';
 import usersRouter from './routes/users';
 import adminRouter from './routes/admin';
-import schoolsRouter from './routes/schools';
+import eventsRouter from './routes/events';
 import postsRouter from './routes/posts';
 
 const app = express();
@@ -46,7 +46,7 @@ app.use('/api/auth', authLimiter, authRouter);
 app.use('/api/projects', projectsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/admin', adminRouter);
-app.use('/api/schools', schoolsRouter);
+app.use('/api/events', eventsRouter);
 app.use('/api/posts', postsRouter);
 
 app.get('/api/health', (_req, res) => {

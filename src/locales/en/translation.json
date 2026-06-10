@@ -443,8 +443,6 @@
     "getInvolved": "Get Involved",
     "imprint": "Imprint",
     "news": "News",
-    "schoolRanking": "School Ranking",
-    "schoolDashboard": "School Dashboard",
     "discover": "Discover",
     "overview": "Overview"
   },
@@ -499,6 +497,12 @@
     "allStatuses": "All"
   },
   "rewards": {
+    "title": "My Rewards",
+    "yourPoints": "Your Points",
+    "nextBadge": "Next badge",
+    "pointsToGo": "{{points}} points to go",
+    "allBadges": "All Badges",
+    "leaderboard": "Leaderboard",
     "heroEyebrow": "ZOE Community Rewards",
     "heroTitle": "Earn Recognition for Your Impact",
     "heroSubtitle": "Every action you take for Northern Corfu earns points. Rise through five Greek-named tiers — from Σπόρος (Seed) to Θεματοφύλακας (Steward) — and unlock real recognition from the municipality and local community.",
@@ -606,25 +610,6 @@
     },
     "formImageUrl": "Cover image URL",
     "formImageUrlHint": "Optional. Paste a public image URL (e.g. Supabase Storage). Use only your own or licensed images.",
-    "schools": {
-      "title": "Schools",
-      "createTitle": "Create a school",
-      "listTitle": "All schools",
-      "validationRequired": "Name and code are required.",
-      "coordinatorCreated": "Coordinator login created",
-      "coordinatorHint": "Copy these credentials now — the password is shown only once.",
-      "name": "School name",
-      "code": "Join code",
-      "location": "Location",
-      "coordinatorLegend": "School login (optional)",
-      "coordinatorEmail": "Coordinator email",
-      "coordinatorName": "Coordinator name",
-      "coordinatorPassword": "Password (auto-generated if empty)",
-      "create": "Create school",
-      "confirmDelete": "Delete this school? Members will be unlinked but keep their accounts.",
-      "edit": "Edit school",
-      "delete": "Delete school"
-    },
     "posts": {
       "title": "News posts",
       "createTitle": "New post",
@@ -1014,7 +999,19 @@
     "spotsLeft_other": "{{count}} spots left",
     "register": "Register",
     "suggestText": "Want to suggest a new event or initiative?",
-    "suggestLink": "Submit your idea on the Participation page →"
+    "suggestLink": "Submit your idea on the Participation page →",
+    "rsvp": {
+      "guestName": "Your name",
+      "guestEmail": "Email address",
+      "consent": "I agree that my name and email may be stored to register me for this event.",
+      "submit": "Confirm registration",
+      "cancel": "Cancel",
+      "noAccountNote": "No account needed — create one to earn points.",
+      "loginPerk": "You'll earn {{points}} points for joining.",
+      "success": "You're registered. See you there!",
+      "successPoints": "You earned {{points}} points!",
+      "error": "Registration failed. Please try again."
+    }
   },
   "roadmap": {
     "title": "Platform Roadmap",
@@ -1276,76 +1273,6 @@
       "PROJECT_NEW": "New project",
       "PROJECT_COMPLETED": "Completed",
       "ANNOUNCEMENT": "Announcement"
-    }
-  },
-  "schools": {
-    "ranking": {
-      "badge": "School programmes",
-      "title": "School Sustainability Ranking",
-      "subtitle": "Schools across Northern Corfu compete in a friendly ranking. Position is based on the average points per member, so smaller schools compete fairly.",
-      "minMembersNote": "A school needs at least {{count}} members before it enters the ranking.",
-      "colAvg": "avg/member",
-      "colTotal": "total",
-      "members": "{{count}} members",
-      "notRankedHeading": "Not yet ranked",
-      "empty": "No schools are ranked yet.",
-      "joinTitle": "Are you a student?",
-      "joinBody": "Join your school with its code and help it climb the ranking.",
-      "joinCta": "Join your school"
-    },
-    "dashboard": {
-      "error": "Could not load your school dashboard.",
-      "rank": "Rank",
-      "unranked": "Not ranked",
-      "avgPoints": "Avg points",
-      "totalPoints": "Total points",
-      "members": "Members",
-      "joinCodeLabel": "Join code",
-      "joinCodeHint": "Share this code so students can join your school.",
-      "tierTitle": "Reward tier",
-      "toNextTier": "{{points}} points to {{tier}}",
-      "topTier": "Top tier reached — congratulations!",
-      "membersTitle": "Members",
-      "noMembers": "No students have joined yet.",
-      "pointsValue": "{{points}} pts"
-    },
-    "join": {
-      "codeLabel": "School code",
-      "codePlaceholder": "e.g. KERKYRA-7F",
-      "codeHintOptional": "Optional — enter your school code to join the ranking. You can also do this later."
-    },
-    "membership": {
-      "title": "Your school",
-      "hint": "Join a school to contribute to its",
-      "rankingLink": "sustainability ranking",
-      "memberOf": "You are a member of",
-      "leave": "Leave",
-      "join": "Join",
-      "joinError": "Could not join. Check the code and try again."
-    }
-  },
-  "schoolRewards": {
-    "tiers": {
-      "sporeio": {
-        "name": "Seedbed",
-        "desc": "Your school is getting started on its sustainability journey."
-      },
-      "alsos": {
-        "name": "Grove",
-        "desc": "A growing group of engaged students making an impact."
-      },
-      "dasos": {
-        "name": "Forest",
-        "desc": "A strong, established school community for sustainability."
-      },
-      "frouros": {
-        "name": "Nature Guardian",
-        "desc": "Your school is a leading force for the environment in Corfu."
-      },
-      "faros": {
-        "name": "Sustainability Beacon",
-        "desc": "A beacon school inspiring the whole region."
-      }
     }
   }
 }

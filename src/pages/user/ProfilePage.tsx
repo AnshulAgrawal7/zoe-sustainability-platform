@@ -6,7 +6,6 @@ import { updateMe } from '../../services/userService';
 import type { Language } from '../../stores/languageStore';
 import type { UserLanguage, UserProfile } from '../../types';
 import { PROFILE_OPTIONS, PROFILE_EMOJI } from '../../data/profiles';
-import SchoolMembershipCard from '../../components/school/SchoolMembershipCard';
 
 const LANGUAGE_LABELS: Record<UserLanguage, string> = {
   EN: 'English',
@@ -163,8 +162,6 @@ export default function ProfilePage() {
           {t(`profiles.${profile}.reward`)}
         </p>
       </div>
-
-      <SchoolMembershipCard />
 
       <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
         <p className="text-sm text-gray-500 dark:text-gray-400">
