@@ -1,5 +1,13 @@
 # Design-Rationale-Matrix — ZOE Platform
 
+> ⚠️ **VERALTET — nicht weiterverwenden.** Diese themenorientierte Matrix (A–E)
+> ist überholt: Sie referenziert **entfernte Features** (Schulranking/`SCHOOL`-Rolle,
+> kein Einzel-Leaderboard) und beschreibt SDG-**Farbkacheln** statt der inzwischen
+> eingebundenen **offiziellen UN-SDG-Icons**. Maßgeblich sind stattdessen:
+> die zielorientierte [`design-principles-Z1-Z6.md`](design-principles-Z1-Z6.md)
+> (Z1–Z6) und die führende [`MATRIX.md`](MATRIX.md) (TP1–TP8 + Vergleichstabelle).
+> Dieses Dokument bleibt nur als Historie erhalten.
+
 > DSR-Artefakt (Peffers et al., 2007), Projektseminar WInf SoSe 2026, FAU, Gruppe 1.
 > Verknüpft **Problem/Anforderung → Designentscheidung (Umsetzung) → Begründung → Quelle(n)**.
 >

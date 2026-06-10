@@ -42,15 +42,15 @@ Diese Matrix verbindet die in **Phase 1 (Problemidentifikation)** abgeleiteten T
 
 ## Vergleichbare kommunale Lösungen (EU/International) — Rigor-Anker
 
-Stakeholder-Anforderung „Vergleich mit anderen Kommunen/EU": die Plattform ist als **Improvement/Exaptation** (Gregor & Hevner 2013 [B]) etablierter Designs in den Kontext Nord-Korfu zu verstehen.
+Stakeholder-Anforderung „Vergleich mit anderen Kommunen/EU": die Plattform ist als **Improvement/Exaptation** (Gregor & Hevner 2013 [B]) etablierter Designs in den Kontext Nord-Korfu zu verstehen. Die Spalte **„Zahlt ein auf (Z1–Z6)"** verknüpft jede Vergleichslösung mit den Phase-2-Zielen (siehe [`design-principles-Z1-Z6.md`](design-principles-Z1-Z6.md)), damit der Rigor-Anker die Designprinzipien stützt. Alle zitierten Quellen liegen im Korpus vor (`Projektseminar_Literatur/`, siehe [`literature-index.md`](literature-index.md)) — keine fehlt.
 
-| Referenz | Was übertragbar ist | Quelle (Typ) |
-|---|---|---|
-| **Decide Madrid / Consul** (>100 Institutionen, 33 Länder) | Niedrigschwellige Vorschlags-/Beteiligungsformate; Transparenz & Feedback als Erfolgsfaktor; Info-Overload als Barriere | Arana-Catania 2021 **[A]**, Royo 2020 **[A]**, Royo 2024 **[A]**, Pina 2024 **[A]** |
-| **We Asked, You Said, We Did** (Schottland) | „Close the loop": Rückmeldung sichtbar machen | Royo 2024 **[A]** |
-| **Marsaxlokk** (Malta, Fischerdorf) | Besucher:innen/Tourismus + maritime Heritage digital einbinden | Vegas Macias 2023 **[A]** |
-| **Bali** (60 Destinationen) | Community-Partizipation + Digitalstrategie wirken messbar auf Nachhaltigkeit | Laksmi 2026 **[A]** |
-| **Spanische / ungarische / griechische Kommunen** | Verbreitete Defizite (Transparenz, WCAG, UX) belegen Relevanz | Simelio 2021 **[A]**, Csontos 2021/2025 **[A]**, Tsatsani 2024 **[A]**, Carayannis 2026 **[A]** |
+| Referenz | Was übertragbar ist | Zahlt ein auf (Z1–Z6) | Quelle (Typ) |
+|---|---|---|---|
+| **Decide Madrid / Consul** (>100 Institutionen, 33 Länder) | Niedrigschwellige Vorschlags-/Beteiligungsformate; Transparenz & Feedback als Erfolgsfaktor; Info-Overload als Barriere | **Z3** (Partizipation), **Z1** (Transparenz/Info) | Arana-Catania 2021 **[A]**, Royo 2020 **[A]**, Royo 2024 **[A]**, Pina 2024 **[A]** |
+| **We Asked, You Said, We Did** (Schottland) | „Close the loop": Rückmeldung sichtbar machen | **Z1** (Transparenz), **Z3** (Partizipation) | Royo 2024 **[A]** |
+| **Marsaxlokk** (Malta, Fischerdorf) | Besucher:innen/Tourismus + maritime Heritage digital einbinden | **Z6** (Zielgruppen/Touristen), **Z5** (lokale Identität), **Z3** | Vegas Macias 2023 **[A]** |
+| **Bali** (60 Destinationen) | Community-Partizipation + Digitalstrategie wirken messbar auf Nachhaltigkeit | **Z3** (Community), **Z2** (SDG/Nachhaltigkeit), **Z5** | Laksmi 2026 **[A]** |
+| **Spanische / ungarische / griechische Kommunen** | Verbreitete Defizite (Transparenz, WCAG, UX) belegen Relevanz | **Z1** (Transparenz), **Z6** (Barrierefreiheit/inklusiv) | Simelio 2021 **[A]**, Csontos 2021/2025 **[A]**, Tsatsani 2024 **[A]**, Carayannis 2026 **[A]** |
 
 ---
 
