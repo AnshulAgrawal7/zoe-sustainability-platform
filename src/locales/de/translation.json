@@ -656,7 +656,7 @@
     "categoryLabel": "Kategorie",
     "categoryPlaceholder": "Kategorie wählen",
     "optionalLabel": "optional",
-    "privacyNote": "Deine Idee wird zur Prüfung an die Gemeinde weitergeleitet. Name und E-Mail sind freiwillig und werden nur genutzt, um dich zu dieser Idee zu kontaktieren — ein Konto ist nicht nötig. (Prototyp: für die Demo gespeichert, keine automatische Weiterleitung.)",
+    "privacyNote": "Deine Idee wird zur Prüfung an die Gemeinde weitergeleitet. Die E-Mail ist freiwillig: Wenn du sie angibst, darf die Gemeinde auf deine Idee antworten; ohne E-Mail bleibt deine Einreichung anonym. Ein Konto ist nicht nötig. (Prototyp: für die Demo gespeichert, kein automatischer Versand.)",
     "submitSuccess": "Danke! Deine Idee wurde zur Prüfung an die Gemeinde übermittelt.",
     "submitError": "Idee konnte nicht übermittelt werden. Bitte versuche es erneut."
   },
@@ -1291,7 +1291,9 @@
     "all": "Alle",
     "anonymous": "Anonym",
     "changeStatus": "Status ändern",
-    "empty": "Noch keine Ideen."
+    "empty": "Noch keine Ideen.",
+    "replyByEmail": "Per E-Mail antworten an {{email}}",
+    "emailSubject": "Ihre Idee: {{title}}"
   },
   "ideaStatus": {
     "NEW": "Neu",

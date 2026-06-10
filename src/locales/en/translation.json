@@ -656,7 +656,7 @@
     "categoryLabel": "Category",
     "categoryPlaceholder": "Select a category",
     "optionalLabel": "optional",
-    "privacyNote": "Your idea is sent to the municipality for review. Name and email are optional and used only to contact you about this idea — no account is required. (Prototype: stored for the demo, not forwarded automatically.)",
+    "privacyNote": "Your idea is sent to the municipality for review. The email is optional: if you provide it, the municipality may reply to your idea; without it your submission stays anonymous. No account is required. (Prototype: stored for the demo, not sent automatically.)",
     "submitSuccess": "Thanks! Your idea has been submitted to the municipality for review.",
     "submitError": "Could not submit your idea. Please try again."
   },
@@ -1291,7 +1291,9 @@
     "all": "All",
     "anonymous": "Anonymous",
     "changeStatus": "Change status",
-    "empty": "No ideas yet."
+    "empty": "No ideas yet.",
+    "replyByEmail": "Reply by email to {{email}}",
+    "emailSubject": "Your idea: {{title}}"
   },
   "ideaStatus": {
     "NEW": "New",

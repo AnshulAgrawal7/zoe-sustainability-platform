@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Lightbulb } from 'lucide-react';
+import { Lightbulb, Mail } from 'lucide-react';
 import { getIdeas, updateIdeaStatus } from '../../services/ideaService';
 import type { Idea, IdeaStatus } from '../../types';
 
@@ -139,13 +139,24 @@ export default function ManageIdeasPage() {
                     {idea.description}
                   </p>
                   <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                    {submitter(idea)}
-                    {idea.submitterEmail && !idea.user
-                      ? ` · ${idea.submitterEmail}`
-                      : ''}
-                    {' · '}
+                    {submitter(idea)} ·{' '}
                     {new Date(idea.createdAt).toLocaleDateString(locale)}
                   </p>
+                  {/* Reply via the admin's own mail client (no in-app/SMTP send). */}
+                  {idea.submitterEmail && (
+                    <a
+                      href={`mailto:${idea.submitterEmail}?subject=${encodeURIComponent(
+                        t('adminIdeas.emailSubject', { title: idea.title })
+                      )}`}
+                      aria-label={t('adminIdeas.replyByEmail', {
+                        email: idea.submitterEmail,
+                      })}
+                      className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-green-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 dark:text-green-400"
+                    >
+                      <Mail size={12} aria-hidden="true" />
+                      {idea.submitterEmail}
+                    </a>
+                  )}
                 </div>
 
                 <div className="flex shrink-0 flex-col gap-1 sm:items-end">
