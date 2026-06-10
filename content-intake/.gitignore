@@ -1,0 +1,6 @@
+# Raw third-party source material (Facebook text & photos) — keep local, do not push.
+# The structure, README and template stay tracked; the actual content does not.
+inbox/*
+sorted/*
+!inbox/.gitkeep
+!**/.gitkeep
