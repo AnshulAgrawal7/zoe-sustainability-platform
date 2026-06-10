@@ -25,28 +25,36 @@ const SDG_COLORS: Record<SDGNumber, string> = {
   17: '#19486A',
 };
 
-// All 17 goals. `unUrl` links to the official UN page for that goal.
+// Official SDGs addressed by the ZOE programme of the Municipality of North Corfu.
+// Source/provenance: Verde.tec environmental award, Feb 2026 (life-news.gr, 03.03.2026).
+export const OFFICIAL_PROGRAMME_SDGS: SDGNumber[] = [
+  4, 6, 11, 12, 13, 14, 15, 17,
+];
+
+// All 17 goals. `unUrl` links to the official UN page; `iconUrl` is the official
+// UN icon (downloaded unmodified to public/sdg-icons/, see that folder's README).
 export const sdgs: SDG[] = (
   Object.keys(SDG_COLORS).map(Number) as SDGNumber[]
 ).map((number) => ({
   number,
   color: SDG_COLORS[number],
   unUrl: `https://sdgs.un.org/goals/goal${number}`,
+  iconUrl: `/sdg-icons/E-WEB-Goal-${String(number).padStart(2, '0')}.png`,
 }));
 
 export const getSdgByNumber = (num: number): SDG | undefined =>
   sdgs.find((s) => s.number === num);
 
-// PROTOTYPE DATA — fictional progress percentages for the goals ZOE addresses.
+// Programme-level progress for the official ZOE SDGs (the 8 above). `projectCount`
+// reflects the seeded ZOE projects mapped to each goal; `progressPercent` is an
+// ILLUSTRATIVE prototype indicator, not a measured value (impact = Phase 5).
 export const sdgProgressData: SDGProgress[] = [
-  { sdg: 3, projectCount: 2, progressPercent: 45 },
-  { sdg: 4, projectCount: 3, progressPercent: 62 },
-  { sdg: 6, projectCount: 2, progressPercent: 38 },
-  { sdg: 8, projectCount: 2, progressPercent: 41 },
-  { sdg: 11, projectCount: 4, progressPercent: 55 },
-  { sdg: 12, projectCount: 3, progressPercent: 71 },
-  { sdg: 13, projectCount: 5, progressPercent: 48 },
-  { sdg: 14, projectCount: 3, progressPercent: 34 },
-  { sdg: 15, projectCount: 4, progressPercent: 59 },
-  { sdg: 17, projectCount: 6, progressPercent: 80 },
+  { sdg: 4, projectCount: 2, progressPercent: 55 },
+  { sdg: 6, projectCount: 2, progressPercent: 50 },
+  { sdg: 11, projectCount: 3, progressPercent: 45 },
+  { sdg: 12, projectCount: 2, progressPercent: 60 },
+  { sdg: 13, projectCount: 3, progressPercent: 50 },
+  { sdg: 14, projectCount: 2, progressPercent: 45 },
+  { sdg: 15, projectCount: 3, progressPercent: 55 },
+  { sdg: 17, projectCount: 1, progressPercent: 50 },
 ];

@@ -15,8 +15,8 @@ test('renders one tab per non-empty initiative within a tablist', () => {
   setup();
   const tablist = screen.getByRole('tablist', { name: /zoe initiatives/i });
   const tabs = within(tablist).getAllByRole('tab');
-  // Seed data covers all four thematic initiatives.
-  expect(tabs).toHaveLength(4);
+  // The 5 canonical categories map onto 3 non-empty thematic initiatives.
+  expect(tabs).toHaveLength(3);
   expect(tabs[0]).toHaveAttribute('aria-selected', 'true');
   expect(tabs[1]).toHaveAttribute('aria-selected', 'false');
 });

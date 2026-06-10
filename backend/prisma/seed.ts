@@ -65,23 +65,34 @@ async function main() {
     }),
   ]);
 
-  const makeProject = (id: string, en: string, el: string, de: string, descEn: string, descEl: string, descDe: string, sdgs: number[], category: string, points: number, location: string, status = 'OPEN', imageUrl: string | null = null) =>
+  // Real ZOE measures (one+ per documented axis). Facts/figures: Verde.tec award
+  // for the Municipality of North Corfu, Feb 2026 (life-news.gr, 03.03.2026) —
+  // programme statements, NOT measured impact. SDGs from the official programme set
+  // {4,6,11,12,13,14,15,17}. No figures beyond the source are added.
+  const SRC = 'Verde.tec 2026 / life-news.gr';
+  const makeProject = (id: string, en: string, el: string, de: string, descEn: string, descEl: string, descDe: string, sdgs: number[], category: string, points: number, location: string, status = 'OPEN', imageUrl: string | null = null, sourceNote: string | null = SRC) =>
     prisma.project.upsert({
       where: { id },
       update: {},
-      create: { id, titleEn: en, titleEl: el, titleDe: de, descriptionEn: descEn, descriptionEl: descEl, descriptionDe: descDe, sdgIds: JSON.stringify(sdgs), category, status, rewardPoints: points, location, imageUrl, createdById: admin.id },
+      create: { id, titleEn: en, titleEl: el, titleDe: de, descriptionEn: descEn, descriptionEl: descEl, descriptionDe: descDe, sdgIds: JSON.stringify(sdgs), category, status, rewardPoints: points, location, imageUrl, sourceNote, createdById: admin.id },
     });
 
   const [p1, p2, p3, p4, p5, p6, p7, p8] = await Promise.all([
-    makeProject('proj-antinioti', 'Antinioti Lagoon Restoration', 'Αποκατάσταση Λιμνοθάλασσας Αντινιώτη', 'Wiederherstellung der Antinioti-Lagune', 'Multi-year restoration of the Antinioti Lagoon — a Natura 2000 protected wetland between Kassiopi and Roda.', 'Πολυετής αποκατάσταση της Λιμνοθάλασσας Αντινιώτη — υγρότοπος Natura 2000.', 'Mehrjährige Wiederherstellung der Antinioti-Lagune — Natura-2000-Schutzgebiet.', [13, 14, 15, 17], 'ENVIRONMENT', 75, 'Antinioti Lagoon, NE Corfu', 'OPEN', 'https://placehold.co/800x400/16a34a/ffffff?text=Antinioti+Lagoon'),
-    // COMPLETED + image — demonstrates the "Completed" status filter and cover images.
-    makeProject('proj-beach-clean', 'Kassiopi Coastal Clean-Up', 'Καθαρισμός Ακτής Κασσιωπής', 'Küstenreinigung Kassiopi', 'Monthly beach and underwater clean-up operations around Kassiopi harbour.', 'Μηνιαίος καθαρισμός παραλίας γύρω από το λιμάνι της Κασσιωπής.', 'Monatliche Strand- und Unterwasserreinigungen rund um den Hafen von Kassiopi.', [14, 12, 17], 'ENVIRONMENT', 50, 'Kassiopi Harbour, NE Corfu', 'COMPLETED', 'https://placehold.co/800x400/0ea5e9/ffffff?text=Kassiopi+Clean-Up'),
-    makeProject('proj-solar-schools', 'Solar Panels for Corfu Schools', 'Ηλιακά Πάνελ για τα Σχολεία', 'Solaranlagen für Korfu-Schulen', 'Installing solar photovoltaic systems on municipal school rooftops across Northern Corfu.', 'Εγκατάσταση ηλιακών φωτοβολταϊκών συστημάτων στις στέγες σχολείων.', 'Installation von Photovoltaik-Systemen auf Schulgebäuden in Nordkorfu.', [7, 4, 13, 11], 'EDUCATION', 60, 'Various schools, Northern Corfu'),
-    makeProject('proj-waste-sep', 'Waste Separation Network', 'Δίκτυο Διαχωρισμού Αποβλήτων', 'Mülltrennnetzwerk', 'Expanding recycling and composting infrastructure across 12 northern Corfu villages.', 'Επέκταση υποδομών ανακύκλωσης σε 12 χωριά.', 'Ausbau der Recycling-Infrastruktur in 12 Dörfern Nordkorfus.', [12, 11, 15], 'COMMUNITY', 40, 'Northern Corfu Villages', 'COMPLETED', 'https://placehold.co/800x400/f97316/ffffff?text=Waste+Separation'),
-    makeProject('proj-erimitis', 'Erimitis Conservation Monitoring', 'Παρακολούθηση Διατήρησης Ερημίτη', 'Naturschutzmonitoring Erimitis', 'Citizen science monitoring program for the Erimitis peninsula.', 'Πρόγραμμα παρακολούθησης από πολίτες για τη χερσόνησο Ερημίτη.', 'Bürgerwissenschafts-Monitoring für die Erimitis-Halbinsel.', [15, 14, 13, 17], 'ENVIRONMENT', 65, 'Erimitis Peninsula, NE Corfu'),
-    makeProject('proj-cycling', 'Sinies–Kassiopi Cycling Path', 'Ποδηλατόδρομος Σινιές–Κασσιώπη', 'Radweg Sinies–Kassiopi', 'Planning a 6km cycling path connecting Sinies, Avliotes, and Kassiopi.', 'Σχεδιασμός ποδηλατόδρομου 6χλμ.', 'Planung eines 6km Radweges.', [11, 13, 3, 8], 'MOBILITY', 35, 'Sinies to Kassiopi, NE Corfu'),
-    makeProject('proj-olive-groves', 'Traditional Olive Grove Restoration', 'Αποκατάσταση Παραδοσιακών Ελαιώνων', 'Wiederherstellung traditioneller Olivenhaine', 'Restoring abandoned olive groves to preserve the UNESCO cultural landscape.', 'Αποκατάσταση εγκαταλελειμμένων ελαιώνων.', 'Wiederherstellung verlassener Olivenhaine.', [15, 8, 11, 12], 'COMMUNITY', 55, 'Northern Corfu hinterland'),
-    makeProject('proj-water-quality', 'Drinking Water Quality Monitoring', 'Παρακολούθηση Ποιότητας Πόσιμου Νερού', 'Trinkwasserqualitäts-Monitoring', 'Community-led water quality testing at 18 sampling points across northern Corfu.', 'Έλεγχος ποιότητας νερού σε 18 σημεία δειγματοληψίας.', 'Wasserqualitäts-Tests an 18 Probenahmestellen.', [6, 3, 11], 'ENVIRONMENT', 45, 'Northern Corfu'),
+    // Mobility
+    makeProject('proj-greenmove', 'GreenMove — Sustainable Mobility', 'GreenMove — Βιώσιμη Κινητικότητα', 'GreenMove — Nachhaltige Mobilität', 'Sustainable urban mobility for North Corfu under the EU programme GreenMove — promoting low-emission transport and active mobility.', 'Βιώσιμη αστική κινητικότητα για τη Βόρεια Κέρκυρα στο πλαίσιο του ευρωπαϊκού προγράμματος GreenMove — μεταφορές χαμηλών εκπομπών και ήπια κινητικότητα.', 'Nachhaltige urbane Mobilität für Nordkorfu im Rahmen des EU-Programms GreenMove — emissionsarme und aktive Mobilität.', [11, 13], 'MOBILITY', 40, 'Municipality of North Corfu'),
+    // Waste / circular economy
+    makeProject('proj-circular', 'Circular Economy Network', 'Δίκτυο Κυκλικής Οικονομίας', 'Kreislaufwirtschafts-Netzwerk', 'Municipal circular-economy programme: 20 recycling streams across 210 collection points, reaching up to 95% sorting purity, with education for 2,000+ pupils. Host of the Circular Municipalities Forum (Feb 2025). Figures are programme data (Verde.tec 2026).', 'Δημοτικό πρόγραμμα κυκλικής οικονομίας: 20 ρεύματα ανακύκλωσης σε 210 σημεία συλλογής, καθαρότητα έως 95%, εκπαίδευση για 2.000+ μαθητές. Διοργανωτής του Φόρουμ Κυκλικών Δήμων (Φεβ. 2025).', 'Kommunales Kreislaufwirtschaftsprogramm: 20 Wertstoffströme an 210 Sammelpunkten, bis zu 95 % Sortenreinheit, Bildung für 2.000+ Schüler:innen. Gastgeber des Forums der Kreislauf-Kommunen (Feb. 2025).', [12, 11, 4], 'COMMUNITY', 50, 'Municipality-wide, North Corfu'),
+    // Marine protection
+    makeProject('proj-marine', 'Marine Protection & Sea Turtles', 'Προστασία Θάλασσας & Θαλάσσιες Χελώνες', 'Meeresschutz & Meeresschildkröten', 'Marine protection with ODEK Kerkyra: sea-turtle conservation with ARCHELON (nest fencing and awareness campaigns) and a marine-mammal congress (May 2025).', 'Προστασία θάλασσας με το ΟΔΕΚ Κέρκυρας: προστασία θαλάσσιων χελωνών με τον ΑΡΧΕΛΩΝ (περίφραξη φωλιών, εκστρατείες) και συνέδριο θαλάσσιων θηλαστικών (Μάιος 2025).', 'Meeresschutz mit ODEK Kerkyra: Schutz von Meeresschildkröten mit ARCHELON (Nest-Einzäunungen, Kampagnen) und ein Kongress zu Meeressäugern (Mai 2025).', [14, 15], 'ENVIRONMENT', 60, 'North Corfu coast'),
+    // Natural monuments
+    makeProject('proj-antinioti', 'Antinioti Lagoon — Natural Monument', 'Λιμνοθάλασσα Αντινιώτη — Φυσικό Μνημείο', 'Antinioti-Lagune — Naturdenkmal', 'Protection of the Antinioti Lagoon, a Natura 2000 wetland between Kassiopi and Roda — part of ZOE\'s natural-monuments axis.', 'Προστασία της Λιμνοθάλασσας Αντινιώτη, υγρότοπος Natura 2000 — άξονας φυσικών μνημείων του ZOE.', 'Schutz der Antinioti-Lagune, eines Natura-2000-Feuchtgebiets — Teil der ZOE-Achse Naturdenkmäler.', [15, 6, 14], 'ENVIRONMENT', 65, 'Antinioti Lagoon, NE Corfu', 'OPEN', 'https://placehold.co/800x400/16a34a/ffffff?text=Antinioti+Lagoon'),
+    makeProject('proj-natural-monuments', 'Natural Monuments & Reforestation', 'Φυσικά Μνημεία & Αναδάσωση', 'Naturdenkmäler & Aufforstung', 'Conservation and monitoring of North Corfu\'s natural monuments — Erimitis, the Nymfes waterfalls, the Agios Panteleimon lake basin and the Klimatia watermills — with reforestation.', 'Διατήρηση και παρακολούθηση φυσικών μνημείων: Ερημίτης, καταρράκτες Νυμφών, λεκάνη Αγίου Παντελεήμονα, νερόμυλοι Κληματιάς — με αναδάσωση.', 'Erhalt und Monitoring der Naturdenkmäler Nordkorfus — Erimitis, Wasserfälle von Nymfes, Seebecken Agios Panteleimon, Wassermühlen Klimatia — samt Aufforstung.', [15, 13], 'ENVIRONMENT', 65, 'Northern Corfu'),
+    // Energy
+    makeProject('proj-led', 'LED Street Lighting Upgrade', 'Αναβάθμιση Δημοτικού Φωτισμού σε LED', 'Umrüstung der Straßenbeleuchtung auf LED', 'Replacement of 4,866 municipal luminaires with energy-efficient LED, reducing energy use and CO₂ emissions across North Corfu (programme figure: Verde.tec 2026).', 'Αντικατάσταση 4.866 φωτιστικών σωμάτων με LED, μειώνοντας την κατανάλωση ενέργειας και τις εκπομπές CO₂.', 'Austausch von 4.866 Leuchten gegen energieeffiziente LED — geringerer Energieverbrauch und CO₂-Ausstoß.', [12, 13], 'COMMUNITY', 45, 'Municipality-wide, North Corfu', 'COMPLETED', 'https://placehold.co/800x400/f59e0b/ffffff?text=LED+Upgrade'),
+    // Education / participation
+    makeProject('proj-education', 'Environmental Education & University Partnership', 'Περιβαλλοντική Εκπαίδευση & Πανεπιστημιακή Συνεργασία', 'Umweltbildung & Universitätspartnerschaft', 'Environmental education and research with the Ionian University and the University of Nuremberg — scientific congresses and active student participation.', 'Περιβαλλοντική εκπαίδευση και έρευνα με το Ιόνιο Πανεπιστήμιο και το Πανεπιστήμιο της Νυρεμβέργης — επιστημονικά συνέδρια και συμμετοχή φοιτητών.', 'Umweltbildung und Forschung mit der Ionischen Universität und der Universität Nürnberg — wissenschaftliche Kongresse und Studierendenbeteiligung.', [4, 17], 'EDUCATION', 55, 'North Corfu / Ionian University'),
+    // Natural monuments — freshwater
+    makeProject('proj-water-quality', 'Drinking Water Quality Monitoring', 'Παρακολούθηση Ποιότητας Πόσιμου Νερού', 'Trinkwasserqualitäts-Monitoring', 'Monitoring of drinking-water quality and protection of freshwater sources across North Corfu, including the Agios Panteleimon basin.', 'Παρακολούθηση ποιότητας πόσιμου νερού και προστασία πηγών γλυκού νερού στη Βόρεια Κέρκυρα, μεταξύ άλλων στη λεκάνη Αγίου Παντελεήμονα.', 'Überwachung der Trinkwasserqualität und Schutz der Süßwasserquellen in Nordkorfu, u. a. im Becken von Agios Panteleimon.', [6, 11], 'ENVIRONMENT', 45, 'Northern Corfu'),
   ]);
 
   // Participations
@@ -134,24 +145,24 @@ async function main() {
       'ZOE brings transparency and citizen participation to sustainability projects across Northern Corfu. Explore projects, join events, and earn rewards for your community.',
       'Το ZOE φέρνει διαφάνεια και συμμετοχή των πολιτών στα έργα βιωσιμότητας σε όλη τη Βόρεια Κέρκυρα. Εξερευνήστε έργα, λάβετε μέρος σε εκδηλώσεις και κερδίστε ανταμοιβές.',
       'ZOE bringt Transparenz und Bürgerbeteiligung in Nachhaltigkeitsprojekte in ganz Nordkorfu. Entdecke Projekte, nimm an Veranstaltungen teil und sammle Belohnungen für deine Gemeinde.'),
-    makePost('post-completed-beach', 'PROJECT_COMPLETED',
-      'Completed: Kassiopi Coastal Clean-Up', 'Ολοκληρώθηκε: Καθαρισμός Ακτής Κασσιωπής', 'Abgeschlossen: Küstenreinigung Kassiopi',
-      'Our monthly beach and underwater clean-up around Kassiopi harbour has wrapped up. Thank you to every volunteer who helped protect the coastline.',
-      'Ο μηνιαίος καθαρισμός παραλίας και βυθού γύρω από το λιμάνι της Κασσιωπής ολοκληρώθηκε. Ευχαριστούμε κάθε εθελοντή.',
-      'Unsere monatliche Strand- und Unterwasserreinigung rund um den Hafen von Kassiopi ist abgeschlossen. Danke an alle Freiwilligen.',
-      p2.id, 'https://placehold.co/800x400/0ea5e9/ffffff?text=Kassiopi+Clean-Up'),
-    makePost('post-completed-waste', 'PROJECT_COMPLETED',
-      'Completed: Waste Separation Network', 'Ολοκληρώθηκε: Δίκτυο Διαχωρισμού Αποβλήτων', 'Abgeschlossen: Mülltrennnetzwerk',
-      'Recycling and composting infrastructure is now live across 12 northern Corfu villages.',
-      'Οι υποδομές ανακύκλωσης και κομποστοποίησης λειτουργούν πλέον σε 12 χωριά.',
-      'Die Recycling- und Kompostierungsinfrastruktur ist nun in 12 Dörfern Nordkorfus aktiv.',
-      p4.id, 'https://placehold.co/800x400/f97316/ffffff?text=Waste+Separation'),
-    makePost('post-new-solar', 'PROJECT_NEW',
-      'New project: Solar Panels for Corfu Schools', 'Νέο έργο: Ηλιακά Πάνελ για τα Σχολεία', 'Neues Projekt: Solaranlagen für Korfu-Schulen',
-      'We are installing solar photovoltaic systems on municipal school rooftops across Northern Corfu. Schools can join and track their impact.',
-      'Εγκαθιστούμε ηλιακά φωτοβολταϊκά συστήματα στις στέγες σχολείων σε όλη τη Βόρεια Κέρκυρα.',
-      'Wir installieren Photovoltaik-Anlagen auf Schuldächern in ganz Nordkorfu. Schulen können mitmachen und ihre Wirkung verfolgen.',
+    makePost('post-completed-led', 'PROJECT_COMPLETED',
+      'Completed: 4,866 luminaires upgraded to LED', 'Ολοκληρώθηκε: 4.866 φωτιστικά σε LED', 'Abgeschlossen: 4.866 Leuchten auf LED umgerüstet',
+      'The municipality has replaced 4,866 luminaires with energy-efficient LED, cutting energy use and CO₂ emissions across North Corfu. (Programme figure: Verde.tec 2026.)',
+      'Ο Δήμος αντικατέστησε 4.866 φωτιστικά με LED, μειώνοντας την ενέργεια και τις εκπομπές CO₂.',
+      'Die Gemeinde hat 4.866 Leuchten gegen LED ausgetauscht — weniger Energie und CO₂.',
+      p6.id, 'https://placehold.co/800x400/f59e0b/ffffff?text=LED+Upgrade'),
+    makePost('post-new-marine', 'PROJECT_NEW',
+      'New: Sea-turtle protection with ARCHELON', 'Νέο: Προστασία θαλάσσιων χελωνών με τον ΑΡΧΕΛΩΝ', 'Neu: Schutz von Meeresschildkröten mit ARCHELON',
+      'In cooperation with ODEK Kerkyra and ARCHELON, North Corfu protects sea-turtle nests with fencing and awareness campaigns.',
+      'Σε συνεργασία με το ΟΔΕΚ Κέρκυρας και τον ΑΡΧΕΛΩΝ, η Βόρεια Κέρκυρα προστατεύει τις φωλιές θαλάσσιων χελωνών με περιφράξεις και εκστρατείες.',
+      'In Zusammenarbeit mit ODEK Kerkyra und ARCHELON schützt Nordkorfu Schildkröten-Nester durch Einzäunung und Kampagnen.',
       p3.id),
+    makePost('post-circular-forum', 'ANNOUNCEMENT',
+      'Circular Municipalities Forum hosted in North Corfu', 'Φόρουμ Κυκλικών Δήμων στη Βόρεια Κέρκυρα', 'Forum der Kreislauf-Kommunen in Nordkorfu',
+      'North Corfu hosted the Circular Municipalities Forum (Feb 2025), part of a circular-economy programme spanning 20 recycling streams and 210 collection points.',
+      'Η Βόρεια Κέρκυρα φιλοξένησε το Φόρουμ Κυκλικών Δήμων (Φεβ. 2025), μέρος προγράμματος με 20 ρεύματα ανακύκλωσης και 210 σημεία συλλογής.',
+      'Nordkorfu war Gastgeber des Forums der Kreislauf-Kommunen (Feb. 2025) — Teil eines Programms mit 20 Wertstoffströmen und 210 Sammelpunkten.',
+      p2.id),
   ]);
 
   console.log(`Seeded: ${[p1,p2,p3,p4,p5,p6,p7,p8].length} projects, 4 users, 5 badges, 4 posts`);

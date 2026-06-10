@@ -25,7 +25,7 @@
     "intro": "ZOE ordnet seine Aktionen den UN-SDGs zu. Hervorgehobene Ziele werden von ZOE-Projekten adressiert; wähle ein Ziel, um die offizielle UN-Seite zu öffnen.",
     "addressed": "Von ZOE adressiert",
     "notAddressed": "Noch nicht adressiert",
-    "openOnUn": "SDG {{number}} auf der UN-Website öffnen",
+    "openOnUn": "SDG {{number}} – {{title}} auf der offiziellen UN-Seite öffnen",
     "addressedOfTotal": "{{count}} von 17 Zielen adressiert"
   },
   "sdgCatalog": {
@@ -494,7 +494,8 @@
     "withdrawSuccess": "Sie haben das Projekt verlassen.",
     "alreadyParticipating": "Sie nehmen bereits an diesem Projekt teil.",
     "filterStatus": "Status",
-    "allStatuses": "Alle"
+    "allStatuses": "Alle",
+    "source": "Quelle"
   },
   "rewards": {
     "title": "Meine Belohnungen",
@@ -1300,5 +1301,9 @@
     "IN_REVIEW": "In Prüfung",
     "ACCEPTED": "Angenommen",
     "DECLINED": "Abgelehnt"
+  },
+  "sdg": {
+    "attribution": "Offizielle UN-SDG-Icons, unverändert und zu Informationszwecken gemäß den UN-SDG-Richtlinien verwendet —",
+    "disclaimer": "Die Inhalte dieser Veröffentlichung wurden nicht von den Vereinten Nationen genehmigt und geben nicht die Ansichten der Vereinten Nationen, ihrer Bediensteten oder Mitgliedstaaten wieder."
   }
 }

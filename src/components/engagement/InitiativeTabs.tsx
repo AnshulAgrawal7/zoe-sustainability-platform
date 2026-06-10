@@ -2,29 +2,25 @@ import { useId, useRef, useState, type KeyboardEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MapPin } from 'lucide-react';
-import type { Project, ProjectCategory } from '../../types';
+import type { Project, ApiProjectCategory } from '../../types';
 
-// Maps ZOE's project categories onto the four thematic initiatives the
+// Maps ZOE's 5 canonical project categories onto the thematic initiatives the
 // municipality communicates (stakeholder request: "tabs for different
 // initiatives — marine protection, natural monuments, ...").
 type InitiativeId =
-  | 'marineCoast'
   | 'natureBiodiversity'
   | 'circularClimate'
   | 'educationTourism';
 
-const CATEGORY_TO_INITIATIVE: Record<ProjectCategory, InitiativeId> = {
-  'Water Protection': 'marineCoast',
-  'Waste Reduction': 'marineCoast',
-  Biodiversity: 'natureBiodiversity',
-  'Community Action': 'natureBiodiversity',
-  'Circular Economy': 'circularClimate',
-  Education: 'educationTourism',
-  'Sustainable Tourism': 'educationTourism',
+const CATEGORY_TO_INITIATIVE: Record<ApiProjectCategory, InitiativeId> = {
+  ENVIRONMENT: 'natureBiodiversity',
+  MOBILITY: 'circularClimate',
+  COMMUNITY: 'circularClimate',
+  EDUCATION: 'educationTourism',
+  CULTURE: 'educationTourism',
 };
 
 const INITIATIVE_ORDER: InitiativeId[] = [
-  'marineCoast',
   'natureBiodiversity',
   'circularClimate',
   'educationTourism',

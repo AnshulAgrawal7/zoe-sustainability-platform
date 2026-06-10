@@ -109,19 +109,21 @@ export default function SDGDashboardPage() {
                   href={sdg.unUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={t('sdgGrid.openOnUn', { number: sdg.number })}
-                  className={`flex h-full min-h-[112px] flex-col justify-between rounded-lg p-3 text-white transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 motion-safe:hover:scale-[1.03] ${
-                    isAddressed
-                      ? 'opacity-100 shadow-sm'
-                      : 'opacity-40 grayscale'
-                  }`}
-                  style={{ backgroundColor: sdg.color }}
+                  aria-label={t('sdgGrid.openOnUn', {
+                    number: sdg.number,
+                    title: t(`sdgCatalog.${sdg.number}.title`),
+                  })}
+                  className="block h-full rounded-lg transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 motion-safe:hover:scale-[1.03]"
                 >
-                  <span className="text-lg font-extrabold">{sdg.number}</span>
-                  <span className="mt-1 text-xs font-medium leading-snug">
-                    {t(`sdgCatalog.${sdg.number}.title`)}
-                  </span>
-                  <span className="mt-2 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide">
+                  {/* Official UN SDG icon, used unmodified (decorative — the link
+                      carries the accessible name). */}
+                  <img
+                    src={sdg.iconUrl}
+                    alt=""
+                    loading="lazy"
+                    className={`w-full rounded-lg ${isAddressed ? '' : 'opacity-40 grayscale'}`}
+                  />
+                  <span className="mt-1.5 flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
                     {isAddressed
                       ? t('sdgGrid.addressed')
                       : t('sdgGrid.notAddressed')}
@@ -132,6 +134,21 @@ export default function SDGDashboardPage() {
             );
           })}
         </ul>
+        {/* UN SDG icon usage: attribution + required disclaimer (icons used
+            unmodified for informational purposes — see public/sdg-icons/README). */}
+        <p className="mt-4 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
+          {t('sdg.attribution')}{' '}
+          <a
+            href="https://www.un.org/sustainabledevelopment"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-green-700 dark:hover:text-green-400"
+          >
+            un.org/sustainabledevelopment
+          </a>
+          {'. '}
+          {t('sdg.disclaimer')}
+        </p>
       </section>
 
       {/* Addressed goals — detail cards */}

@@ -235,6 +235,13 @@ export default function ProjectDetailPage() {
             {getDescription()}
           </p>
 
+          {/* Provenance (programme fact, not measured impact) */}
+          {project.sourceNote && (
+            <p className="mb-6 text-xs text-gray-500 dark:text-gray-400">
+              {t('projects.source')}: {project.sourceNote}
+            </p>
+          )}
+
           {/* SDG badges */}
           {sdgs.length > 0 && (
             <div className="mb-6 flex flex-wrap gap-2">

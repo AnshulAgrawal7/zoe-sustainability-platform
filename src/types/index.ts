@@ -1,5 +1,7 @@
 // Core domain types for the ZOE platform prototype
 
+// Finer-grained categories retained for EVENTS only. Projects use the canonical
+// 5-value `ApiProjectCategory` (single source of truth across all project screens).
 export type ProjectCategory =
   | 'Biodiversity'
   | 'Circular Economy'
@@ -35,12 +37,13 @@ export interface SDG {
   number: SDGNumber;
   color: string; // official UN goal color
   unUrl: string; // official UN goal page
+  iconUrl: string; // official UN goal icon (public/sdg-icons/, used unmodified)
 }
 
 export interface Project {
   id: string;
   title: string;
-  category: ProjectCategory;
+  category: ApiProjectCategory; // canonical 5-value taxonomy (consistent with /projects API)
   status: ProjectStatus;
   location: string;
   description: string;
@@ -54,6 +57,7 @@ export interface Project {
   transparencyMetrics: TransparencyMetric[];
   participantCount: number;
   thumbnailColor: string; // Tailwind color class for placeholder
+  sourceNote?: string; // provenance, e.g. "Verde.tec 2026 / life-news.gr"
 }
 
 export interface TransparencyMetric {
@@ -168,6 +172,7 @@ export interface ApiProject {
   location: string | null;
   maxParticipants: number | null;
   imageUrl: string | null;
+  sourceNote: string | null;
   createdAt: string;
   _count?: { participations: number };
 }
