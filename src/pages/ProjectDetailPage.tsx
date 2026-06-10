@@ -8,11 +8,21 @@ import {
   Star,
   CheckCircle,
   AlertCircle,
+  Calendar,
+  Clock,
 } from 'lucide-react';
 import { getProject, participate, withdraw } from '../services/projectService';
+import { getEvents } from '../services/eventService';
 import { getMe } from '../services/userService';
+import EventRegister from '../components/events/EventRegister';
 import { useAuthStore } from '../stores/authStore';
-import type { ApiProject } from '../types';
+import type { ApiProject, ApiEvent } from '../types';
+
+const DATE_LOCALES: Record<string, string> = {
+  en: 'en-GB',
+  el: 'el-GR',
+  de: 'de-DE',
+};
 
 export default function ProjectDetailPage() {
   const { t, i18n } = useTranslation();
@@ -23,6 +33,7 @@ export default function ProjectDetailPage() {
   const { isAuthenticated, user, updateUser } = useAuthStore();
 
   const [project, setProject] = useState<ApiProject | null>(null);
+  const [events, setEvents] = useState<ApiEvent[]>([]);
   const [isParticipating, setIsParticipating] = useState(false);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
@@ -53,6 +64,10 @@ export default function ProjectDetailPage() {
       }
     }
     void load();
+    // Events for this project (non-blocking; failure just hides the section).
+    getEvents({ projectId: id })
+      .then(setEvents)
+      .catch(() => setEvents([]));
   }, [id, isAuthenticated]);
 
   function getTitle(): string {
@@ -317,6 +332,93 @@ export default function ProjectDetailPage() {
           )}
         </div>
       </div>
+
+      {/* Events linked to this project */}
+      {events.length > 0 && (
+        <section className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8">
+          <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+            <Calendar
+              size={18}
+              aria-hidden="true"
+              className="text-green-600 dark:text-green-400"
+            />
+            {t('projects.eventsTitle')}
+          </h2>
+          <ul className="space-y-4">
+            {events.map((ev) => {
+              const evTitle =
+                lang === 'el'
+                  ? ev.titleEl
+                  : lang === 'de'
+                    ? ev.titleDe
+                    : ev.titleEn;
+              const evDesc =
+                lang === 'el'
+                  ? ev.descriptionEl
+                  : lang === 'de'
+                    ? ev.descriptionDe
+                    : ev.descriptionEn;
+              const dloc = DATE_LOCALES[lang] ?? 'en-GB';
+              const dateStr = new Date(ev.date).toLocaleDateString(dloc, {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              });
+              const timeStr = new Date(ev.date).toLocaleTimeString(dloc, {
+                hour: '2-digit',
+                minute: '2-digit',
+              });
+              const capacity = ev.capacity;
+              const registered = ev.registeredCount ?? 0;
+              const spotsLeft = capacity != null ? capacity - registered : null;
+              return (
+                <li
+                  key={ev.id}
+                  className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/40"
+                >
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
+                    {evTitle}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                    {evDesc}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-4 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar size={14} aria-hidden="true" />
+                      {dateStr}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Clock size={14} aria-hidden="true" />
+                      {timeStr}
+                    </span>
+                    {ev.location && (
+                      <span className="flex items-center gap-1.5">
+                        <MapPin size={14} aria-hidden="true" />
+                        {ev.location}
+                      </span>
+                    )}
+                    {capacity != null && (
+                      <span className="flex items-center gap-1.5">
+                        <Users size={14} aria-hidden="true" />
+                        {registered}/{capacity}
+                      </span>
+                    )}
+                  </div>
+                  {(spotsLeft == null || spotsLeft > 0) && (
+                    <div className="mt-3 border-t border-gray-100 pt-3 dark:border-gray-700">
+                      <EventRegister
+                        eventId={ev.id}
+                        rewardPoints={ev.rewardPoints}
+                      />
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
     </div>
   );
 }

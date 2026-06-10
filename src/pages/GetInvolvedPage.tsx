@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { Award, ArrowRight } from 'lucide-react';
 import InitiativeTabs from '../components/engagement/InitiativeTabs';
 import TouristContribution from '../components/engagement/TouristContribution';
 import NewsletterSignup from '../components/ui/NewsletterSignup';
@@ -44,6 +46,29 @@ export default function GetInvolvedPage() {
 
       <div className="mt-12">
         <NewsletterSignup />
+      </div>
+
+      {/* Rewards is a CONSEQUENCE of participation, not a participation path — so it
+          lives here as a secondary link (and in the personal menu), not in the
+          main "Mitmachen" menu. */}
+      <div className="mt-12 rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-700 dark:bg-gray-800/50">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <Award
+              size={16}
+              aria-hidden="true"
+              className="text-amber-500 dark:text-amber-400"
+            />
+            {t('getInvolved.rewardsNote')}
+          </p>
+          <Link
+            to="/rewards"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-green-700 hover:underline dark:text-green-400"
+          >
+            {t('getInvolved.rewardsLink')}
+            <ArrowRight size={14} aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </div>
   );

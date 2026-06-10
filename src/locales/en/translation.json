@@ -444,7 +444,9 @@
     "imprint": "Imprint",
     "news": "News",
     "discover": "Discover",
-    "overview": "Overview"
+    "overview": "Overview",
+    "submitIdea": "Submit an idea",
+    "projectsEvents": "Projects & events"
   },
   "auth": {
     "login": "Login",
@@ -495,7 +497,8 @@
     "alreadyParticipating": "You are already participating in this project.",
     "filterStatus": "Status",
     "allStatuses": "All",
-    "source": "Source"
+    "source": "Source",
+    "eventsTitle": "Events for this project"
   },
   "rewards": {
     "title": "My Rewards",
@@ -854,7 +857,9 @@
       "invalidEmail": "Please enter a valid email address.",
       "success": "Thanks! In the full version you would now receive a confirmation email.",
       "prototypeNotice": "Prototype: no email is stored or sent. This illustrates the planned newsletter opt-in."
-    }
+    },
+    "rewardsNote": "Taking part earns recognition and rewards over time.",
+    "rewardsLink": "See the rewards programme"
   },
   "sdgDashboard": {
     "eyebrow": "UN Sustainable Development Goals",
@@ -1002,7 +1007,7 @@
     "eventsFound_other": "{{count}} events found",
     "noEventsMatch": "No events match your filter.",
     "showAll": "Show all events",
-    "relatedProject": "→ Related project",
+    "relatedProject": "→ Part of: {{project}}",
     "fullyBooked": "Fully booked",
     "spotsLeft_one": "{{count}} spot left",
     "spotsLeft_other": "{{count}} spots left",
@@ -1020,7 +1025,8 @@
       "success": "You're registered. See you there!",
       "successPoints": "You earned {{points}} points!",
       "error": "Registration failed. Please try again."
-    }
+    },
+    "demoNote": "Demo data: events and dates are illustrative examples, not official municipal fixtures."
   },
   "roadmap": {
     "title": "Platform Roadmap",
@@ -1306,5 +1312,21 @@
   "sdg": {
     "attribution": "Official UN SDG icons, used unmodified for information under the UN SDG guidelines —",
     "disclaimer": "The content of this publication has not been approved by the United Nations and does not reflect the views of the United Nations or its officials or Member States."
+  },
+  "adminEvents": {
+    "title": "Manage Events",
+    "create": "Create event",
+    "edit": "Edit event",
+    "cardSubtitle": "Create and schedule events",
+    "totalEvents": "Events",
+    "empty": "No events yet.",
+    "formDate": "Date & time",
+    "formCapacity": "Capacity",
+    "formUnlimited": "Unlimited",
+    "formProject": "Linked project",
+    "formNoProject": "— Standalone (no project) —",
+    "validationDateRequired": "Please choose a date and time.",
+    "deleteConfirm": "Delete this event? This cannot be undone.",
+    "delete": "Delete"
   }
 }

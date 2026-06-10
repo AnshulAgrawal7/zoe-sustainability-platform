@@ -137,7 +137,21 @@ können Sie nach Typ filtern (Neu / Abgeschlossen / Ankündigung).
 
 ---
 
-## 8. Plattform-Übersicht
+## 8. An Terminen teilnehmen
+
+Unter **Termine** (`/events`) finden Sie konkrete Veranstaltungen — Reinigungstage,
+Workshops, Foren. Nach Kategorie filterbar; bei vielen Terminen ist das zugehörige
+**Projekt** verlinkt (Termine erscheinen auch auf der jeweiligen Projekt-Detailseite).
+
+- **Eingeloggt:** Ein Klick auf **Anmelden** trägt Sie ein und Sie erhalten die
+  Punkte des Termins.
+- **Als Gast:** ohne Konto mit Name, E-Mail und Einwilligung anmelden (ohne Punkte —
+  ein Konto lohnt sich für die Punkte).
+- Eine Bestätigung wird direkt angezeigt; doppelte Anmeldungen sind nicht möglich.
+
+---
+
+## 9. Plattform-Übersicht
 
 | Seite | Beschreibung |
 |---|---|

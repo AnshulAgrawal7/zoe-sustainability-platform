@@ -444,7 +444,9 @@
     "imprint": "Impressum",
     "news": "Neuigkeiten",
     "discover": "Entdecken",
-    "overview": "Übersicht"
+    "overview": "Übersicht",
+    "submitIdea": "Idee einreichen",
+    "projectsEvents": "Projekte & Termine"
   },
   "auth": {
     "login": "Anmelden",
@@ -495,7 +497,8 @@
     "alreadyParticipating": "Sie nehmen bereits an diesem Projekt teil.",
     "filterStatus": "Status",
     "allStatuses": "Alle",
-    "source": "Quelle"
+    "source": "Quelle",
+    "eventsTitle": "Termine zu diesem Projekt"
   },
   "rewards": {
     "title": "Meine Belohnungen",
@@ -854,7 +857,9 @@
       "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
       "success": "Danke! In der Vollversion würden Sie nun eine Bestätigungs-E-Mail erhalten.",
       "prototypeNotice": "Prototyp: Es wird keine E-Mail gespeichert oder versendet. Dies veranschaulicht das geplante Newsletter-Opt-in."
-    }
+    },
+    "rewardsNote": "Mitmachen bringt mit der Zeit Anerkennung und Belohnungen.",
+    "rewardsLink": "Zum Belohnungsprogramm"
   },
   "sdgDashboard": {
     "eyebrow": "UN-Ziele für nachhaltige Entwicklung",
@@ -1002,7 +1007,7 @@
     "eventsFound_other": "{{count}} Veranstaltungen gefunden",
     "noEventsMatch": "Keine Veranstaltungen passen zu Ihrem Filter.",
     "showAll": "Alle Veranstaltungen anzeigen",
-    "relatedProject": "→ Zugehöriges Projekt",
+    "relatedProject": "→ Teil von: {{project}}",
     "fullyBooked": "Ausgebucht",
     "spotsLeft_one": "{{count}} Platz frei",
     "spotsLeft_other": "{{count}} Plätze frei",
@@ -1020,7 +1025,8 @@
       "success": "Du bist angemeldet. Bis bald!",
       "successPoints": "Du hast {{points}} Punkte erhalten!",
       "error": "Anmeldung fehlgeschlagen. Bitte versuche es erneut."
-    }
+    },
+    "demoNote": "Demodaten: Termine und Daten sind illustrative Beispiele, keine amtlichen Veranstaltungen."
   },
   "roadmap": {
     "title": "Plattform-Roadmap",
@@ -1306,5 +1312,21 @@
   "sdg": {
     "attribution": "Offizielle UN-SDG-Icons, unverändert und zu Informationszwecken gemäß den UN-SDG-Richtlinien verwendet —",
     "disclaimer": "Die Inhalte dieser Veröffentlichung wurden nicht von den Vereinten Nationen genehmigt und geben nicht die Ansichten der Vereinten Nationen, ihrer Bediensteten oder Mitgliedstaaten wieder."
+  },
+  "adminEvents": {
+    "title": "Termine verwalten",
+    "create": "Termin anlegen",
+    "edit": "Termin bearbeiten",
+    "cardSubtitle": "Termine anlegen und planen",
+    "totalEvents": "Termine",
+    "empty": "Noch keine Termine.",
+    "formDate": "Datum & Uhrzeit",
+    "formCapacity": "Kapazität",
+    "formUnlimited": "Unbegrenzt",
+    "formProject": "Verknüpftes Projekt",
+    "formNoProject": "— Eigenständig (kein Projekt) —",
+    "validationDateRequired": "Bitte Datum und Uhrzeit wählen.",
+    "deleteConfirm": "Diesen Termin löschen? Das kann nicht rückgängig gemacht werden.",
+    "delete": "Löschen"
   }
 }

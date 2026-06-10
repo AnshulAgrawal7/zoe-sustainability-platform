@@ -34,6 +34,9 @@ import ManageIdeasPage from '../pages/admin/ManageIdeasPage';
 import ManagePostsPage from '../pages/admin/ManagePostsPage';
 import NewProjectPage from '../pages/admin/NewProjectPage';
 import EditProjectPage from '../pages/admin/EditProjectPage';
+import ManageEventsPage from '../pages/admin/ManageEventsPage';
+import NewEventPage from '../pages/admin/NewEventPage';
+import EditEventPage from '../pages/admin/EditEventPage';
 import AccessibilityPage from '../pages/AccessibilityPage';
 import PrivacyPage from '../pages/PrivacyPage';
 import ImprintPage from '../pages/ImprintPage';
@@ -144,6 +147,30 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <EditProjectPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/events',
+        element: (
+          <AdminRoute>
+            <ManageEventsPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/events/new',
+        element: (
+          <AdminRoute>
+            <NewEventPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/events/:id/edit',
+        element: (
+          <AdminRoute>
+            <EditEventPage />
           </AdminRoute>
         ),
       },

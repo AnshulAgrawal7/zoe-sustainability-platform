@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Users, Folder, BarChart2, ArrowRight } from 'lucide-react';
+import {
+  Users,
+  Folder,
+  BarChart2,
+  CalendarDays,
+  ArrowRight,
+} from 'lucide-react';
 import { api } from '../../services/api';
 import type { ApiResponse } from '../../types';
 
@@ -10,6 +16,7 @@ interface Stats {
   totalProjects: number;
   totalParticipations: number;
   openProjects: number;
+  totalEvents: number;
   projectsByCategory: { category: string; _count: { id: number } }[];
 }
 
@@ -64,6 +71,12 @@ export default function AdminDashboardPage() {
                 icon: Folder,
                 color: 'amber',
               },
+              {
+                label: t('adminEvents.totalEvents'),
+                value: stats.totalEvents,
+                icon: CalendarDays,
+                color: 'teal',
+              },
             ].map(({ label, value, icon: Icon, color }) => (
               <div
                 key={label}
@@ -114,6 +127,20 @@ export default function AdminDashboardPage() {
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400">
               {t('admin.changeRole')}
+            </p>
+          </div>
+          <ArrowRight className="h-5 w-5 text-gray-400" aria-hidden="true" />
+        </Link>
+        <Link
+          to="/admin/events"
+          className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-green-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700"
+        >
+          <div>
+            <p className="font-semibold text-gray-900 dark:text-white">
+              {t('adminEvents.title')}
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {t('adminEvents.cardSubtitle')}
             </p>
           </div>
           <ArrowRight className="h-5 w-5 text-gray-400" aria-hidden="true" />

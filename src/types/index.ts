@@ -66,15 +66,34 @@ export interface TransparencyMetric {
   unit: string;
 }
 
-// Text (title/description/location) is translated — see i18n: eventData.<id>.*
-export interface Event {
+// Event as served by the backend (trilingual, like ApiProject). `date` is an ISO
+// string; `registeredCount` is derived from EventRegistration; `project` is the
+// optional parent initiative.
+export interface ApiEventProjectRef {
   id: string;
-  category: ProjectCategory;
+  titleEn: string;
+  titleEl: string;
+  titleDe: string;
+  category: ApiProjectCategory;
+}
+
+export interface ApiEvent {
+  id: string;
+  titleEn: string;
+  titleEl: string;
+  titleDe: string;
+  descriptionEn: string;
+  descriptionEl: string;
+  descriptionDe: string;
   date: string;
-  time: string;
-  participantsMax: number;
-  participantsRegistered: number;
-  projectId?: string;
+  location: string | null;
+  category: ApiProjectCategory;
+  rewardPoints: number;
+  capacity: number | null;
+  projectId: string | null;
+  project?: ApiEventProjectRef | null;
+  registeredCount?: number;
+  createdAt: string;
 }
 
 // Text (label/unit/description) is translated — see i18n: impactMetrics.<id>.*

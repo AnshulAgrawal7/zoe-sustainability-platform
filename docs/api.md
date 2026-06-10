@@ -126,6 +126,42 @@ Withdraw from a project (deducts points). **USER auth required.**
 
 ---
 
+## Events (`/api/events`)
+
+An event is a concrete, dated appointment that optionally belongs to a project
+(`projectId`, nullable) or stands alone. Trilingual; `category` reuses the
+project categories. Attendance is stored in `EventRegistration` (the `eventId` is
+a deliberately soft reference — no FK — so historical RSVPs are preserved).
+
+### GET /events
+Public list. Query filters: `category` (project category), `projectId`,
+`upcoming=true` (date ≥ now). Each event includes the linked `project`
+(id + trilingual titles + category) and a derived `registeredCount`.
+
+**Response 200:**
+```json
+{ "success": true, "data": { "events": [ { "id": "evt-…", "titleEn": "…", "date": "2026-07-12T09:00:00.000Z", "category": "ENVIRONMENT", "rewardPoints": 25, "capacity": 80, "projectId": "proj-marine", "project": { "id": "proj-marine", "titleEn": "…" }, "registeredCount": 12 } ] } }
+```
+
+### GET /events/:id
+Public detail (same shape as a list item).
+
+### POST /events/:id/join
+Logged-in attendance: earns the event's `rewardPoints`, grants threshold badges.
+**USER auth required.**
+
+**Response 201:** `{ "success": true, "data": { "id": "…", "pointsAwarded": 25, "guest": false } }`  
+**Error 409:** Already registered.  **Error 403:** Fully booked.  **Error 404:** Event not found.
+
+### POST /events/:eventId/register
+Open RSVP (rate-limited). Logged-in users earn points; **guests** pass
+`guestName` + `guestEmail` + `consent:true` and earn none. `optionalAuth`.
+
+### GET /events/:eventId/count
+Public registration count: `{ "success": true, "data": { "count": 12 } }`.
+
+---
+
 ## Users (`/api/users`)
 
 ### GET /users/me
@@ -186,7 +222,7 @@ Dashboard statistics.
   "success": true,
   "data": {
     "totalUsers": 4, "totalProjects": 8, "totalParticipations": 7,
-    "openProjects": 8, "projectsByCategory": [...]
+    "openProjects": 8, "totalEvents": 9, "projectsByCategory": [...]
   }
 }
 ```
@@ -222,6 +258,18 @@ the key is missing the endpoint returns `503 translation_not_configured`.
 }
 ```
 Errors: `400` (invalid `sourceLang`/fields, field too long), `503 translation_not_configured` (no key).
+
+### POST /admin/events
+Create an event. **ADMIN auth required.** Body: trilingual `title*`/`description*`,
+`date` (ISO 8601), `category` (project category), optional `location`,
+`rewardPoints`, `capacity`, `projectId` (validated to exist if given).
+
+### PATCH /admin/events/:id
+Update an event (partial). **ADMIN auth required.**
+
+### DELETE /admin/events/:id
+Delete an event. **ADMIN auth required.** RSVPs keep their soft `eventId` and are
+not cascaded.
 
 ### POST /admin/schools
 Create a school, optionally with a coordinator login (role `SCHOOL`).

@@ -62,6 +62,34 @@ model Project {
   createdById    String
   participations Participation[]
   posts          Post[]
+  events         Event[]
+}
+
+// A concrete, dated event/appointment (e.g. a beach cleanup on 12.07.). Belongs
+// OPTIONALLY to a Project (one project has many events) or stands alone
+// (projectId null). Trilingual like Project. `category` reuses PROJECT_CATEGORIES
+// (validated at the application layer, see constants.ts). Attendance is tracked in
+// EventRegistration (logged-in users earn `rewardPoints`, guests earn none).
+model Event {
+  id            String   @id @default(cuid())
+  titleEn       String
+  titleEl       String
+  titleDe       String
+  descriptionEn String
+  descriptionEl String
+  descriptionDe String
+  date          DateTime
+  location      String?
+  category      String
+  rewardPoints  Int      @default(20)
+  capacity      Int?
+  projectId     String?
+  project       Project? @relation(fields: [projectId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([projectId])
+  @@index([date])
 }
 
 // News / blog feed. Auto-created when a project goes live (OPEN) or is completed,
@@ -96,11 +124,15 @@ model Participation {
   @@unique([userId, projectId])
 }
 
-// Event RSVP. Events are prototype content (src/data/events.ts), referenced by
-// string `eventId`. Registration is open WITHOUT an account to lower the barrier:
-// guests provide name + email + consent (no points). Logged-in users register via
-// `userId` and earn points. NULL userId rows (guests) are unconstrained by the
-// unique index (Postgres treats NULLs as distinct), so many guests may register.
+// Event RSVP. `eventId` is a DELIBERATELY SOFT reference to Event.id (no enforced
+// FK): the Event model was introduced later and a hard FK on this pre-existing
+// column would reject historical rows, so existence is validated at the
+// application layer instead (see eventController). Seeded events reuse the legacy
+// `evt-*` ids, so older registrations stay meaningfully linked.
+// Registration is open WITHOUT an account to lower the barrier: guests provide
+// name + email + consent (no points). Logged-in users register via `userId` and
+// earn points. NULL userId rows (guests) are unconstrained by the unique index
+// (Postgres treats NULLs as distinct), so many guests may register.
 model EventRegistration {
   id            String   @id @default(cuid())
   eventId       String

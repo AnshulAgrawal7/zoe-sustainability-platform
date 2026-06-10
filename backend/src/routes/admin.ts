@@ -3,9 +3,10 @@ import { body } from 'express-validator';
 import { getAllUsers, updateUserRole, getStats } from '../controllers/adminController';
 import { translateProjectFields } from '../controllers/translationController';
 import { getIdeas, updateIdeaStatus } from '../controllers/ideaController';
+import { createEvent, updateEvent, deleteEvent } from '../controllers/eventController';
 import { authenticate } from '../middleware/auth';
 import { adminOnly } from '../middleware/adminOnly';
-import { IDEA_STATUSES } from '../constants';
+import { IDEA_STATUSES, PROJECT_CATEGORIES } from '../constants';
 
 const router = Router();
 
@@ -31,5 +32,35 @@ router.patch(
   [body('status').isIn([...IDEA_STATUSES])],
   updateIdeaStatus
 );
+
+// --- Events (admin CRUD; public read lives on /api/events) ---
+const eventCreateValidators = [
+  body('titleEn').trim().notEmpty(),
+  body('titleEl').trim().notEmpty(),
+  body('titleDe').trim().notEmpty(),
+  body('descriptionEn').trim().notEmpty(),
+  body('descriptionEl').trim().notEmpty(),
+  body('descriptionDe').trim().notEmpty(),
+  body('date').isISO8601(),
+  body('category').isIn([...PROJECT_CATEGORIES]),
+  body('rewardPoints').optional().isInt({ min: 0 }),
+  body('capacity').optional({ values: 'null' }).isInt({ min: 1 }),
+  body('projectId').optional({ values: 'falsy' }).isString(),
+  body('location').optional({ values: 'falsy' }).trim().isLength({ max: 200 }),
+];
+
+const eventUpdateValidators = [
+  body('titleEn').optional().trim().notEmpty(),
+  body('titleEl').optional().trim().notEmpty(),
+  body('titleDe').optional().trim().notEmpty(),
+  body('date').optional().isISO8601(),
+  body('category').optional().isIn([...PROJECT_CATEGORIES]),
+  body('rewardPoints').optional().isInt({ min: 0 }),
+  body('capacity').optional({ values: 'null' }).isInt({ min: 1 }),
+];
+
+router.post('/events', eventCreateValidators, createEvent);
+router.patch('/events/:id', eventUpdateValidators, updateEvent);
+router.delete('/events/:id', deleteEvent);
 
 export default router;

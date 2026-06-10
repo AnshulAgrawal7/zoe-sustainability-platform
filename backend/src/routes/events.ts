@@ -1,11 +1,16 @@
 import { Router } from 'express';
-import { body } from 'express-validator';
+import { body, query } from 'express-validator';
 import rateLimit from 'express-rate-limit';
 import {
+  getEvents,
+  getEvent,
+  joinEvent,
   registerForEvent,
   getEventRegistrationCount,
 } from '../controllers/eventController';
+import { authenticate } from '../middleware/auth';
 import { optionalAuth } from '../middleware/optionalAuth';
+import { PROJECT_CATEGORIES } from '../constants';
 
 const router = Router();
 
@@ -17,8 +22,23 @@ const registerLimiter = rateLimit({
   message: { success: false, error: 'Too many requests, please try again later' },
 });
 
+// --- Public read ---
+router.get(
+  '/',
+  [
+    query('category').optional().isIn([...PROJECT_CATEGORIES]),
+    query('projectId').optional().isString(),
+    query('upcoming').optional().isBoolean(),
+  ],
+  getEvents
+);
+
 router.get('/:eventId/count', getEventRegistrationCount);
 
+// --- Logged-in attendance (earns the event's reward points) ---
+router.post('/:id/join', authenticate, joinEvent);
+
+// --- Open RSVP (guests: name + email + consent, no points) ---
 router.post(
   '/:eventId/register',
   registerLimiter,
@@ -30,5 +50,8 @@ router.post(
   ],
   registerForEvent
 );
+
+// Keep the detail route last so it does not shadow the sub-paths above.
+router.get('/:id', getEvent);
 
 export default router;

@@ -139,3 +139,21 @@ Der Neuigkeiten-Feed (`/news` + Startseite) speist sich aus Beiträgen.
   (`Ankündigung` / `Neues Projekt` / `Abgeschlossen`), optional Bild-URL.
 - **Veröffentlicht**-Häkchen steuert die Sichtbarkeit. Auto-Beiträge sind ganz normal
   **bearbeitbar/löschbar**.
+
+## 10. Termine verwalten (`/admin/events`)
+
+Termine (Events) sind konkrete, datierte Aktivitäten, die **optional zu einem
+Projekt** gehören (ein Projekt → mehrere Termine) oder eigenständig sind.
+
+- **Anlegen** (`/admin/events/new`): Titel + Beschreibung in EN/EL/DE (der
+  **Übersetzen-Button** mit DeepL füllt aus einer Sprache die anderen beiden),
+  **Datum & Uhrzeit**, **Kategorie** (gleiche Liste wie Projekte/Ideen),
+  Punkte, optional **Kapazität** und **verknüpftes Projekt** (Auswahl; leer =
+  eigenständig).
+- **Bearbeiten/Löschen** (`/admin/events/:id/edit`): Felder ändern oder den Termin
+  löschen. Bestehende Anmeldungen behalten ihren Bezug (kein harter Fremdschlüssel).
+- Verknüpfte Termine erscheinen automatisch auf der **Projekt-Detailseite**
+  („Termine zu diesem Projekt") und auf der öffentlichen **Termine-Seite**
+  (`/events`).
+- Teilnahme: eingeloggte Nutzer:innen erhalten die Punkte des Termins; Gäste melden
+  sich mit Name/E-Mail/Einwilligung an (ohne Punkte).

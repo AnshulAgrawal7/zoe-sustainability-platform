@@ -98,6 +98,83 @@ async function main() {
     makeProject('proj-water-quality', 'Drinking Water Quality Monitoring', 'Παρακολούθηση Ποιότητας Πόσιμου Νερού', 'Trinkwasserqualitäts-Monitoring', 'Monitoring of drinking-water quality and protection of freshwater sources across North Corfu, including the Agios Panteleimon basin.', 'Παρακολούθηση ποιότητας πόσιμου νερού και προστασία πηγών γλυκού νερού στη Βόρεια Κέρκυρα, μεταξύ άλλων στη λεκάνη Αγίου Παντελεήμονα.', 'Überwachung der Trinkwasserqualität und Schutz der Süßwasserquellen in Nordkorfu, u. a. im Becken von Agios Panteleimon.', [6, 11], 'ENVIRONMENT', 45, 'Northern Corfu'),
   ]);
 
+  // --- Demo events (concrete dates for the real projects above). DEMO/PROGRAMME
+  // DATA: plausible illustrative dates, not official municipal fixtures. Ids reuse
+  // the legacy `evt-*` keys so any historical EventRegistration rows stay linked.
+  const makeEvent = (
+    id: string,
+    titleEn: string, titleEl: string, titleDe: string,
+    descEn: string, descEl: string, descDe: string,
+    date: string, location: string, category: string,
+    projectId: string | null, rewardPoints = 20, capacity: number | null = null,
+  ) =>
+    prisma.event.upsert({
+      where: { id },
+      update: {},
+      create: {
+        id, titleEn, titleEl, titleDe,
+        descriptionEn: descEn, descriptionEl: descEl, descriptionDe: descDe,
+        date: new Date(date), location, category, rewardPoints, capacity, projectId,
+      },
+    });
+
+  await Promise.all([
+    makeEvent('evt-cleanup-jun25',
+      'Northern Coastline Cleanup Day', 'Ημέρα Καθαρισμού Βόρειας Ακτής', 'Küstenreinigungstag Nordkorfu',
+      'Monthly coastal cleanup with ARCHELON volunteers. Equipment and a citizen-science litter sheet provided; communal breakfast afterwards. All ages welcome.',
+      'Μηνιαίος παράκτιος καθαρισμός με εθελοντές του ΑΡΧΕΛΩΝ. Παρέχονται εξοπλισμός και φύλλο καταγραφής απορριμμάτων· κοινό πρωινό μετά. Για όλες τις ηλικίες.',
+      'Monatliche Küstenreinigung mit ARCHELON-Freiwilligen. Ausrüstung und Citizen-Science-Bogen werden gestellt; gemeinsames Frühstück danach. Für alle Altersgruppen.',
+      '2026-07-12T09:00:00.000Z', 'Kassiopi Beach, North Corfu', 'ENVIRONMENT', 'proj-marine', 25, 80),
+    makeEvent('evt-cleanup-jul25',
+      'Second Coastline Cleanup', 'Δεύτερος Παράκτιος Καθαρισμός', 'Zweite Küstenreinigung',
+      'Follow-up cleanup along the Almyros stretch, focusing on micro-litter and ghost nets. Boats provided by local fishers.',
+      'Συνέχεια καθαρισμού στην παραλία Αλμυρού, με έμφαση στα μικροαπορρίμματα και τα εγκαταλελειμμένα δίχτυα. Σκάφη από τοπικούς αλιείς.',
+      'Folge-Reinigung am Strandabschnitt Almyros mit Fokus auf Mikromüll und Geisternetze. Boote von lokalen Fischer:innen.',
+      '2026-07-19T09:00:00.000Z', 'Almyros Beach, North Corfu', 'ENVIRONMENT', 'proj-marine', 25, 60),
+    makeEvent('evt-biodiversity-workshop',
+      'Wetland Biodiversity Walk', 'Περιήγηση Βιοποικιλότητας Υγροτόπου', 'Biodiversitäts-Spaziergang im Feuchtgebiet',
+      'Guided walk around the Antinioti Lagoon to identify wetland birds and plants. Led by local naturalists; binoculars provided.',
+      'Καθοδηγούμενη περιήγηση στη Λιμνοθάλασσα Αντινιώτη για αναγνώριση πτηνών και φυτών. Με τοπικούς φυσιοδίφες· παρέχονται κιάλια.',
+      'Geführter Rundgang an der Antinioti-Lagune zur Bestimmung von Vögeln und Pflanzen. Mit lokalen Naturkundigen; Ferngläser werden gestellt.',
+      '2026-07-26T08:30:00.000Z', 'Antinioti Lagoon, NE Corfu', 'ENVIRONMENT', 'proj-antinioti', 20, 25),
+    makeEvent('evt-recycling-hub',
+      'Recycling Hub Open Day', 'Ημέρα Ανοιχτών Θυρών Κέντρου Ανακύκλωσης', 'Tag der offenen Tür im Recycling-Hub',
+      'Tour the municipal sorting hub, see the 20 recycling streams in action and join sorting games for children.',
+      'Ξενάγηση στο δημοτικό κέντρο διαλογής, παρουσίαση των 20 ρευμάτων ανακύκλωσης και παιχνίδια διαλογής για παιδιά.',
+      'Führung durch das kommunale Sortierzentrum, die 20 Wertstoffströme in Aktion und Sortierspiele für Kinder.',
+      '2026-08-02T11:00:00.000Z', 'Municipal Hub, North Corfu', 'COMMUNITY', 'proj-circular', 20, 150),
+    makeEvent('evt-composting-expansion',
+      'Community Composting Planning', 'Σχεδιασμός Κοινοτικής Κομποστοποίησης', 'Planung der Gemeinschaftskompostierung',
+      'Open planning meeting for villages joining the next composting wave. Hear the pilot results and register interest.',
+      'Ανοιχτή συνάντηση σχεδιασμού για χωριά που εντάσσονται στο επόμενο κύμα κομποστοποίησης. Αποτελέσματα πιλότου και δήλωση ενδιαφέροντος.',
+      'Offenes Planungstreffen für Dörfer der nächsten Kompostierungswelle. Pilot-Ergebnisse und Interessenbekundung.',
+      '2026-08-23T18:30:00.000Z', 'Town Hall, North Corfu', 'COMMUNITY', 'proj-circular', 20, 80),
+    makeEvent('evt-water-monitoring',
+      'Citizen Water Monitor Training', 'Εκπαίδευση Εθελοντών Παρακολούθησης Νερού', 'Schulung Wasser-Monitoring',
+      'Full-day training for new volunteer water-quality monitors: test kits, GPS data entry and the reporting protocol. Certification on completion.',
+      'Ολοήμερη εκπαίδευση νέων εθελοντών: κιτ ελέγχου, καταχώριση GPS και πρωτόκολλο αναφοράς. Πιστοποίηση με την ολοκλήρωση.',
+      'Ganztägige Schulung für neue Freiwillige: Testkits, GPS-Dateneingabe und Meldeprotokoll. Zertifikat nach Abschluss.',
+      '2026-08-30T08:30:00.000Z', 'Acharavi, North Corfu', 'ENVIRONMENT', 'proj-water-quality', 30, 15),
+    makeEvent('evt-reforestation-day',
+      'Reforestation Volunteer Day', 'Ημέρα Εθελοντικής Αναδάσωσης', 'Aufforstungs-Freiwilligentag',
+      'Plant native trees on a fire-affected slope near the Nymfes waterfalls. Tools and saplings provided.',
+      'Φύτευση ιθαγενών δέντρων σε πληγείσα από πυρκαγιά πλαγιά κοντά στους καταρράκτες Νυμφών. Παρέχονται εργαλεία και δενδρύλλια.',
+      'Pflanzung heimischer Bäume an einem brandgeschädigten Hang nahe den Nymfes-Wasserfällen. Werkzeug und Setzlinge gestellt.',
+      '2026-09-13T09:00:00.000Z', 'Nymfes, North Corfu', 'ENVIRONMENT', 'proj-natural-monuments', 25, 50),
+    makeEvent('evt-youth-eco',
+      'Youth Eco Workshop', 'Εργαστήριο Νέων για το Περιβάλλον', 'Jugend-Umweltworkshop',
+      'Hands-on sustainability workshop for secondary students with the Ionian University. Project ideas pitched by youth teams.',
+      'Πρακτικό εργαστήριο βιωσιμότητας για μαθητές με το Ιόνιο Πανεπιστήμιο. Ομάδες νέων παρουσιάζουν ιδέες έργων.',
+      'Praxis-Nachhaltigkeitsworkshop für Schüler:innen mit der Ionischen Universität. Jugendteams stellen Projektideen vor.',
+      '2026-09-20T09:00:00.000Z', 'Ionian University, Corfu', 'EDUCATION', 'proj-education', 20, 30),
+    makeEvent('evt-sdg-forum',
+      'Annual ZOE SDG Forum', 'Ετήσιο Φόρουμ SDG του ZOE', 'Jährliches ZOE-SDG-Forum',
+      'Public forum on ZOE programme results, SDG progress and community priorities for next year. All citizens welcome; translation available.',
+      'Δημόσιο φόρουμ για τα αποτελέσματα του ZOE, την πρόοδο SDG και τις προτεραιότητες της κοινότητας. Ανοιχτό σε όλους· διαθέσιμη μετάφραση.',
+      'Öffentliches Forum zu ZOE-Ergebnissen, SDG-Fortschritt und Prioritäten. Alle Bürger:innen willkommen; Übersetzung verfügbar.',
+      '2026-09-27T09:00:00.000Z', 'Kassiopi Community Hall', 'COMMUNITY', null, 30, 200),
+  ]);
+
   // Participations
   const upsertParticipation = (userId: string, projectId: string, points: number) =>
     prisma.participation.upsert({

@@ -50,6 +50,9 @@ Browser (React SPA)
 | `/admin/projects` | ManageProjectsPage | ADMIN |
 | `/admin/projects/new` | NewProjectPage | ADMIN |
 | `/admin/projects/:id/edit` | EditProjectPage | ADMIN |
+| `/admin/events` | ManageEventsPage | ADMIN |
+| `/admin/events/new` | NewEventPage | ADMIN |
+| `/admin/events/:id/edit` | EditEventPage | ADMIN |
 | `/admin/users` | ManageUsersPage | ADMIN |
 | `/admin/schools` | ManageSchoolsPage | ADMIN |
 | `/admin/posts` | ManagePostsPage | ADMIN |
@@ -73,6 +76,14 @@ Full documentation: `docs/api.md`
 | `DELETE /api/projects/:id` | Close project | ADMIN |
 | `POST /api/projects/:id/participate` | Join project | USER |
 | `DELETE /api/projects/:id/participate` | Withdraw | USER |
+| `GET /api/events` | List events (filter category/projectId/upcoming) | — |
+| `GET /api/events/:id` | Get event | — |
+| `POST /api/events/:id/join` | Join event (earn points) | USER |
+| `POST /api/events/:eventId/register` | Open RSVP (guest/user) | optional |
+| `GET /api/events/:eventId/count` | Registration count | — |
+| `POST /api/admin/events` | Create event | ADMIN |
+| `PATCH /api/admin/events/:id` | Edit event | ADMIN |
+| `DELETE /api/admin/events/:id` | Delete event | ADMIN |
 | `GET /api/users/me` | Own profile | USER |
 | `PUT /api/users/me` | Update profile | USER |
 | `GET /api/users/me/badges` | Own badges | USER |
@@ -113,7 +124,12 @@ School
 Project
   id, titleEn, titleEl, titleDe, descriptionEn, descriptionEl, descriptionDe
   sdgIds (JSON string), category, status, rewardPoints, location, maxParticipants
-  → participations[], createdBy(User), posts[]
+  → participations[], createdBy(User), posts[], events[]
+
+Event   // concrete dated appointment; optional parent project (1 project → N events)
+  id, titleEn/El/De, descriptionEn/El/De, date (DateTime), location?,
+  category (project category), rewardPoints, capacity?, projectId?
+  → project(Project?)   // real FK (nullable, ON DELETE SET NULL)
 
 Post   // news/blog; auto-created on project OPEN/COMPLETED or written by admin
   id, type (PROJECT_NEW|PROJECT_COMPLETED|ANNOUNCEMENT)
@@ -123,6 +139,11 @@ Post   // news/blog; auto-created on project OPEN/COMPLETED or written by admin
 Participation
   id, userId, projectId, joinedAt, pointsAwarded
   UNIQUE(userId, projectId)
+
+EventRegistration   // attendance/RSVP
+  id, eventId (SOFT ref to Event.id — no FK), userId?, guestName?, guestEmail?,
+  pointsAwarded, createdAt
+  UNIQUE(userId, eventId)   // logged-in users; guests (null userId) unconstrained
 
 Badge
   id, nameEn, nameEl, nameDe, descEn, descEl, descDe, iconName, threshold
@@ -156,6 +177,21 @@ RefreshToken
   project's existing EN/EL/DE fields, so **no extra translation call** is needed.
   Manual posts reuse the existing DeepL `/admin/translate` panel.
 - Auto-creation is **non-blocking** (failures never break project create/update).
+
+### ADR — Events as an entity with a soft RSVP link
+
+- An **`Event`** is a concrete dated appointment that optionally belongs to a
+  **`Project`** (`projectId`, real nullable FK) so one initiative groups many
+  dated activities; standalone events keep `projectId = null`.
+- **`EventRegistration.eventId` stays a soft string reference (no FK).** The RSVP
+  table predates the `Event` model; adding a hard FK would have rejected
+  historical rows on migration. Existence is validated at the application layer
+  (the `join` route 404s on unknown events), and seeded events reuse the legacy
+  `evt-*` ids so older RSVPs stay linked — an **additive, loss-free** migration.
+- **Two participation paths kept:** `POST /events/:id/join` (logged-in, earns the
+  event's `rewardPoints`, mirrors project participation incl. badges) and the
+  existing open `POST /events/:eventId/register` (guests: name+email+consent, no
+  points). `category` reuses the single `PROJECT_CATEGORIES` source.
 
 ---
 

@@ -44,16 +44,17 @@ export async function updateUserRole(req: AuthRequest, res: Response) {
 
 export async function getStats(_req: AuthRequest, res: Response) {
   try {
-    const [totalUsers, totalProjects, totalParticipations, openProjects, projectsByCategory] =
+    const [totalUsers, totalProjects, totalParticipations, openProjects, totalEvents, projectsByCategory] =
       await Promise.all([
         prisma.user.count(),
         prisma.project.count(),
         prisma.participation.count(),
         prisma.project.count({ where: { status: 'OPEN' } }),
+        prisma.event.count(),
         prisma.project.groupBy({ by: ['category'], _count: { id: true } }),
       ]);
 
-    ok(res, { totalUsers, totalProjects, totalParticipations, openProjects, projectsByCategory });
+    ok(res, { totalUsers, totalProjects, totalParticipations, openProjects, totalEvents, projectsByCategory });
   } catch {
     serverError(res);
   }

@@ -31,8 +31,8 @@ export default function Header() {
     {
       label: t('nav.participate'),
       links: [
-        { to: '/get-involved', label: t('nav.overview') },
-        { to: '/rewards', label: t('nav.rewards') },
+        { to: '/participate', label: t('nav.submitIdea') },
+        { to: '/get-involved', label: t('nav.projectsEvents') },
       ],
     },
   ];

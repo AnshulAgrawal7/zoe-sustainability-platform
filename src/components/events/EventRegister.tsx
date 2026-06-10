@@ -2,19 +2,22 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight, Check, Loader2 } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
-import { registerForEvent } from '../../services/eventService';
-
-// Mirrors EVENT_POINTS on the backend — used only for the "you'll earn X" hint.
-const EVENT_POINTS = 20;
+import { joinEvent, registerForEvent } from '../../services/eventService';
 
 interface EventRegisterProps {
   eventId: string;
+  // The event's own reward (logged-in users earn this on join). Default mirrors
+  // the backend EVENT_POINTS fallback.
+  rewardPoints?: number;
 }
 
 // Event RSVP that works WITHOUT an account to lower the participation barrier:
-// logged-in users register in one click and earn points; guests provide name +
-// email + consent and earn none.
-export default function EventRegister({ eventId }: EventRegisterProps) {
+// logged-in users join in one click and earn the event's points; guests provide
+// name + email + consent and earn none.
+export default function EventRegister({
+  eventId,
+  rewardPoints = 20,
+}: EventRegisterProps) {
   const { t } = useTranslation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const user = useAuthStore((s) => s.user);
@@ -32,12 +35,13 @@ export default function EventRegister({ eventId }: EventRegisterProps) {
     setError('');
     setLoading(true);
     try {
-      const result = await registerForEvent(
-        eventId,
-        asGuest
-          ? { guestName: name.trim(), guestEmail: email.trim(), consent }
-          : undefined
-      );
+      const result = asGuest
+        ? await registerForEvent(eventId, {
+            guestName: name.trim(),
+            guestEmail: email.trim(),
+            consent,
+          })
+        : await joinEvent(eventId);
       if (!asGuest && result.pointsAwarded && user) {
         updateUser({ points: user.points + result.pointsAwarded });
       }
@@ -93,7 +97,7 @@ export default function EventRegister({ eventId }: EventRegisterProps) {
           )}
         </button>
         <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-          {t('events.rsvp.loginPerk', { points: EVENT_POINTS })}
+          {t('events.rsvp.loginPerk', { points: rewardPoints })}
         </p>
         {error && (
           <p
