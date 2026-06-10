@@ -46,6 +46,8 @@ export interface Project {
   category: ApiProjectCategory; // canonical 5-value taxonomy (consistent with /projects API)
   status: ProjectStatus;
   location: string;
+  lat?: number;
+  lng?: number;
   description: string;
   problem: string;
   expectedImpact: string;
@@ -189,6 +191,8 @@ export interface ApiProject {
   status: ApiProjectStatus;
   rewardPoints: number;
   location: string | null;
+  lat: number | null;
+  lng: number | null;
   maxParticipants: number | null;
   imageUrl: string | null;
   sourceNote: string | null;

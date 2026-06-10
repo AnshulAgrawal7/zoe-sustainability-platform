@@ -4,7 +4,20 @@ import { Award, ArrowRight } from 'lucide-react';
 import InitiativeTabs from '../components/engagement/InitiativeTabs';
 import TouristContribution from '../components/engagement/TouristContribution';
 import NewsletterSignup from '../components/ui/NewsletterSignup';
+import ProjectMap, { type MapPoint } from '../components/map/ProjectMap';
 import { projects } from '../data/projects';
+
+// Fallback-data points (this page uses the static catalogue, no backend call).
+const mapPoints: MapPoint[] = projects
+  .filter((p) => p.lat != null && p.lng != null)
+  .map((p) => ({
+    id: p.id,
+    title: p.title,
+    category: p.category,
+    sdgs: p.sdgs,
+    lat: p.lat as number,
+    lng: p.lng as number,
+  }));
 
 /**
  * "Get Involved" — additive page (Iteration 7) bundling three additive,
@@ -38,6 +51,17 @@ export default function GetInvolvedPage() {
         <div className="mt-6">
           <InitiativeTabs projects={projects} />
         </div>
+      </section>
+
+      {/* Compact map of the initiatives (Z1 central info / Z5 local identity).
+          The <section> is intentionally NOT a landmark (no accessible name) — the
+          ProjectMap's role="region" already carries the name, so this avoids a
+          duplicate-landmark axe violation. */}
+      <section className="mt-12">
+        <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+          {t('map.ariaLabel')}
+        </h2>
+        <ProjectMap points={mapPoints} />
       </section>
 
       <div className="mt-12">

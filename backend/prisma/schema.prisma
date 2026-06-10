@@ -52,6 +52,8 @@ model Project {
   rewardPoints    Int       @default(50)
   imageUrl        String?
   location        String?
+  lat             Float? // optional map coordinate (WGS84); paired with lng
+  lng             Float?
   startDate       DateTime?
   endDate         DateTime?
   sourceNote      String? // provenance, e.g. "Verde.tec 2026 / life-news.gr" (programme fact, not measured impact)

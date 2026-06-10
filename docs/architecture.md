@@ -123,7 +123,8 @@ School
 
 Project
   id, titleEn, titleEl, titleDe, descriptionEn, descriptionEl, descriptionDe
-  sdgIds (JSON string), category, status, rewardPoints, location, maxParticipants
+  sdgIds (JSON string), category, status, rewardPoints, location, maxParticipants,
+  lat?, lng?  (optional WGS84 map coordinates, additive)
   → participations[], createdBy(User), posts[], events[]
 
 Event   // concrete dated appointment; optional parent project (1 project → N events)
@@ -192,6 +193,21 @@ RefreshToken
   event's `rewardPoints`, mirrors project participation incl. badges) and the
   existing open `POST /events/:eventId/register` (guests: name+email+consent, no
   points). `category` reuses the single `PROJECT_CATEGORIES` source.
+
+### ADR — Interactive initiative map
+
+- **Library: Leaflet + react-leaflet** (MIT, **no API key**) with **OpenStreetMap**
+  tiles (light) / **CARTO dark_all** (dark) — both free; OSM + CARTO attribution is
+  rendered (licence requirement). No Google/Mapbox, no routing, no realtime geodata.
+- **Data: additive `Project.lat?/lng?`** (two nullable floats), seeded for the 8
+  projects. Three municipality-wide actions share the Acharavi centroid; `led` +
+  `education` get a small deterministic **display offset** so all markers stay
+  clickable (not precise point locations).
+- **`ProjectMap`** (`src/components/map/`) takes a decoupled `points: MapPoint[]`
+  prop, so it serves both the API-driven `/projects` (List/Map toggle) and the
+  fallback-data `/get-involved`. **Marker icons use coloured `divIcon`s** (HTML, no
+  image assets) which sidesteps the known Leaflet/Vite marker-icon path bug; a
+  `L.Icon.Default` override is kept as a safety net.
 
 ---
 

@@ -11,6 +11,11 @@
 // and `participantCount` fields are ILLUSTRATIVE status indicators for the
 // prototype, not measured values. SDGs are drawn only from the official programme
 // set {4, 6, 11, 12, 13, 14, 15, 17}.
+//
+// `lat`/`lng` are verified public North-Corfu locations. The municipality-wide
+// actions share the Acharavi centroid (greenmove = exact); led + education carry a
+// small DISPLAY offset (~180 m) so all three map markers stay clickable — they are
+// not precise point locations. Mirrors backend/prisma/seed.ts.
 
 import type { Project } from '../types';
 
@@ -19,6 +24,8 @@ const SRC = 'Verde.tec 2026 / life-news.gr';
 export const projects: Project[] = [
   {
     id: 'proj-greenmove',
+    lat: 37.6467,
+    lng: 19.9244,
     title: 'GreenMove — Sustainable Mobility',
     category: 'MOBILITY',
     status: 'Active',
@@ -44,6 +51,8 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-circular',
+    lat: 37.6433,
+    lng: 19.9178,
     title: 'Circular Economy Network',
     category: 'COMMUNITY',
     status: 'Active',
@@ -81,6 +90,8 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-marine',
+    lat: 37.7119,
+    lng: 19.8697,
     title: 'Marine Protection & Sea Turtles',
     category: 'ENVIRONMENT',
     status: 'Active',
@@ -108,6 +119,8 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-antinioti',
+    lat: 37.6892,
+    lng: 19.8534,
     title: 'Antinioti Lagoon — Natural Monument',
     category: 'ENVIRONMENT',
     status: 'Active',
@@ -134,6 +147,8 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-natural-monuments',
+    lat: 37.675,
+    lng: 19.865,
     title: 'Natural Monuments & Reforestation',
     category: 'ENVIRONMENT',
     status: 'Active',
@@ -160,6 +175,8 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-led',
+    lat: 37.6481,
+    lng: 19.9258,
     title: 'LED Street Lighting Upgrade',
     category: 'COMMUNITY',
     status: 'Completed',
@@ -187,6 +204,8 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-education',
+    lat: 37.6453,
+    lng: 19.9258,
     title: 'Environmental Education & University Partnership',
     category: 'EDUCATION',
     status: 'Active',
@@ -212,6 +231,8 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-water-quality',
+    lat: 37.635,
+    lng: 19.905,
     title: 'Drinking Water Quality Monitoring',
     category: 'ENVIRONMENT',
     status: 'Active',

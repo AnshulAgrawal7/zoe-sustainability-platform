@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Filter, Users, ArrowRight, Star } from 'lucide-react';
+import { Filter, Users, ArrowRight, Star, List, Map } from 'lucide-react';
 import { getProjects } from '../services/projectService';
+import ProjectMap, { type MapPoint } from '../components/map/ProjectMap';
 import type { ApiProject } from '../types';
 
 const CATEGORIES = [
@@ -27,6 +28,7 @@ export default function ProjectsPage() {
   const [pages, setPages] = useState(1);
   const [categoryFilter, setCategoryFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('OPEN');
+  const [view, setView] = useState<'list' | 'map'>('list');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [retryCount, setRetryCount] = useState(0);
@@ -162,7 +164,39 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      {/* Grid */}
+      {/* List / Map view toggle */}
+      <div
+        className="mb-6 flex justify-end gap-2"
+        role="group"
+        aria-label={t('map.toggle')}
+      >
+        <button
+          onClick={() => setView('list')}
+          aria-pressed={view === 'list'}
+          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+            view === 'list'
+              ? 'bg-green-600 text-white'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+          }`}
+        >
+          <List size={15} aria-hidden="true" />
+          {t('map.viewList')}
+        </button>
+        <button
+          onClick={() => setView('map')}
+          aria-pressed={view === 'map'}
+          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+            view === 'map'
+              ? 'bg-green-600 text-white'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+          }`}
+        >
+          <Map size={15} aria-hidden="true" />
+          {t('map.viewMap')}
+        </button>
+      </div>
+
+      {/* Grid / Map */}
       {loading ? (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
@@ -186,6 +220,19 @@ export default function ProjectsPage() {
         <p className="py-16 text-center text-gray-500 dark:text-gray-400">
           {t('projects.noProjects')}
         </p>
+      ) : view === 'map' ? (
+        <ProjectMap
+          points={projects
+            .filter((p) => p.lat != null && p.lng != null)
+            .map<MapPoint>((p) => ({
+              id: p.id,
+              title: getTitle(p),
+              category: p.category,
+              sdgs: parseSdgs(p.sdgIds),
+              lat: p.lat as number,
+              lng: p.lng as number,
+            }))}
+        />
       ) : (
         <>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

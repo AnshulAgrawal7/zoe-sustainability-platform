@@ -1328,5 +1328,16 @@
     "validationDateRequired": "Bitte Datum und Uhrzeit wählen.",
     "deleteConfirm": "Diesen Termin löschen? Das kann nicht rückgängig gemacht werden.",
     "delete": "Löschen"
+  },
+  "map": {
+    "toggle": "Listen-/Kartenansicht",
+    "viewList": "Liste",
+    "viewMap": "Karte",
+    "loading": "Karte wird geladen …",
+    "noLocation": "Keine Standortdaten für diese Projekte.",
+    "ariaLabel": "Karte der ZOE-Initiativen"
+  },
+  "popup": {
+    "viewProject": "Projekt ansehen →"
   }
 }

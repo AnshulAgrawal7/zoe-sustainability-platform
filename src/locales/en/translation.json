@@ -1328,5 +1328,16 @@
     "validationDateRequired": "Please choose a date and time.",
     "deleteConfirm": "Delete this event? This cannot be undone.",
     "delete": "Delete"
+  },
+  "map": {
+    "toggle": "List / map view",
+    "viewList": "List",
+    "viewMap": "Map",
+    "loading": "Loading map…",
+    "noLocation": "No location data for these projects.",
+    "ariaLabel": "Map of ZOE initiatives"
+  },
+  "popup": {
+    "viewProject": "View project →"
   }
 }
