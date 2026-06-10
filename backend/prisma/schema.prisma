@@ -29,6 +29,7 @@ model User {
 
   participations     Participation[]
   eventRegistrations EventRegistration[]
+  ideas              Idea[]
   userBadges         UserBadge[]
   refreshTokens      RefreshToken[]
   createdProjects    Project[]           @relation("CreatedBy")
@@ -111,6 +112,27 @@ model EventRegistration {
 
   @@unique([userId, eventId])
   @@index([eventId])
+}
+
+// Citizen-submitted idea / proposal (goal Z3). Open to everyone WITHOUT an
+// account; a valid token links `userId`, otherwise the submission is anonymous
+// (optional submitterName/submitterEmail). `category` reuses the Project category
+// values (validated at the application layer, see constants.ts). Reviewed by
+// admins via /admin/ideas — there is no email dispatch (Future Work).
+// status: "NEW" | "IN_REVIEW" | "ACCEPTED" | "DECLINED"
+model Idea {
+  id             String   @id @default(cuid())
+  title          String
+  description    String
+  category       String
+  status         String   @default("NEW")
+  submitterName  String?
+  submitterEmail String?
+  user           User?    @relation(fields: [userId], references: [id])
+  userId         String?
+  createdAt      DateTime @default(now())
+
+  @@index([status])
 }
 
 model Badge {

@@ -650,7 +650,15 @@
     "clearButton": "Clear",
     "eventsTitle": "Looking for upcoming events?",
     "eventsSubtitle": "Join a cleanup day, biodiversity workshop, or community forum in person.",
-    "browseEvents": "Browse upcoming events"
+    "browseEvents": "Browse upcoming events",
+    "ideaTitleLabel": "Idea title",
+    "ideaTitlePlaceholder": "A short, clear title",
+    "categoryLabel": "Category",
+    "categoryPlaceholder": "Select a category",
+    "optionalLabel": "optional",
+    "privacyNote": "Your idea is sent to the municipality for review. Name and email are optional and used only to contact you about this idea — no account is required. (Prototype: stored for the demo, not forwarded automatically.)",
+    "submitSuccess": "Thanks! Your idea has been submitted to the municipality for review.",
+    "submitError": "Could not submit your idea. Please try again."
   },
   "sdgs": {
     "title": "Sustainable Development Goals",
@@ -1274,5 +1282,21 @@
       "PROJECT_COMPLETED": "Completed",
       "ANNOUNCEMENT": "Announcement"
     }
+  },
+  "adminIdeas": {
+    "title": "Citizen Ideas",
+    "subtitle": "Ideas and proposals submitted by citizens.",
+    "cardSubtitle": "Review submitted citizen ideas",
+    "filterLabel": "Filter by status",
+    "all": "All",
+    "anonymous": "Anonymous",
+    "changeStatus": "Change status",
+    "empty": "No ideas yet."
+  },
+  "ideaStatus": {
+    "NEW": "New",
+    "IN_REVIEW": "In review",
+    "ACCEPTED": "Accepted",
+    "DECLINED": "Declined"
   }
 }

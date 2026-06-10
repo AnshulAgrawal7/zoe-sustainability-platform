@@ -250,3 +250,21 @@ export interface Post {
   projectId: string | null;
   createdAt: string;
 }
+
+// --- Citizen ideas (goal Z3) ---
+
+export type IdeaStatus = 'NEW' | 'IN_REVIEW' | 'ACCEPTED' | 'DECLINED';
+
+// Admin-facing shape (GET /api/admin/ideas). `category` reuses ApiProjectCategory.
+export interface Idea {
+  id: string;
+  title: string;
+  description: string;
+  category: ApiProjectCategory;
+  status: IdeaStatus;
+  submitterName: string | null;
+  submitterEmail: string | null;
+  userId: string | null;
+  user: { id: string; name: string; email: string } | null;
+  createdAt: string;
+}

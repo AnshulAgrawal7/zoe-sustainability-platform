@@ -30,6 +30,7 @@ import UserRewardsPage from '../pages/user/UserRewardsPage';
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
 import ManageProjectsPage from '../pages/admin/ManageProjectsPage';
 import ManageUsersPage from '../pages/admin/ManageUsersPage';
+import ManageIdeasPage from '../pages/admin/ManageIdeasPage';
 import ManagePostsPage from '../pages/admin/ManagePostsPage';
 import NewProjectPage from '../pages/admin/NewProjectPage';
 import EditProjectPage from '../pages/admin/EditProjectPage';
@@ -111,6 +112,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageUsersPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/ideas',
+        element: (
+          <AdminRoute>
+            <ManageIdeasPage />
           </AdminRoute>
         ),
       },

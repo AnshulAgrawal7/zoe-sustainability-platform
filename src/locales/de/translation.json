@@ -650,7 +650,15 @@
     "clearButton": "Zurücksetzen",
     "eventsTitle": "Suchen Sie nach bevorstehenden Veranstaltungen?",
     "eventsSubtitle": "Nehmen Sie persönlich an einem Aufräumtag, Biodiversitäts-Workshop oder Bürgerforum teil.",
-    "browseEvents": "Kommende Veranstaltungen entdecken"
+    "browseEvents": "Kommende Veranstaltungen entdecken",
+    "ideaTitleLabel": "Titel der Idee",
+    "ideaTitlePlaceholder": "Ein kurzer, klarer Titel",
+    "categoryLabel": "Kategorie",
+    "categoryPlaceholder": "Kategorie wählen",
+    "optionalLabel": "optional",
+    "privacyNote": "Deine Idee wird zur Prüfung an die Gemeinde weitergeleitet. Name und E-Mail sind freiwillig und werden nur genutzt, um dich zu dieser Idee zu kontaktieren — ein Konto ist nicht nötig. (Prototyp: für die Demo gespeichert, keine automatische Weiterleitung.)",
+    "submitSuccess": "Danke! Deine Idee wurde zur Prüfung an die Gemeinde übermittelt.",
+    "submitError": "Idee konnte nicht übermittelt werden. Bitte versuche es erneut."
   },
   "sdgs": {
     "title": "Ziele für nachhaltige Entwicklung",
@@ -1274,5 +1282,21 @@
       "PROJECT_COMPLETED": "Abgeschlossen",
       "ANNOUNCEMENT": "Ankündigung"
     }
+  },
+  "adminIdeas": {
+    "title": "Bürger-Ideen",
+    "subtitle": "Von Bürger:innen eingereichte Ideen und Vorschläge.",
+    "cardSubtitle": "Eingereichte Bürger-Ideen prüfen",
+    "filterLabel": "Nach Status filtern",
+    "all": "Alle",
+    "anonymous": "Anonym",
+    "changeStatus": "Status ändern",
+    "empty": "Noch keine Ideen."
+  },
+  "ideaStatus": {
+    "NEW": "Neu",
+    "IN_REVIEW": "In Prüfung",
+    "ACCEPTED": "Angenommen",
+    "DECLINED": "Abgelehnt"
   }
 }

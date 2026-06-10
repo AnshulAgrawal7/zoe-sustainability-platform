@@ -11,6 +11,7 @@ import {
 } from '../controllers/projectController';
 import { authenticate } from '../middleware/auth';
 import { adminOnly } from '../middleware/adminOnly';
+import { PROJECT_CATEGORIES } from '../constants';
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.get(
   [
     query('page').optional().isInt({ min: 1 }),
     query('limit').optional().isInt({ min: 1, max: 50 }),
-    query('category').optional().isIn(['ENVIRONMENT', 'MOBILITY', 'COMMUNITY', 'EDUCATION', 'CULTURE']),
+    query('category').optional().isIn([...PROJECT_CATEGORIES]),
     query('status').optional().isIn(['DRAFT', 'OPEN', 'CLOSED', 'COMPLETED', 'ALL']),
   ],
   getProjects
@@ -38,7 +39,7 @@ router.post(
     body('descriptionEn').trim().notEmpty(),
     body('descriptionEl').trim().notEmpty(),
     body('descriptionDe').trim().notEmpty(),
-    body('category').isIn(['ENVIRONMENT', 'MOBILITY', 'COMMUNITY', 'EDUCATION', 'CULTURE']),
+    body('category').isIn([...PROJECT_CATEGORIES]),
     body('rewardPoints').optional().isInt({ min: 0 }),
     body('imageUrl').optional({ values: 'falsy' }).isURL({ require_protocol: true }).isLength({ max: 2048 }),
     body('sdgIds').isArray(),
