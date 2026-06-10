@@ -71,7 +71,7 @@
 | # | Problem / Anforderung | Designentscheidung & Umsetzung | Begründung | Quelle(n) |
 |---|---|---|---|---|
 | F1 | Prototyp darf nicht als Echtsystem missverstanden werden | **`PrototypeBanner`** global im `Layout`; ehrliche Datenkennzeichnung (`// PROTOTYPE DATA —`) | Forschungsethische Transparenz über Reifegrad und Datenqualität | Peffers et al. (2007); Hevner et al. (2004) |
-| F2 | Designentscheidungen müssen nachvollziehbar/rigoros sein | Diese Matrix + ADRs (`docs/architecture.md`) verknüpfen Problem→Lösung→Quelle | DSR verlangt Verankerung im Knowledge Base (Rigor Cycle) | Hevner et al. (2004); Peffers et al. (2007) |
+| F2 | Designentscheidungen müssen nachvollziehbar/rigoros sein | Diese Matrix + ADRs (`docs/architecture.md`) verknüpfen Problem→Lösung→Quelle | DSR verlangt Verankerung im Knowledge Base (Rigor Cycle) | Hevner (2007) (Drei-Zyklen-/Rigor-Cycle); Peffers et al. (2007) |
 | F3 | Akzeptanz künftiger Nutzer einschätzen | Geplante Evaluation (SUS, Interviews); Designziele an Nutzbarkeit/Teilnahmeabsicht ausgerichtet | Technologieakzeptanz (Nützlichkeit/Benutzbarkeit) als Erfolgsfaktor | Venkatesh et al. (2003) |
 
 ---
@@ -88,7 +88,8 @@
 - GNTO — Greek National Tourism Organisation (2023). Tourism statistics.
 - GSMA Intelligence (2023). *The mobile economy Europe 2023*.
 - Hamari, J., Koivisto, J., & Sarsa, H. (2014). Does gamification work? A literature review of empirical studies on gamification. *Proc. 47th HICSS*, 3025–3034. https://doi.org/10.1109/HICSS.2014.377
-- Hevner, A. R., March, S. T., Park, J., & Ram, S. (2004). Design science in information systems research. *MIS Quarterly*, 28(1), 75–105.
+- Hevner, A. R. (2007). A three cycle view of design science research. *Scandinavian Journal of Information Systems*, 19(2), 87–92. *(Drei-Zyklen-Modell: Relevance/Rigor/Design Cycle.)*
+- Hevner, A. R., March, S. T., Park, J., & Ram, S. (2004). Design science in information systems research. *MIS Quarterly*, 28(1), 75–105. *(7 Guidelines / DSR-Framework.)*
 - Le Blanc, D. (2015). Towards integration at last? The SDGs as a network of targets. *Sustainable Development*, 23(3), 176–187.
 - MySociety (2019). *FixMyStreet impact report 2019*.
 - Peffers, K., Tuunanen, T., Rothenberger, M. A., & Chatterjee, S. (2007). A design science research methodology for information systems research. *JMIS*, 24(3), 45–77. https://doi.org/10.2753/MIS0742-1222240302

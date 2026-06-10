@@ -2,8 +2,11 @@
 // (same `proj-*` ids, 5-value category taxonomy, official programme SDGs).
 //
 // Project FACTS & FIGURES are programme data of the Municipality of North Corfu,
-// sourced from the Verde.tec environmental award, Feb 2026 (life-news.gr,
-// 03.03.2026) — see each project's `sourceNote`. They are programme statements,
+// sourced primarily from the Verde.tec environmental award, Feb 2026 (life-news.gr,
+// 03.03.2026); additional figures/context from Attica Green Expo 2026
+// (kerkyrasimera.gr), the ODEK/ARCHELON cooperation (Corfu TV News, 31.07.2025) and
+// a parliamentary question on turtle deaths (Corfu Stories, 15.04.2026) — see each
+// project's `sourceNote`. They are MUNICIPAL PROGRAMME STATEMENTS,
 // NOT a ZOE impact measurement (impact evaluation = Phase 5). The `progressPercent`
 // and `participantCount` fields are ILLUSTRATIVE status indicators for the
 // prototype, not measured values. SDGs are drawn only from the official programme
@@ -46,7 +49,7 @@ export const projects: Project[] = [
     status: 'Active',
     location: 'Municipality-wide, North Corfu',
     description:
-      'Municipal circular-economy programme: 20 recycling streams across 210 collection points, reaching up to 95% sorting purity, with education for 2,000+ pupils. North Corfu hosted the Circular Municipalities Forum (Feb 2025). Figures are programme data (Verde.tec 2026).',
+      'Municipal circular-economy programme: in 2025 it diverted 2,682.699 t of residual waste from landfill — 15.08% of 17,787 t (municipal programme figure: Attica Green Expo 2026 / kerkyrasimera.gr). It runs 20 recycling streams across 210 collection points (up to 95% sorting purity — a separate process measure) and educates 2,000+ pupils; North Corfu hosted the Circular Municipalities Forum (Feb 2025). Figures are municipal programme data, not a ZOE impact measurement.',
     problem:
       'Seasonal tourism multiplies waste volumes; without dense collection and sorting infrastructure, recyclables are lost to landfill.',
     expectedImpact:
@@ -61,6 +64,11 @@ export const projects: Project[] = [
       'Join school and community education activities',
     ],
     transparencyMetrics: [
+      {
+        label: 'Residual Waste Diverted (2025)',
+        value: '2,682.699',
+        unit: 't · 15.08% of 17,787 t',
+      },
       { label: 'Recycling Streams', value: '20', unit: 'streams' },
       { label: 'Collection Points', value: '210', unit: 'points' },
       { label: 'Sorting Purity', value: 'up to 95', unit: '%' },
@@ -68,7 +76,8 @@ export const projects: Project[] = [
     ],
     participantCount: 0,
     thumbnailColor: 'bg-amber-500',
-    sourceNote: SRC,
+    sourceNote:
+      'Attica Green Expo 2026 / kerkyrasimera.gr (diversion figure); Verde.tec 2026 (streams, points, purity, education)',
   },
   {
     id: 'proj-marine',
@@ -77,11 +86,11 @@ export const projects: Project[] = [
     status: 'Active',
     location: 'North Corfu coast',
     description:
-      'Marine protection in cooperation with ODEK Kerkyra: sea-turtle conservation with ARCHELON (nest fencing and awareness campaigns) and a marine-mammal congress (May 2025).',
+      'Marine protection on the North Corfu coast: sea-turtle conservation with ARCHELON (nest fencing and awareness campaigns) and marine-mammal stranding response with ODEK Kerkyra, the local cetacean (whale and dolphin) rescue team, alongside a marine-mammal congress (May 2025).',
     problem:
-      'Coastal and marine habitats face pressure from tourism, litter and disturbance of nesting sites.',
+      'Coastal and marine habitats face pressure from tourism, litter and disturbance of nesting sites. The need for action is documented, not hypothetical: 17 sea turtles were found dead off Corfu in Q1 2026, prompting a parliamentary question (Corfu Stories, 15.04.2026).',
     expectedImpact:
-      'Protected sea-turtle nests, raised public awareness and stronger scientific cooperation on marine life.',
+      'Better-protected nesting sites, faster stranding response and stronger scientific cooperation — and transparency that makes ongoing pressures visible, not only successes, so citizens and decision-makers can see where action is still needed.',
     sdgs: [14, 15],
     progressPercent: 45,
     startDate: '2024',
@@ -94,7 +103,8 @@ export const projects: Project[] = [
     transparencyMetrics: [],
     participantCount: 0,
     thumbnailColor: 'bg-sky-600',
-    sourceNote: SRC,
+    sourceNote:
+      'ODEK/ARCHELON cooperation: Corfu TV News, 31.07.2025; turtle deaths: Corfu Stories, 15.04.2026',
   },
   {
     id: 'proj-antinioti',

@@ -110,5 +110,43 @@ Legende Status: **VT** = Volltext vorhanden · **PP** = Preprint/nicht peer-revi
 6. **#24 Çetintürk & #7 Chokki** — Preprint/Nicht-peer-reviewed bzw. Preprint-Status: in Wirkungsaussagen nur vorsichtig (Typ B) verwenden.
 7. **#42 Raliphaswa** — thematisch ausschließen.
 8. **Neue Quellen #43–#48** — bibliografisch vollständig, **keine ⚠️**. Hinweise: **#44 Sailer** ist die **CC-BY-Repository-Version** (LMU), Volltext identisch zur CHB-Fassung (DOI bleibt 10.1016/j.chb.2016.12.033); **#48 UN-2030-Agenda** als amtliche UN-Resolution (A/RES/70/1) zitieren (kein A/B — normatives Primärdokument); **#43 Ryan & Deci** = Typ B (Theorie), **#44 Sailer / #45 Hamari / #46 Mekler** = Typ A (gemessene Effekte), **#47 Nielsen & Molich** = Typ B (Evaluationsmethode).
+
+---
+
+## Normative Primärquellen & Standards (außerhalb des PDF-Korpus)
+
+> Diese Einträge sind **keine** PDFs in `Projektseminar_Literatur/`. Sie sind amtliche
+> Primär-/Standard-Dokumente, die das Artefakt (Barrierefreiheit, SDG-Bezug) als
+> normative Grundlage zitiert — die obige 49-PDF-Tabelle (Halluzinationssperre) bleibt
+> davon unberührt. Typ-Tags: **[Primär]** / **[Standard]**.
+
+| Quelle | APA7-Vollzitat | Typ |
+|---|---|---|
+| EU-Richtlinie 2016/2102 | Richtlinie (EU) 2016/2102 des Europäischen Parlaments und des Rates vom 26. Oktober 2016 über den barrierefreien Zugang zu den Websites und mobilen Anwendungen öffentlicher Stellen. *Amtsblatt der Europäischen Union*, L 327, 1–15. | **[Primär]** |
+| W3C WCAG 2.1 | World Wide Web Consortium. (2018). *Web Content Accessibility Guidelines (WCAG) 2.1* (W3C Recommendation, 5. Juni 2018). W3C. https://www.w3.org/TR/WCAG21/ | **[Primär/Standard]** |
+| EN 301 549 | European Telecommunications Standards Institute (ETSI). *EN 301 549 — Accessibility requirements for ICT products and services* (harmonisierter europäischer Standard; übernimmt **WCAG 2.1 Level AA** für die Richtlinie (EU) 2016/2102). ⚠️ Genaue Version/Jahr vor finaler Verwendung prüfen. | **[Standard]** |
+| UN-SDG-Zielseiten | United Nations. (o. J.). *The 17 Goals — Sustainable Development Goals*. Department of Economic and Social Affairs. https://sdgs.un.org/goals *(Offizielle Zieltitel/Seiten für SDG 4, 6, 11, 12, 13, 14, 15, 17; ergänzt die Resolution A/RES/70/1, #48.)* | **[Primär]** |
+
+> **Zitations-Korrektur (DSR-Methodik):** Das **Drei-Zyklen-Modell** (Relevance/Rigor/
+> Design Cycle) ist **immer Hevner (2007)** [#2] zuzuordnen; das **DSR-Framework / die
+> 7 Guidelines** bleiben **Hevner, March, Park & Ram (2004)**. Beide Zuordnungen nicht
+> vermischen.
+
+---
+
+## Medien-/Kontextquellen Nord-Korfu (kein Peer-Review)
+
+> Sekundäre bzw. PR-nahe Quellen, die den lokalen Kontext belegen (ZOE-Programm,
+> Kennzahlen, Kooperationen, Ratsbeschluss). **Nur für Kontext-/Faktenangaben, nicht für
+> Wirkungsaussagen** verwenden. Exakte Titel/URLs sind aus den PDFs nicht verifizierbar
+> und mit **⚠️** markiert (nichts geraten). Typ-Tags: **[Sekundär]** / **[PR]**.
+
+| Quelle | Angabe (APA7-nah) | Typ |
+|---|---|---|
+| Verde.tec 2026 / Life News | Life News. (2026, 3. März). *[Nord-Korfu beim Umweltpreis Verde.tec: 31 Maßnahmen über sechs Achsen, SDG-Liste, 4.866 LED-Leuchten]*. life-news.gr. ⚠️ Genauer Titel/URL prüfen. | **[Sekundär/PR]** |
+| Attica Green Expo 2026 / kerkyrasimera.gr | kerkyrasimera.gr. (2026). *[Nord-Korfu auf der Attica Green Expo: 2.682,699 t Restmüll ausgeschleust = 15,08 % von 17.787 t (2025)]*. kerkyrasimera.gr. ⚠️ Genauer Titel/URL prüfen. | **[Sekundär]** |
+| ODEK-Gründung + ARCHELON-Kooperation | Corfu TV News. (2025, 31. Juli). *[Gründung des ODEK (24.05.2025), Rettungsteam für Walartige; Kooperation mit ARCHELON zum Schutz von Meeresschildkröten]*. corfutvnews.gr. ⚠️ Genauer Titel/URL prüfen. | **[Sekundär]** |
+| ZOE-Meeresprogramm — Ratsbeschluss | Corfu TV News / CorfuPress. (2025, 30. Juli). *[Ratsbeschluss „ZOE — Programm zum Schutz des Meereslebens" — einziger formal dokumentierter Teil des Programms]*. ⚠️ Genauer Titel/URL prüfen. | **[Sekundär]** |
+| Meeresschildkröten-Sterben / parl. Anfrage | Corfu Stories. (2026, 15. April). *[17 tote Meeresschildkröten in Q1 2026; parlamentarische Anfrage]*. ⚠️ Genauer Titel/URL prüfen. | **[Sekundär]** |
 </content>
 </invoke>

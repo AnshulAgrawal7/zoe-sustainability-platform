@@ -54,8 +54,11 @@ export default function AboutPage() {
               <p className="mb-4 leading-relaxed text-gray-700 dark:text-gray-300">
                 {t('about.whatP2')}
               </p>
-              <p className="leading-relaxed text-gray-700 dark:text-gray-300">
+              <p className="mb-4 leading-relaxed text-gray-700 dark:text-gray-300">
                 {t('about.whatP3')}
+              </p>
+              <p className="border-l-4 border-amber-400 bg-amber-50 p-3 text-sm leading-relaxed text-gray-600 dark:border-amber-500 dark:bg-amber-900/20 dark:text-gray-300">
+                {t('about.definitionNote')}
               </p>
             </div>
             <div className="rounded-xl border border-green-100 bg-green-50 p-6 dark:border-green-800 dark:bg-green-900/20">

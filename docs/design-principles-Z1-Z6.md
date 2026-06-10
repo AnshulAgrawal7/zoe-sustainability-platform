@@ -25,12 +25,18 @@
 | **Z3 — Bürgerpartizipation & Community** | Hohe Beteiligungshürden; Beteiligung hängt an persönlichen Netzwerken; eingereichte Ideen versanden. | Niedrigschwellige Beteiligung (auch ohne Account) mit sichtbarer Bearbeitung. | **DP3a:** Ermögliche Einreichung/Teilnahme **ohne Pflicht-Account**, mit optionaler Identität. **DP3b:** Schließe die Rückkopplungsschleife (Status NEW→…→ACCEPTED, Sichtbarkeit im Admin-Backend). | Saldivar et al. (⚠️ Jahr prüfen); Arana-Catania et al. (2021); Shin et al. (2024); Mariani et al. (2025). |
 | **Z4 — Motivation/Gamification** | Reine Belohnung kann intrinsische Motivation verdrängen; kompetitives Ranking unter Nachbarn erzeugt soziale Reibung. | Langfristiges Engagement fördern, ohne intrinsische Motivation zu untergraben. | **DP4a:** Setze Punkte/Badges/Stufen als **Anerkennung** (Kompetenz/Verbundenheit), nicht als reines Belohnungsranking. **DP4b:** Belohnung optional (Gast ohne Punkte) — der Account ist Mehrwert, keine Pflicht. | Ryan & Deci (2000); Sailer et al. (2017); Mekler et al. (2017); Hamari et al. (2014); Krath et al. (2021); Thiel et al. (2016). *Gamification-Definition (Deterding et al. 2011): **Quelle fehlt – bitte ergänzen**.* |
 | **Z5 — Umweltbewusstsein & lokale Identität** | Bewusstsein und Bindung an die lokale Natur fehlen; Wissen wird nicht systematisch vermittelt. | Umweltbewusstsein und lokale Identifikation stärken. | **DP5a:** Lokal verortete Inhalte (Antinioti, Erimitis, Natura 2000) statt abstrakter Botschaften. **DP5b:** Junge Zielgruppen/Schulen über Bildungs-/Beteiligungsformate einbinden. | Vare et al. (2025); Peacock et al. (2018); Laksmi (2026); Vegas Macías et al. (2023). *Sozialkapital/lokale Identität (Putnam): **Quelle fehlt – bitte ergänzen**.* |
-| **Z6 — Zielgruppen inklusiv erreichen** | Sprach- und Zugangsbarrieren (EL/EN/DE, Tourismus); Barrierefreiheit ist für öffentliche Stellen gesetzlich verpflichtend. | Alle erreichen: Mehrsprachigkeit DE/EN/EL, WCAG 2.1 AA, niedrige Hürden, kostenfrei. | **DP6a:** Dreisprachigkeit (EN/EL/DE) als First-Class, alle Inhalte/Labels über `t()`. **DP6b:** Barrierearme, WCAG-2.1-konforme, kostenfreie, account-optionale Nutzung. | Pontus (2021); Asghari (2023); Chirumavilla et al. (2025); Csontos et al. (2021, 2025); Nielsen & Molich (1990). |
+| **Z6 — Zielgruppen inklusiv erreichen** | Sprach- und Zugangsbarrieren (EL/EN/DE, Tourismus); Barrierefreiheit ist für öffentliche Stellen gesetzlich verpflichtend. | Alle erreichen: Mehrsprachigkeit DE/EN/EL, WCAG 2.1 AA, niedrige Hürden, kostenfrei. | **DP6a:** Dreisprachigkeit (EN/EL/DE) als First-Class, alle Inhalte/Labels über `t()`. **DP6b:** Barrierearme, WCAG-2.1-konforme, kostenfreie, account-optionale Nutzung. | **DP6a (Mehrsprachigkeit als Inklusion/Partizipation):** Shin et al. (2024); *präziser Beleg fehlt – bitte ergänzen* — WCAG 2.1 / Richtlinie (EU) 2016/2102 belegen **Barrierefreiheit, nicht Mehrsprachigkeit**. **DP6b (Barrierefreiheit):** Csontos et al. (2021, 2025); Pontus (2021, mehrsprachige Barrierefreiheit); Asghari (2023); Chirumavilla et al. (2025); Nielsen & Molich (1990). |
 
 ---
 
 ## Hinweise
 
+- **ZOE = Dachprogramm (breite Lesart):** ZOE bezeichnet das **Umwelt-Dachprogramm**
+  der Gemeinde Nord-Korfu (31 Maßnahmen über sechs Achsen: Mobilität · Abfall/Kreislauf
+  · Meeresschutz · Naturdenkmäler · Energie · Bildung/Partizipation; Verde.tec 2026).
+  Meeresschutz ist **eine** Achse, nicht das Gesamtprogramm; nur das Meeresleben-
+  Programm ist formal ratsbeschlossen (30.07.2025). Vollständiger Hinweis in
+  [`MATRIX.md`](MATRIX.md) (führend) → stützt Z1/TP1 (Sichtbarkeitsdefizit).
 - **Demonstration (Phase 4), nicht Evaluation:** Die Tabelle zeigt, *dass* das
   Artefakt die Ziele adressiert (Designentscheidung + Beleg), nicht *wie wirksam*
   es ist — Wirkungsmessung ist Phase 5 (siehe FEDS-Spalte in [`MATRIX.md`](MATRIX.md)).
@@ -41,3 +47,10 @@
   Z5) — diese stammen aus der themenorientierten Alt-Matrix und sind **nicht** im
   PDF-Korpus; vor finaler Abgabe entweder beschaffen oder durch vorhandene
   Korpus-Quellen ersetzen.
+- **Z6 / Mehrsprachigkeit:** Die Dreisprachigkeit (DP6a) ist als *Inklusions-/
+  Partizipationsmaßnahme* zu belegen — **nicht** mit WCAG 2.1 / Richtlinie (EU)
+  2016/2102 (diese belegen Barrierefreiheit). Nächstbester Korpus-Beleg: Shin et al.
+  (2024); ein präziser Beleg „Mehrsprachigkeit als Partizipation" fehlt im Korpus
+  und ist zu ergänzen. Pontus (2021) deckt nur die *Barrierefreiheit mehrsprachiger*
+  Seiten ab. Simonofski et al. (2022, #6) trägt **nur** für Z3 (Laien/Partizipation/
+  Dashboards), **nicht** für Mehrsprachigkeit.

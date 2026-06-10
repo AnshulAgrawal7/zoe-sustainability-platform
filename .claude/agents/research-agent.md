@@ -18,7 +18,7 @@ Each document in `docs/research/` contains:
 3. Sources (APA, min. 3 peer-reviewed)
 
 ## DSR Framing
-All research strengthens the Rigor Cycle (Hevner et al., 2004) and Relevance Cycle.
+All research strengthens the Rigor Cycle (Hevner, 2007) and Relevance Cycle.
 Findings feed into `docs/dsr-methodology.md`.
 
 ## Never
