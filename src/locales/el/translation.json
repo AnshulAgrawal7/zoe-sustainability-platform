@@ -444,7 +444,9 @@
     "imprint": "Νομικές πληροφορίες",
     "news": "Νέα",
     "schoolRanking": "Κατάταξη Σχολείων",
-    "schoolDashboard": "Πίνακας Σχολείου"
+    "schoolDashboard": "Πίνακας Σχολείου",
+    "discover": "Ανακάλυψη",
+    "overview": "Επισκόπηση"
   },
   "auth": {
     "login": "Σύνδεση",

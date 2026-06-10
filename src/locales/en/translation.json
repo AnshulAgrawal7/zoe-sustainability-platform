@@ -444,7 +444,9 @@
     "imprint": "Imprint",
     "news": "News",
     "schoolRanking": "School Ranking",
-    "schoolDashboard": "School Dashboard"
+    "schoolDashboard": "School Dashboard",
+    "discover": "Discover",
+    "overview": "Overview"
   },
   "auth": {
     "login": "Login",

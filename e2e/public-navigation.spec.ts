@@ -4,8 +4,8 @@ test.describe('Public navigation', () => {
   test('landing page loads with ZOE branding', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/ZOE/i);
-    // Logo link in header
-    await expect(page.getByRole('link', { name: /ZOE Platform/i }).first()).toBeVisible();
+    // Logo link in header (Greek wordmark, accessible name "ZOE")
+    await expect(page.getByRole('link', { name: /ZOE/i }).first()).toBeVisible();
   });
 
   test('prototype banner is visible on landing page', async ({ page }) => {
@@ -18,10 +18,13 @@ test.describe('Public navigation', () => {
   test('main nav links navigate to correct pages', async ({ page }) => {
     await page.goto('/');
 
-    await page.getByRole('navigation', { name: 'Main navigation' }).getByText(/projects/i).click();
+    // "Projects" now lives inside the "Discover" dropdown
+    await page.getByRole('button', { name: /discover/i }).click();
+    await page.getByRole('menuitem', { name: /projects/i }).click();
     await expect(page).toHaveURL(/\/projects/);
 
     await page.goto('/');
+    // "About" is a top-level link
     await page.getByRole('navigation', { name: 'Main navigation' }).getByText(/about/i).click();
     await expect(page).toHaveURL(/\/about/);
   });
@@ -53,11 +56,6 @@ test.describe('Public navigation', () => {
 
   test('transparency page loads', async ({ page }) => {
     await page.goto('/transparency');
-    await expect(page.locator('h1')).toBeVisible();
-  });
-
-  test('roadmap page loads', async ({ page }) => {
-    await page.goto('/roadmap');
     await expect(page.locator('h1')).toBeVisible();
   });
 

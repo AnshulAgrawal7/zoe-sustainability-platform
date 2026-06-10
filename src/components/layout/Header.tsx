@@ -7,6 +7,7 @@ import { useThemeStore } from '../../stores/themeStore';
 import { logout } from '../../services/authService';
 import LanguageSwitcher from './LanguageSwitcher';
 import UserMenu from './UserMenu';
+import NavDropdown from './NavDropdown';
 
 export default function Header() {
   const { t } = useTranslation();
@@ -17,16 +18,30 @@ export default function Header() {
     useAuthStore();
   const { theme, toggleTheme } = useThemeStore();
 
-  const navLinks = [
-    { to: '/about', label: t('nav.about') },
-    { to: '/projects', label: t('nav.projects') },
-    { to: '/sdg-dashboard', label: t('nav.sdgs') },
-    { to: '/events', label: t('nav.events') },
-    { to: '/news', label: t('nav.news') },
+  // Grouped under dropdowns to keep the bar slim (4 top-level entries).
+  const navGroups = [
+    {
+      label: t('nav.discover'),
+      links: [
+        { to: '/projects', label: t('nav.projects') },
+        { to: '/sdg-dashboard', label: t('nav.sdgs') },
+        { to: '/events', label: t('nav.events') },
+        { to: '/news', label: t('nav.news') },
+      ],
+    },
+    {
+      label: t('nav.participate'),
+      links: [
+        { to: '/get-involved', label: t('nav.overview') },
+        { to: '/rewards', label: t('nav.rewards') },
+        { to: '/school-ranking', label: t('nav.schoolRanking') },
+      ],
+    },
+  ];
+
+  const soloLinks = [
     { to: '/transparency', label: t('nav.transparency') },
-    { to: '/get-involved', label: t('nav.getInvolved') },
-    { to: '/rewards', label: t('nav.rewards') },
-    { to: '/school-ranking', label: t('nav.schoolRanking') },
+    { to: '/about', label: t('nav.about') },
   ];
 
   async function handleLogout() {
@@ -42,10 +57,13 @@ export default function Header() {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2 text-lg font-bold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+            aria-label="ZOE"
+            className="flex items-center gap-2 text-2xl font-bold tracking-wide text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
           >
             <Leaf size={22} aria-hidden="true" />
-            <span>ZOE Platform</span>
+            <span aria-hidden="true" lang="el">
+              ΖΩΗ
+            </span>
           </Link>
 
           {/* Desktop nav */}
@@ -53,7 +71,14 @@ export default function Header() {
             aria-label="Main navigation"
             className="hidden items-center gap-1 lg:flex"
           >
-            {navLinks.map((link) => (
+            {navGroups.map((group) => (
+              <NavDropdown
+                key={group.label}
+                label={group.label}
+                links={group.links}
+              />
+            ))}
+            {soloLinks.map((link) => (
               <NavLink
                 key={link.to}
                 to={link.to}
@@ -140,7 +165,34 @@ export default function Header() {
           className="border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 lg:hidden"
         >
           <div className="space-y-1 px-4 py-3">
-            {navLinks.map((link) => (
+            {navGroups.map((group) => (
+              <div key={group.label}>
+                <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
+                  {group.label}
+                </p>
+                {group.links.map((link) => (
+                  <NavLink
+                    key={link.to}
+                    to={link.to}
+                    onClick={() => setMenuOpen(false)}
+                    className={({ isActive }) =>
+                      `block rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                        isActive
+                          ? 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                          : 'text-gray-600 hover:bg-gray-50 hover:text-green-700 dark:text-gray-300 dark:hover:bg-gray-800'
+                      }`
+                    }
+                  >
+                    {({ isActive }) => (
+                      <span aria-current={isActive ? 'page' : undefined}>
+                        {link.label}
+                      </span>
+                    )}
+                  </NavLink>
+                ))}
+              </div>
+            ))}
+            {soloLinks.map((link) => (
               <NavLink
                 key={link.to}
                 to={link.to}

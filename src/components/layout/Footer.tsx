@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Leaf, ExternalLink } from 'lucide-react';
+import { Leaf } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
@@ -16,7 +16,6 @@ export default function Footer() {
     { to: '/participate', label: t('nav.participate') },
     { to: '/events', label: t('nav.events') },
     { to: '/transparency', label: t('nav.transparency') },
-    { to: '/roadmap', label: t('nav.roadmap') },
   ];
 
   return (
@@ -83,14 +82,6 @@ export default function Footer() {
             <p className="text-sm leading-relaxed text-gray-400">
               {t('footer.researchText')}
             </p>
-            <a
-              href="https://github.com"
-              className="mt-3 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white"
-              aria-label={t('footer.viewOnGitHub')}
-            >
-              <ExternalLink size={16} aria-hidden="true" />
-              <span>{t('footer.viewOnGitHub')}</span>
-            </a>
           </div>
         </div>
 

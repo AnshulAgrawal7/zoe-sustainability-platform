@@ -444,7 +444,9 @@
     "imprint": "Impressum",
     "news": "Neuigkeiten",
     "schoolRanking": "Schul-Ranking",
-    "schoolDashboard": "Schul-Dashboard"
+    "schoolDashboard": "Schul-Dashboard",
+    "discover": "Entdecken",
+    "overview": "Übersicht"
   },
   "auth": {
     "login": "Anmelden",

@@ -13,7 +13,6 @@ import SDGDashboardPage from '../pages/SDGDashboardPage';
 import ParticipationPage from '../pages/ParticipationPage';
 import EventsPage from '../pages/EventsPage';
 import TransparencyPage from '../pages/TransparencyPage';
-import RoadmapPage from '../pages/RoadmapPage';
 import AudiencesPage from '../pages/AudiencesPage';
 import RewardsPage from '../pages/RewardsPage';
 import GetInvolvedPage from '../pages/GetInvolvedPage';
@@ -60,7 +59,6 @@ const router = createBrowserRouter([
       { path: 'audiences', element: <AudiencesPage /> },
       { path: 'events', element: <EventsPage /> },
       { path: 'transparency', element: <TransparencyPage /> },
-      { path: 'roadmap', element: <RoadmapPage /> },
       { path: 'rewards', element: <RewardsPage /> },
       { path: 'school-ranking', element: <SchoolRankingPage /> },
       { path: 'news', element: <NewsPage /> },
