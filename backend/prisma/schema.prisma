@@ -288,3 +288,62 @@ model RefreshToken {
   expiresAt DateTime
   createdAt DateTime @default(now())
 }
+
+// --- "What's New" feed (imported VBM Kokkali Facebook posts). Kept SEPARATE
+// from the existing `Post` model (project lifecycle news), which is read-only
+// merged into the public feed via an adapter — see feedController. ---
+
+enum PostCategory {
+  ANNOUNCEMENT
+  EVENT
+  PROJECT
+  NEWS
+}
+
+enum EventStatus {
+  UPCOMING
+  COMPLETED
+}
+
+// One imported Facebook post. `sourceFolder` (folder number) is the natural key
+// for idempotent re-imports. Original Greek text is authoritative; DE/EN are
+// DeepL machine translations flagged for review.
+model FeedPost {
+  id           String       @id @default(cuid())
+  category     PostCategory
+  eventStatus  EventStatus? // only meaningful when category = EVENT
+  publishedAt  DateTime // from line 1 of the .txt (DD.MM.YYYY)
+  sourceFolder String       @unique
+  needsReview  Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  translations FeedPostTranslation[]
+  images       FeedPostImage[]
+}
+
+model FeedPostTranslation {
+  id                  String   @id @default(cuid())
+  post                FeedPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId              String
+  locale              String // 'el' | 'de' | 'en'
+  title               String // short generated headline (<= ~80 chars)
+  body                String   @db.Text
+  isMachineTranslated Boolean  @default(false) // false for el, true for de/en
+
+  @@unique([postId, locale])
+}
+
+model FeedPostImage {
+  id          String   @id @default(cuid())
+  post        FeedPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId      String
+  storagePath String // path inside the Supabase bucket
+  publicUrl   String
+  order       Int
+  altText     String? // for WCAG 2.1 AA; editable in admin
+  width       Int? // against layout shift
+  height      Int?
+
+  @@index([postId])
+}
