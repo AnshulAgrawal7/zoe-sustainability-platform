@@ -752,14 +752,14 @@
       "getInvolved": "Mitmachen"
     },
     "stats": {
-      "disclaimer": "* Alle Statistiken sind Prototyp-Demodaten zu Demonstrationszwecken."
+      "disclaimer": "Belegte Angaben aus dem Gemeindeprogramm, mit Quelle."
     },
     "pillars": {
       "heading": "Warum die ZOE-Plattform?",
       "subheading": "Die Umweltgovernance in kleinen Gemeinden mangelt oft an Transparenz und Bürgerbeteiligung. ZOE ändert das mit drei zentralen Grundsätzen.",
       "transparency": {
         "title": "Transparenz",
-        "description": "Jedes Projekt veröffentlicht offen Fortschrittskennzahlen, Teilnehmerzahlen und Wirkungsdaten. Bürgerinnen und Bürger können sehen, wohin Mittel fließen und was erreicht wird."
+        "description": "Projekte dokumentieren ihre Ressourcen, Aktivitäten und – wo erfasst – belegte Ergebnisse mit Quelle. Bürger:innen können nachvollziehen, woran gearbeitet wird."
       },
       "participation": {
         "title": "Bürgerbeteiligung",
@@ -767,7 +767,7 @@
       },
       "impact": {
         "title": "Nachhaltigkeitswirkung",
-        "description": "Im Einklang mit den UN-Zielen für nachhaltige Entwicklung ist jedes ZOE-Projekt darauf ausgelegt, einen messbaren, langfristigen Umweltnutzen zu erzielen."
+        "description": "Jedes ZOE-Projekt ist den UN-Zielen für nachhaltige Entwicklung zugeordnet und arbeitet auf lokale Umwelt- und Gemeinschaftsziele hin."
       }
     },
     "featured": {
@@ -800,7 +800,35 @@
       "eventCta": "Teilnehmen",
       "projectCta": "Mehr erfahren"
     },
-    "statsAria": "Wichtige Kennzahlen"
+    "statsAria": "Wichtige Kennzahlen",
+    "facts": {
+      "led": {
+        "value": "4.866",
+        "label": "LED-Leuchten umgerüstet",
+        "source": "Verde.tec 2026"
+      },
+      "waste": {
+        "value": "2.682,699 t",
+        "label": "Restmüll ausgeschleust (15,08%)",
+        "source": "Attica Green Expo 2026"
+      },
+      "scope": {
+        "value": "8",
+        "label": "Projekte in 6 Handlungsachsen",
+        "source": ""
+      }
+    },
+    "community": {
+      "heading": "Aus der Community",
+      "subheading": "Freigegebene Ideen von Bürger:innen und Gästen.",
+      "viewAll": "Zum Ideen-Board",
+      "empty": "Noch keine freigegebenen Ideen."
+    },
+    "learnSection": {
+      "heading": "Lernen & Entdecken",
+      "subheading": "Lokal verankerter Hintergrund zu Nordkorfu.",
+      "viewAll": "Mehr erfahren"
+    }
   },
   "privacy": {
     "title": "Datenschutzerklärung",

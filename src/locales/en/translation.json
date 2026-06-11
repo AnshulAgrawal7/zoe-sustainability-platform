@@ -752,14 +752,14 @@
       "getInvolved": "Get Involved"
     },
     "stats": {
-      "disclaimer": "* All statistics are prototype dummy data for demonstration purposes."
+      "disclaimer": "Documented municipal programme figures, with sources."
     },
     "pillars": {
       "heading": "Why the ZOE Platform?",
       "subheading": "Environmental governance in small municipalities often lacks visibility and citizen connection. ZOE changes that with three core commitments.",
       "transparency": {
         "title": "Transparency",
-        "description": "Every project publishes progress metrics, participation numbers, and impact data openly. Citizens can see where funding goes and what is being achieved."
+        "description": "Projects document their resources, activities and — where recorded — sourced results. Citizens can follow what is being worked on."
       },
       "participation": {
         "title": "Citizen Participation",
@@ -767,7 +767,7 @@
       },
       "impact": {
         "title": "Sustainability Impact",
-        "description": "Aligned with the UN Sustainable Development Goals, each ZOE project is designed to deliver measurable, long-term environmental benefit."
+        "description": "Each ZOE project is mapped to the UN Sustainable Development Goals and works towards local environmental and community goals."
       }
     },
     "featured": {
@@ -800,7 +800,35 @@
       "eventCta": "Join in",
       "projectCta": "Learn more"
     },
-    "statsAria": "Key statistics"
+    "statsAria": "Key statistics",
+    "facts": {
+      "led": {
+        "value": "4,866",
+        "label": "LED luminaires upgraded",
+        "source": "Verde.tec 2026"
+      },
+      "waste": {
+        "value": "2,682.699 t",
+        "label": "residual waste diverted (15.08%)",
+        "source": "Attica Green Expo 2026"
+      },
+      "scope": {
+        "value": "8",
+        "label": "projects across 6 action areas",
+        "source": ""
+      }
+    },
+    "community": {
+      "heading": "From the community",
+      "subheading": "Approved ideas from residents and visitors.",
+      "viewAll": "To the ideas board",
+      "empty": "No approved ideas yet."
+    },
+    "learnSection": {
+      "heading": "Learn & discover",
+      "subheading": "Locally-grounded background on North Corfu.",
+      "viewAll": "More to learn"
+    }
   },
   "privacy": {
     "title": "Privacy Policy",

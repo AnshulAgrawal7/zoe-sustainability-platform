@@ -317,12 +317,17 @@ export default function ProjectsPage() {
                       </div>
                     )}
                     <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-3 dark:border-gray-700">
-                      <span className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                        <Users size={12} aria-hidden="true" />
-                        {t('projects.participants', {
-                          count: participantCount,
-                        })}
-                      </span>
+                      {/* Hide a bare "0 participants" — it reads as a dead platform */}
+                      {participantCount > 0 ? (
+                        <span className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                          <Users size={12} aria-hidden="true" />
+                          {t('projects.participants', {
+                            count: participantCount,
+                          })}
+                        </span>
+                      ) : (
+                        <span />
+                      )}
                       <span className="flex items-center gap-1 text-xs font-medium text-green-600 dark:text-green-400">
                         {t('projects.participate')}{' '}
                         <ArrowRight size={12} aria-hidden="true" />
