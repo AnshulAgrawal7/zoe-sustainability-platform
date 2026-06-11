@@ -225,7 +225,7 @@ export default function LandingPage() {
       {engageItems.length > 0 && (
         <section
           aria-labelledby="engage-heading"
-          className="bg-white py-12 dark:bg-gray-900"
+          className="bg-white py-10 dark:bg-gray-900"
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -334,7 +334,7 @@ export default function LandingPage() {
       </section>
 
       {/* Featured projects */}
-      <section className="bg-white py-12 dark:bg-gray-900">
+      <section className="bg-white py-10 dark:bg-gray-900">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -390,7 +390,7 @@ export default function LandingPage() {
 
       {/* From the community — newest approved citizen ideas (Z3) */}
       {communityIdeas.length > 0 && (
-        <section className="bg-gray-50 py-12 dark:bg-gray-800">
+        <section className="bg-gray-50 py-10 dark:bg-gray-800">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
@@ -439,7 +439,7 @@ export default function LandingPage() {
 
       {/* Learn & discover — locally-grounded educational content (Z5) */}
       {learnResources.length > 0 && (
-        <section className="bg-white py-12 dark:bg-gray-900">
+        <section className="bg-white py-10 dark:bg-gray-900">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
@@ -492,7 +492,7 @@ export default function LandingPage() {
       )}
 
       {/* How ZOE works — three pillars */}
-      <section className="bg-gray-50 py-12 dark:bg-gray-800">
+      <section className="bg-gray-50 py-10 dark:bg-gray-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8 text-center">
             <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
@@ -525,7 +525,7 @@ export default function LandingPage() {
 
       {/* What's new — news feed */}
       {latestPosts.length > 0 && (
-        <section className="bg-gray-50 py-12 dark:bg-gray-800">
+        <section className="bg-gray-50 py-10 dark:bg-gray-800">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
@@ -554,7 +554,7 @@ export default function LandingPage() {
       )}
 
       {/* CTA — Participate */}
-      <section className="bg-green-700 py-12 text-white">
+      <section className="bg-green-700 py-10 text-white">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="mb-4 text-3xl font-bold text-white">
             {t('landing.cta.heading')}
