@@ -5,28 +5,29 @@ export default {
   theme: {
     extend: {
       colors: {
-        // ZOE brand green scale (Block 6) — anchored on the brand green (#2d7d46
-        // at 600). It REPLACES Tailwind's default `green`, so every existing
-        // `*-green-*` class shifts to the ZOE identity in one place. Fully
-        // reversible: delete this `green` block to fall back to Tailwind green.
-        // Contrast verified (WCAG AA): white-on-600 5.08, white-on-700 7.29,
-        // green-600/700 text on white 5.08/7.29, dark-mode green-400 on
-        // gray-900/800 6.50/5.38 — all ≥ the previous defaults on the key pairs.
+        // ZOE brand green — fresher/lighter retune (Part 1B). Replaces Tailwind's
+        // default `green` so every `*-green-*` shifts in one place. The mids
+        // (400/500) are brighter/springier; 700 is lightened (the hero gradient
+        // and the CTA section read lighter/fresher) while every white-on-green
+        // pair stays WCAG AA. Reversible: delete this block.
+        // Verified contrast: white-on-600 4.54, white-on-700 5.80 (was 7.29),
+        // green-600/700 text on white 4.54/5.80, dark-mode green-400 on
+        // gray-900/800 7.55/6.25, green-300 on gray-900 9.94 — all ≥ AA.
         green: {
-          50: '#eef8f1',
-          100: '#d6efdd',
-          200: '#afe0bf',
-          300: '#7ecb98',
-          400: '#4eaf70',
-          500: '#319a56',
-          600: '#2d7d46',
-          700: '#246239',
-          800: '#1e4e2e',
-          900: '#193f27',
-          950: '#0f2817',
+          50: '#edfbf1',
+          100: '#d2f5de',
+          200: '#a3e9bd',
+          300: '#6bd793',
+          400: '#39c06e',
+          500: '#1fa654',
+          600: '#2d864b',
+          700: '#277343',
+          800: '#1f5734',
+          900: '#18472a',
+          950: '#0e2d1a',
         },
         zoe: {
-          green: '#2d7d46',
+          green: '#2d864b',
           teal: '#0d9488',
           blue: '#1d4ed8',
           olive: '#65a30d',
