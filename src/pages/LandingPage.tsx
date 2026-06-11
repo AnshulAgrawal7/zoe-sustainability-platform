@@ -245,74 +245,67 @@ export default function LandingPage() {
         </Container>
       </section>
 
-      {/* Why ZOE — three pillars */}
-      <section className="bg-gray-50 py-10 dark:bg-gray-800">
+      {/* Featured projects */}
+      <section className="bg-white py-10 dark:bg-gray-900">
         <Container>
-          <div className="mb-8 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
-              {t('landing.pillars.heading')}
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
-              {t('landing.pillars.subheading')}
-            </p>
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+                {t('landing.featured.heading')}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400">
+                {t('landing.featured.subheading')}
+              </p>
+            </div>
+            <Link
+              to="/projects"
+              className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+            >
+              {t('landing.featured.viewAll')}
+              <ArrowRight size={18} aria-hidden="true" />
+            </Link>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {pillars.map((p) => (
-              <div
-                key={p.titleKey}
-                className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-900"
-              >
-                <div className={`mb-4 inline-flex rounded-xl p-3 ${p.color}`}>
-                  <p.icon size={24} aria-hidden="true" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
-                  {t(p.titleKey)}
-                </h3>
-                <p className="leading-relaxed text-gray-600 dark:text-gray-400">
-                  {t(p.descKey)}
-                </p>
-              </div>
-            ))}
+            {highlights.map((project) => {
+              const Icon = categoryIcons[project.category] ?? Leaf;
+              return (
+                <Link
+                  key={project.id}
+                  to={`/projects/${project.id}`}
+                  className="group overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:border-green-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-600"
+                >
+                  <div
+                    className={`h-3 ${project.thumbnailColor}`}
+                    aria-hidden="true"
+                  />
+                  <div className="p-5">
+                    <div className="mb-3 flex items-start justify-between gap-2">
+                      <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                        <Icon size={16} aria-hidden="true" />
+                        <span className="text-xs">{project.category}</span>
+                      </div>
+                      <StatusBadge status={project.status} />
+                    </div>
+                    <h3 className="mb-2 font-semibold text-gray-900 transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-400">
+                      {project.title}
+                    </h3>
+                    <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+                      {project.description}
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </Container>
       </section>
-
-      {/* What's new — merged feed teaser */}
-      {feedTeaser.length > 0 && (
-        <section className="bg-gray-50 py-10 dark:bg-gray-800">
-          <Container>
-            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-                  {t('landing.news.heading')}
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {t('landing.news.subheading')}
-                </p>
-              </div>
-              <Link
-                to="/news"
-                className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
-              >
-                {t('landing.news.viewAll')}
-                <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {feedTeaser.map((item) => (
-                <FeedCard key={`${item.source}-${item.id}`} item={item} />
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
 
       {/* Get involved now — upcoming events first, then OPEN projects. Placed
           here so participation is the first action after the intro sections. */}
       {engageItems.length > 0 && (
         <section
           aria-labelledby="engage-heading"
-          className="bg-white py-10 dark:bg-gray-900"
+          className="bg-gray-50 py-10 dark:bg-gray-800"
         >
           <Container>
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -391,61 +384,6 @@ export default function LandingPage() {
         </section>
       )}
 
-      {/* Featured projects */}
-      <section className="bg-white py-10 dark:bg-gray-900">
-        <Container>
-          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-                {t('landing.featured.heading')}
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                {t('landing.featured.subheading')}
-              </p>
-            </div>
-            <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
-            >
-              {t('landing.featured.viewAll')}
-              <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {highlights.map((project) => {
-              const Icon = categoryIcons[project.category] ?? Leaf;
-              return (
-                <Link
-                  key={project.id}
-                  to={`/projects/${project.id}`}
-                  className="group overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:border-green-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-600"
-                >
-                  <div
-                    className={`h-3 ${project.thumbnailColor}`}
-                    aria-hidden="true"
-                  />
-                  <div className="p-5">
-                    <div className="mb-3 flex items-start justify-between gap-2">
-                      <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                        <Icon size={16} aria-hidden="true" />
-                        <span className="text-xs">{project.category}</span>
-                      </div>
-                      <StatusBadge status={project.status} />
-                    </div>
-                    <h3 className="mb-2 font-semibold text-gray-900 transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-400">
-                      {project.title}
-                    </h3>
-                    <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
-                      {project.description}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </Container>
-      </section>
-
       {/* Impact stats — documented, sourced programme figures only */}
       <section
         className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
@@ -472,6 +410,122 @@ export default function LandingPage() {
           <p className="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
             {t('landing.stats.disclaimer')}
           </p>
+        </Container>
+      </section>
+
+      {/* What's new — merged feed teaser */}
+      {feedTeaser.length > 0 && (
+        <section className="bg-white py-10 dark:bg-gray-900">
+          <Container>
+            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+                  {t('landing.news.heading')}
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {t('landing.news.subheading')}
+                </p>
+              </div>
+              <Link
+                to="/news"
+                className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+              >
+                {t('landing.news.viewAll')}
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {feedTeaser.map((item) => (
+                <FeedCard key={`${item.source}-${item.id}`} item={item} />
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* Learn & discover — locally-grounded educational content (Z5) */}
+      {learnResources.length > 0 && (
+        <section className="bg-gray-50 py-10 dark:bg-gray-800">
+          <Container>
+            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="mb-2 flex items-center gap-2 text-3xl font-bold text-gray-900 dark:text-white">
+                  <GraduationCap
+                    size={24}
+                    aria-hidden="true"
+                    className="text-green-600 dark:text-green-400"
+                  />
+                  {t('landing.learnSection.heading')}
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {t('landing.learnSection.subheading')}
+                </p>
+              </div>
+              <Link
+                to="/learn"
+                className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+              >
+                {t('landing.learnSection.viewAll')}
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+              {learnResources.map((r) => (
+                <Link
+                  key={r.id}
+                  to={`/learn/${r.id}`}
+                  className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:border-green-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-600"
+                >
+                  <EntityImage
+                    src={r.imageUrl}
+                    alt={pickLang(r.titleEn, r.titleEl, r.titleDe)}
+                    category={r.category}
+                    className="h-32 w-full"
+                  />
+                  <div className="flex flex-1 flex-col p-5">
+                    <span className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      {t(`projects.category.${r.category}`)}
+                    </span>
+                    <h3 className="line-clamp-2 text-base font-bold text-gray-900 transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-400">
+                      {pickLang(r.titleEn, r.titleEl, r.titleDe)}
+                    </h3>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* Why ZOE — three pillars */}
+      <section className="bg-white py-10 dark:bg-gray-900">
+        <Container>
+          <div className="mb-8 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
+              {t('landing.pillars.heading')}
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
+              {t('landing.pillars.subheading')}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {pillars.map((p) => (
+              <div
+                key={p.titleKey}
+                className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-900"
+              >
+                <div className={`mb-4 inline-flex rounded-xl p-3 ${p.color}`}>
+                  <p.icon size={24} aria-hidden="true" />
+                </div>
+                <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+                  {t(p.titleKey)}
+                </h3>
+                <p className="leading-relaxed text-gray-600 dark:text-gray-400">
+                  {t(p.descKey)}
+                </p>
+              </div>
+            ))}
+          </div>
         </Container>
       </section>
 
@@ -517,60 +571,6 @@ export default function LandingPage() {
                   <p className="line-clamp-3 text-sm text-gray-600 dark:text-gray-400">
                     {idea.description}
                   </p>
-                </Link>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {/* Learn & discover — locally-grounded educational content (Z5) */}
-      {learnResources.length > 0 && (
-        <section className="bg-white py-10 dark:bg-gray-900">
-          <Container>
-            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h2 className="mb-2 flex items-center gap-2 text-3xl font-bold text-gray-900 dark:text-white">
-                  <GraduationCap
-                    size={24}
-                    aria-hidden="true"
-                    className="text-green-600 dark:text-green-400"
-                  />
-                  {t('landing.learnSection.heading')}
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {t('landing.learnSection.subheading')}
-                </p>
-              </div>
-              <Link
-                to="/learn"
-                className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
-              >
-                {t('landing.learnSection.viewAll')}
-                <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-              {learnResources.map((r) => (
-                <Link
-                  key={r.id}
-                  to={`/learn/${r.id}`}
-                  className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:border-green-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-600"
-                >
-                  <EntityImage
-                    src={r.imageUrl}
-                    alt={pickLang(r.titleEn, r.titleEl, r.titleDe)}
-                    category={r.category}
-                    className="h-32 w-full"
-                  />
-                  <div className="flex flex-1 flex-col p-5">
-                    <span className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                      {t(`projects.category.${r.category}`)}
-                    </span>
-                    <h3 className="line-clamp-2 text-base font-bold text-gray-900 transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-400">
-                      {pickLang(r.titleEn, r.titleEl, r.titleDe)}
-                    </h3>
-                  </div>
                 </Link>
               ))}
             </div>
