@@ -3,6 +3,7 @@ import { body, query } from 'express-validator';
 import {
   getProjects,
   getProject,
+  getImpactMetrics,
   createProject,
   updateProject,
   deleteProject,
@@ -34,6 +35,9 @@ router.get(
   ],
   getProjects
 );
+
+// Aggregated documented impact figures — must precede the `/:id` route.
+router.get('/impact', getImpactMetrics);
 
 router.get('/:id', getProject);
 

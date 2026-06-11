@@ -64,12 +64,33 @@ export async function getProjects(req: Request, res: Response) {
   }
 }
 
+// GET /api/projects/impact — public. All documented (sourced) impact figures
+// across projects, for the transparency aggregation. Only real metrics exist.
+export async function getImpactMetrics(_req: Request, res: Response) {
+  try {
+    const metrics = await prisma.projectMetric.findMany({
+      orderBy: { createdAt: 'asc' },
+      include: {
+        project: {
+          select: { id: true, titleEn: true, titleEl: true, titleDe: true },
+        },
+      },
+    });
+    ok(res, { metrics, total: metrics.length });
+  } catch {
+    serverError(res);
+  }
+}
+
 export async function getProject(req: Request, res: Response) {
   const id = req.params['id'] as string;
   try {
     const project = await prisma.project.findUnique({
       where: { id },
-      include: { _count: { select: { participations: true } } },
+      include: {
+        _count: { select: { participations: true } },
+        metrics: { orderBy: { createdAt: 'asc' } },
+      },
     });
     if (!project) { notFound(res); return; }
     ok(res, project);

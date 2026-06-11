@@ -1,11 +1,20 @@
 import { api } from './api';
-import type { ApiResponse, ApiProject } from '../types';
+import type { ApiResponse, ApiProject, ApiImpactMetric } from '../types';
 
 interface ProjectsResponse {
   projects: ApiProject[];
   total: number;
   page: number;
   pages: number;
+}
+
+// Public: all documented, sourced impact figures across projects (transparency).
+export async function getImpactMetrics(): Promise<ApiImpactMetric[]> {
+  const res =
+    await api.get<ApiResponse<{ metrics: ApiImpactMetric[]; total: number }>>(
+      '/projects/impact'
+    );
+  return res.data.metrics;
 }
 
 interface ProjectFilters {

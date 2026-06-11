@@ -959,7 +959,13 @@
       }
     ],
     "footerLabel": "Research transparency:",
-    "footerText": "This is a prototype platform built for a Design Science Research academic project. All data shown is fictional and intended to demonstrate the information architecture and UX concepts only. A production deployment would require a verified data pipeline from real project management systems."
+    "footerText": "This is a prototype platform built for a Design Science Research academic project. All data shown is fictional and intended to demonstrate the information architecture and UX concepts only. A production deployment would require a verified data pipeline from real project management systems.",
+    "documented": {
+      "heading": "Documented impact (sourced)",
+      "intro": "Real, sourced figures from municipal programme communication. Projects without a verified figure are not listed here.",
+      "empty": "No documented figures yet.",
+      "illustrativeLabel": "Illustrative prototype figures (example data — not measured)"
+    }
   },
   "audiences": {
     "title": "Who We Reach — Target Audiences & Sensitization",
@@ -1443,5 +1449,10 @@
     "formProject": "Linked project",
     "noProject": "No linked project",
     "projectColumn": "Project"
+  },
+  "projImpact": {
+    "heading": "Documented impact",
+    "notMeasured": "Impact not yet measured for this project.",
+    "source": "Source"
   }
 }

@@ -12,7 +12,7 @@ WCAG, keine erfundenen Daten, Persistenz in der DB, Commit nach jedem Block.
 | A2 | Z3 Forum (Kommentare + Likes, moderiert) | ✅ | Comment/CommentLike (additiv), Detailseite mit Kommentaren+Likes, Admin-Moderation |
 | B | Z5 Bildungsinhalte (LearningResource) | ✅ | Entität + /learn (+Detail) + Admin-CRUD (DeepL) + Projekt-Verknüpfung + 4 reale Seeds |
 | C | Z2 SDG-Dashboard ehrlich machen | ✅ | Erfundene %-Balken entfernt; zählbare Fakten (beitragende/abgeschlossene Projekte) + Disclaimer |
-| D | Z1 belegte Wirkungszahlen | ⏳ | offen |
+| D | Z1 belegte Wirkungszahlen | ✅ | ProjectMetric-Tabelle (nur belegte Zahlen); Detail-Block/„noch nicht erfasst"; /transparency aggregiert belegte Werte |
 | E | Z4 Missionen (SDT-konform) | ⏳ | offen |
 | F | Z6 hartkodierte Strings → i18n | ⏳ | offen |
 
@@ -137,6 +137,44 @@ Angemaßte „% erfüllt" entfernt, durch zählbare Zuordnung ersetzt.
 - Keine Migration, kein Backend. tsc/eslint sauber, FE 22 grün; keine Tests prüften die
   alten Balken (verifiziert).
 
+### Block D — Belegte Wirkungszahlen (Z1) ✅
+Echte Vorher/Nachher-Werte nur wo belegt; Rest transparent „noch nicht erfasst".
+
+**Muster-Entscheidung:** **`ProjectMetric`-Tabelle** statt fixer Felder
+(impactBaseline/Current…). Begründung: proj-circular hat **mehrere** belegte
+Kennzahlen (ausgeschleuste Tonnen, Ausschleusungsquote, Ströme, Sammelpunkte) — eine
+1:1-Feldgruppe könnte das nicht abbilden. Eine Zeile = eine belegte Zahl; ein Projekt
+ohne Zeilen hat keine gemessene Wirkung (kein `isMeasured`-Flag nötig: Vorhandensein
+von Zeilen = belegt).
+
+**Schema (additiv):** `ProjectMetric` (projectId FK, trilinguales Label, `value`
+als Text zur exakten Wahrung der Zahl, unit?, source?). Migration
+`20260611170000_add_project_metrics` (CREATE TABLE/INDEX/FK, ON DELETE CASCADE).
+
+**Backend:** `getProject` inkludiert `metrics`; neuer öffentlicher Endpoint
+`GET /api/projects/impact` (aggregiert alle belegten Kennzahlen + Projektbezug,
+**vor** `/:id` gemountet).
+
+**Frontend:** Projekt-Detail zeigt Block „Belegte Wirkung" mit den Zahlen+Quelle —
+**nur wenn vorhanden**, sonst dezent „Wirkung noch nicht erfasst". `/transparency`
+bekommt oben eine neue Sektion „Belegte Wirkung (mit Quelle)" aus der API; die
+bestehende KPI-Sektion wird **klar als „Illustrative Prototyp-Zahlen (Beispieldaten —
+nicht gemessen)"** gelabelt. Typen `ApiProjectMetric/ApiImpactMetric`,
+`projectService.getImpactMetrics`, i18n `projImpact.*` + `transparency.documented.*`.
+
+**Seed (nur belegte Fakten):** proj-led „4.866 LED-Leuchten" (Verde.tec 2026);
+proj-circular „2.682,699 t ausgeschleust" + „15,08 %" (Attica Green Expo 2026) +
+„20 Ströme" + „210 Sammelpunkte" (Verde.tec 2026). Alle anderen Projekte: **keine**
+Kennzahl → „noch nicht erfasst". Idempotent (deleteMany+createMany).
+
+**Offen/Hinweis:** die illustrative `progressPercent`-Tabelle auf /transparency bleibt
+(unter Prototyp-Hinweis + neuem „illustrative"-Label); echte Entfernung wäre ein
+separater Schritt.
+
+**Tests:** Backend +3 (`metrics.test.ts`: /impact mit Quelle+Projekt, Detail mit/ohne
+Kennzahlen) → **92**. E2E +1 (`transparency.spec.ts`: belegte Zahl „4,866" sichtbar)
+→ **59**.
+
 ## Neue Migrationen
 _(A1: keine.)_
 
@@ -152,6 +190,13 @@ cd backend && npx prisma migrate deploy && npx prisma generate
 ### `20260611160000_add_learning_resources` (Block B)
 Additiv: neue Tabelle `LearningResource` (+ Index + FK auf Project, ON DELETE SET NULL).
 **Bereits während des Runs gegen Supabase deployed + geseedet** (für E2E nötig).
+```bash
+cd backend && npx prisma migrate deploy && npx prisma generate && npm run db:seed
+```
+
+### `20260611170000_add_project_metrics` (Block D)
+Additiv: neue Tabelle `ProjectMetric` (+ Index + FK auf Project, ON DELETE CASCADE).
+**Bereits während des Runs gegen Supabase deployed + geseedet.**
 ```bash
 cd backend && npx prisma migrate deploy && npx prisma generate && npm run db:seed
 ```

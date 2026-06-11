@@ -456,7 +456,52 @@ async function main() {
       'COMMUNITY', [12, 11], 'proj-circular', 'Verde.tec 2026 / Attica Green Expo 2026'),
   ]);
 
-  console.log(`Seeded: ${[p1,p2,p3,p4,p5,p6,p7,p8].length} projects, 4 users, 5 badges, 4 posts, 4 demo ideas, 4 learning resources`);
+  // --- Documented impact figures (Z1). ONLY real, sourced numbers; every other
+  // project has none (UI shows "not yet measured"). Idempotent: clear + recreate.
+  await prisma.projectMetric.deleteMany({
+    where: { projectId: { in: ['proj-led', 'proj-circular'] } },
+  });
+  await prisma.projectMetric.createMany({
+    data: [
+      {
+        projectId: 'proj-led',
+        labelEn: 'LED luminaires upgraded',
+        labelEl: 'Φωτιστικά που αναβαθμίστηκαν σε LED',
+        labelDe: 'Auf LED umgerüstete Leuchten',
+        value: '4,866', unit: null, source: 'Verde.tec 2026',
+      },
+      {
+        projectId: 'proj-circular',
+        labelEn: 'Residual waste diverted from landfill (2025)',
+        labelEl: 'Σύμμεικτα που εκτράπηκαν από την ταφή (2025)',
+        labelDe: 'Aus der Deponierung ausgeschleuster Restmüll (2025)',
+        value: '2,682.699', unit: 't', source: 'Attica Green Expo 2026',
+      },
+      {
+        projectId: 'proj-circular',
+        labelEn: 'Diversion rate (2025)',
+        labelEl: 'Ποσοστό εκτροπής (2025)',
+        labelDe: 'Ausschleusungsquote (2025)',
+        value: '15.08', unit: '%', source: 'Attica Green Expo 2026',
+      },
+      {
+        projectId: 'proj-circular',
+        labelEn: 'Recycling streams',
+        labelEl: 'Ρεύματα ανακύκλωσης',
+        labelDe: 'Wertstoffströme',
+        value: '20', unit: null, source: 'Verde.tec 2026',
+      },
+      {
+        projectId: 'proj-circular',
+        labelEn: 'Collection points',
+        labelEl: 'Σημεία συλλογής',
+        labelDe: 'Sammelpunkte',
+        value: '210', unit: null, source: 'Verde.tec 2026',
+      },
+    ],
+  });
+
+  console.log(`Seeded: ${[p1,p2,p3,p4,p5,p6,p7,p8].length} projects, 4 users, 5 badges, 4 posts, 4 demo ideas, 4 learning resources, 5 impact metrics`);
   console.log('Admin:    admin@zoe-corfu.gr / ZoeAdmin2026!');
   console.log('Users:    citizen1@example.com, citizen2@example.com, tourist@example.com / Test1234!');
 }

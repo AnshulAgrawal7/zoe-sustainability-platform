@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
   Leaf,
   Users,
@@ -10,12 +11,15 @@ import {
   TrendingUp,
   TrendingDown,
   Minus,
+  BarChart3,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { impactMetrics } from '../data/metrics';
 import { projects } from '../data/projects';
+import { getImpactMetrics } from '../services/projectService';
 import ProgressBar from '../components/ui/ProgressBar';
 import StatusBadge from '../components/ui/StatusBadge';
+import type { ApiImpactMetric } from '../types';
 
 const iconMap: Record<string, React.ElementType> = {
   Leaf,
@@ -41,10 +45,30 @@ const trendColors = {
 };
 
 export default function TransparencyPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language.slice(0, 2);
   const principles = t('transparency.principles', {
     returnObjects: true,
   }) as { title: string; desc: string }[];
+
+  const [documented, setDocumented] = useState<ApiImpactMetric[]>([]);
+  useEffect(() => {
+    getImpactMetrics()
+      .then(setDocumented)
+      .catch(() => setDocumented([]));
+  }, []);
+
+  function metricLabel(m: ApiImpactMetric): string {
+    if (lang === 'el') return m.labelEl;
+    if (lang === 'de') return m.labelDe;
+    return m.labelEn;
+  }
+  function projectTitle(m: ApiImpactMetric): string {
+    if (!m.project) return '';
+    if (lang === 'el') return m.project.titleEl;
+    if (lang === 'de') return m.project.titleDe;
+    return m.project.titleEn;
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
@@ -62,11 +86,64 @@ export default function TransparencyPage() {
         </div>
       </div>
 
-      {/* KPI grid */}
+      {/* Documented impact (sourced) — only real figures from the API (Z1) */}
+      {documented.length > 0 && (
+        <section aria-labelledby="documented-impact-heading" className="mb-12">
+          <h2
+            id="documented-impact-heading"
+            className="mb-2 flex items-center gap-2 text-xl font-semibold text-gray-900 dark:text-white"
+          >
+            <BarChart3
+              size={20}
+              aria-hidden="true"
+              className="text-green-600 dark:text-green-400"
+            />
+            {t('transparency.documented.heading')}
+          </h2>
+          <p className="mb-5 max-w-2xl text-sm text-gray-600 dark:text-gray-300">
+            {t('transparency.documented.intro')}
+          </p>
+          <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {documented.map((m) => (
+              <li
+                key={m.id}
+                className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800"
+              >
+                <p className="text-2xl font-bold text-green-700 dark:text-green-400">
+                  {m.value}
+                  {m.unit && (
+                    <span className="ml-1 text-sm font-normal text-gray-500 dark:text-gray-400">
+                      {m.unit}
+                    </span>
+                  )}
+                </p>
+                <p className="mt-1 text-sm font-medium text-gray-700 dark:text-gray-200">
+                  {metricLabel(m)}
+                </p>
+                {m.project && (
+                  <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+                    {projectTitle(m)}
+                  </p>
+                )}
+                {m.source && (
+                  <p className="mt-2 text-xs text-gray-400 dark:text-gray-500">
+                    {t('projImpact.source')}: {m.source}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* KPI grid — clearly labelled as illustrative prototype data */}
       <section aria-label={t('transparency.kpiSectionLabel')} className="mb-12">
-        <h2 className="mb-5 text-xl font-semibold text-gray-900 dark:text-white">
+        <h2 className="mb-1 text-xl font-semibold text-gray-900 dark:text-white">
           {t('transparency.kpiHeading')}
         </h2>
+        <p className="mb-5 text-sm font-medium text-amber-700 dark:text-amber-400">
+          {t('transparency.documented.illustrativeLabel')}
+        </p>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {impactMetrics.map((metric) => {
             const Icon = iconMap[metric.icon] ?? Leaf;

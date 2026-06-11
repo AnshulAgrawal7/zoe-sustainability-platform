@@ -79,6 +79,26 @@ model Project {
   posts             Post[]
   events            Event[]
   learningResources LearningResource[]
+  metrics           ProjectMetric[]
+}
+
+// Documented impact figure for a project (Z1). Only REAL, sourced figures are
+// stored here; a project with no rows has no measured impact yet (the UI then
+// shows "not yet measured" rather than an invented number). One project may have
+// several figures (e.g. tonnes diverted, diversion rate, streams).
+model ProjectMetric {
+  id        String   @id @default(cuid())
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId String
+  labelEn   String
+  labelEl   String
+  labelDe   String
+  value     String // kept as text to preserve the exact documented figure
+  unit      String?
+  source    String?
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
 }
 
 // Self-contained, locally-grounded educational content (Z5). Trilingual; optionally

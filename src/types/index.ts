@@ -197,6 +197,7 @@ export interface ApiProject {
   maxParticipants: number | null;
   imageUrl: string | null;
   sourceNote: string | null;
+  metrics?: ApiProjectMetric[];
   // Value chain (Hammer & Champy): Input -> Activity -> Output, trilingual, optional.
   inputResourcesEn: string | null;
   inputResourcesEl: string | null;
@@ -328,6 +329,28 @@ export interface LearningResource {
   projectId: string | null;
   project?: LearningProjectRef | null;
   createdAt: string;
+}
+
+// Documented, sourced impact figure for a project (Z1).
+export interface ApiProjectMetric {
+  id: string;
+  labelEn: string;
+  labelEl: string;
+  labelDe: string;
+  value: string;
+  unit: string | null;
+  source: string | null;
+  projectId: string;
+}
+
+// Aggregated impact figure (GET /api/projects/impact) — carries its project.
+export interface ApiImpactMetric extends ApiProjectMetric {
+  project: {
+    id: string;
+    titleEn: string;
+    titleEl: string;
+    titleDe: string;
+  } | null;
 }
 
 export type CommentStatus = 'VISIBLE' | 'HIDDEN';

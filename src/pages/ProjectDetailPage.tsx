@@ -15,6 +15,7 @@ import {
   Sparkles,
   GraduationCap,
   ArrowRight,
+  BarChart3,
 } from 'lucide-react';
 import { getProject, participate, withdraw } from '../services/projectService';
 import { getEvents } from '../services/eventService';
@@ -207,6 +208,9 @@ export default function ProjectDetailPage() {
   }
 
   const sdgs = parseSdgs();
+  const metrics = project.metrics ?? [];
+  const metricLabel = (m: (typeof metrics)[number]): string =>
+    lang === 'el' ? m.labelEl : lang === 'de' ? m.labelDe : m.labelEn;
   const participantCount = project._count?.participations ?? 0;
   const valueChainSteps = [
     {
@@ -382,6 +386,49 @@ export default function ProjectDetailPage() {
           )}
         </div>
       </div>
+
+      {/* Documented impact (Z1) — only real, sourced figures; else honest note */}
+      <section className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8">
+        <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+          <BarChart3
+            size={18}
+            aria-hidden="true"
+            className="text-green-600 dark:text-green-400"
+          />
+          {t('projImpact.heading')}
+        </h2>
+        {metrics.length > 0 ? (
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {metrics.map((m) => (
+              <li
+                key={m.id}
+                className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/40"
+              >
+                <p className="text-2xl font-bold text-green-700 dark:text-green-400">
+                  {m.value}
+                  {m.unit && (
+                    <span className="ml-1 text-sm font-normal text-gray-500 dark:text-gray-400">
+                      {m.unit}
+                    </span>
+                  )}
+                </p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  {metricLabel(m)}
+                </p>
+                {m.source && (
+                  <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+                    {t('projImpact.source')}: {m.source}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {t('projImpact.notMeasured')}
+          </p>
+        )}
+      </section>
 
       {/* Value chain — Input -> Activity -> Result (Block 5). Only when filled. */}
       {valueChainSteps.length > 0 && (
