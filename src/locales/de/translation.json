@@ -804,6 +804,10 @@
       "projectCta": "Mehr erfahren"
     },
     "statsAria": "Wichtige Kennzahlen",
+    "sdgs": {
+      "heading": "Adressierte Nachhaltigkeitsziele (SDGs)",
+      "subheading": "Die ZOE-Maßnahmen zahlen auf diese UN-SDGs ein. Wähle ein Ziel, um zu sehen, wie."
+    },
     "facts": {
       "volunteers": {
         "label": "Freiwillige aktiv in Nord-Korfu"

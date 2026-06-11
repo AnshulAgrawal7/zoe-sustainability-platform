@@ -39,6 +39,16 @@ import type {
 
 const highlights = projects.filter((p) => p.status === 'Active').slice(0, 3);
 
+// Addressed SDGs (B3) — derived from the project data (single source of truth),
+// shown as an icon row that links to the internal SDG page.
+const addressedSdgs = Array.from(new Set(projects.flatMap((p) => p.sdgs))).sort(
+  (a, b) => a - b
+);
+
+function sdgIconPath(n: number): string {
+  return `/sdg-icons/E-WEB-Goal-${String(n).padStart(2, '0')}.png`;
+}
+
 const DATE_LOCALES: Record<string, string> = {
   en: 'en-GB',
   el: 'el-GR',
@@ -394,6 +404,45 @@ export default function LandingPage() {
           </p>
         </Container>
       </section>
+
+      {/* Addressed SDGs — icon row linking to the internal SDG page (B3) */}
+      {addressedSdgs.length > 0 && (
+        <section
+          aria-labelledby="landing-sdgs-heading"
+          className="bg-gray-50 py-10 dark:bg-gray-800"
+        >
+          <Container>
+            <h2
+              id="landing-sdgs-heading"
+              className="mb-2 text-center text-xl font-bold text-gray-900 dark:text-white"
+            >
+              {t('landing.sdgs.heading')}
+            </h2>
+            <p className="mx-auto mb-6 max-w-2xl text-center text-sm text-gray-600 dark:text-gray-400">
+              {t('landing.sdgs.subheading')}
+            </p>
+            <ul className="flex flex-wrap justify-center gap-3">
+              {addressedSdgs.map((n) => (
+                <li key={n}>
+                  <Link
+                    to={`/sdg-dashboard#sdg-${n}`}
+                    aria-label={t('projects.sdgLinkAria', { n })}
+                    className="block h-14 w-14 overflow-hidden rounded-lg transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 motion-safe:hover:scale-105 sm:h-16 sm:w-16"
+                  >
+                    <img
+                      src={sdgIconPath(n)}
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy"
+                      className="h-full w-full"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </section>
+      )}
 
       {/* What's new — merged feed teaser */}
       {feedTeaser.length > 0 && (

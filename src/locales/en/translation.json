@@ -804,6 +804,10 @@
       "projectCta": "Learn more"
     },
     "statsAria": "Key statistics",
+    "sdgs": {
+      "heading": "Sustainable Development Goals we address",
+      "subheading": "ZOE's actions contribute to these UN SDGs. Select a goal to see how."
+    },
     "facts": {
       "volunteers": {
         "label": "volunteers already active across North Corfu"
