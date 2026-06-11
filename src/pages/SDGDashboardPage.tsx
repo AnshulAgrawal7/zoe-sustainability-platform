@@ -167,14 +167,15 @@ export default function SDGDashboardPage() {
             return (
               <div
                 key={number}
-                className="overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
+                id={`sdg-${number}`}
+                className="flex scroll-mt-24 flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
               >
                 <div
                   className="h-2"
                   style={{ backgroundColor: sdg.color }}
                   aria-hidden="true"
                 />
-                <div className="p-5">
+                <div className="flex flex-1 flex-col p-5">
                   <div className="mb-3 flex items-start justify-between gap-2">
                     <span
                       className="rounded px-2 py-0.5 text-sm font-bold text-white"
@@ -195,21 +196,6 @@ export default function SDGDashboardPage() {
                     {t(`sdgCatalog.${number}.contribution`, {
                       defaultValue: '',
                     })}
-                  </p>
-
-                  {/* Countable facts (no fabricated % of achievement) */}
-                  <p className="mb-4 text-xs font-medium text-gray-600 dark:text-gray-300">
-                    {t('sdgDashboard.contributing', {
-                      count: linkedProjects.length,
-                    })}
-                    {completedCount > 0 && (
-                      <span className="text-gray-400 dark:text-gray-500">
-                        {' · '}
-                        {t('sdgDashboard.ofWhichCompleted', {
-                          count: completedCount,
-                        })}
-                      </span>
-                    )}
                   </p>
 
                   {/* Linked projects */}
@@ -233,6 +219,13 @@ export default function SDGDashboardPage() {
                       </ul>
                     </div>
                   )}
+
+                  {/* K1: completed-count in the bottom-right corner of the tile */}
+                  <p className="mt-auto pt-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400">
+                    {t('sdgDashboard.ofWhichCompleted', {
+                      count: completedCount,
+                    })}
+                  </p>
                 </div>
               </div>
             );
