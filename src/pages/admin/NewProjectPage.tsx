@@ -4,6 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { ChevronLeft } from 'lucide-react';
 import { createProject } from '../../services/projectService';
 import AutoTranslatePanel from '../../components/admin/AutoTranslatePanel';
+import ValueChainFields from './ValueChainFields';
+
+const TRANSLATABLE = [
+  'title',
+  'description',
+  'inputResources',
+  'keyActivities',
+  'outputResults',
+];
 
 const CATEGORIES = [
   'ENVIRONMENT',
@@ -26,6 +35,15 @@ export default function NewProjectPage() {
     descriptionEn: '',
     descriptionEl: '',
     descriptionDe: '',
+    inputResourcesEn: '',
+    inputResourcesEl: '',
+    inputResourcesDe: '',
+    keyActivitiesEn: '',
+    keyActivitiesEl: '',
+    keyActivitiesDe: '',
+    outputResultsEn: '',
+    outputResultsEl: '',
+    outputResultsDe: '',
     category: 'ENVIRONMENT' as (typeof CATEGORIES)[number],
     status: 'OPEN' as (typeof STATUSES)[number],
     rewardPoints: 50,
@@ -104,7 +122,11 @@ export default function NewProjectPage() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <AutoTranslatePanel values={form} onChange={set} />
+        <AutoTranslatePanel
+          values={form}
+          onChange={set}
+          fields={TRANSLATABLE}
+        />
 
         {/* Titles */}
         <section className="space-y-4 rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800">
@@ -169,6 +191,9 @@ export default function NewProjectPage() {
             </div>
           ))}
         </section>
+
+        {/* Value chain (Input -> Activity -> Output) */}
+        <ValueChainFields form={form} set={set} />
 
         {/* Meta */}
         <section className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800">

@@ -16,6 +16,15 @@ interface ProjectBody {
   descriptionEn?: string;
   descriptionEl?: string;
   descriptionDe?: string;
+  inputResourcesEn?: string;
+  inputResourcesEl?: string;
+  inputResourcesDe?: string;
+  keyActivitiesEn?: string;
+  keyActivitiesEl?: string;
+  keyActivitiesDe?: string;
+  outputResultsEn?: string;
+  outputResultsEl?: string;
+  outputResultsDe?: string;
   sdgIds?: number[];
   category?: string;
   status?: string;
@@ -92,6 +101,15 @@ export async function createProject(req: AuthRequest, res: Response) {
         location: rest.location,
         maxParticipants: rest.maxParticipants,
         imageUrl: rest.imageUrl ?? null,
+        inputResourcesEn: rest.inputResourcesEn?.trim() || null,
+        inputResourcesEl: rest.inputResourcesEl?.trim() || null,
+        inputResourcesDe: rest.inputResourcesDe?.trim() || null,
+        keyActivitiesEn: rest.keyActivitiesEn?.trim() || null,
+        keyActivitiesEl: rest.keyActivitiesEl?.trim() || null,
+        keyActivitiesDe: rest.keyActivitiesDe?.trim() || null,
+        outputResultsEn: rest.outputResultsEn?.trim() || null,
+        outputResultsEl: rest.outputResultsEl?.trim() || null,
+        outputResultsDe: rest.outputResultsDe?.trim() || null,
         createdById: req.user!.userId,
       },
     });
@@ -131,6 +149,15 @@ export async function updateProject(req: AuthRequest, res: Response) {
         ...(rest.location !== undefined ? { location: rest.location } : {}),
         ...(rest.rewardPoints !== undefined ? { rewardPoints: rest.rewardPoints } : {}),
         ...(rest.imageUrl !== undefined ? { imageUrl: rest.imageUrl || null } : {}),
+        ...(rest.inputResourcesEn !== undefined ? { inputResourcesEn: rest.inputResourcesEn || null } : {}),
+        ...(rest.inputResourcesEl !== undefined ? { inputResourcesEl: rest.inputResourcesEl || null } : {}),
+        ...(rest.inputResourcesDe !== undefined ? { inputResourcesDe: rest.inputResourcesDe || null } : {}),
+        ...(rest.keyActivitiesEn !== undefined ? { keyActivitiesEn: rest.keyActivitiesEn || null } : {}),
+        ...(rest.keyActivitiesEl !== undefined ? { keyActivitiesEl: rest.keyActivitiesEl || null } : {}),
+        ...(rest.keyActivitiesDe !== undefined ? { keyActivitiesDe: rest.keyActivitiesDe || null } : {}),
+        ...(rest.outputResultsEn !== undefined ? { outputResultsEn: rest.outputResultsEn || null } : {}),
+        ...(rest.outputResultsEl !== undefined ? { outputResultsEl: rest.outputResultsEl || null } : {}),
+        ...(rest.outputResultsDe !== undefined ? { outputResultsDe: rest.outputResultsDe || null } : {}),
         ...(sdgIds !== undefined ? { sdgIds: JSON.stringify(sdgIds) } : {}),
       },
     });

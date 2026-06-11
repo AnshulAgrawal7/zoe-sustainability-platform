@@ -12,7 +12,7 @@ Baseline-Tests: **Backend 68 / FE 22 / E2E 55**. DE/EN/EL für alle neuen Texte.
 | 2 — Events unter Projekte | ✅ | Beidseitige Verlinkung + 9 verknüpfte Seed-Events bereits vorhanden; verifiziert, keine toten Links |
 | 3 — Startseite: aktive Projekte/Events oben | ✅ | „Jetzt mitmachen"-Sektion direkt nach Hero: kommende Events zuerst, dann OPEN-Projekte, nutzt `EntityImage` |
 | 4 — Bild-Infrastruktur | ✅ | Teil 1 `Event.imageUrl` + Teil 2 `EntityImage` (Platzhalter + onError) in Projekt-Karten/-Detail + Event-Liste |
-| 5 — Input/Aktivität/Output (Hammer & Champy) | ⏳ | Steht aus |
+| 5 — Input/Aktivität/Output (Hammer & Champy) | ✅ | 9 trilinguale Projekt-Felder + Migration; Detail-Abschnitt „Input → Aktivität → Ergebnis"; Admin-Felder; Seed mit belegten Fakten |
 | 6 — Grüneres Design | ⏳ | Steht aus |
 
 Legende: ✅ fertig · ⚠️ teilweise/mit Einschränkung · ⛔ übersprungen · ⏳ offen
@@ -133,6 +133,27 @@ Neue Sektion in `LandingPage.tsx`, **direkt nach dem Hero** (vor Stats/Pillars/F
   projectLabel/eventCta/projectCta) in EN/DE/EL.
 - tsc (FE+BE) sauber, eslint sauber, FE 22 grün.
 
+### Block 5 — Input → Aktivität → Output (Hammer & Champy 1993)
+**Trilingual** umgesetzt (konsistent mit den vorhandenen Projekt-Textfeldern):
+- **Schema/Migration:** 9 optionale Spalten an `Project`
+  (`inputResources{En,El,De}`, `keyActivities{En,El,De}`, `outputResults{En,El,De}`),
+  Migration `20260611140000_add_project_value_chain` (nur `ADD COLUMN`).
+- **Backend:** `projectController` create/update + Validatoren in `routes/projects.ts`
+  (`valueChainValidators`, optional, max 2000 Zeichen).
+- **Typen:** `ApiProject` um die 9 Felder erweitert; Service nutzt `Partial<ApiProject>`.
+- **Admin:** neue, wiederverwendbare Komponente `ValueChainFields.tsx` (3 Felder ×
+  EN/EL/DE) in New-/Edit-Projektformular; `AutoTranslatePanel` übersetzt jetzt auch
+  diese drei Basisfelder (DeepL), sodass Admins eine Sprache tippen und die anderen
+  zwei füllen lassen können. i18n: `admin.valueChain*` (EN/DE/EL).
+- **Projekt-Detail:** Abschnitt „Input → Aktivität → Ergebnis" als `<ol>` mit bis zu
+  3 Karten, **nur wenn befüllt**; i18n `projects.valueChain.*`.
+- **Seed:** alle 8 realen Projekte trilingual befüllt — belegte Zahlen als
+  Programmangabe (z. B. proj-circular Output „2.682,699 t = 15,08%", proj-led
+  „4.866 LED-Leuchten"); wo keine gemessene Wirkung belegt ist, Output als
+  „Programmziel" formuliert (keine erfundenen Werte).
+- tsc (FE+BE) sauber, eslint sauber, BE 68 / FE 22 grün (Seed lief im Test-Setup
+  fehlerfrei → alle 8 Projekt-Ids getroffen).
+
 ## Testergebnisse
 
 | Suite | Vorher | Nachher (Block 1) |
@@ -192,6 +213,19 @@ npx prisma generate            # Client-Typen aktualisieren
 ```
 Die lokale Test-DB braucht nichts — `globalSetup.ts` macht `prisma db push --force-reset`
 und liest das Schema direkt.
+
+### `20260611140000_add_project_value_chain` (Block 5)
+Additiv: 9× `ALTER TABLE "Project" ADD COLUMN … TEXT;` (Input/Aktivität/Output ×3 Sprachen).
+
+**Deploy gegen Supabase (vom User auszuführen):**
+```bash
+cd backend
+npx prisma migrate deploy      # wendet add_event_image + add_project_value_chain an
+npx prisma generate
+npm run db:seed                # befüllt die 8 Projekte mit den Value-Chain-Texten
+```
+Hinweis: `db:seed` ist idempotent (upsert/update) und setzt die belegten
+Programmangaben für die 8 realen Projekte.
 
 ---
 

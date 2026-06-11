@@ -499,7 +499,13 @@
     "allStatuses": "Alle",
     "source": "Quelle",
     "eventsTitle": "Termine zu diesem Projekt",
-    "prototypeCount": "Prototyp — {{count}} Projekte"
+    "prototypeCount": "Prototyp — {{count}} Projekte",
+    "valueChain": {
+      "heading": "So funktioniert es: Input → Aktivität → Ergebnis",
+      "input": "Input",
+      "activity": "Aktivität",
+      "output": "Ergebnis"
+    }
   },
   "rewards": {
     "title": "Meine Belohnungen",
@@ -633,7 +639,12 @@
       "edit": "Beitrag bearbeiten",
       "delete": "Beitrag löschen",
       "confirmDelete": "Diesen Beitrag löschen?"
-    }
+    },
+    "valueChainHeading": "Wertschöpfung (Input → Aktivität → Ergebnis)",
+    "valueChainHint": "Optional. Nur belegte Programmangaben — was reingeht, was getan wird, was rauskommt. Wird auf der Projektseite angezeigt, wenn befüllt.",
+    "valueChainInput": "Input — Ressourcen, Freiwillige, Mittel",
+    "valueChainActivity": "Aktivität — was getan wird",
+    "valueChainOutput": "Output / Ergebnis — Nutzen für Bürger:innen"
   },
   "participate": {
     "title": "Bürgerbeteiligung",

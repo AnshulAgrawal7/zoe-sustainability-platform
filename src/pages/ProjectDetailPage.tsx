@@ -10,6 +10,9 @@ import {
   AlertCircle,
   Calendar,
   Clock,
+  Boxes,
+  Cog,
+  Sparkles,
 } from 'lucide-react';
 import { getProject, participate, withdraw } from '../services/projectService';
 import { getEvents } from '../services/eventService';
@@ -92,6 +95,15 @@ export default function ProjectDetailPage() {
     } catch {
       return [];
     }
+  }
+
+  // Value chain (Block 5): language-appropriate text for one base field.
+  function valueChain(
+    base: 'inputResources' | 'keyActivities' | 'outputResults'
+  ): string {
+    if (!project) return '';
+    const suffix = lang === 'el' ? 'El' : lang === 'de' ? 'De' : 'En';
+    return (project[`${base}${suffix}` as keyof ApiProject] as string) ?? '';
   }
 
   async function handleParticipate() {
@@ -188,6 +200,26 @@ export default function ProjectDetailPage() {
 
   const sdgs = parseSdgs();
   const participantCount = project._count?.participations ?? 0;
+  const valueChainSteps = [
+    {
+      key: 'input',
+      Icon: Boxes,
+      label: t('projects.valueChain.input'),
+      text: valueChain('inputResources'),
+    },
+    {
+      key: 'activity',
+      Icon: Cog,
+      label: t('projects.valueChain.activity'),
+      text: valueChain('keyActivities'),
+    },
+    {
+      key: 'output',
+      Icon: Sparkles,
+      label: t('projects.valueChain.output'),
+      text: valueChain('outputResults'),
+    },
+  ].filter((s) => s.text);
   const categoryColor =
     {
       ENVIRONMENT: 'bg-green-500',
@@ -342,6 +374,33 @@ export default function ProjectDetailPage() {
           )}
         </div>
       </div>
+
+      {/* Value chain — Input -> Activity -> Result (Block 5). Only when filled. */}
+      {valueChainSteps.length > 0 && (
+        <section className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8">
+          <h2 className="mb-5 text-lg font-bold text-gray-900 dark:text-white">
+            {t('projects.valueChain.heading')}
+          </h2>
+          <ol className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {valueChainSteps.map(({ key, Icon, label, text }) => (
+              <li
+                key={key}
+                className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/40"
+              >
+                <div className="mb-2 flex items-center gap-2 text-green-700 dark:text-green-400">
+                  <Icon size={18} aria-hidden="true" />
+                  <span className="text-xs font-semibold uppercase tracking-wide">
+                    {label}
+                  </span>
+                </div>
+                <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                  {text}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       {/* Events linked to this project */}
       {events.length > 0 && (

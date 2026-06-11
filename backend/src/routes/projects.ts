@@ -15,6 +15,15 @@ import { PROJECT_CATEGORIES } from '../constants';
 
 const router = Router();
 
+// Value-chain fields (Block 5) — all optional, trilingual free text.
+const valueChainValidators = [
+  'inputResourcesEn', 'inputResourcesEl', 'inputResourcesDe',
+  'keyActivitiesEn', 'keyActivitiesEl', 'keyActivitiesDe',
+  'outputResultsEn', 'outputResultsEl', 'outputResultsDe',
+].map((f) =>
+  body(f).optional({ values: 'falsy' }).isString().isLength({ max: 2000 })
+);
+
 router.get(
   '/',
   [
@@ -42,6 +51,7 @@ router.post(
     body('category').isIn([...PROJECT_CATEGORIES]),
     body('rewardPoints').optional().isInt({ min: 0 }),
     body('imageUrl').optional({ values: 'falsy' }).isURL({ require_protocol: true }).isLength({ max: 2048 }),
+    ...valueChainValidators,
     body('sdgIds').isArray(),
   ],
   createProject
@@ -57,6 +67,7 @@ router.put(
     body('titleDe').optional().trim().notEmpty(),
     body('status').optional().isIn(['DRAFT', 'OPEN', 'CLOSED', 'COMPLETED']),
     body('imageUrl').optional({ values: 'falsy' }).isURL({ require_protocol: true }).isLength({ max: 2048 }),
+    ...valueChainValidators,
   ],
   updateProject
 );

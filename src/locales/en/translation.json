@@ -499,7 +499,13 @@
     "allStatuses": "All",
     "source": "Source",
     "eventsTitle": "Events for this project",
-    "prototypeCount": "Prototype — {{count}} projects"
+    "prototypeCount": "Prototype — {{count}} projects",
+    "valueChain": {
+      "heading": "How it works: Input → Activity → Result",
+      "input": "Input",
+      "activity": "Activity",
+      "output": "Result"
+    }
   },
   "rewards": {
     "title": "My Rewards",
@@ -633,7 +639,12 @@
       "edit": "Edit post",
       "delete": "Delete post",
       "confirmDelete": "Delete this post?"
-    }
+    },
+    "valueChainHeading": "Value chain (Input → Activity → Output)",
+    "valueChainHint": "Optional. Programme facts only — what goes in, what is done, what comes out. Shown on the project page when filled.",
+    "valueChainInput": "Input — resources, volunteers, funding",
+    "valueChainActivity": "Activity — what is done",
+    "valueChainOutput": "Output / result — benefit for citizens"
   },
   "participate": {
     "title": "Citizen Participation",

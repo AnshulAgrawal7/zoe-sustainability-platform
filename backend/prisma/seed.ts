@@ -118,6 +118,113 @@ async function main() {
     )
   );
 
+  // --- Value chain (Hammer & Champy 1993): Input -> Activity -> Output, trilingual.
+  // Programme/municipal facts grounded in each project's sourced description; output
+  // statements use documented figures where they exist, otherwise the programme aim
+  // (no fabricated measured impact). Shown on the project detail page.
+  const valueChain: Record<
+    string,
+    {
+      inputResourcesEn: string; inputResourcesEl: string; inputResourcesDe: string;
+      keyActivitiesEn: string; keyActivitiesEl: string; keyActivitiesDe: string;
+      outputResultsEn: string; outputResultsEl: string; outputResultsDe: string;
+    }
+  > = {
+    'proj-greenmove': {
+      inputResourcesEn: 'EU GreenMove programme funding; municipal mobility planning; partner operators.',
+      inputResourcesEl: 'Χρηματοδότηση προγράμματος GreenMove (ΕΕ)· δημοτικός σχεδιασμός κινητικότητας· συνεργαζόμενοι φορείς.',
+      inputResourcesDe: 'Förderung aus dem EU-Programm GreenMove; kommunale Mobilitätsplanung; Partnerbetreiber.',
+      keyActivitiesEn: 'Promoting low-emission transport and active mobility across North Corfu.',
+      keyActivitiesEl: 'Προώθηση μεταφορών χαμηλών εκπομπών και ήπιας κινητικότητας στη Βόρεια Κέρκυρα.',
+      keyActivitiesDe: 'Förderung emissionsarmer Verkehrsmittel und aktiver Mobilität in Nordkorfu.',
+      outputResultsEn: 'Lower-emission mobility options for residents and visitors (programme aim).',
+      outputResultsEl: 'Επιλογές κινητικότητας χαμηλών εκπομπών για κατοίκους και επισκέπτες (στόχος προγράμματος).',
+      outputResultsDe: 'Emissionsärmere Mobilitätsangebote für Einwohner:innen und Gäste (Programmziel).',
+    },
+    'proj-circular': {
+      inputResourcesEn: '20 recycling streams across 210 collection points; municipal sorting hub; school programme.',
+      inputResourcesEl: '20 ρεύματα ανακύκλωσης σε 210 σημεία συλλογής· δημοτικό κέντρο διαλογής· σχολικό πρόγραμμα.',
+      inputResourcesDe: '20 Wertstoffströme an 210 Sammelpunkten; kommunales Sortierzentrum; Schulprogramm.',
+      keyActivitiesEn: 'Separate collection and sorting (up to 95% purity); educating 2,000+ pupils.',
+      keyActivitiesEl: 'Χωριστή συλλογή και διαλογή (καθαρότητα έως 95%)· εκπαίδευση 2.000+ μαθητών.',
+      keyActivitiesDe: 'Getrenntsammlung und Sortierung (bis zu 95% Sortenreinheit); Bildung von 2.000+ Schüler:innen.',
+      outputResultsEn: '2,682.699 t residual waste diverted from landfill in 2025 — 15.08% of 17,787 t (municipal programme figure).',
+      outputResultsEl: '2.682,699 t σύμμεικτων εκτράπηκαν από την ταφή το 2025 — 15,08% των 17.787 t (στοιχείο προγράμματος).',
+      outputResultsDe: '2.682,699 t Restmüll 2025 aus der Deponierung ausgeschleust — 15,08% von 17.787 t (Programmangabe).',
+    },
+    'proj-marine': {
+      inputResourcesEn: 'ARCHELON and ODEK Kerkyra volunteers; nest-fencing and stranding-response equipment.',
+      inputResourcesEl: 'Εθελοντές ΑΡΧΕΛΩΝ και ΟΔΕΚ Κέρκυρας· εξοπλισμός περίφραξης φωλιών και αντιμετώπισης εκβρασμών.',
+      inputResourcesDe: 'Freiwillige von ARCHELON und ODEK Kerkyra; Ausrüstung für Nest-Einzäunung und Strandungsbergung.',
+      keyActivitiesEn: 'Sea-turtle nest protection, awareness campaigns and marine-mammal stranding response.',
+      keyActivitiesEl: 'Προστασία φωλιών χελωνών, εκστρατείες ευαισθητοποίησης και αντιμετώπιση εκβρασμών θαλάσσιων θηλαστικών.',
+      keyActivitiesDe: 'Schutz von Schildkrötennestern, Aufklärungskampagnen und Bergung gestrandeter Meeressäuger.',
+      outputResultsEn: 'Protected nests and a local stranding-response capacity on the North Corfu coast (programme aim).',
+      outputResultsEl: 'Προστατευμένες φωλιές και τοπική ικανότητα αντιμετώπισης εκβρασμών στις ακτές της Β. Κέρκυρας (στόχος προγράμματος).',
+      outputResultsDe: 'Geschützte Nester und lokale Strandungs-Bergungskapazität an der Küste Nordkorfus (Programmziel).',
+    },
+    'proj-antinioti': {
+      inputResourcesEn: 'Natura 2000 wetland; conservation volunteers and monitoring effort.',
+      inputResourcesEl: 'Υγρότοπος Natura 2000· εθελοντές διατήρησης και προσπάθεια παρακολούθησης.',
+      inputResourcesDe: 'Natura-2000-Feuchtgebiet; Naturschutz-Freiwillige und Monitoring.',
+      keyActivitiesEn: 'Protecting the lagoon from runoff and unregulated access; habitat monitoring.',
+      keyActivitiesEl: 'Προστασία της λιμνοθάλασσας από απορροές και ανεξέλεγκτη πρόσβαση· παρακολούθηση οικοτόπων.',
+      keyActivitiesDe: 'Schutz der Lagune vor Abflüssen und unkontrolliertem Zugang; Lebensraum-Monitoring.',
+      outputResultsEn: 'Safeguarded wetland habitat between Kassiopi and Roda (conservation aim).',
+      outputResultsEl: 'Διαφυλαγμένος υγροτοπικός οικότοπος μεταξύ Κασσιόπης και Ρόδα (στόχος διατήρησης).',
+      outputResultsDe: 'Gesicherter Feuchtgebiets-Lebensraum zwischen Kassiopi und Roda (Schutzziel).',
+    },
+    'proj-natural-monuments': {
+      inputResourcesEn: 'Volunteers, tools and native saplings; sites at Erimitis, Nymfes and Klimatia.',
+      inputResourcesEl: 'Εθελοντές, εργαλεία και ιθαγενή δενδρύλλια· τοποθεσίες Ερημίτη, Νυμφών και Κληματιάς.',
+      inputResourcesDe: 'Freiwillige, Werkzeug und heimische Setzlinge; Standorte Erimitis, Nymfes und Klimatia.',
+      keyActivitiesEn: "Conservation, monitoring and reforestation of North Corfu's natural monuments.",
+      keyActivitiesEl: 'Διατήρηση, παρακολούθηση και αναδάσωση των φυσικών μνημείων της Βόρειας Κέρκυρας.',
+      keyActivitiesDe: 'Erhalt, Monitoring und Aufforstung der Naturdenkmäler Nordkorfus.',
+      outputResultsEn: 'Restored slopes and protected natural monuments (programme aim).',
+      outputResultsEl: 'Αποκατεστημένες πλαγιές και προστατευμένα φυσικά μνημεία (στόχος προγράμματος).',
+      outputResultsDe: 'Wiederhergestellte Hänge und geschützte Naturdenkmäler (Programmziel).',
+    },
+    'proj-led': {
+      inputResourcesEn: 'Municipal energy-efficiency budget; 4,866 existing luminaires.',
+      inputResourcesEl: 'Δημοτικός προϋπολογισμός ενεργειακής απόδοσης· 4.866 υφιστάμενα φωτιστικά.',
+      inputResourcesDe: 'Kommunales Energieeffizienz-Budget; 4.866 vorhandene Leuchten.',
+      keyActivitiesEn: 'Replacing municipal luminaires with energy-efficient LEDs.',
+      keyActivitiesEl: 'Αντικατάσταση δημοτικών φωτιστικών με ενεργειακά αποδοτικά LED.',
+      keyActivitiesDe: 'Austausch kommunaler Leuchten gegen energieeffiziente LED.',
+      outputResultsEn: '4,866 LED luminaires installed, reducing energy use and CO₂ (programme figure: Verde.tec 2026).',
+      outputResultsEl: 'Εγκαταστάθηκαν 4.866 φωτιστικά LED, μειώνοντας ενέργεια και CO₂ (στοιχείο: Verde.tec 2026).',
+      outputResultsDe: '4.866 LED-Leuchten installiert, weniger Energie und CO₂ (Programmangabe: Verde.tec 2026).',
+    },
+    'proj-education': {
+      inputResourcesEn: 'Partnership with the Ionian University and the University of Nuremberg; student volunteers.',
+      inputResourcesEl: 'Συνεργασία με το Ιόνιο Πανεπιστήμιο και το Πανεπιστήμιο της Νυρεμβέργης· φοιτητές εθελοντές.',
+      inputResourcesDe: 'Partnerschaft mit der Ionischen Universität und der Universität Nürnberg; studentische Freiwillige.',
+      keyActivitiesEn: 'Environmental education, scientific congresses and active student participation.',
+      keyActivitiesEl: 'Περιβαλλοντική εκπαίδευση, επιστημονικά συνέδρια και ενεργή συμμετοχή φοιτητών.',
+      keyActivitiesDe: 'Umweltbildung, wissenschaftliche Kongresse und aktive Studierendenbeteiligung.',
+      outputResultsEn: 'Joint research and an engaged student community (programme aim).',
+      outputResultsEl: 'Κοινή έρευνα και ενεργή φοιτητική κοινότητα (στόχος προγράμματος).',
+      outputResultsDe: 'Gemeinsame Forschung und eine engagierte Studierendengemeinschaft (Programmziel).',
+    },
+    'proj-water-quality': {
+      inputResourcesEn: 'Volunteer monitors, test kits and the Agios Panteleimon basin sources.',
+      inputResourcesEl: 'Εθελοντές παρακολούθησης, κιτ ελέγχου και πηγές της λεκάνης Αγίου Παντελεήμονα.',
+      inputResourcesDe: 'Freiwillige Messende, Testkits und die Quellen des Agios-Panteleimon-Beckens.',
+      keyActivitiesEn: 'Monitoring drinking-water quality and protecting freshwater sources.',
+      keyActivitiesEl: 'Παρακολούθηση ποιότητας πόσιμου νερού και προστασία πηγών γλυκού νερού.',
+      keyActivitiesDe: 'Überwachung der Trinkwasserqualität und Schutz der Süßwasserquellen.',
+      outputResultsEn: 'Continuous water-quality oversight across North Corfu (programme aim).',
+      outputResultsEl: 'Συνεχής εποπτεία ποιότητας νερού στη Βόρεια Κέρκυρα (στόχος προγράμματος).',
+      outputResultsDe: 'Kontinuierliche Überwachung der Wasserqualität in Nordkorfu (Programmziel).',
+    },
+  };
+  await Promise.all(
+    Object.entries(valueChain).map(([id, data]) =>
+      prisma.project.update({ where: { id }, data })
+    )
+  );
+
   // --- Demo events (concrete dates for the real projects above). DEMO/PROGRAMME
   // DATA: plausible illustrative dates, not official municipal fixtures. Ids reuse
   // the legacy `evt-*` keys so any historical EventRegistration rows stay linked.

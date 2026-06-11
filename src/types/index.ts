@@ -197,6 +197,16 @@ export interface ApiProject {
   maxParticipants: number | null;
   imageUrl: string | null;
   sourceNote: string | null;
+  // Value chain (Hammer & Champy): Input -> Activity -> Output, trilingual, optional.
+  inputResourcesEn: string | null;
+  inputResourcesEl: string | null;
+  inputResourcesDe: string | null;
+  keyActivitiesEn: string | null;
+  keyActivitiesEl: string | null;
+  keyActivitiesDe: string | null;
+  outputResultsEn: string | null;
+  outputResultsEl: string | null;
+  outputResultsDe: string | null;
   createdAt: string;
   _count?: { participations: number };
 }

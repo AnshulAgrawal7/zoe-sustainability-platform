@@ -45,6 +45,17 @@ model Project {
   descriptionEn   String
   descriptionEl   String
   descriptionDe   String
+  // Value chain (Hammer & Champy 1993): Input -> Activity -> Output, trilingual,
+  // optional. Shown on the project detail page only when filled. Programme facts.
+  inputResourcesEn String?
+  inputResourcesEl String?
+  inputResourcesDe String?
+  keyActivitiesEn  String?
+  keyActivitiesEl  String?
+  keyActivitiesDe  String?
+  outputResultsEn  String?
+  outputResultsEl  String?
+  outputResultsDe  String?
   sdgIds          String // JSON array: "[3, 11, 13]"
   category        String
   status          String    @default("OPEN")

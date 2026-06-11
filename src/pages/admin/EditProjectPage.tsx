@@ -4,7 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { ChevronLeft } from 'lucide-react';
 import { getProject, updateProject } from '../../services/projectService';
 import AutoTranslatePanel from '../../components/admin/AutoTranslatePanel';
+import ValueChainFields from './ValueChainFields';
 import type { ApiProject } from '../../types';
+
+const TRANSLATABLE = [
+  'title',
+  'description',
+  'inputResources',
+  'keyActivities',
+  'outputResults',
+];
 
 const CATEGORIES = [
   'ENVIRONMENT',
@@ -29,6 +38,15 @@ export default function EditProjectPage() {
     descriptionEn: '',
     descriptionEl: '',
     descriptionDe: '',
+    inputResourcesEn: '',
+    inputResourcesEl: '',
+    inputResourcesDe: '',
+    keyActivitiesEn: '',
+    keyActivitiesEl: '',
+    keyActivitiesDe: '',
+    outputResultsEn: '',
+    outputResultsEl: '',
+    outputResultsDe: '',
     category: 'ENVIRONMENT' as (typeof CATEGORIES)[number],
     status: 'OPEN' as (typeof STATUSES)[number],
     rewardPoints: 50,
@@ -52,6 +70,15 @@ export default function EditProjectPage() {
           descriptionEn: p.descriptionEn,
           descriptionEl: p.descriptionEl,
           descriptionDe: p.descriptionDe,
+          inputResourcesEn: p.inputResourcesEn ?? '',
+          inputResourcesEl: p.inputResourcesEl ?? '',
+          inputResourcesDe: p.inputResourcesDe ?? '',
+          keyActivitiesEn: p.keyActivitiesEn ?? '',
+          keyActivitiesEl: p.keyActivitiesEl ?? '',
+          keyActivitiesDe: p.keyActivitiesDe ?? '',
+          outputResultsEn: p.outputResultsEn ?? '',
+          outputResultsEl: p.outputResultsEl ?? '',
+          outputResultsDe: p.outputResultsDe ?? '',
           category: p.category as (typeof CATEGORIES)[number],
           status: p.status as (typeof STATUSES)[number],
           rewardPoints: p.rewardPoints,
@@ -128,7 +155,11 @@ export default function EditProjectPage() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <AutoTranslatePanel values={form} onChange={set} />
+        <AutoTranslatePanel
+          values={form}
+          onChange={set}
+          fields={TRANSLATABLE}
+        />
 
         {/* Titles */}
         <section className="space-y-4 rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800">
@@ -187,6 +218,9 @@ export default function EditProjectPage() {
             </div>
           ))}
         </section>
+
+        {/* Value chain (Input -> Activity -> Output) */}
+        <ValueChainFields form={form} set={set} />
 
         {/* Meta */}
         <section className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800">
