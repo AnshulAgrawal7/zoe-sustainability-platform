@@ -330,7 +330,7 @@ export default function ProjectsPage() {
                         <span />
                       )}
                       <span className="flex items-center gap-1 text-xs font-medium text-green-600 dark:text-green-400">
-                        {t('projects.participate')}{' '}
+                        {t('projects.viewProject')}{' '}
                         <ArrowRight size={12} aria-hidden="true" />
                       </span>
                     </div>

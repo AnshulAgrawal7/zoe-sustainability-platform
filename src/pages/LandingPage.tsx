@@ -74,6 +74,7 @@ export default function LandingPage() {
   const [openProjects, setOpenProjects] = useState<ApiProject[]>([]);
   const [communityIdeas, setCommunityIdeas] = useState<PublicIdea[]>([]);
   const [learnResources, setLearnResources] = useState<LearningResource[]>([]);
+  const [projectCount, setProjectCount] = useState<number | null>(null);
 
   useEffect(() => {
     // "Get involved now": upcoming events (date asc from the API) take priority,
@@ -84,6 +85,10 @@ export default function LandingPage() {
     getProjects({ status: 'OPEN', limit: 4 })
       .then((data) => setOpenProjects(data.projects))
       .catch(() => setOpenProjects([]));
+    // Dynamic stat: total LISTED projects (all statuses; umbrella excluded).
+    getProjects({ status: 'ALL', limit: 1 })
+      .then((data) => setProjectCount(data.total))
+      .catch(() => setProjectCount(null));
     // New sections: approved community ideas (Z3) + learning resources (Z5).
     getPublicIdeas()
       .then((ideas) => setCommunityIdeas(ideas.slice(0, 3)))
@@ -112,15 +117,22 @@ export default function LandingPage() {
   // data/landingFacts.ts and formatted to the active locale here via Intl, so the
   // thousands/decimal separators follow the language (EN "2,682.699" vs DE/EL
   // "2.682,699") instead of being hand-formatted per translation.
-  const facts = LANDING_FACTS.map((f) => ({
-    key: f.key,
-    value:
-      formatNumber(f.value, i18n.language, {
-        maximumFractionDigits: f.fractionDigits ?? 0,
-      }) + (f.unit ? `\u00A0${f.unit}` : ''),
-    label: t(f.labelKey),
-    source: t(f.sourceKey),
-  }));
+  const facts = LANDING_FACTS.map((f) => {
+    // The "projects" number is dynamic \u2014 the count of listed projects (falls back
+    // to the documented constant until it loads). "6 action areas" stays in the
+    // curated label string. Other figures are documented constants.
+    const raw =
+      f.key === 'scope' && projectCount !== null ? projectCount : f.value;
+    return {
+      key: f.key,
+      value:
+        formatNumber(raw, i18n.language, {
+          maximumFractionDigits: f.fractionDigits ?? 0,
+        }) + (f.unit ? `\u00A0${f.unit}` : ''),
+      label: t(f.labelKey),
+      source: t(f.sourceKey),
+    };
+  });
 
   function pickLang(en: string, el: string, de: string): string {
     if (lang === 'el') return el;

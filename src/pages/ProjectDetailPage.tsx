@@ -6,8 +6,6 @@ import {
   ArrowLeft,
   MapPin,
   Users,
-  Star,
-  CheckCircle,
   AlertCircle,
   Calendar,
   Clock,
@@ -18,13 +16,11 @@ import {
   ArrowRight,
   BarChart3,
 } from 'lucide-react';
-import { getProject, participate, withdraw } from '../services/projectService';
+import { getProject } from '../services/projectService';
 import { getEvents } from '../services/eventService';
 import { getLearningResources } from '../services/learnService';
-import { getMe } from '../services/userService';
 import EventRegister from '../components/events/EventRegister';
 import EntityImage from '../components/ui/EntityImage';
-import { useAuthStore } from '../stores/authStore';
 import type { ApiProject, ApiEvent, LearningResource } from '../types';
 
 const DATE_LOCALES: Record<string, string> = {
@@ -39,34 +35,17 @@ export default function ProjectDetailPage() {
   const navigate = useNavigate();
   const lang = i18n.language.slice(0, 2);
 
-  const { isAuthenticated, user, updateUser } = useAuthStore();
-
   const [project, setProject] = useState<ApiProject | null>(null);
   const [events, setEvents] = useState<ApiEvent[]>([]);
   const [learn, setLearn] = useState<LearningResource[]>([]);
-  const [isParticipating, setIsParticipating] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState(false);
-  const [actionMessage, setActionMessage] = useState<{
-    type: 'success' | 'error';
-    text: string;
-  } | null>(null);
 
   useEffect(() => {
     if (!id) return;
     async function load() {
       setLoading(true);
       try {
-        const [proj, participating] = await Promise.all([
-          getProject(id!),
-          isAuthenticated
-            ? getMe().then((me) =>
-                me.participations.some((p) => p.projectId === id)
-              )
-            : Promise.resolve(false),
-        ]);
-        setProject(proj);
-        setIsParticipating(participating);
+        setProject(await getProject(id!));
       } catch {
         setProject(null);
       } finally {
@@ -82,7 +61,7 @@ export default function ProjectDetailPage() {
     getLearningResources({ projectId: id })
       .then(setLearn)
       .catch(() => setLearn([]));
-  }, [id, isAuthenticated]);
+  }, [id]);
 
   function getTitle(): string {
     if (!project) return '';
@@ -114,67 +93,6 @@ export default function ProjectDetailPage() {
     if (!project) return '';
     const suffix = lang === 'el' ? 'El' : lang === 'de' ? 'De' : 'En';
     return (project[`${base}${suffix}` as keyof ApiProject] as string) ?? '';
-  }
-
-  async function handleParticipate() {
-    if (!id || !project) return;
-    setActionLoading(true);
-    setActionMessage(null);
-    try {
-      const { pointsAwarded } = await participate(id);
-      setIsParticipating(true);
-      setProject((prev) =>
-        prev
-          ? {
-              ...prev,
-              _count: {
-                participations: (prev._count?.participations ?? 0) + 1,
-              },
-            }
-          : prev
-      );
-      updateUser({ points: (user?.points ?? 0) + pointsAwarded });
-      setActionMessage({
-        type: 'success',
-        text: t('projects.joinSuccess', { points: pointsAwarded }),
-      });
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : t('common.error');
-      setActionMessage({ type: 'error', text: msg });
-    } finally {
-      setActionLoading(false);
-    }
-  }
-
-  async function handleWithdraw() {
-    if (!id) return;
-    setActionLoading(true);
-    setActionMessage(null);
-    try {
-      await withdraw(id);
-      setIsParticipating(false);
-      setProject((prev) =>
-        prev
-          ? {
-              ...prev,
-              _count: {
-                participations: Math.max(
-                  0,
-                  (prev._count?.participations ?? 1) - 1
-                ),
-              },
-            }
-          : prev
-      );
-      setActionMessage({
-        type: 'success',
-        text: t('projects.withdrawSuccess'),
-      });
-    } catch {
-      setActionMessage({ type: 'error', text: t('common.error') });
-    } finally {
-      setActionLoading(false);
-    }
   }
 
   if (loading) {
@@ -295,10 +213,6 @@ export default function ProjectDetailPage() {
               <Users size={14} aria-hidden="true" />
               {t('projects.participants', { count: participantCount })}
             </span>
-            <span className="flex items-center gap-1.5 font-semibold text-amber-600 dark:text-amber-400">
-              <Star size={14} aria-hidden="true" />
-              {t('projects.points', { points: project.rewardPoints })}
-            </span>
           </div>
 
           <p className="mb-6 leading-relaxed text-gray-700 dark:text-gray-300">
@@ -323,66 +237,6 @@ export default function ProjectDetailPage() {
                   SDG {n}
                 </span>
               ))}
-            </div>
-          )}
-
-          {/* Action message */}
-          {actionMessage && (
-            <div
-              role={actionMessage.type === 'error' ? 'alert' : 'status'}
-              className={`mb-4 flex items-center gap-2 rounded-lg p-3 text-sm ${
-                actionMessage.type === 'success'
-                  ? 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300'
-                  : 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300'
-              }`}
-            >
-              {actionMessage.type === 'success' && (
-                <CheckCircle size={16} aria-hidden="true" />
-              )}
-              {actionMessage.text}
-            </div>
-          )}
-
-          {/* Participate button */}
-          {project.status === 'OPEN' && (
-            <div className="flex flex-wrap gap-3">
-              {isAuthenticated ? (
-                isParticipating ? (
-                  <button
-                    onClick={() => void handleWithdraw()}
-                    disabled={actionLoading}
-                    className="flex items-center gap-2 rounded-lg border border-gray-300 px-6 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-60 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
-                  >
-                    <CheckCircle
-                      size={16}
-                      className="text-green-500"
-                      aria-hidden="true"
-                    />
-                    {actionLoading
-                      ? t('common.loading')
-                      : t('projects.participating')}{' '}
-                    — {t('projects.withdraw')}
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => void handleParticipate()}
-                    disabled={actionLoading}
-                    className="flex items-center gap-2 rounded-lg bg-green-600 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:opacity-60"
-                  >
-                    <Star size={16} aria-hidden="true" />
-                    {actionLoading
-                      ? t('common.loading')
-                      : `${t('projects.participate')} (+${project.rewardPoints} pts)`}
-                  </button>
-                )
-              ) : (
-                <Link
-                  to="/login"
-                  className="rounded-lg bg-green-600 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
-                >
-                  {t('nav.login')} → {t('projects.participate')}
-                </Link>
-              )}
             </div>
           )}
         </div>
