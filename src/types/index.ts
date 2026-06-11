@@ -380,6 +380,34 @@ export interface FeedItem {
   needsReview: boolean;
 }
 
+// Admin-facing feed shapes (all translations + images).
+export interface AdminFeedTranslation {
+  id: string;
+  locale: string;
+  title: string;
+  body: string;
+  isMachineTranslated: boolean;
+}
+export interface AdminFeedImage {
+  id: string;
+  storagePath: string;
+  publicUrl: string;
+  order: number;
+  altText: string | null;
+  width: number | null;
+  height: number | null;
+}
+export interface AdminFeedPost {
+  id: string;
+  category: 'ANNOUNCEMENT' | 'EVENT' | 'PROJECT' | 'NEWS';
+  eventStatus: 'UPCOMING' | 'COMPLETED' | null;
+  publishedAt: string;
+  sourceFolder: string;
+  needsReview: boolean;
+  translations: AdminFeedTranslation[];
+  images: AdminFeedImage[];
+}
+
 export type CommentStatus = 'VISIBLE' | 'HIDDEN';
 
 // Public comment on an approved idea — author display name only, no PII.

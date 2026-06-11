@@ -1505,5 +1505,31 @@
       "COMPLETED": "Completed",
       "UPCOMING": "Upcoming"
     }
+  },
+  "adminFeed": {
+    "title": "What’s New feed",
+    "subtitle": "Edit imported posts: category, event status, translations, images. Review machine translations and add alt-texts.",
+    "navLabel": "Manage the What’s New feed",
+    "empty": "No feed posts yet — run the import script.",
+    "needsReview": "Needs review",
+    "edit": "Edit",
+    "delete": "Delete post",
+    "deleteConfirm": "Delete this post and its images? This cannot be undone.",
+    "create": "",
+    "formCategory": "Category",
+    "formEventStatus": "Event status",
+    "eventStatusNone": "None",
+    "formNeedsReview": "Needs review",
+    "translations": "Translations",
+    "machineTranslated": "machine-translated",
+    "imagesHeading": "Images",
+    "altLabel": "Alt text (for screen readers)",
+    "altSave": "Save alt",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "deleteImage": "Delete image",
+    "deleteImageConfirm": "Delete this image (also from storage)?",
+    "saved": "Saved",
+    "sourceFolder": "Source folder"
   }
 }

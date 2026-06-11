@@ -1505,5 +1505,31 @@
       "COMPLETED": "Abgeschlossen",
       "UPCOMING": "Bevorstehend"
     }
+  },
+  "adminFeed": {
+    "title": "Was-ist-neu-Feed",
+    "subtitle": "Importierte Posts bearbeiten: Kategorie, Event-Status, Übersetzungen, Bilder. Maschinelle Übersetzungen prüfen und Alt-Texte ergänzen.",
+    "navLabel": "Was-ist-neu-Feed verwalten",
+    "empty": "Noch keine Feed-Posts — Import-Skript ausführen.",
+    "needsReview": "Review nötig",
+    "edit": "Bearbeiten",
+    "delete": "Post löschen",
+    "deleteConfirm": "Diesen Post und seine Bilder löschen? Nicht umkehrbar.",
+    "create": "",
+    "formCategory": "Kategorie",
+    "formEventStatus": "Event-Status",
+    "eventStatusNone": "Keiner",
+    "formNeedsReview": "Review nötig",
+    "translations": "Übersetzungen",
+    "machineTranslated": "maschinell übersetzt",
+    "imagesHeading": "Bilder",
+    "altLabel": "Alt-Text (für Screenreader)",
+    "altSave": "Alt speichern",
+    "moveUp": "Nach oben",
+    "moveDown": "Nach unten",
+    "deleteImage": "Bild löschen",
+    "deleteImageConfirm": "Dieses Bild löschen (auch aus dem Speicher)?",
+    "saved": "Gespeichert",
+    "sourceFolder": "Quellordner"
   }
 }

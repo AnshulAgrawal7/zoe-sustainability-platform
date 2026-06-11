@@ -39,6 +39,8 @@ import ManageCommentsPage from '../pages/admin/ManageCommentsPage';
 import ManageLearnPage from '../pages/admin/ManageLearnPage';
 import NewLearnPage from '../pages/admin/NewLearnPage';
 import EditLearnPage from '../pages/admin/EditLearnPage';
+import ManageFeedPage from '../pages/admin/ManageFeedPage';
+import EditFeedPage from '../pages/admin/EditFeedPage';
 import ManagePostsPage from '../pages/admin/ManagePostsPage';
 import NewProjectPage from '../pages/admin/NewProjectPage';
 import EditProjectPage from '../pages/admin/EditProjectPage';
@@ -167,6 +169,22 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <EditLearnPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/feed',
+        element: (
+          <AdminRoute>
+            <ManageFeedPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/feed/:id/edit',
+        element: (
+          <AdminRoute>
+            <EditFeedPage />
           </AdminRoute>
         ),
       },
