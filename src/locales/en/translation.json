@@ -450,7 +450,9 @@
     "sdgContributions": "SDG contributions",
     "keyFigures": "Key figures",
     "ideas": "Ideas board",
-    "learn": "Learning"
+    "learn": "Learning",
+    "mainNavAria": "Main navigation",
+    "mobileNavAria": "Mobile navigation"
   },
   "auth": {
     "login": "Login",
@@ -648,7 +650,8 @@
     "valueChainHint": "Optional. Programme facts only — what goes in, what is done, what comes out. Shown on the project page when filled.",
     "valueChainInput": "Input — resources, volunteers, funding",
     "valueChainActivity": "Activity — what is done",
-    "valueChainOutput": "Output / result — benefit for citizens"
+    "valueChainOutput": "Output / result — benefit for citizens",
+    "locationPlaceholder": "e.g. Kassiopi, North Corfu"
   },
   "participate": {
     "title": "Citizen Participation",
@@ -721,7 +724,8 @@
     "copyright": "© 2026 ZOE Environmental Programme — Municipality of Northern Corfu",
     "accessibility": "Accessibility",
     "privacy": "Privacy Policy",
-    "imprint": "Imprint"
+    "imprint": "Imprint",
+    "legalNavAria": "Legal navigation"
   },
   "accessibility": {
     "title": "Accessibility Statement",
@@ -795,7 +799,8 @@
       "projectLabel": "Project",
       "eventCta": "Join in",
       "projectCta": "Learn more"
-    }
+    },
+    "statsAria": "Key statistics"
   },
   "privacy": {
     "title": "Privacy Policy",

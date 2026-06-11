@@ -450,7 +450,9 @@
     "sdgContributions": "SDG-Beiträge",
     "keyFigures": "Kennzahlen",
     "ideas": "Ideen-Board",
-    "learn": "Wissen"
+    "learn": "Wissen",
+    "mainNavAria": "Hauptnavigation",
+    "mobileNavAria": "Mobile Navigation"
   },
   "auth": {
     "login": "Anmelden",
@@ -648,7 +650,8 @@
     "valueChainHint": "Optional. Nur belegte Programmangaben — was reingeht, was getan wird, was rauskommt. Wird auf der Projektseite angezeigt, wenn befüllt.",
     "valueChainInput": "Input — Ressourcen, Freiwillige, Mittel",
     "valueChainActivity": "Aktivität — was getan wird",
-    "valueChainOutput": "Output / Ergebnis — Nutzen für Bürger:innen"
+    "valueChainOutput": "Output / Ergebnis — Nutzen für Bürger:innen",
+    "locationPlaceholder": "z. B. Kassiopi, Nordkorfu"
   },
   "participate": {
     "title": "Bürgerbeteiligung",
@@ -721,7 +724,8 @@
     "copyright": "© 2026 ZOE Umweltprogramm — Gemeinde Nordkorfu",
     "accessibility": "Barrierefreiheit",
     "privacy": "Datenschutzerklärung",
-    "imprint": "Impressum"
+    "imprint": "Impressum",
+    "legalNavAria": "Rechtliche Navigation"
   },
   "accessibility": {
     "title": "Barrierefreiheitserklärung",
@@ -795,7 +799,8 @@
       "projectLabel": "Projekt",
       "eventCta": "Teilnehmen",
       "projectCta": "Mehr erfahren"
-    }
+    },
+    "statsAria": "Wichtige Kennzahlen"
   },
   "privacy": {
     "title": "Datenschutzerklärung",

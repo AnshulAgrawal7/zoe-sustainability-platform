@@ -13,8 +13,8 @@ WCAG, keine erfundenen Daten, Persistenz in der DB, Commit nach jedem Block.
 | B | Z5 Bildungsinhalte (LearningResource) | ✅ | Entität + /learn (+Detail) + Admin-CRUD (DeepL) + Projekt-Verknüpfung + 4 reale Seeds |
 | C | Z2 SDG-Dashboard ehrlich machen | ✅ | Erfundene %-Balken entfernt; zählbare Fakten (beitragende/abgeschlossene Projekte) + Disclaimer |
 | D | Z1 belegte Wirkungszahlen | ✅ | ProjectMetric-Tabelle (nur belegte Zahlen); Detail-Block/„noch nicht erfasst"; /transparency aggregiert belegte Werte |
-| E | Z4 Missionen (SDT-konform) | ⏳ | offen |
-| F | Z6 hartkodierte Strings → i18n | ⏳ | offen |
+| E | Z4 Missionen (SDT-konform) | ⏭️ | **bewusst zurückgestellt** (PRIO 3, größter/risikoreichster Block) — Plan unten |
+| F | Z6 hartkodierte Strings → i18n | ✅ | Landmark-aria-labels + Admin-Placeholder externalisiert (EN/DE/EL) |
 
 ## Chronologisches Protokoll
 
@@ -174,6 +174,38 @@ separater Schritt.
 **Tests:** Backend +3 (`metrics.test.ts`: /impact mit Quelle+Projekt, Detail mit/ohne
 Kennzahlen) → **92**. E2E +1 (`transparency.spec.ts`: belegte Zahl „4,866" sichtbar)
 → **59**.
+
+### Block F — hartkodierte Strings → i18n (Z6) ✅
+- Landmark-/Navigations-`aria-label`s externalisiert: Header (Haupt-/Mobil-Navigation),
+  Footer (rechtliche Navigation), LandingPage (Kennzahlen-Sektion) → `nav.mainNavAria`,
+  `nav.mobileNavAria`, `footer.legalNavAria`, `landing.statsAria` (EN/DE/EL).
+- Admin-Platzhalter „e.g. Kassiopi…" (EventFormFields, NewProjectPage) →
+  `admin.locationPlaceholder` (EN/DE/EL).
+- **Geprüft:** die früher bemängelten Beteiligungs-Optionstexte (`participationOpts.*`)
+  sind bereits vollständig dreisprachig (EL/DE vorhanden) — keine Änderung nötig.
+- **Bewusst belassen:** das Logo-`aria-label="ZOE"` (sprachneutraler Markenname).
+- Keine Logikänderung. tsc/eslint sauber, FE 22 grün. Bestehende Nav-E2E bleibt grün
+  (EN-Standardsprache → „Main navigation" unverändert).
+
+### Block E — Missionen (Z4) ⏭️ ZURÜCKGESTELLT
+**Warum:** PRIO 3 und mit Abstand der größte/risikoreichste Block (neue Entitäten
+**plus** Eingriffe in bereits getestete Kern-Flows). Gemäß Run-Vorgabe „lieber sauber
+abschließen was geht … niemals halbfertig/rot committen" bewusst NICHT angefangen,
+um die fünf fertigen Blöcke grün und stabil zu halten.
+
+**Konkreter nächster Schritt (sauber additiv):**
+1. Schema: `Mission` (trilingual title/description, `type` JOIN_EVENTS|JOIN_PROJECTS|
+   SUBMIT_IDEA, `targetCount`, rewardPoints/rewardBadgeId?, optional projectId/sdg) +
+   `UserMissionProgress` (userId, missionId, progress, completedAt?). Additive Migration.
+2. Fortschritts-Hook: eine zentrale `advanceMissions(userId, type)`-Funktion, aufgerufen
+   in `projectController.participate`, `eventController.joinEvent/registerForEvent`,
+   `ideaController.createIdea` (nur eingeloggt). Erfüllung → Punkte/Badge, **kein
+   Doppel-Reward** (idempotent über `completedAt`).
+3. `/my-rewards` + `/dashboard`: aktive Missionen + Fortschrittsbalken. Admin-CRUD.
+4. Seed: 2–3 Missionen an echte Projekte/Events (z. B. „Nimm an 3 ZOE-Terminen teil").
+5. Tests: Fortschritt zählt korrekt; Abschluss → Belohnung; kein Doppel-Reward.
+6. **SDT-Hinweis (Ryan & Deci 2000):** bewusst NUR Missionen, **kein** Zeitlimit/
+   Wettbewerb — Kompetenzerleben statt extrinsischem Druck (Over-Justification vermeiden).
 
 ## Neue Migrationen
 _(A1: keine.)_

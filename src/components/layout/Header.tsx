@@ -73,7 +73,7 @@ export default function Header() {
 
           {/* Desktop nav */}
           <nav
-            aria-label="Main navigation"
+            aria-label={t('nav.mainNavAria')}
             className="hidden items-center gap-1 lg:flex"
           >
             {navGroups.map((group) => (
@@ -166,7 +166,7 @@ export default function Header() {
       {menuOpen && (
         <nav
           id="mobile-menu"
-          aria-label="Mobile navigation"
+          aria-label={t('nav.mobileNavAria')}
           className="border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 lg:hidden"
         >
           <div className="space-y-1 px-4 py-3">

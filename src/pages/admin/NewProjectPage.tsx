@@ -286,7 +286,7 @@ export default function NewProjectPage() {
                 type="text"
                 value={form.location}
                 onChange={(e) => set('location', e.target.value)}
-                placeholder="e.g. Kassiopi, NE Corfu"
+                placeholder={t('admin.locationPlaceholder')}
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
             </div>

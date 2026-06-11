@@ -163,7 +163,7 @@ export default function EventFormFields({ form, set, projects }: Props) {
               type="text"
               value={form.location}
               onChange={(e) => set('location', e.target.value)}
-              placeholder="e.g. Kassiopi Beach, North Corfu"
+              placeholder={t('admin.locationPlaceholder')}
               className={inputClass}
             />
           </div>

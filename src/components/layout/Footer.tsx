@@ -88,7 +88,7 @@ export default function Footer() {
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-gray-800 pt-6 text-xs text-gray-500 sm:flex-row">
           <p>{t('footer.copyright')}</p>
           <nav
-            aria-label="Legal navigation"
+            aria-label={t('footer.legalNavAria')}
             className="flex items-center gap-4"
           >
             <Link
