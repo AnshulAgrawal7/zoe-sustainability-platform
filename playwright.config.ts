@@ -7,6 +7,8 @@ const useWindowsChrome = existsSync(WINDOWS_CHROME);
 
 export default defineConfig({
   testDir: './e2e',
+  // Remove E2E-created test ideas/comments from the persistent DB after the run.
+  globalTeardown: './e2e/global-teardown.ts',
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,

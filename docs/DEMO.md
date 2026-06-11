@@ -120,6 +120,29 @@ In **dieser Reihenfolge** (zwei Terminals):
 
 ---
 
+## 4b. TESTDATEN BEREINIGEN (vor der Demo, falls nötig)
+
+E2E-Tests laufen gegen die echte Supabase-DB und hinterlassen Test-Ideen/-Kommentare
+(z. B. „E2E board 1781…", Beschreibung „Automated end-to-end idea submission"), die
+sonst auf `/ideas` und in der Landing-Sektion „Aus der Community" auftauchen.
+
+**Bereinigen (löscht NUR Test-Artefakte, lässt die 4 geseedeten Demo-Ideen unangetastet):**
+```bash
+cd backend && npx ts-node prisma/cleanup-test-data.ts
+```
+Ausgabe z. B.: `Cleanup: removed 28 test ideas, 6 test comments, … · Seeded demo ideas present: 4/4 OK`.
+
+- Erkennt Test-Ideen an: Titel beginnt mit `E2E`, Beschreibung enthält
+  `Automated end-to-end`, oder `submitterEmail` `reply-*@example.com`; dazu
+  Test-Kommentare (`E2E comment …`).
+- Meldet, falls < 4 Demo-Ideen übrig sind → dann `npm run db:seed` (idempotent)
+  stellt `idea-demo-*` wieder her.
+- **Automatisch:** Das Skript läuft auch als Playwright-`globalTeardown` nach jeder
+  E2E-Suite (`e2e/global-teardown.ts`), sodass frische Testdaten gleich wieder
+  entfernt werden.
+
+---
+
 ## 5. NACH DER PRÄSENTATION
 
 - [ ] **Dev-Server stoppen:** in beiden Terminals **Ctrl+C**.
