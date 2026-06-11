@@ -573,7 +573,7 @@ export default function LandingPage() {
           <p className="mx-auto mb-4 max-w-2xl text-lg text-green-100">
             {t('landing.cta.body')}
           </p>
-          <p className="mb-8 text-sm text-green-200">
+          <p className="mb-8 text-sm text-green-100">
             {t('landing.cta.rewards')}{' '}
             <Link
               to="/rewards"

@@ -145,7 +145,7 @@ export default function RewardsPage() {
       {/* Hero */}
       <section className="bg-gradient-to-br from-green-700 to-teal-700 py-14 text-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-3 flex items-center gap-2 text-sm text-green-200">
+          <div className="mb-3 flex items-center gap-2 text-sm text-green-100">
             <Award size={14} aria-hidden="true" />
             <span>{t('rewards.heroEyebrow')}</span>
           </div>
