@@ -16,18 +16,17 @@ import {
   Lightbulb,
 } from 'lucide-react';
 import { projects } from '../data/projects';
-import { fallbackPosts } from '../data/posts';
 import StatusBadge from '../components/ui/StatusBadge';
-import PostCard from '../components/news/PostCard';
+import FeedCard from '../components/news/FeedCard';
 import EntityImage from '../components/ui/EntityImage';
-import { getPosts } from '../services/postService';
+import { getFeed } from '../services/feedService';
 import { getEvents } from '../services/eventService';
 import { getProjects } from '../services/projectService';
 import { getPublicIdeas } from '../services/ideaService';
 import { getLearningResources } from '../services/learnService';
 import { trackEvent, ANALYTICS_EVENTS } from '../services/analytics';
 import type {
-  Post,
+  FeedItem,
   ApiEvent,
   ApiProject,
   PublicIdea,
@@ -67,16 +66,13 @@ const categoryIcons: Record<string, React.ElementType> = {
 export default function LandingPage() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language.slice(0, 2);
-  const [latestPosts, setLatestPosts] = useState<Post[]>([]);
+  const [feedTeaser, setFeedTeaser] = useState<FeedItem[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<ApiEvent[]>([]);
   const [openProjects, setOpenProjects] = useState<ApiProject[]>([]);
   const [communityIdeas, setCommunityIdeas] = useState<PublicIdea[]>([]);
   const [learnResources, setLearnResources] = useState<LearningResource[]>([]);
 
   useEffect(() => {
-    getPosts({ limit: 3 })
-      .then((posts) => setLatestPosts(posts.slice(0, 3)))
-      .catch(() => setLatestPosts(fallbackPosts.slice(0, 3)));
     // "Get involved now": upcoming events (date asc from the API) take priority,
     // OPEN projects fill the rest. Both calls are public; failures degrade to empty.
     getEvents({ upcoming: true })
@@ -93,6 +89,21 @@ export default function LandingPage() {
       .then((res) => setLearnResources(res.slice(0, 3)))
       .catch(() => setLearnResources([]));
   }, []);
+
+  // "What's new" teaser = top 3 of the merged feed, refetched on locale change.
+  useEffect(() => {
+    let cancelled = false;
+    getFeed(lang)
+      .then((items) => {
+        if (!cancelled) setFeedTeaser(items.slice(0, 3));
+      })
+      .catch(() => {
+        if (!cancelled) setFeedTeaser([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [lang]);
 
   // Documented programme facts (sourced) for the trust strip under the hero.
   const facts = [
@@ -523,8 +534,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* What's new — news feed */}
-      {latestPosts.length > 0 && (
+      {/* What's new — merged feed teaser */}
+      {feedTeaser.length > 0 && (
         <section className="bg-gray-50 py-10 dark:bg-gray-800">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -545,8 +556,8 @@ export default function LandingPage() {
               </Link>
             </div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {latestPosts.map((post) => (
-                <PostCard key={post.id} post={post} compact />
+              {feedTeaser.map((item) => (
+                <FeedCard key={`${item.source}-${item.id}`} item={item} />
               ))}
             </div>
           </div>

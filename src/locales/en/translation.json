@@ -1487,5 +1487,23 @@
     "heading": "Documented impact",
     "notMeasured": "Impact not yet measured for this project.",
     "source": "Source"
+  },
+  "feed": {
+    "gallery": "Photo gallery",
+    "filterBy": "Filter",
+    "all": "All",
+    "completedEvents": "Completed events",
+    "found": "{{count}} entries",
+    "category": {
+      "ANNOUNCEMENT": "Announcement",
+      "EVENT": "Event",
+      "PROJECT": "Project",
+      "NEWS": "News",
+      "PROJECT_UPDATE": "Project update"
+    },
+    "event": {
+      "COMPLETED": "Completed",
+      "UPCOMING": "Upcoming"
+    }
   }
 }

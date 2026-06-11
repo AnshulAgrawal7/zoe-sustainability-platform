@@ -1487,5 +1487,23 @@
     "heading": "Belegte Wirkung",
     "notMeasured": "Wirkung für dieses Projekt noch nicht erfasst.",
     "source": "Quelle"
+  },
+  "feed": {
+    "gallery": "Fotogalerie",
+    "filterBy": "Filtern",
+    "all": "Alle",
+    "completedEvents": "Abgeschlossene Termine",
+    "found": "{{count}} Einträge",
+    "category": {
+      "ANNOUNCEMENT": "Ankündigung",
+      "EVENT": "Termin",
+      "PROJECT": "Projekt",
+      "NEWS": "Neuigkeit",
+      "PROJECT_UPDATE": "Projekt-Update"
+    },
+    "event": {
+      "COMPLETED": "Abgeschlossen",
+      "UPCOMING": "Bevorstehend"
+    }
   }
 }

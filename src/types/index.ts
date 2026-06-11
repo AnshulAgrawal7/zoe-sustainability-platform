@@ -353,6 +353,33 @@ export interface ApiImpactMetric extends ApiProjectMetric {
   } | null;
 }
 
+// "What's New" merged feed (imported Facebook posts + project posts).
+export interface FeedImage {
+  url: string;
+  alt: string | null;
+  width: number | null;
+  height: number | null;
+}
+
+export type FeedCategory =
+  | 'ANNOUNCEMENT'
+  | 'EVENT'
+  | 'PROJECT'
+  | 'NEWS'
+  | 'PROJECT_UPDATE';
+
+export interface FeedItem {
+  id: string;
+  source: 'feed' | 'project';
+  category: FeedCategory;
+  eventStatus: 'UPCOMING' | 'COMPLETED' | null;
+  date: string;
+  title: string;
+  excerpt: string;
+  images: FeedImage[];
+  needsReview: boolean;
+}
+
 export type CommentStatus = 'VISIBLE' | 'HIDDEN';
 
 // Public comment on an approved idea — author display name only, no PII.

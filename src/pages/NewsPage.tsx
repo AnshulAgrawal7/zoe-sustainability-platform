@@ -1,36 +1,65 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Newspaper } from 'lucide-react';
-import { getPosts } from '../services/postService';
-import { fallbackPosts } from '../data/posts';
-import PostCard from '../components/news/PostCard';
-import type { Post, PostType } from '../types';
+import { Newspaper, CheckCircle2 } from 'lucide-react';
+import { getFeed } from '../services/feedService';
+import FeedCard from '../components/news/FeedCard';
+import type { FeedItem, FeedCategory } from '../types';
 
-const FILTERS: (PostType | 'ALL')[] = [
-  'ALL',
-  'PROJECT_NEW',
-  'PROJECT_COMPLETED',
+const CATEGORIES: FeedCategory[] = [
   'ANNOUNCEMENT',
+  'EVENT',
+  'PROJECT',
+  'NEWS',
+  'PROJECT_UPDATE',
 ];
 
 export default function NewsPage() {
-  const { t } = useTranslation();
-  const [posts, setPosts] = useState<Post[]>([]);
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language.slice(0, 2);
+
+  const [items, setItems] = useState<FeedItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<PostType | 'ALL'>('ALL');
+  const [category, setCategory] = useState<FeedCategory | ''>('');
+  const [completedOnly, setCompletedOnly] = useState(false);
 
+  // Refetch on locale change so the body text follows the active language.
   useEffect(() => {
-    getPosts({ limit: 50 })
-      .then(setPosts)
-      .catch(() => setPosts(fallbackPosts))
-      .finally(() => setLoading(false));
-  }, []);
+    let cancelled = false;
+    async function load() {
+      setLoading(true);
+      try {
+        const data = await getFeed(lang);
+        if (!cancelled) setItems(data);
+      } catch {
+        if (!cancelled) setItems([]);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, [lang]);
 
-  const visible =
-    filter === 'ALL' ? posts : posts.filter((p) => p.type === filter);
+  const visible = completedOnly
+    ? items.filter(
+        (i) => i.category === 'EVENT' && i.eventStatus === 'COMPLETED'
+      )
+    : category
+      ? items.filter((i) => i.category === category)
+      : items;
+
+  function chipClass(active: boolean): string {
+    return `rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 ${
+      active
+        ? 'bg-green-600 text-white'
+        : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
+    }`;
+  }
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
       <header className="mb-6">
         <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-sm font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300">
           <Newspaper size={16} aria-hidden="true" />
@@ -44,27 +73,49 @@ export default function NewsPage() {
         </p>
       </header>
 
-      {/* Type filter */}
+      {/* Category filter + "Completed events" toggle */}
       <div
-        className="mb-6 flex flex-wrap gap-2"
+        className="mb-6 flex flex-wrap items-center gap-2"
         role="group"
-        aria-label={t('news.filterLabel')}
+        aria-label={t('feed.filterBy')}
       >
-        {FILTERS.map((f) => (
+        <button
+          type="button"
+          onClick={() => {
+            setCategory('');
+            setCompletedOnly(false);
+          }}
+          aria-pressed={!category && !completedOnly}
+          className={chipClass(!category && !completedOnly)}
+        >
+          {t('feed.all')}
+        </button>
+        {CATEGORIES.map((c) => (
           <button
-            key={f}
+            key={c}
             type="button"
-            onClick={() => setFilter(f)}
-            aria-pressed={filter === f}
-            className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 ${
-              filter === f
-                ? 'bg-green-600 text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
-            }`}
+            onClick={() => {
+              setCategory(c);
+              setCompletedOnly(false);
+            }}
+            aria-pressed={category === c && !completedOnly}
+            className={chipClass(category === c && !completedOnly)}
           >
-            {f === 'ALL' ? t('news.filterAll') : t(`news.types.${f}`)}
+            {t(`feed.category.${c}`)}
           </button>
         ))}
+        <button
+          type="button"
+          onClick={() => {
+            setCompletedOnly(true);
+            setCategory('');
+          }}
+          aria-pressed={completedOnly}
+          className={`inline-flex items-center gap-1.5 ${chipClass(completedOnly)}`}
+        >
+          <CheckCircle2 size={13} aria-hidden="true" />
+          {t('feed.completedEvents')}
+        </button>
       </div>
 
       {loading ? (
@@ -76,11 +127,16 @@ export default function NewsPage() {
           {t('news.empty')}
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-        </div>
+        <>
+          <p className="mb-5 text-sm text-gray-500 dark:text-gray-400">
+            {t('feed.found', { count: visible.length })}
+          </p>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {visible.map((item) => (
+              <FeedCard key={`${item.source}-${item.id}`} item={item} />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
