@@ -1405,6 +1405,7 @@
     "viewMap": "Karte",
     "loading": "Karte wird geladen …",
     "noLocation": "Keine Standortdaten für diese Projekte.",
+    "legendLabel": "Projektkategorien",
     "ariaLabel": "Karte der ZOE-Initiativen"
   },
   "popup": {

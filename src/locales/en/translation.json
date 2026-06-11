@@ -1405,6 +1405,7 @@
     "viewMap": "Map",
     "loading": "Loading map…",
     "noLocation": "No location data for these projects.",
+    "legendLabel": "Project categories",
     "ariaLabel": "Map of ZOE initiatives"
   },
   "popup": {

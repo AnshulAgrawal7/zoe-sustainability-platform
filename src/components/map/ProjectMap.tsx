@@ -3,6 +3,7 @@ import L from 'leaflet';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useThemeStore } from '../../stores/themeStore';
+import { projectCategoryHex } from '../ui/categoryVisuals';
 import 'leaflet/dist/leaflet.css';
 
 // Leaflet/Vite icon fix (safety net): Leaflet's default marker references image
@@ -34,18 +35,11 @@ interface ProjectMapProps {
   className?: string;
 }
 
-// Category colours mirror the project card colour bar. Inline hex (not Tailwind)
-// because the divIcon HTML lives outside Tailwind's class scanning.
-const CATEGORY_COLOR: Record<string, string> = {
-  ENVIRONMENT: '#16a34a',
-  MOBILITY: '#2563eb',
-  COMMUNITY: '#ea580c',
-  EDUCATION: '#9333ea',
-  CULTURE: '#0d9488',
-};
-
+// Category colour comes from the central categoryVisuals source (one truth,
+// shared with the cards' accent + the map legend). divIcon HTML lives outside
+// Tailwind's class scanning, so we use the raw hex here.
 function categoryIcon(category: string): L.DivIcon {
-  const color = CATEGORY_COLOR[category] ?? '#6b7280';
+  const color = projectCategoryHex(category);
   return L.divIcon({
     className: '', // drop Leaflet's default white box
     html: `<span style="display:block;width:18px;height:18px;border-radius:9999px;background:${color};border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.35)"></span>`,
