@@ -94,7 +94,7 @@ export default function IdeaDetailPage() {
 
   if (loading) {
     return (
-      <Container maxW="3xl" className="py-20 text-center">
+      <Container className="py-20 text-center">
         <p className="text-gray-500 dark:text-gray-400">
           {t('common.loading')}
         </p>
@@ -104,7 +104,7 @@ export default function IdeaDetailPage() {
 
   if (notFound || !idea) {
     return (
-      <Container maxW="3xl" className="py-20 text-center">
+      <Container className="py-20 text-center">
         <AlertCircle
           size={40}
           className="mx-auto mb-4 text-gray-400"
@@ -124,7 +124,7 @@ export default function IdeaDetailPage() {
   }
 
   return (
-    <Container maxW="3xl" className="py-10">
+    <Container className="py-10">
       <Link
         to="/ideas"
         className="mb-6 inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"

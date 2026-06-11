@@ -58,7 +58,7 @@ export default function ParticipationPage() {
   }
 
   return (
-    <Container maxW="5xl" className="py-10">
+    <Container className="py-10">
       {/* Header */}
       <div className="mb-10">
         <h1 className="mb-3 text-3xl font-bold text-gray-900 dark:text-white">

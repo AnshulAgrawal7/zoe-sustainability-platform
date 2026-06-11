@@ -72,7 +72,7 @@ export default function ManageIdeasPage() {
   }
 
   return (
-    <Container maxW="4xl" className="py-8">
+    <Container className="py-8">
       <div className="mb-1 flex items-center gap-2">
         <Lightbulb size={22} className="text-amber-500" aria-hidden="true" />
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">

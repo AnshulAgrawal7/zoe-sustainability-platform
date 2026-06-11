@@ -135,7 +135,7 @@ export default function EditProjectPage() {
     return <div className="p-8 text-red-600">{t('common.error')}</div>;
 
   return (
-    <Container maxW="3xl" className="py-8">
+    <Container className="py-8">
       <Link
         to="/admin/projects"
         className="mb-4 inline-flex items-center gap-1 text-sm text-gray-500 hover:text-green-600 dark:text-gray-400"

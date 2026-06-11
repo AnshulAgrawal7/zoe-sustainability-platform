@@ -104,7 +104,7 @@ export default function EditEventPage() {
 
   if (notFound) {
     return (
-      <Container maxW="3xl" className="py-20 text-center">
+      <Container className="py-20 text-center">
         <p className="text-gray-500 dark:text-gray-400">{t('common.error')}</p>
         <Link
           to="/admin/events"
@@ -117,7 +117,7 @@ export default function EditEventPage() {
   }
 
   return (
-    <Container maxW="3xl" className="py-8">
+    <Container className="py-8">
       <Link
         to="/admin/events"
         className="mb-4 inline-flex items-center gap-1 text-sm text-gray-500 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-400"

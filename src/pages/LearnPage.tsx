@@ -52,7 +52,7 @@ export default function LearnPage() {
   );
 
   return (
-    <Container maxW="5xl" className="py-10">
+    <Container className="py-10">
       <div className="mb-6">
         <h1 className="mb-2 flex items-center gap-2 text-3xl font-bold text-gray-900 dark:text-white">
           <GraduationCap

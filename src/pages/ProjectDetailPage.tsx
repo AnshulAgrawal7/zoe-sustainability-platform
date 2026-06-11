@@ -97,7 +97,7 @@ export default function ProjectDetailPage() {
 
   if (loading) {
     return (
-      <Container maxW="4xl" className="py-20 text-center">
+      <Container className="py-20 text-center">
         <p className="text-gray-500 dark:text-gray-400">
           {t('common.loading')}
         </p>
@@ -107,7 +107,7 @@ export default function ProjectDetailPage() {
 
   if (!project) {
     return (
-      <Container maxW="4xl" className="py-20 text-center">
+      <Container className="py-20 text-center">
         <AlertCircle
           size={48}
           className="mx-auto mb-4 text-gray-400"
@@ -161,7 +161,7 @@ export default function ProjectDetailPage() {
     }[project.category] ?? 'bg-gray-400';
 
   return (
-    <Container maxW="4xl" className="py-10">
+    <Container className="py-10">
       <button
         onClick={() => navigate(-1)}
         className="mb-6 flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"

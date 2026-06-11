@@ -30,7 +30,7 @@ export default function ManageFeedPage() {
   }, []);
 
   return (
-    <Container maxW="4xl" className="py-8">
+    <Container className="py-8">
       <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
         {t('adminFeed.title')}
       </h1>

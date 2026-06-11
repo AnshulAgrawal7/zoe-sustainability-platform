@@ -26,7 +26,7 @@ export default function ManageProjectsPage() {
   }
 
   return (
-    <Container maxW="4xl" className="py-8">
+    <Container className="py-8">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           {t('admin.projects')}

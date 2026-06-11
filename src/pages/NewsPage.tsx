@@ -60,7 +60,7 @@ export default function NewsPage() {
   }
 
   return (
-    <Container maxW="6xl" className="py-8">
+    <Container className="py-8">
       <header className="mb-6">
         <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-sm font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300">
           <Newspaper size={16} aria-hidden="true" />

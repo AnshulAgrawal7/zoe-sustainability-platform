@@ -45,7 +45,7 @@ export default function ManageUsersPage() {
   }
 
   return (
-    <Container maxW="4xl" className="py-8">
+    <Container className="py-8">
       <h1 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
         {t('admin.users')}
       </h1>

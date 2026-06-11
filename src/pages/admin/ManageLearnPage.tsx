@@ -33,7 +33,7 @@ export default function ManageLearnPage() {
   }
 
   return (
-    <Container maxW="4xl" className="py-8">
+    <Container className="py-8">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">

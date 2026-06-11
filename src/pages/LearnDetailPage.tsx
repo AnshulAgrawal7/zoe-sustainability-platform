@@ -55,7 +55,7 @@ export default function LearnDetailPage() {
 
   if (loading) {
     return (
-      <Container maxW="3xl" className="py-20 text-center">
+      <Container className="py-20 text-center">
         <p className="text-gray-500 dark:text-gray-400">
           {t('common.loading')}
         </p>
@@ -65,7 +65,7 @@ export default function LearnDetailPage() {
 
   if (notFound || !resource) {
     return (
-      <Container maxW="3xl" className="py-20 text-center">
+      <Container className="py-20 text-center">
         <AlertCircle
           size={40}
           className="mx-auto mb-4 text-gray-400"
@@ -89,7 +89,7 @@ export default function LearnDetailPage() {
   const body = pick(resource.bodyEn, resource.bodyEl, resource.bodyDe);
 
   return (
-    <Container maxW="3xl" className="py-10">
+    <Container className="py-10">
       <Link
         to="/learn"
         className="mb-6 inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
