@@ -15,7 +15,8 @@ import {
   rewardActivities,
   communityMilestones,
 } from '../data/rewards';
-import type { RewardTier } from '../types';
+import { PROFILE_OPTIONS } from '../data/profiles';
+import type { RewardTier, UserProfile } from '../types';
 
 const DEMO_POINTS = 130;
 
@@ -116,6 +117,8 @@ function TierCard({
 
 export default function RewardsPage() {
   const { t } = useTranslation();
+  // J4: reward focus per audience profile (data lives in i18n profiles.<id>.*).
+  const [profile, setProfile] = useState<UserProfile>('RESIDENT');
   const currentTier = rewardTiers.find(
     (tier) =>
       DEMO_POINTS >= tier.pointsMin &&
@@ -260,8 +263,52 @@ export default function RewardsPage() {
         </Container>
       </section>
 
-      {/* How to earn points */}
+      {/* Reward focus per profile (J4) — tabs switch the tailored focus text */}
       <section className="bg-white py-14 dark:bg-gray-900">
+        <Container maxW="3xl">
+          <div className="mb-8 text-center">
+            <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+              {t('profiles.rewardFocusTitle')}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300">
+              {t('rewards.profileFocusSubtitle')}
+            </p>
+          </div>
+          <div
+            role="tablist"
+            aria-label={t('profiles.rewardFocusTitle')}
+            className="mb-6 flex flex-wrap justify-center gap-2"
+          >
+            {PROFILE_OPTIONS.map((p) => {
+              const active = profile === p.id;
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setProfile(p.id)}
+                  className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 ${
+                    active
+                      ? 'border-green-600 bg-green-600 text-white'
+                      : 'border-gray-300 bg-white text-gray-600 hover:border-green-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300'
+                  }`}
+                >
+                  {t(`profiles.${p.id}.label`)}
+                </button>
+              );
+            })}
+          </div>
+          <div className="rounded-xl border border-gray-200 bg-gray-50 p-6 text-center dark:border-gray-700 dark:bg-gray-800">
+            <p className="leading-relaxed text-gray-700 dark:text-gray-300">
+              {t(`profiles.${profile}.reward`)}
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      {/* How to earn points */}
+      <section className="border-t border-gray-100 bg-white py-14 dark:border-gray-800 dark:bg-gray-900">
         <Container maxW="4xl">
           <div className="mb-10 text-center">
             <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
