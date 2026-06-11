@@ -35,6 +35,18 @@ function excerpt(body: string, n = 240): string {
   return clean.length > n ? `${clean.slice(0, n).trimEnd()}…` : clean;
 }
 
+// Resolve an image's alt text to the active locale (fallback: EN, then ""). An
+// empty string is a valid, intentional value (decorative image).
+function pickAlt(
+  altTexts: { locale: string; text: string }[],
+  locale: Locale
+): string {
+  const a =
+    altTexts.find((x) => x.locale === locale) ??
+    altTexts.find((x) => x.locale === 'en');
+  return a?.text ?? '';
+}
+
 // GET /api/feed?locale=el|de|en — public. Merged feed, newest first. Text is
 // resolved to the requested locale with an EL fallback (the imported posts'
 // source language).
@@ -47,7 +59,7 @@ export async function getFeed(req: Request, res: Response) {
       prisma.feedPost.findMany({
         include: {
           translations: true,
-          images: { orderBy: { order: 'asc' } },
+          images: { orderBy: { order: 'asc' }, include: { altTexts: true } },
         },
       }),
       prisma.post.findMany({
@@ -73,7 +85,7 @@ export async function getFeed(req: Request, res: Response) {
         excerpt: excerpt(tr?.body ?? ''),
         images: fp.images.map((im) => ({
           url: im.publicUrl,
-          alt: im.altText,
+          alt: pickAlt(im.altTexts, locale),
           width: im.width,
           height: im.height,
         })),
@@ -114,7 +126,10 @@ export async function getFeed(req: Request, res: Response) {
 
 const adminInclude = {
   translations: true,
-  images: { orderBy: { order: 'asc' as const } },
+  images: {
+    orderBy: { order: 'asc' as const },
+    include: { altTexts: true },
+  },
 };
 
 // GET /api/admin/feed — all feed posts with every translation + image.
@@ -224,7 +239,7 @@ export async function adminDeleteFeed(req: Request, res: Response) {
   }
 }
 
-// PATCH /api/admin/feed/images/:imageId — alt text and/or order.
+// PATCH /api/admin/feed/images/:imageId — trilingual alt texts and/or order.
 export async function adminUpdateImage(req: Request, res: Response) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -232,19 +247,40 @@ export async function adminUpdateImage(req: Request, res: Response) {
     return;
   }
   const imageId = req.params['imageId'] as string;
-  const { altText, order } = req.body as { altText?: string; order?: number };
+  const { altTexts, order } = req.body as {
+    altTexts?: { locale: string; text: string; needsReview?: boolean }[];
+    order?: number;
+  };
   try {
     const existing = await prisma.feedPostImage.findUnique({ where: { id: imageId } });
     if (!existing) {
       notFound(res);
       return;
     }
-    const updated = await prisma.feedPostImage.update({
+    if (order !== undefined) {
+      await prisma.feedPostImage.update({ where: { id: imageId }, data: { order } });
+    }
+    if (Array.isArray(altTexts)) {
+      for (const at of altTexts) {
+        if (!['el', 'de', 'en'].includes(at.locale)) continue;
+        await prisma.feedPostImageAltText.upsert({
+          where: { imageId_locale: { imageId, locale: at.locale } },
+          update: {
+            text: at.text,
+            ...(at.needsReview !== undefined ? { needsReview: at.needsReview } : {}),
+          },
+          create: {
+            imageId,
+            locale: at.locale,
+            text: at.text,
+            needsReview: at.needsReview ?? true,
+          },
+        });
+      }
+    }
+    const updated = await prisma.feedPostImage.findUnique({
       where: { id: imageId },
-      data: {
-        ...(altText !== undefined ? { altText: altText.trim() || null } : {}),
-        ...(order !== undefined ? { order } : {}),
-      },
+      include: { altTexts: true },
     });
     ok(res, updated);
   } catch {

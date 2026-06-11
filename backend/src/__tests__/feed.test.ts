@@ -114,13 +114,26 @@ describe('Admin feed CRUD', () => {
     expect(de?.title).toBe('DE neu');
   });
 
-  it('updates an image alt text and reorders images', async () => {
+  it('updates trilingual image alt texts and reorders images', async () => {
     const alt = await request(app)
       .patch(`/api/admin/feed/images/${imageId}`)
       .set('Authorization', `Bearer ${adminToken}`)
-      .send({ altText: 'A descriptive alt' });
+      .send({
+        altTexts: [
+          { locale: 'en', text: 'A descriptive alt', needsReview: false },
+          { locale: 'de', text: 'Beschreibender Alt-Text' },
+        ],
+      });
     expect(alt.status).toBe(200);
-    expect(alt.body.data.altText).toBe('A descriptive alt');
+    const en = (
+      alt.body.data.altTexts as Array<{
+        locale: string;
+        text: string;
+        needsReview: boolean;
+      }>
+    ).find((a) => a.locale === 'en');
+    expect(en?.text).toBe('A descriptive alt');
+    expect(en?.needsReview).toBe(false);
 
     const reorder = await request(app)
       .patch(`/api/admin/feed/${feedPostId}/reorder`)

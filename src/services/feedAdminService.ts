@@ -38,7 +38,10 @@ export async function deleteFeedPost(id: string): Promise<void> {
 
 export async function updateFeedImage(
   imageId: string,
-  data: { altText?: string; order?: number }
+  data: {
+    order?: number;
+    altTexts?: { locale: string; text: string; needsReview?: boolean }[];
+  }
 ): Promise<AdminFeedImage> {
   const res = await api.patch<ApiResponse<AdminFeedImage>>(
     `/admin/feed/images/${imageId}`,

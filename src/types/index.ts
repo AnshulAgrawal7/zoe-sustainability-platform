@@ -388,12 +388,20 @@ export interface AdminFeedTranslation {
   body: string;
   isMachineTranslated: boolean;
 }
+// Trilingual alt text for one image (WCAG 2.1 AA). `text = ""` is a deliberate
+// decorative image. `needsReview` is per-language (machine-generated until checked).
+export interface AdminFeedImageAltText {
+  id: string;
+  locale: string;
+  text: string;
+  needsReview: boolean;
+}
 export interface AdminFeedImage {
   id: string;
   storagePath: string;
   publicUrl: string;
   order: number;
-  altText: string | null;
+  altTexts: AdminFeedImageAltText[];
   width: number | null;
   height: number | null;
 }

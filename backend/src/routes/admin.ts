@@ -111,7 +111,7 @@ router.get('/feed', adminListFeed);
 router.patch(
   '/feed/images/:imageId',
   [
-    body('altText').optional({ values: 'falsy' }).isString().isLength({ max: 500 }),
+    body('altTexts').optional().isArray(),
     body('order').optional().isInt({ min: 0 }),
   ],
   adminUpdateImage

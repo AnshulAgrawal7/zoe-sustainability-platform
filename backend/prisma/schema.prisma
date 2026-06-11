@@ -341,9 +341,24 @@ model FeedPostImage {
   storagePath String // path inside the Supabase bucket
   publicUrl   String
   order       Int
-  altText     String? // for WCAG 2.1 AA; editable in admin
   width       Int? // against layout shift
   height      Int?
 
+  altTexts FeedPostImageAltText[]
+
   @@index([postId])
+}
+
+// Trilingual alt text per image (WCAG 2.1 AA). `text = ""` means a deliberately
+// decorative image (correct empty-alt behaviour). Mirrors FeedPostTranslation:
+// one row per (image, locale), with a per-language review flag.
+model FeedPostImageAltText {
+  id          String        @id @default(cuid())
+  image       FeedPostImage @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  imageId     String
+  locale      String // 'el' | 'de' | 'en'
+  text        String
+  needsReview Boolean       @default(true)
+
+  @@unique([imageId, locale])
 }
