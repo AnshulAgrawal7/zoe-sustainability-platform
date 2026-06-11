@@ -65,3 +65,6 @@ docs/reports/*.toc
 
 # Team-meeting prep notes (internal, local only)
 docs/team-meeting/
+
+# Source material for the Facebook import (images live in Supabase Storage, not git)
+Posts_Kokkali_Facebook/
