@@ -651,7 +651,7 @@
     "valueChainInput": "Input — resources, volunteers, funding",
     "valueChainActivity": "Activity — what is done",
     "valueChainOutput": "Output / result — benefit for citizens",
-    "locationPlaceholder": "e.g. Kassiopi, North Corfu"
+    "locationPlaceholder": "e.g. Kassiopi, Northern Corfu"
   },
   "participate": {
     "title": "Citizen Participation",
@@ -793,7 +793,7 @@
     },
     "engage": {
       "heading": "Get involved now",
-      "subheading": "Upcoming events and open projects across North Corfu.",
+      "subheading": "Upcoming events and open projects across Northern Corfu.",
       "viewAll": "View all",
       "eventLabel": "Event",
       "projectLabel": "Project",
@@ -826,7 +826,7 @@
     },
     "learnSection": {
       "heading": "Learn & discover",
-      "subheading": "Locally-grounded background on North Corfu.",
+      "subheading": "Locally-grounded background on Northern Corfu.",
       "viewAll": "More to learn"
     }
   },
@@ -1451,7 +1451,7 @@
   },
   "learn": {
     "title": "Learning & background",
-    "intro": "Locally-grounded background on North Corfu’s nature, places and initiatives.",
+    "intro": "Locally-grounded background on Northern Corfu’s nature, places and initiatives.",
     "demoNote": "Prototype — educational content",
     "all": "All",
     "filterBy": "Filter by category",
