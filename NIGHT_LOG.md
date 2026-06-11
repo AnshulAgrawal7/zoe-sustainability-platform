@@ -11,7 +11,7 @@ Baseline-Tests: **Backend 68 / FE 22 / E2E 55**. DE/EN/EL für alle neuen Texte.
 | 1 — Z1–Z6 Soll-Ist-Abgleich | ✅ | Alle 6 Ziele bereits implementiert; 1 i18n-Lücke (`Prototype —`) geschlossen |
 | 2 — Events unter Projekte | ✅ | Beidseitige Verlinkung + 9 verknüpfte Seed-Events bereits vorhanden; verifiziert, keine toten Links |
 | 3 — Startseite: aktive Projekte/Events oben | ⏳ | Steht aus (nach Block 4) |
-| 4 — Bild-Infrastruktur | ⚠️ | Teil 1 fertig: `Event.imageUrl` (Migration) + Admin-Formular + Backend; Anzeige/Platzhalter-Komponente noch offen |
+| 4 — Bild-Infrastruktur | ✅ | Teil 1 `Event.imageUrl` + Teil 2 `EntityImage` (Platzhalter + onError) in Projekt-Karten/-Detail + Event-Liste |
 | 5 — Input/Aktivität/Output (Hammer & Champy) | ⏳ | Steht aus |
 | 6 — Grüneres Design | ⏳ | Steht aus |
 
@@ -145,8 +145,21 @@ Nach Netzwerk-Abbruch („socket closed") fortgesetzt; vor dem Weiterarbeiten vi
   `admin.formImageUrl` + Hint — in EN/EL/DE bereits vorhanden), New-/Edit-Page
   mappen `imageUrl` in den Payload bzw. laden es aus `event.imageUrl`.
 - **Typen:** `ApiEvent.imageUrl` + `EventPayload.imageUrl`.
-- **Offen (Teil 2):** wiederverwendbare Anzeige-Komponente mit Platzhalter +
-  `onError`-Fallback und Einbindung in Projekt-Karten/-Detail und Event-Liste.
+- **Teil 2 (erledigt):** neue wiederverwendbare Komponente
+  `src/components/ui/EntityImage.tsx` — rendert das Bild oder, bei leerer
+  `src`/Ladefehler (`onError`), einen kategorie-farbigen Platzhalter mit Icon
+  (nie ein kaputtes Bild-Symbol). Reales Bild trägt `alt` = Entitätsname (WCAG);
+  Platzhalter ist dekorativ (`aria-hidden`, Titel steht als Text daneben).
+  Eingebunden in:
+  - **Projekt-Karten** (`ProjectsPage`): immer eine Vorschau (Platzhalter, wenn
+    kein Bild) — einheitliches Raster.
+  - **Projekt-Detail** (`ProjectDetailPage`): großes Headerbild **nur wenn gesetzt**
+    (kein riesiger leerer Platzhalter).
+  - **Event-Liste** (`EventsPage`): Vorschau **nur wenn gesetzt** (hält die
+    vertikale Zeilenliste scannbar; `onError`-Fallback greift trotzdem).
+  - `Project.imageUrl` + Projekt-Admin-Feld existierten bereits (pre-existing).
+  - **Bewusste Entscheidung:** Platzhalter-Zwang nur in Rastern (Karten/Kacheln),
+    in Zeilen-/Detail-Kontexten konditional — dokumentiert für Konsistenzfrage.
 
 ---
 

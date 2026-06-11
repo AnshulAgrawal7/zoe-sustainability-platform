@@ -15,6 +15,7 @@ import { getProject, participate, withdraw } from '../services/projectService';
 import { getEvents } from '../services/eventService';
 import { getMe } from '../services/userService';
 import EventRegister from '../components/events/EventRegister';
+import EntityImage from '../components/ui/EntityImage';
 import { useAuthStore } from '../stores/authStore';
 import type { ApiProject, ApiEvent } from '../types';
 
@@ -208,6 +209,15 @@ export default function ProjectDetailPage() {
 
       {/* Hero card */}
       <div className="mb-6 overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+        {/* Header image — only when set (no big empty placeholder on detail) */}
+        {project.imageUrl && (
+          <EntityImage
+            src={project.imageUrl}
+            alt={getTitle()}
+            category={project.category}
+            className="h-56 w-full sm:h-72"
+          />
+        )}
         <div className={`h-2 ${categoryColor}`} aria-hidden="true" />
         <div className="p-6 sm:p-8">
           <div className="mb-4 flex flex-wrap items-center gap-3">

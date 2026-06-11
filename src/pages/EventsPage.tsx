@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getEvents } from '../services/eventService';
 import EventRegister from '../components/events/EventRegister';
+import EntityImage from '../components/ui/EntityImage';
 import type { ApiEvent, ApiProjectCategory } from '../types';
 
 const CATEGORIES: ApiProjectCategory[] = [
@@ -168,6 +169,17 @@ export default function EventsPage() {
                     key={event.id}
                     className="rounded-xl border border-gray-200 bg-white p-5 transition-shadow hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6"
                   >
+                    {/* Cover preview — shown only when the event has an image
+                        (kept off imageless rows to keep the list scannable);
+                        EntityImage still falls back gracefully on load errors. */}
+                    {event.imageUrl && (
+                      <EntityImage
+                        src={event.imageUrl}
+                        alt={title(event)}
+                        category={event.category}
+                        className="mb-4 h-44 w-full rounded-lg"
+                      />
+                    )}
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                       <div className="flex-1">
                         <div className="mb-3 flex flex-wrap items-center gap-2">

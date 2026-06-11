@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Filter, Users, ArrowRight, Star, List, Map } from 'lucide-react';
 import { getProjects } from '../services/projectService';
 import ProjectMap, { type MapPoint } from '../components/map/ProjectMap';
+import EntityImage from '../components/ui/EntityImage';
 import type { ApiProject } from '../types';
 
 const CATEGORIES = [
@@ -245,15 +246,13 @@ export default function ProjectsPage() {
                   to={`/projects/${project.id}`}
                   className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:border-green-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700"
                 >
-                  {/* Cover image (optional) */}
-                  {project.imageUrl && (
-                    <img
-                      src={project.imageUrl}
-                      alt={getTitle(project)}
-                      loading="lazy"
-                      className="h-40 w-full object-cover"
-                    />
-                  )}
+                  {/* Cover preview — image or a category-coloured placeholder */}
+                  <EntityImage
+                    src={project.imageUrl}
+                    alt={getTitle(project)}
+                    category={project.category}
+                    className="h-40 w-full"
+                  />
                   {/* Color bar by category */}
                   <div
                     className={`h-1.5 ${
