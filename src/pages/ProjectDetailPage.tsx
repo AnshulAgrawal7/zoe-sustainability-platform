@@ -21,6 +21,7 @@ import { getEvents } from '../services/eventService';
 import { getLearningResources } from '../services/learnService';
 import EventRegister from '../components/events/EventRegister';
 import EntityImage from '../components/ui/EntityImage';
+import Lightbox from '../components/news/Lightbox';
 import type { ApiProject, ApiEvent, LearningResource } from '../types';
 
 const DATE_LOCALES: Record<string, string> = {
@@ -39,6 +40,8 @@ export default function ProjectDetailPage() {
   const [events, setEvents] = useState<ApiEvent[]>([]);
   const [learn, setLearn] = useState<LearningResource[]>([]);
   const [loading, setLoading] = useState(true);
+  // D3: full-size cover image in the shared Lightbox (reused, not rewritten).
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -172,14 +175,22 @@ export default function ProjectDetailPage() {
 
       {/* Hero card */}
       <div className="mb-6 overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-        {/* Header image — only when set (no big empty placeholder on detail) */}
+        {/* Header image — only when set (no big empty placeholder on detail).
+            Click opens the full-size Lightbox (D3). */}
         {project.imageUrl && (
-          <EntityImage
-            src={project.imageUrl}
-            alt={getTitle()}
-            category={project.category}
-            className="h-56 w-full sm:h-72"
-          />
+          <button
+            type="button"
+            onClick={() => setLightboxOpen(true)}
+            aria-label={t('feed.gallery.label')}
+            className="block w-full cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-green-500"
+          >
+            <EntityImage
+              src={project.imageUrl}
+              alt={getTitle()}
+              category={project.category}
+              className="h-56 w-full sm:h-72"
+            />
+          </button>
         )}
         <div className={`h-2 ${categoryColor}`} aria-hidden="true" />
         <div className="p-6 sm:p-8">
@@ -421,6 +432,21 @@ export default function ProjectDetailPage() {
             ))}
           </ul>
         </section>
+      )}
+
+      {lightboxOpen && project.imageUrl && (
+        <Lightbox
+          images={[
+            {
+              url: project.imageUrl,
+              alt: getTitle(),
+              width: null,
+              height: null,
+            },
+          ]}
+          startIndex={0}
+          onClose={() => setLightboxOpen(false)}
+        />
       )}
     </Container>
   );

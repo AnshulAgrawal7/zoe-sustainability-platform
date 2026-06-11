@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowLeft, AlertCircle, Folder } from 'lucide-react';
 import { getLearningResource } from '../services/learnService';
 import EntityImage from '../components/ui/EntityImage';
+import Lightbox from '../components/news/Lightbox';
 import type { LearningResource } from '../types';
 
 function parseSdgs(json: string): number[] {
@@ -23,6 +24,8 @@ export default function LearnDetailPage() {
   const [resource, setResource] = useState<LearningResource | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  // D3: full-size cover image in the shared Lightbox (reused, not rewritten).
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -100,12 +103,19 @@ export default function LearnDetailPage() {
 
       <article className="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
         {resource.imageUrl && (
-          <EntityImage
-            src={resource.imageUrl}
-            alt={title}
-            category={resource.category}
-            className="h-56 w-full sm:h-72"
-          />
+          <button
+            type="button"
+            onClick={() => setLightboxOpen(true)}
+            aria-label={t('feed.gallery.label')}
+            className="block w-full cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-green-500"
+          >
+            <EntityImage
+              src={resource.imageUrl}
+              alt={title}
+              category={resource.category}
+              className="h-56 w-full sm:h-72"
+            />
+          </button>
         )}
         <div className="p-6 sm:p-8">
           <span className="mb-3 inline-block rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:bg-gray-700 dark:text-gray-400">
@@ -152,6 +162,16 @@ export default function LearnDetailPage() {
           )}
         </div>
       </article>
+
+      {lightboxOpen && resource.imageUrl && (
+        <Lightbox
+          images={[
+            { url: resource.imageUrl, alt: title, width: null, height: null },
+          ]}
+          startIndex={0}
+          onClose={() => setLightboxOpen(false)}
+        />
+      )}
     </Container>
   );
 }
