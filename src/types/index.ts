@@ -380,6 +380,19 @@ export interface FeedItem {
   needsReview: boolean;
 }
 
+// Single-entry detail — like FeedItem but with the FULL body (no excerpt).
+export interface FeedDetail {
+  id: string;
+  source: 'feed' | 'project';
+  category: FeedCategory;
+  eventStatus: 'UPCOMING' | 'COMPLETED' | null;
+  date: string;
+  title: string;
+  body: string;
+  images: FeedImage[];
+  needsReview: boolean;
+}
+
 // Admin-facing feed shapes (all translations + images).
 export interface AdminFeedTranslation {
   id: string;

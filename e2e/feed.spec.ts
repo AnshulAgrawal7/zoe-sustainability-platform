@@ -26,4 +26,37 @@ test.describe("What's New feed", () => {
       .click();
     await expect(cards.first()).toBeVisible();
   });
+
+  test('opens an entry detail page (full body) and the image lightbox', async ({
+    page,
+  }) => {
+    await page.goto('/news');
+    const cards = page.locator('article');
+    await expect(cards.first()).toBeVisible({ timeout: 10000 });
+
+    // The card title is the single navigation link → detail page.
+    await cards.first().getByRole('link').first().click();
+    await expect(page).toHaveURL(/\/news\/(feed|project)\//);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expect(
+      page.getByRole('link', {
+        name: /back to the feed|zurück zum feed|πίσω στη ροή/i,
+      })
+    ).toBeVisible();
+
+    // If the entry has a gallery, opening a thumbnail shows an accessible
+    // dialog; ESC closes it and restores the page.
+    const thumb = page
+      .getByRole('button', {
+        name: /open image|bild .* öffnen|άνοιγμα εικόνας/i,
+      })
+      .first();
+    if (await thumb.count()) {
+      await thumb.click();
+      const dialog = page.getByRole('dialog');
+      await expect(dialog).toBeVisible();
+      await page.keyboard.press('Escape');
+      await expect(dialog).toBeHidden();
+    }
+  });
 });

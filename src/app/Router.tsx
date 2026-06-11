@@ -20,6 +20,7 @@ import IdeaDetailPage from '../pages/IdeaDetailPage';
 import LearnPage from '../pages/LearnPage';
 import LearnDetailPage from '../pages/LearnDetailPage';
 import NewsPage from '../pages/NewsPage';
+import NewsDetailPage from '../pages/NewsDetailPage';
 
 // Auth pages
 import LoginPage from '../pages/auth/LoginPage';
@@ -73,6 +74,7 @@ const router = createBrowserRouter([
       { path: 'transparency', element: <TransparencyPage /> },
       { path: 'rewards', element: <RewardsPage /> },
       { path: 'news', element: <NewsPage /> },
+      { path: 'news/:source/:id', element: <NewsDetailPage /> },
       { path: 'accessibility', element: <AccessibilityPage /> },
       { path: 'privacy', element: <PrivacyPage /> },
       { path: 'imprint', element: <ImprintPage /> },
