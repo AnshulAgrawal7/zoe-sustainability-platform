@@ -3,7 +3,6 @@ import Container from '../components/layout/Container';
 import {
   Award,
   Star,
-  Users,
   ChevronDown,
   ChevronUp,
   CheckCircle,
@@ -130,16 +129,6 @@ export default function RewardsPage() {
         (currentTier.pointsMax - currentTier.pointsMin)) *
       100
     : 100;
-
-  const why = t('rewards.why', { returnObjects: true }) as {
-    title: string;
-    desc: string;
-  }[];
-  const whyIcons = [
-    <Users size={22} className="text-green-600" aria-hidden="true" />,
-    <Award size={22} className="text-teal-600" aria-hidden="true" />,
-    <TrendingUp size={22} className="text-cyan-600" aria-hidden="true" />,
-  ];
 
   return (
     <div>
@@ -308,9 +297,6 @@ export default function RewardsPage() {
                     }`}
                   >
                     <td className="px-4 py-3 text-gray-700 dark:text-gray-200">
-                      <span className="mr-2" aria-hidden="true">
-                        {activity.icon}
-                      </span>
                       {t(`rewardData.activities.${activity.id}`)}
                     </td>
                     <td className="hidden px-4 py-3 sm:table-cell">
@@ -427,31 +413,6 @@ export default function RewardsPage() {
               {t('rewards.milestonesNoteLabel')}
             </span>{' '}
             {t('rewards.milestonesNote')}
-          </div>
-        </Container>
-      </section>
-
-      {/* Why this system */}
-      <section className="bg-white py-14 dark:bg-gray-900">
-        <Container maxW="4xl">
-          <h2 className="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
-            {t('rewards.whyTitle')}
-          </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {why.map((item, i) => (
-              <div
-                key={item.title}
-                className="rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-700 dark:bg-gray-800"
-              >
-                <div className="mb-3">{whyIcons[i]}</div>
-                <h3 className="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
-                  {item.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
           </div>
         </Container>
       </section>

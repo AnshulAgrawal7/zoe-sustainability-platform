@@ -215,7 +215,8 @@
     "activities": {
       "cleanup-event": "Attend a beach or grove cleanup",
       "water-cert": "Complete water monitoring certification",
-      "submit-idea": "Submit a project idea",
+      "submit-idea": "Submit an idea",
+      "attend-event": "Attend an event",
       "report-issue": "Report an environmental issue",
       "volunteer-day": "Volunteer at a project day",
       "attend-workshop": "Attend a ZOE workshop",

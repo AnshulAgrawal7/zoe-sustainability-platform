@@ -215,7 +215,8 @@
     "activities": {
       "cleanup-event": "An einem Strand- oder Hain-Cleanup teilnehmen",
       "water-cert": "Zertifizierung zur Wasserüberwachung abschließen",
-      "submit-idea": "Eine Projektidee einreichen",
+      "submit-idea": "Eine Idee einreichen",
+      "attend-event": "An einer Veranstaltung teilnehmen",
       "report-issue": "Ein Umweltproblem melden",
       "volunteer-day": "An einem Projekttag mithelfen",
       "attend-workshop": "An einem ZOE-Workshop teilnehmen",

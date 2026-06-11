@@ -45,19 +45,10 @@ export const rewardTiers: RewardTier[] = [
   },
 ];
 
+// Reduced to two illustrative examples (J3); no emojis on the point rows.
 export const rewardActivities: RewardActivity[] = [
-  { id: 'cleanup-event', points: 20, icon: '🧹', category: 'Action' },
-  { id: 'water-cert', points: 40, icon: '💧', category: 'Training' },
-  { id: 'submit-idea', points: 15, icon: '💡', category: 'Participation' },
-  { id: 'report-issue', points: 10, icon: '📍', category: 'Participation' },
-  { id: 'volunteer-day', points: 25, icon: '🤝', category: 'Action' },
-  { id: 'attend-workshop', points: 15, icon: '📚', category: 'Training' },
-  { id: 'steward-monthly', points: 10, icon: '🌍', category: 'Ongoing' },
-  { id: 'recruit-neighbour', points: 20, icon: '👋', category: 'Community' },
-  { id: 'give-feedback', points: 10, icon: '✍️', category: 'Participation' },
-  { id: 'eco-business', points: 50, icon: '🏪', category: 'Business' },
-  { id: 'school-session', points: 30, icon: '🎓', category: 'Education' },
-  { id: 'photo-doc', points: 8, icon: '📸', category: 'Participation' },
+  { id: 'submit-idea', points: 1, icon: '', category: 'Participation' },
+  { id: 'attend-event', points: 2, icon: '', category: 'Action' },
 ];
 
 export const communityMilestones: CommunityMilestone[] = [
