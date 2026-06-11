@@ -9,9 +9,9 @@ Baseline-Tests: **Backend 68 / FE 22 / E2E 55**. DE/EN/EL für alle neuen Texte.
 | Block | Status | Ergebnis (1 Zeile) |
 |---|---|---|
 | 1 — Z1–Z6 Soll-Ist-Abgleich | ✅ | Alle 6 Ziele bereits implementiert; 1 i18n-Lücke (`Prototype —`) geschlossen |
-| 2 — Events unter Projekte | ⏳ | Steht aus |
-| 3 — Startseite: aktive Projekte/Events oben | ⏳ | Steht aus |
-| 4 — Bild-Infrastruktur | ⏳ | Steht aus |
+| 2 — Events unter Projekte | ✅ | Beidseitige Verlinkung + 9 verknüpfte Seed-Events bereits vorhanden; verifiziert, keine toten Links |
+| 3 — Startseite: aktive Projekte/Events oben | ⏳ | Steht aus (nach Block 4) |
+| 4 — Bild-Infrastruktur | ⏳ | In Arbeit — wird VOR Block 3 gebaut (Landing-Kacheln nutzen die Bild-Komponente wieder) |
 | 5 — Input/Aktivität/Output (Hammer & Champy) | ⏳ | Steht aus |
 | 6 — Grüneres Design | ⏳ | Steht aus |
 
@@ -27,7 +27,12 @@ Legende: ✅ fertig · ⚠️ teilweise/mit Einschränkung · ⛔ übersprungen 
 2. **Baseline verifiziert** — `cd backend && npm test` → **68 passed**.
    `npm test` (FE, vitest) → **22 passed**. E2E (55) wird gegen Supabase-Dev-Server
    am Ende gefahren.
-3. **Block-1-Audit** — Router, alle Z1–Z6-relevanten Seiten + Backend-Controller
+3. **Block 2 (Events↔Projekte)** — Code + Seed geprüft: beidseitige Verlinkung und
+   9 verknüpfte Seed-Events bereits vorhanden, keine toten Links. Keine Code-Änderung
+   nötig (s. Block-Details). Nur Log-Commit. **Build-Reihenfolge:** Block 4
+   (Bild-Infra) wird vor Block 3 (Landing) umgesetzt, da die Landing-Kacheln die
+   Bild-/Platzhalter-Komponente aus Block 4 wiederverwenden.
+4. **Block-1-Audit** — Router, alle Z1–Z6-relevanten Seiten + Backend-Controller
    gelesen (siehe Block-Details). Ergebnis: Z1–Z6 sind im Code vorhanden und
    funktionsfähig. Einzige gefundene Lücke: ein hartkodierter String
    `Prototype — {total} …` in `ProjectsPage.tsx` (Z6-Verstoß „kein Text ohne `t()`").
@@ -85,6 +90,32 @@ Account optional (Gast-RSVP + anonyme Ideen). **Ergänzt:** ein hartkodierter St
 → **Lücke geschlossen.**
 
 **Übersprungen in Block 1:** nichts.
+
+### Block 2 — Events sauber unter Projekte hängen
+
+**Vorgefunden (alles bereits implementiert):**
+- **Projekt → Events:** `ProjectDetailPage` hat einen Abschnitt „Termine zu diesem
+  Projekt" (`projects.eventsTitle`), lädt `getEvents({ projectId })` und rendert je
+  Event eine `EventRegister`-Teilnahmemöglichkeit.
+- **Event → Projekt (Rücklink):** `EventsPage` zeigt bei `event.projectId` einen
+  klickbaren Link „→ Teil von: {Projektname}" (`events.relatedProject`, EN/DE/EL
+  vorhanden) auf `/projects/:id`. Eigenständige Events (projectId null) werden normal
+  gelistet.
+- **Seed:** genau **9 Events**, sinnvoll verknüpft — Cleanups → `proj-marine` (2×),
+  Biodiversität → `proj-antinioti`, Recycling/Kompost → `proj-circular` (2×),
+  Wasser → `proj-water-quality`, Aufforstung → `proj-natural-monuments`, Jugend →
+  `proj-education`; 1 eigenständiges SDG-Forum (`projectId: null`).
+- **Keine toten Links:** alle referenzierten `proj-*`-Ids existieren im Seed.
+
+**Implementiert:** nichts nötig — Anforderung war bereits erfüllt (Grundsatz
+„Erfinde nichts"). Verifiziert per Code-Review + Seed-Integritätsprüfung.
+
+**Bewusste Entscheidung:** Es gibt **keine** eigene Event-Detail-Route. Events werden
+vollständig (inkl. Beschreibung, Kapazität, Registrierung, Projekt-Rücklink) in der
+`/events`-Liste und im Projekt-Detail dargestellt; ein separater Permalink je Event
+ist für den Prototyp nicht erforderlich → nicht hinzugefügt (Scope/Risiko).
+
+**Lücke bleibt:** keine.
 
 ---
 
