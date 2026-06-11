@@ -1467,6 +1467,10 @@
     "aboutProject": "Related project",
     "source": "Source"
   },
+  "newsDetail": {
+    "back": "Back to the feed",
+    "notFound": "This entry was not found."
+  },
   "adminLearn": {
     "title": "Learning resources",
     "subtitle": "Create and edit educational content. Optionally link a resource to a real project and SDGs.",
@@ -1489,7 +1493,15 @@
     "source": "Source"
   },
   "feed": {
-    "gallery": "Photo gallery",
+    "gallery": {
+      "label": "Photo gallery",
+      "prev": "Previous image",
+      "next": "Next image",
+      "goTo": "Go to image {{n}}",
+      "open": "Open image {{current}} of {{total}}",
+      "close": "Close image",
+      "counter": "{{current}} of {{total}}"
+    },
     "filterBy": "Filter",
     "all": "All",
     "completedEvents": "Completed events",

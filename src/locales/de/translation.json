@@ -1467,6 +1467,10 @@
     "aboutProject": "Verknüpftes Projekt",
     "source": "Quelle"
   },
+  "newsDetail": {
+    "back": "Zurück zum Feed",
+    "notFound": "Dieser Beitrag wurde nicht gefunden."
+  },
   "adminLearn": {
     "title": "Lerninhalte",
     "subtitle": "Bildungsinhalte anlegen und bearbeiten. Optional mit einem echten Projekt und SDGs verknüpfen.",
@@ -1489,7 +1493,15 @@
     "source": "Quelle"
   },
   "feed": {
-    "gallery": "Fotogalerie",
+    "gallery": {
+      "label": "Fotogalerie",
+      "prev": "Vorheriges Bild",
+      "next": "Nächstes Bild",
+      "goTo": "Zu Bild {{n}} springen",
+      "open": "Bild {{current}} von {{total}} öffnen",
+      "close": "Bild schließen",
+      "counter": "{{current}} von {{total}}"
+    },
     "filterBy": "Filtern",
     "all": "Alle",
     "completedEvents": "Abgeschlossene Termine",
