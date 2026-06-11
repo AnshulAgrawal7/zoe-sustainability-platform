@@ -55,7 +55,7 @@ function categoryIcon(category: string): L.DivIcon {
   });
 }
 
-const NORTH_CORFU_CENTER: [number, number] = [37.67, 19.88];
+const NORTH_CORFU_CENTER: [number, number] = [39.77, 19.88];
 
 export default function ProjectMap({ points, className }: ProjectMapProps) {
   const { t } = useTranslation();

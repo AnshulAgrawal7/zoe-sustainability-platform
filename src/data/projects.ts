@@ -24,7 +24,7 @@ const SRC = 'Verde.tec 2026 / life-news.gr';
 export const projects: Project[] = [
   {
     id: 'proj-greenmove',
-    lat: 37.6467,
+    lat: 39.7467,
     lng: 19.9244,
     title: 'GreenMove — Sustainable Mobility',
     category: 'MOBILITY',
@@ -51,7 +51,7 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-circular',
-    lat: 37.6433,
+    lat: 39.7433,
     lng: 19.9178,
     title: 'Circular Economy Network',
     category: 'COMMUNITY',
@@ -90,7 +90,7 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-marine',
-    lat: 37.7119,
+    lat: 39.8019,
     lng: 19.8697,
     title: 'Marine Protection & Sea Turtles',
     category: 'ENVIRONMENT',
@@ -119,7 +119,7 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-antinioti',
-    lat: 37.6892,
+    lat: 39.7792,
     lng: 19.8534,
     title: 'Antinioti Lagoon — Natural Monument',
     category: 'ENVIRONMENT',
@@ -147,7 +147,7 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-natural-monuments',
-    lat: 37.675,
+    lat: 39.765,
     lng: 19.865,
     title: 'Natural Monuments & Reforestation',
     category: 'ENVIRONMENT',
@@ -175,8 +175,8 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-led',
-    lat: 37.6481,
-    lng: 19.9258,
+    lat: 39.748,
+    lng: 19.93,
     title: 'LED Street Lighting Upgrade',
     category: 'COMMUNITY',
     status: 'Completed',
@@ -204,8 +204,8 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-education',
-    lat: 37.6453,
-    lng: 19.9258,
+    lat: 39.7454,
+    lng: 19.9188,
     title: 'Environmental Education & University Partnership',
     category: 'EDUCATION',
     status: 'Active',
@@ -231,7 +231,7 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-water-quality',
-    lat: 37.635,
+    lat: 39.735,
     lng: 19.905,
     title: 'Drinking Water Quality Monitoring',
     category: 'ENVIRONMENT',

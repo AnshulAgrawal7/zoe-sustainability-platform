@@ -31,16 +31,16 @@ const points: MapPoint[] = [
     title: 'Marine Protection',
     category: 'ENVIRONMENT',
     sdgs: [14, 15],
-    lat: 37.71,
-    lng: 19.87,
+    lat: 39.8019,
+    lng: 19.8697,
   },
   {
     id: 'proj-greenmove',
     title: 'GreenMove',
     category: 'MOBILITY',
     sdgs: [11],
-    lat: 37.64,
-    lng: 19.92,
+    lat: 39.7467,
+    lng: 19.9244,
   },
 ];
 

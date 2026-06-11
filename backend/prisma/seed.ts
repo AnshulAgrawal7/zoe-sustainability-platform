@@ -103,14 +103,14 @@ async function main() {
   // exact); led + education get a small deterministic DISPLAY offset (~180 m) so
   // all three markers stay individually clickable (they are not point locations).
   const coords: Record<string, { lat: number; lng: number }> = {
-    'proj-greenmove': { lat: 37.6467, lng: 19.9244 }, // Acharavi (municipal centre)
-    'proj-circular': { lat: 37.6433, lng: 19.9178 }, // Acharavi recycling area
-    'proj-marine': { lat: 37.7119, lng: 19.8697 }, // Kassiopi coast
-    'proj-antinioti': { lat: 37.6892, lng: 19.8534 }, // Antinioti lagoon (Natura 2000)
-    'proj-natural-monuments': { lat: 37.675, lng: 19.865 }, // Erimitis peninsula
-    'proj-led': { lat: 37.6481, lng: 19.9258 }, // municipality-wide (offset from centroid)
-    'proj-education': { lat: 37.6453, lng: 19.9258 }, // municipality-wide (offset from centroid)
-    'proj-water-quality': { lat: 37.635, lng: 19.905 }, // Acharavi-south supply area
+    'proj-greenmove': { lat: 39.7467, lng: 19.9244 }, // Acharavi (municipal centre)
+    'proj-circular': { lat: 39.7433, lng: 19.9178 }, // Acharavi recycling area
+    'proj-marine': { lat: 39.8019, lng: 19.8697 }, // Kassiopi coast
+    'proj-antinioti': { lat: 39.7792, lng: 19.8534 }, // Antinioti lagoon (Natura 2000)
+    'proj-natural-monuments': { lat: 39.765, lng: 19.865 }, // Erimitis peninsula
+    'proj-led': { lat: 39.748, lng: 19.93 }, // municipality-wide (offset from centroid)
+    'proj-education': { lat: 39.7454, lng: 19.9188 }, // municipality-wide (offset from centroid)
+    'proj-water-quality': { lat: 39.735, lng: 19.905 }, // Acharavi-south supply area
   };
   await Promise.all(
     Object.entries(coords).map(([id, { lat, lng }]) =>
