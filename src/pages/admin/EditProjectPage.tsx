@@ -301,11 +301,20 @@ export default function EditProjectPage() {
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
               {form.imageUrl && (
-                <img
-                  src={form.imageUrl}
-                  alt=""
-                  className="mt-2 h-28 w-full rounded-lg object-cover"
-                />
+                <div className="mt-2">
+                  <img
+                    src={form.imageUrl}
+                    alt=""
+                    className="h-28 w-full rounded-lg object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => set('imageUrl', '')}
+                    className="mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-red-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 dark:text-red-400"
+                  >
+                    {t('admin.formImageRemove')}
+                  </button>
+                </div>
               )}
               <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
                 {t('admin.formImageUrlHint')}

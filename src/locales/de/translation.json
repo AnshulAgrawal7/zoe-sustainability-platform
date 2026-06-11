@@ -631,6 +631,7 @@
     },
     "formImageUrl": "Titelbild-URL",
     "formImageUrlHint": "Optional. Öffentliche Bild-URL einfügen (z. B. Supabase Storage). Nur eigene oder lizenzierte Bilder verwenden.",
+    "formImageRemove": "Bild entfernen",
     "posts": {
       "title": "Neuigkeiten-Beiträge",
       "createTitle": "Neuer Beitrag",

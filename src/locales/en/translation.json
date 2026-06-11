@@ -631,6 +631,7 @@
     },
     "formImageUrl": "Cover image URL",
     "formImageUrlHint": "Optional. Paste a public image URL (e.g. Supabase Storage). Use only your own or licensed images.",
+    "formImageRemove": "Remove image",
     "posts": {
       "title": "News posts",
       "createTitle": "New post",

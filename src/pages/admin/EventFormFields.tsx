@@ -183,6 +183,22 @@ export default function EventFormFields({ form, set, projects }: Props) {
               placeholder="https://…/image.jpg"
               className={inputClass}
             />
+            {form.imageUrl && (
+              <div className="mt-2">
+                <img
+                  src={form.imageUrl}
+                  alt=""
+                  className="h-28 w-full rounded-lg object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => set('imageUrl', '')}
+                  className="mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-red-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 dark:text-red-400"
+                >
+                  {t('admin.formImageRemove')}
+                </button>
+              </div>
+            )}
             <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
               {t('admin.formImageUrlHint')}
             </p>
