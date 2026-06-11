@@ -12,6 +12,7 @@ import eventsRouter from './routes/events';
 import ideasRouter from './routes/ideas';
 import commentsRouter from './routes/comments';
 import learnRouter from './routes/learn';
+import feedRouter from './routes/feed';
 import postsRouter from './routes/posts';
 
 const app = express();
@@ -53,6 +54,7 @@ app.use('/api/events', eventsRouter);
 app.use('/api/ideas', ideasRouter);
 app.use('/api/comments', commentsRouter);
 app.use('/api/learn', learnRouter);
+app.use('/api/feed', feedRouter);
 app.use('/api/posts', postsRouter);
 
 app.get('/api/health', (_req, res) => {
