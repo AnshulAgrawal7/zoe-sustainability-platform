@@ -1,6 +1,8 @@
 import type { Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 import { PrismaClient } from '@prisma/client';
-import { ok, serverError } from '../utils/response';
+import { ok, badRequest, notFound, serverError } from '../utils/response';
+import { deleteImages } from '../services/storage';
 
 const prisma = new PrismaClient();
 
@@ -101,6 +103,194 @@ export async function getFeed(req: Request, res: Response) {
     items.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 
     ok(res, { items, total: items.length });
+  } catch {
+    serverError(res);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Admin (adminOnly via the admin router)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const adminInclude = {
+  translations: true,
+  images: { orderBy: { order: 'asc' as const } },
+};
+
+// GET /api/admin/feed — all feed posts with every translation + image.
+export async function adminListFeed(_req: Request, res: Response) {
+  try {
+    const posts = await prisma.feedPost.findMany({
+      orderBy: { publishedAt: 'desc' },
+      include: adminInclude,
+    });
+    ok(res, { posts, total: posts.length });
+  } catch {
+    serverError(res);
+  }
+}
+
+// GET /api/admin/feed/:id
+export async function adminGetFeed(req: Request, res: Response) {
+  const id = req.params['id'] as string;
+  try {
+    const post = await prisma.feedPost.findUnique({
+      where: { id },
+      include: adminInclude,
+    });
+    if (!post) {
+      notFound(res);
+      return;
+    }
+    ok(res, post);
+  } catch {
+    serverError(res);
+  }
+}
+
+interface UpdateFeedBody {
+  category?: 'ANNOUNCEMENT' | 'EVENT' | 'PROJECT' | 'NEWS';
+  eventStatus?: 'UPCOMING' | 'COMPLETED' | null;
+  needsReview?: boolean;
+  translations?: { locale: string; title: string; body: string }[];
+}
+
+// PATCH /api/admin/feed/:id — fields + translations (title/body per locale).
+export async function adminUpdateFeed(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    badRequest(res, 'Validation failed', errors.array());
+    return;
+  }
+  const id = req.params['id'] as string;
+  const body = req.body as UpdateFeedBody;
+  try {
+    const existing = await prisma.feedPost.findUnique({ where: { id } });
+    if (!existing) {
+      notFound(res);
+      return;
+    }
+    await prisma.feedPost.update({
+      where: { id },
+      data: {
+        ...(body.category !== undefined ? { category: body.category } : {}),
+        ...(body.eventStatus !== undefined ? { eventStatus: body.eventStatus } : {}),
+        ...(body.needsReview !== undefined ? { needsReview: body.needsReview } : {}),
+      },
+    });
+    if (Array.isArray(body.translations)) {
+      for (const tr of body.translations) {
+        if (!['el', 'de', 'en'].includes(tr.locale)) continue;
+        await prisma.feedPostTranslation.upsert({
+          where: { postId_locale: { postId: id, locale: tr.locale } },
+          update: { title: tr.title, body: tr.body },
+          create: {
+            postId: id,
+            locale: tr.locale,
+            title: tr.title,
+            body: tr.body,
+            isMachineTranslated: tr.locale !== 'el',
+          },
+        });
+      }
+    }
+    const updated = await prisma.feedPost.findUnique({
+      where: { id },
+      include: adminInclude,
+    });
+    ok(res, updated);
+  } catch {
+    serverError(res);
+  }
+}
+
+// DELETE /api/admin/feed/:id — removes bucket images, then the post (cascade).
+export async function adminDeleteFeed(req: Request, res: Response) {
+  const id = req.params['id'] as string;
+  try {
+    const post = await prisma.feedPost.findUnique({
+      where: { id },
+      include: { images: true },
+    });
+    if (!post) {
+      notFound(res);
+      return;
+    }
+    await deleteImages(post.images.map((im) => im.storagePath)).catch(() => null);
+    await prisma.feedPost.delete({ where: { id } });
+    ok(res, null, 'Feed post deleted');
+  } catch {
+    serverError(res);
+  }
+}
+
+// PATCH /api/admin/feed/images/:imageId — alt text and/or order.
+export async function adminUpdateImage(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    badRequest(res, 'Validation failed', errors.array());
+    return;
+  }
+  const imageId = req.params['imageId'] as string;
+  const { altText, order } = req.body as { altText?: string; order?: number };
+  try {
+    const existing = await prisma.feedPostImage.findUnique({ where: { id: imageId } });
+    if (!existing) {
+      notFound(res);
+      return;
+    }
+    const updated = await prisma.feedPostImage.update({
+      where: { id: imageId },
+      data: {
+        ...(altText !== undefined ? { altText: altText.trim() || null } : {}),
+        ...(order !== undefined ? { order } : {}),
+      },
+    });
+    ok(res, updated);
+  } catch {
+    serverError(res);
+  }
+}
+
+// DELETE /api/admin/feed/images/:imageId — removes the object + the row.
+export async function adminDeleteImage(req: Request, res: Response) {
+  const imageId = req.params['imageId'] as string;
+  try {
+    const img = await prisma.feedPostImage.findUnique({ where: { id: imageId } });
+    if (!img) {
+      notFound(res);
+      return;
+    }
+    await deleteImages([img.storagePath]).catch(() => null);
+    await prisma.feedPostImage.delete({ where: { id: imageId } });
+    ok(res, null, 'Image deleted');
+  } catch {
+    serverError(res);
+  }
+}
+
+// PATCH /api/admin/feed/:id/reorder — set image order from an ordered id list.
+export async function adminReorderImages(req: Request, res: Response) {
+  const id = req.params['id'] as string;
+  const { ids } = req.body as { ids: string[] };
+  if (!Array.isArray(ids)) {
+    badRequest(res, 'ids must be an array');
+    return;
+  }
+  try {
+    await prisma.$transaction(
+      ids.map((imgId, idx) =>
+        prisma.feedPostImage.update({
+          where: { id: imgId },
+          data: { order: idx },
+        })
+      )
+    );
+    const images = await prisma.feedPostImage.findMany({
+      where: { postId: id },
+      orderBy: { order: 'asc' },
+    });
+    ok(res, { images });
   } catch {
     serverError(res);
   }

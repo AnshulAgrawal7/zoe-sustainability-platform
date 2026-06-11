@@ -10,6 +10,15 @@ import {
   updateLearningResource,
   deleteLearningResource,
 } from '../controllers/learningController';
+import {
+  adminListFeed,
+  adminGetFeed,
+  adminUpdateFeed,
+  adminDeleteFeed,
+  adminUpdateImage,
+  adminDeleteImage,
+  adminReorderImages,
+} from '../controllers/feedController';
 import { authenticate } from '../middleware/auth';
 import { adminOnly } from '../middleware/adminOnly';
 import { IDEA_STATUSES, COMMENT_STATUSES, PROJECT_CATEGORIES } from '../constants';
@@ -96,5 +105,30 @@ const learnValidators = [
 router.post('/learn', learnValidators, createLearningResource);
 router.patch('/learn/:id', learnValidators, updateLearningResource);
 router.delete('/learn/:id', deleteLearningResource);
+
+// --- What's New feed (admin). More specific image/reorder routes first. ---
+router.get('/feed', adminListFeed);
+router.patch(
+  '/feed/images/:imageId',
+  [
+    body('altText').optional({ values: 'falsy' }).isString().isLength({ max: 500 }),
+    body('order').optional().isInt({ min: 0 }),
+  ],
+  adminUpdateImage
+);
+router.delete('/feed/images/:imageId', adminDeleteImage);
+router.patch('/feed/:id/reorder', [body('ids').isArray()], adminReorderImages);
+router.get('/feed/:id', adminGetFeed);
+router.patch(
+  '/feed/:id',
+  [
+    body('category').optional().isIn(['ANNOUNCEMENT', 'EVENT', 'PROJECT', 'NEWS']),
+    body('eventStatus').optional({ values: 'null' }).isIn(['UPCOMING', 'COMPLETED']),
+    body('needsReview').optional().isBoolean(),
+    body('translations').optional().isArray(),
+  ],
+  adminUpdateFeed
+);
+router.delete('/feed/:id', adminDeleteFeed);
 
 export default router;
