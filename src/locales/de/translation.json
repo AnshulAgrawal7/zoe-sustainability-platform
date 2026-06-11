@@ -803,17 +803,14 @@
     "statsAria": "Wichtige Kennzahlen",
     "facts": {
       "led": {
-        "value": "4.866",
         "label": "LED-Leuchten umgerüstet",
         "source": "Verde.tec 2026"
       },
       "waste": {
-        "value": "2.682,699 t",
         "label": "Restmüll ausgeschleust (15,08%)",
         "source": "Attica Green Expo 2026"
       },
       "scope": {
-        "value": "8",
         "label": "Projekte in 6 Handlungsachsen",
         "source": ""
       }

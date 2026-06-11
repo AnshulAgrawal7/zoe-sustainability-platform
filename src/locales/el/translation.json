@@ -803,17 +803,14 @@
     "statsAria": "Βασικά στατιστικά",
     "facts": {
       "led": {
-        "value": "4.866",
         "label": "φωτιστικά αναβαθμίστηκαν σε LED",
         "source": "Verde.tec 2026"
       },
       "waste": {
-        "value": "2.682,699 t",
         "label": "σύμμεικτα εκτράπηκαν (15,08%)",
         "source": "Attica Green Expo 2026"
       },
       "scope": {
-        "value": "8",
         "label": "έργα σε 6 άξονες δράσης",
         "source": ""
       }

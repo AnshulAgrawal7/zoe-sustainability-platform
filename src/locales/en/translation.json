@@ -803,17 +803,14 @@
     "statsAria": "Key statistics",
     "facts": {
       "led": {
-        "value": "4,866",
         "label": "LED luminaires upgraded",
         "source": "Verde.tec 2026"
       },
       "waste": {
-        "value": "2,682.699 t",
         "label": "residual waste diverted (15.08%)",
         "source": "Attica Green Expo 2026"
       },
       "scope": {
-        "value": "8",
         "label": "projects across 6 action areas",
         "source": ""
       }

@@ -16,6 +16,8 @@ import {
   Lightbulb,
 } from 'lucide-react';
 import { projects } from '../data/projects';
+import { LANDING_FACTS } from '../data/landingFacts';
+import { formatNumber } from '../utils/format';
 import StatusBadge from '../components/ui/StatusBadge';
 import FeedCard from '../components/news/FeedCard';
 import EntityImage from '../components/ui/EntityImage';
@@ -105,27 +107,19 @@ export default function LandingPage() {
     };
   }, [lang]);
 
-  // Documented programme facts (sourced) for the trust strip under the hero.
-  const facts = [
-    {
-      key: 'led',
-      value: t('landing.facts.led.value'),
-      label: t('landing.facts.led.label'),
-      source: t('landing.facts.led.source'),
-    },
-    {
-      key: 'waste',
-      value: t('landing.facts.waste.value'),
-      label: t('landing.facts.waste.label'),
-      source: t('landing.facts.waste.source'),
-    },
-    {
-      key: 'scope',
-      value: t('landing.facts.scope.value'),
-      label: t('landing.facts.scope.label'),
-      source: t('landing.facts.scope.source'),
-    },
-  ];
+  // Documented programme facts (sourced) for the stats strip. Numbers are raw in
+  // data/landingFacts.ts and formatted to the active locale here via Intl, so the
+  // thousands/decimal separators follow the language (EN "2,682.699" vs DE/EL
+  // "2.682,699") instead of being hand-formatted per translation.
+  const facts = LANDING_FACTS.map((f) => ({
+    key: f.key,
+    value:
+      formatNumber(f.value, i18n.language, {
+        maximumFractionDigits: f.fractionDigits ?? 0,
+      }) + (f.unit ? ` ${f.unit}` : ''),
+    label: t(f.labelKey),
+    source: t(f.sourceKey),
+  }));
 
   function pickLang(en: string, el: string, de: string): string {
     if (lang === 'el') return el;
