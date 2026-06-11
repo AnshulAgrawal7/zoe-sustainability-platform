@@ -1,10 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useImageNav } from '../../hooks/useImageNav';
+import { feedCategoryVisual } from '../ui/categoryVisuals';
 import type { FeedImage } from '../../types';
 
-// Compact image preview for a feed card. One image at a time with clickable
-// prev/next arrows; dots up to DOTS_MAX images, otherwise an "n/total" counter.
+// Compact image preview for a feed card, coupled to the image COUNT:
+//   0 images → intentional category-gradient fallback + icon (no flat surface)
+//   1 image  → static image, no navigation controls
+//   ≥2 images → one image at a time with clickable prev/next arrows + dots
+//               (up to DOTS_MAX), otherwise an "n/total" counter
 // Touch-swipe still works (no visible scrollbar). The controls sit above the
 // card's stretched title link (z-10), so clicking an arrow/dot/counter never
 // triggers navigation to the detail page — only the image/text area does.
@@ -13,11 +17,32 @@ const DOTS_MAX = 5;
 const ctrl =
   'rounded-full bg-black/50 p-1.5 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white disabled:opacity-0';
 
-export default function CardGallery({ images }: { images: FeedImage[] }) {
+export default function CardGallery({
+  images,
+  category,
+}: {
+  images: FeedImage[];
+  category: string;
+}) {
   const { t } = useTranslation();
   const { index, goTo, next, prev, touchHandlers } = useImageNav(images.length);
 
-  if (images.length === 0) return null;
+  // 0 images → category gradient + icon (same one source as the rest of the cards).
+  if (images.length === 0) {
+    const { gradient, Icon } = feedCategoryVisual(category);
+    return (
+      <div
+        aria-hidden="true"
+        className={`flex h-48 w-full items-center justify-center bg-gradient-to-br ${gradient}`}
+      >
+        <Icon
+          className="h-10 w-10 text-white/85"
+          strokeWidth={1.5}
+          aria-hidden="true"
+        />
+      </div>
+    );
+  }
 
   if (images.length === 1) {
     const img = images[0]!;

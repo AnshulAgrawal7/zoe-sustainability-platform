@@ -21,7 +21,7 @@ export default function FeedCard({ item }: { item: FeedItem }) {
   // above it (z-10), so they never trigger navigation to the detail page.
   return (
     <article className="relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
-      <CardGallery images={item.images} />
+      <CardGallery images={item.images} category={item.category} />
 
       <div className="flex flex-1 flex-col p-5">
         <div className="mb-2 flex flex-wrap items-center gap-2">

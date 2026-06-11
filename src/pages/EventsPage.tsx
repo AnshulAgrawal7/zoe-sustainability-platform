@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { getEvents } from '../services/eventService';
 import EventRegister from '../components/events/EventRegister';
 import EntityImage from '../components/ui/EntityImage';
+import { projectCategoryVisual } from '../components/ui/categoryVisuals';
 import type { ApiEvent, ApiProjectCategory } from '../types';
 
 const CATEGORIES: ApiProjectCategory[] = [
@@ -37,16 +38,6 @@ function formatTime(iso: string, locale: string): string {
     minute: '2-digit',
   });
 }
-
-const categoryColors: Record<string, string> = {
-  ENVIRONMENT:
-    'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300',
-  MOBILITY: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
-  COMMUNITY:
-    'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300',
-  EDUCATION: 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300',
-  CULTURE: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300',
-};
 
 export default function EventsPage() {
   const { t, i18n } = useTranslation();
@@ -161,26 +152,22 @@ export default function EventsPage() {
                   capacity != null && capacity > 0
                     ? Math.round((registered / capacity) * 100)
                     : 0;
-                const colorClass =
-                  categoryColors[event.category] ??
-                  'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
+                const colorClass = projectCategoryVisual(event.category).badge;
 
                 return (
                   <article
                     key={event.id}
                     className="rounded-xl border border-gray-200 bg-white p-5 transition-shadow hover:shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6"
                   >
-                    {/* Cover preview — shown only when the event has an image
-                        (kept off imageless rows to keep the list scannable);
-                        EntityImage still falls back gracefully on load errors. */}
-                    {event.imageUrl && (
-                      <EntityImage
-                        src={event.imageUrl}
-                        alt={title(event)}
-                        category={event.category}
-                        className="mb-4 h-44 w-full rounded-lg"
-                      />
-                    )}
+                    {/* Cover preview — always rendered: an empty imageUrl slot
+                        falls back to the intentional category gradient + icon
+                        (one source), so imageless rows look deliberate, not flat. */}
+                    <EntityImage
+                      src={event.imageUrl}
+                      alt={title(event)}
+                      category={event.category}
+                      className="mb-4 h-44 w-full rounded-lg"
+                    />
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                       <div className="flex-1">
                         <div className="mb-3 flex flex-wrap items-center gap-2">
