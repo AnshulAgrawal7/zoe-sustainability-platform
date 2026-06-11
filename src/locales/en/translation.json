@@ -498,7 +498,8 @@
     "filterStatus": "Status",
     "allStatuses": "All",
     "source": "Source",
-    "eventsTitle": "Events for this project"
+    "eventsTitle": "Events for this project",
+    "prototypeCount": "Prototype — {{count}} projects"
   },
   "rewards": {
     "title": "My Rewards",

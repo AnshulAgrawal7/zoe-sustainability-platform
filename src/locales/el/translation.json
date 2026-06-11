@@ -498,7 +498,8 @@
     "filterStatus": "Κατάσταση",
     "allStatuses": "Όλα",
     "source": "Πηγή",
-    "eventsTitle": "Εκδηλώσεις για αυτό το έργο"
+    "eventsTitle": "Εκδηλώσεις για αυτό το έργο",
+    "prototypeCount": "Πρωτότυπο — {{count}} έργα"
   },
   "rewards": {
     "title": "Οι επιβραβεύσεις μου",

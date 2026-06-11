@@ -102,7 +102,7 @@ export default function ProjectsPage() {
           {t('projects.subtitle')}
         </p>
         <p className="mt-2 inline-block rounded border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400">
-          Prototype — {total} {t('projects.title').toLowerCase()}
+          {t('projects.prototypeCount', { count: total })}
         </p>
       </div>
 
