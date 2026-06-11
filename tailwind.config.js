@@ -34,6 +34,15 @@ export default {
           sky: '#0284c7',
         },
       },
+      // Headline scale one step smaller with tighter leading (Part 1A) — the
+      // page felt oversized. Only the large steps are overridden; body text,
+      // buttons and touch targets are untouched. Reversible: delete this block.
+      fontSize: {
+        '3xl': ['1.625rem', { lineHeight: '2rem' }],
+        '4xl': ['1.875rem', { lineHeight: '2.25rem' }],
+        '5xl': ['2.5rem', { lineHeight: '1.1' }],
+        '6xl': ['3rem', { lineHeight: '1.05' }],
+      },
       fontFamily: {
         sans: ['Inter', 'Noto Sans', 'system-ui', 'sans-serif'],
       },

@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
@@ -11,14 +13,27 @@
 }
 
 @layer base {
+  /* Compact density (Part 1A): drop the root from 16px to 15px so every
+     rem-based size — text AND spacing (py-*, p-*, gap-*) — shrinks ~6%
+     proportionally. Central + reversible (set back to 16px to undo).
+     Conservative on purpose to keep primary-CTA touch targets >= 44px. */
+  html {
+    font-size: 15px;
+  }
+
   body {
-    @apply text-gray-700 bg-gray-50;
+    @apply bg-gray-50 text-gray-700;
     font-family: 'Inter', 'Noto Sans', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply text-gray-900;
   }
 }
