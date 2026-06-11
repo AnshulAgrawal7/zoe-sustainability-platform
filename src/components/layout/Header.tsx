@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import Container from './Container';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Leaf, Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import logoIcon from '../../assets/logo-icon.png';
 import { useAuthStore } from '../../stores/authStore';
 import { useThemeStore } from '../../stores/themeStore';
 import { logout } from '../../services/authService';
@@ -62,16 +63,19 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900">
       <Container>
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
+          {/* Logo — ZOE brand mark (links home). The link carries the accessible
+              name, so the image is decorative. */}
           <Link
             to="/"
-            aria-label="ZOE"
-            className="flex items-center gap-2 text-2xl font-bold tracking-wide text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+            aria-label={t('nav.home')}
+            className="flex items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
           >
-            <Leaf size={22} aria-hidden="true" />
-            <span aria-hidden="true" lang="el">
-              ΖΩΗ
-            </span>
+            <img
+              src={logoIcon}
+              alt=""
+              aria-hidden="true"
+              className="h-9 w-auto sm:h-10"
+            />
           </Link>
 
           {/* Desktop nav */}
