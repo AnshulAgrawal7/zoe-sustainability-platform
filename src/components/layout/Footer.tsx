@@ -19,7 +19,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="mt-auto bg-gray-900 text-gray-300">
+    <footer className="mt-auto bg-green-950 text-gray-300">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* Brand */}
@@ -85,7 +85,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-gray-800 pt-6 text-xs text-gray-500 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-green-900 pt-6 text-xs text-gray-400 sm:flex-row">
           <p>{t('footer.copyright')}</p>
           <nav
             aria-label={t('footer.legalNavAria')}
@@ -105,7 +105,7 @@ export default function Footer() {
             </Link>
           </nav>
         </div>
-        <p className="mt-3 text-center text-xs text-gray-600">
+        <p className="mt-3 text-center text-xs text-gray-400">
           {t('footer.dsr')}
         </p>
       </div>

@@ -711,11 +711,11 @@
   },
   "footer": {
     "madeBy": "ZOE Nachhaltigkeitsplattform",
-    "dsr": "Prototyp · Alle Daten fiktiv · Keine personenbezogenen Daten erhoben",
+    "dsr": "Forschungsprototyp · fiktive Daten · keine personenbezogenen Daten erhoben",
     "corfu": "Gemeinde Nordkorfu",
     "brand": "ZOE Platform",
     "tagline": "Strategischer Rahmen für Umweltmaßnahmen — Gemeinde Nordkorfu.",
-    "prototypeNotice": "Frontend-Prototyp — Fiktive Daten",
+    "prototypeNotice": "Forschungsprototyp · fiktive Daten",
     "platformLinks": "Plattform",
     "engagementLinks": "Mitmachen",
     "researchContext": "Forschungskontext",

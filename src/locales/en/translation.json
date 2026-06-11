@@ -711,11 +711,11 @@
   },
   "footer": {
     "madeBy": "ZOE Sustainability Platform",
-    "dsr": "Prototype · All data fictional · No personal data collected",
+    "dsr": "Research prototype · fictional data · no personal data collected",
     "corfu": "Municipality of Northern Corfu",
     "brand": "ZOE Platform",
     "tagline": "Strategic Framework for Environmental Actions — Municipality of Northern Corfu.",
-    "prototypeNotice": "Frontend Prototype — Fictional Data",
+    "prototypeNotice": "Research prototype · fictional data",
     "platformLinks": "Platform",
     "engagementLinks": "Engagement",
     "researchContext": "Research Context",
