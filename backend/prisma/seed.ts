@@ -73,11 +73,11 @@ async function main() {
   // NOT measured impact. SDGs from the official programme set
   // {4,6,11,12,13,14,15,17}. No figures beyond the sources are added.
   const SRC = 'Verde.tec 2026 / life-news.gr';
-  const makeProject = (id: string, en: string, el: string, de: string, descEn: string, descEl: string, descDe: string, sdgs: number[], category: string, points: number, location: string, status = 'OPEN', imageUrl: string | null = null, sourceNote: string | null = SRC) =>
+  const makeProject = (id: string, en: string, el: string, de: string, descEn: string, descEl: string, descDe: string, sdgs: number[], category: string, points: number, location: string, status = 'OPEN', imageUrl: string | null = null, sourceNote: string | null = SRC, listed = true) =>
     prisma.project.upsert({
       where: { id },
       update: {},
-      create: { id, titleEn: en, titleEl: el, titleDe: de, descriptionEn: descEn, descriptionEl: descEl, descriptionDe: descDe, sdgIds: JSON.stringify(sdgs), category, status, rewardPoints: points, location, imageUrl, sourceNote, createdById: admin.id },
+      create: { id, titleEn: en, titleEl: el, titleDe: de, descriptionEn: descEn, descriptionEl: descEl, descriptionDe: descDe, sdgIds: JSON.stringify(sdgs), category, status, rewardPoints: points, location, imageUrl, sourceNote, listed, createdById: admin.id },
     });
 
   const [p1, p2, p3, p4, p5, p6, p7, p8] = await Promise.all([
@@ -97,6 +97,28 @@ async function main() {
     // Natural monuments — freshwater
     makeProject('proj-water-quality', 'Drinking Water Quality Monitoring', 'Παρακολούθηση Ποιότητας Πόσιμου Νερού', 'Trinkwasserqualitäts-Monitoring', 'Monitoring of drinking-water quality and protection of freshwater sources across North Corfu, including the Agios Panteleimon basin.', 'Παρακολούθηση ποιότητας πόσιμου νερού και προστασία πηγών γλυκού νερού στη Βόρεια Κέρκυρα, μεταξύ άλλων στη λεκάνη Αγίου Παντελεήμονα.', 'Überwachung der Trinkwasserqualität und Schutz der Süßwasserquellen in Nordkorfu, u. a. im Becken von Agios Panteleimon.', [6, 11], 'ENVIRONMENT', 45, 'Northern Corfu'),
   ]);
+
+  // Structural umbrella project (listed=false): hidden from public lists/counts,
+  // exists to give cross-cutting events (e.g. the annual SDG forum) a required
+  // project home (Decision A). Trilingual content is human-authored (matches the
+  // A migration); no metrics → no invented figures.
+  await makeProject(
+    'proj-zoe-programme',
+    'ZOE Programme — Cross-cutting Initiatives',
+    'Πρόγραμμα ZOE — Οριζόντιες Δράσεις',
+    'ZOE-Programm — Übergreifende Initiativen',
+    'The ZOE umbrella programme of the Municipality of Northern Corfu. This structural entry groups cross-cutting activities and events — such as the annual SDG forum — that span several thematic projects rather than belonging to a single one. It carries no separate impact figures of its own.',
+    'Το πρόγραμμα-ομπρέλα ZOE του Δήμου Βόρειας Κέρκυρας. Αυτή η δομική καταχώριση ομαδοποιεί οριζόντιες δράσεις και εκδηλώσεις — όπως το ετήσιο φόρουμ SDG — που εκτείνονται σε πολλά θεματικά έργα αντί να ανήκουν σε ένα. Δεν φέρει δικά της μεγέθη επίδρασης.',
+    'Das ZOE-Dachprogramm der Gemeinde Nordkorfu. Dieser strukturelle Eintrag bündelt übergreifende Aktivitäten und Veranstaltungen — etwa das jährliche SDG-Forum —, die mehrere thematische Projekte umfassen, statt zu einem einzelnen zu gehören. Er weist keine eigenen Wirkungszahlen aus.',
+    [],
+    'COMMUNITY',
+    0,
+    'Municipality of Northern Corfu',
+    'OPEN',
+    null,
+    null,
+    false
+  );
 
   // --- Map coordinates (WGS84), verified to public North-Corfu locations.
   // Three municipality-wide actions share the Acharavi centroid (greenmove =
@@ -233,7 +255,7 @@ async function main() {
     titleEn: string, titleEl: string, titleDe: string,
     descEn: string, descEl: string, descDe: string,
     date: string, location: string, category: string,
-    projectId: string | null, rewardPoints = 20, capacity: number | null = null,
+    projectId: string, rewardPoints = 20, capacity: number | null = null,
   ) =>
     prisma.event.upsert({
       where: { id },
@@ -299,7 +321,7 @@ async function main() {
       'Public forum on ZOE programme results, SDG progress and community priorities for next year. All citizens welcome; translation available.',
       'Δημόσιο φόρουμ για τα αποτελέσματα του ZOE, την πρόοδο SDG και τις προτεραιότητες της κοινότητας. Ανοιχτό σε όλους· διαθέσιμη μετάφραση.',
       'Öffentliches Forum zu ZOE-Ergebnissen, SDG-Fortschritt und Prioritäten. Alle Bürger:innen willkommen; Übersetzung verfügbar.',
-      '2026-09-27T09:00:00.000Z', 'Kassiopi Community Hall', 'COMMUNITY', null, 30, 200),
+      '2026-09-27T09:00:00.000Z', 'Kassiopi Community Hall', 'COMMUNITY', 'proj-zoe-programme', 30, 200),
   ]);
 
   // Participations
