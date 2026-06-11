@@ -68,3 +68,8 @@ docs/team-meeting/
 
 # Source material for the Facebook import (images live in Supabase Storage, not git)
 Posts_Kokkali_Facebook/
+
+# Source material for the entity-image import (Events/Projects/News/Wissen) and
+# branding logos. Entity images live in Supabase Storage; logos are also bundled
+# into public/ + src/assets. The raw source folder is local-only (NOT pushed).
+Bilder_Events_Projekte_News/
