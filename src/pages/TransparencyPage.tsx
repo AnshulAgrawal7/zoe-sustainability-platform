@@ -17,7 +17,6 @@ import { useTranslation } from 'react-i18next';
 import { impactMetrics } from '../data/metrics';
 import { projects } from '../data/projects';
 import { getImpactMetrics } from '../services/projectService';
-import ProgressBar from '../components/ui/ProgressBar';
 import StatusBadge from '../components/ui/StatusBadge';
 import type { ApiImpactMetric } from '../types';
 
@@ -213,11 +212,8 @@ export default function TransparencyPage() {
                   <th className="hidden px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-300 sm:table-cell">
                     {t('transparency.thCategory')}
                   </th>
-                  <th className="hidden px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-300 md:table-cell">
+                  <th className="px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-300">
                     {t('transparency.thStatus')}
-                  </th>
-                  <th className="w-48 px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-300">
-                    {t('transparency.thProgress')}
                   </th>
                   <th className="hidden px-5 py-3 text-right font-medium text-gray-600 dark:text-gray-300 sm:table-cell">
                     {t('transparency.thParticipants')}
@@ -241,14 +237,8 @@ export default function TransparencyPage() {
                     <td className="hidden px-4 py-3.5 text-gray-500 dark:text-gray-400 sm:table-cell">
                       {p.category}
                     </td>
-                    <td className="hidden px-4 py-3.5 md:table-cell">
+                    <td className="px-4 py-3.5">
                       <StatusBadge status={p.status} />
-                    </td>
-                    <td className="w-48 px-4 py-3.5">
-                      <ProgressBar
-                        value={p.progressPercent}
-                        color="bg-green-500"
-                      />
                     </td>
                     <td className="hidden px-5 py-3.5 text-right text-gray-500 dark:text-gray-400 sm:table-cell">
                       {p.participantCount.toLocaleString()}

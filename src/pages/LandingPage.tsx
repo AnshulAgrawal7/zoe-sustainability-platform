@@ -18,7 +18,6 @@ import { projects } from '../data/projects';
 import { impactMetrics } from '../data/metrics';
 import { fallbackPosts } from '../data/posts';
 import StatusBadge from '../components/ui/StatusBadge';
-import ProgressBar from '../components/ui/ProgressBar';
 import PostCard from '../components/news/PostCard';
 import EntityImage from '../components/ui/EntityImage';
 import { getPosts } from '../services/postService';
@@ -369,23 +368,9 @@ export default function LandingPage() {
                     <h3 className="mb-2 font-semibold text-gray-900 transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-400">
                       {project.title}
                     </h3>
-                    <p className="mb-4 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+                    <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
                       {project.description}
                     </p>
-                    <div>
-                      <div className="mb-1 flex justify-between text-xs text-gray-500 dark:text-gray-400">
-                        <span>{t('landing.featured.progress')}</span>
-                      </div>
-                      <ProgressBar value={project.progressPercent} />
-                    </div>
-                    <div className="mt-3 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                      <Users size={13} aria-hidden="true" />
-                      <span>
-                        {t('landing.featured.participants', {
-                          count: project.participantCount.toLocaleString(),
-                        })}
-                      </span>
-                    </div>
                   </div>
                 </Link>
               );
