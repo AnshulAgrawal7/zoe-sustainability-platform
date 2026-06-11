@@ -58,6 +58,30 @@ async function main() {
     `Cleanup: removed ${ideas.count} test ideas, ${comments.count} test comments, ${likes.count} comment likes.`
   );
 
+  // 3b) E2E also joins events as the demo users. The seed creates NO event
+  //     registrations for them, so any are test artefacts — removing them keeps
+  //     the join E2E reproducible and event counts clean. Real registrations by
+  //     other users are untouched.
+  const testUsers = await prisma.user.findMany({
+    where: {
+      email: {
+        in: [
+          'admin@zoe-corfu.gr',
+          'citizen1@example.com',
+          'citizen2@example.com',
+          'tourist@example.com',
+        ],
+      },
+    },
+    select: { id: true },
+  });
+  const regs = testUsers.length
+    ? await prisma.eventRegistration.deleteMany({
+        where: { userId: { in: testUsers.map((u) => u.id) } },
+      })
+    : { count: 0 };
+  console.log(`Cleanup: removed ${regs.count} test-user event registrations.`);
+
   // 4) Safety check: the 4 seeded ACCEPTED demo ideas must still be present.
   const demo = await prisma.idea.count({
     where: { id: { startsWith: 'idea-demo-' } },
