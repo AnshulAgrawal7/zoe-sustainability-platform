@@ -25,6 +25,7 @@ interface EventBody {
   category?: string;
   rewardPoints?: number;
   capacity?: number;
+  imageUrl?: string;
   projectId?: string | null;
 }
 
@@ -107,6 +108,7 @@ export async function createEvent(req: AuthRequest, res: Response) {
         category: body.category as string,
         rewardPoints: body.rewardPoints ?? EVENT_POINTS,
         capacity: body.capacity ?? null,
+        imageUrl: body.imageUrl ?? null,
         projectId: body.projectId ?? null,
       },
     });
@@ -144,6 +146,7 @@ export async function updateEvent(req: AuthRequest, res: Response) {
         ...(body.category !== undefined ? { category: body.category } : {}),
         ...(body.rewardPoints !== undefined ? { rewardPoints: body.rewardPoints } : {}),
         ...(body.capacity !== undefined ? { capacity: body.capacity } : {}),
+        ...(body.imageUrl !== undefined ? { imageUrl: body.imageUrl || null } : {}),
         ...(body.projectId !== undefined ? { projectId: body.projectId || null } : {}),
       },
     });

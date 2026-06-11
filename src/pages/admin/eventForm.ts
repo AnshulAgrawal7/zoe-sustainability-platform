@@ -9,7 +9,10 @@ export const EVENT_CATEGORIES = [
   'CULTURE',
 ] as const;
 
-export interface EventFormState {
+// `type` (not `interface`) so the form object stays assignable to the
+// `Record<string, unknown>` prop of AutoTranslatePanel — interfaces have no
+// implicit index signature, which previously broke `tsc --noEmit`.
+export type EventFormState = {
   titleEn: string;
   titleEl: string;
   titleDe: string;
@@ -21,8 +24,9 @@ export interface EventFormState {
   category: (typeof EVENT_CATEGORIES)[number];
   rewardPoints: number | string;
   capacity: number | string;
+  imageUrl: string;
   projectId: string;
-}
+};
 
 export const emptyEventForm: EventFormState = {
   titleEn: '',
@@ -36,5 +40,6 @@ export const emptyEventForm: EventFormState = {
   category: 'ENVIRONMENT',
   rewardPoints: 20,
   capacity: '',
+  imageUrl: '',
   projectId: '',
 };

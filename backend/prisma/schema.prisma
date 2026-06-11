@@ -85,6 +85,7 @@ model Event {
   category      String
   rewardPoints  Int      @default(20)
   capacity      Int?
+  imageUrl      String? // optional cover image (URL string; no file upload)
   projectId     String?
   project       Project? @relation(fields: [projectId], references: [id])
   createdAt     DateTime @default(now())

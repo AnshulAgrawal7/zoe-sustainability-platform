@@ -57,6 +57,7 @@ export default function NewEventPage() {
         category: form.category,
         rewardPoints: Number(form.rewardPoints),
         capacity: form.capacity ? Number(form.capacity) : null,
+        imageUrl: form.imageUrl || undefined,
         projectId: form.projectId || null,
       });
       navigate('/admin/events');

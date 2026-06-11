@@ -49,6 +49,7 @@ export default function EditEventPage() {
           category: ev.category,
           rewardPoints: ev.rewardPoints,
           capacity: ev.capacity ?? '',
+          imageUrl: ev.imageUrl ?? '',
           projectId: ev.projectId ?? '',
         })
       )
@@ -77,6 +78,7 @@ export default function EditEventPage() {
         category: form.category,
         rewardPoints: Number(form.rewardPoints),
         capacity: form.capacity ? Number(form.capacity) : null,
+        imageUrl: form.imageUrl || null,
         projectId: form.projectId || null,
       });
       navigate('/admin/events');

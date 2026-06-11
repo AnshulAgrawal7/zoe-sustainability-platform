@@ -92,6 +92,7 @@ export interface ApiEvent {
   category: ApiProjectCategory;
   rewardPoints: number;
   capacity: number | null;
+  imageUrl: string | null;
   projectId: string | null;
   project?: ApiEventProjectRef | null;
   registeredCount?: number;

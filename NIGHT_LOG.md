@@ -11,7 +11,7 @@ Baseline-Tests: **Backend 68 / FE 22 / E2E 55**. DE/EN/EL für alle neuen Texte.
 | 1 — Z1–Z6 Soll-Ist-Abgleich | ✅ | Alle 6 Ziele bereits implementiert; 1 i18n-Lücke (`Prototype —`) geschlossen |
 | 2 — Events unter Projekte | ✅ | Beidseitige Verlinkung + 9 verknüpfte Seed-Events bereits vorhanden; verifiziert, keine toten Links |
 | 3 — Startseite: aktive Projekte/Events oben | ⏳ | Steht aus (nach Block 4) |
-| 4 — Bild-Infrastruktur | ⏳ | In Arbeit — wird VOR Block 3 gebaut (Landing-Kacheln nutzen die Bild-Komponente wieder) |
+| 4 — Bild-Infrastruktur | ⚠️ | Teil 1 fertig: `Event.imageUrl` (Migration) + Admin-Formular + Backend; Anzeige/Platzhalter-Komponente noch offen |
 | 5 — Input/Aktivität/Output (Hammer & Champy) | ⏳ | Steht aus |
 | 6 — Grüneres Design | ⏳ | Steht aus |
 
@@ -130,21 +130,53 @@ ist für den Prototyp nicht erforderlich → nicht hinzugefügt (Scope/Risiko).
 **Vorbestehende, nicht durch den Nightrun verursachte Probleme:**
 - `tsc --noEmit`: 2 Fehler in `NewEventPage.tsx:92` / `EditEventPage.tsx:138`
   (`EventFormState` braucht Index-Signatur). Verifiziert pre-existing auf `778fe08`.
-  → Fix geplant in Block 4.
+  → **In Block 4 behoben:** `EventFormState` von `interface` auf `type` umgestellt
+  (Object-Typen sind — anders als Interfaces — zu `Record<string, unknown>`
+  zuweisbar). `tsc --noEmit` ist jetzt auf FE **und** Backend sauber.
+
+### Block 4 — Bild-Infrastruktur (Teil 1: Event-`imageUrl`)
+Nach Netzwerk-Abbruch („socket closed") fortgesetzt; vor dem Weiterarbeiten via
+`git status` / `git diff` / `tsc` geprüft, nichts doppelt angewendet.
+- **Schema/Migration:** `Event.imageUrl String?` + Migration
+  `20260611130000_add_event_image`.
+- **Backend:** `eventController` (create/update) und Admin-Validatoren
+  (`isURL`, max 2048) kennen `imageUrl`.
+- **Admin-Formular:** Feld „Titelbild-URL" in `EventFormFields` (Label
+  `admin.formImageUrl` + Hint — in EN/EL/DE bereits vorhanden), New-/Edit-Page
+  mappen `imageUrl` in den Payload bzw. laden es aus `event.imageUrl`.
+- **Typen:** `ApiEvent.imageUrl` + `EventPayload.imageUrl`.
+- **Offen (Teil 2):** wiederverwendbare Anzeige-Komponente mit Platzhalter +
+  `onError`-Fallback und Einbindung in Projekt-Karten/-Detail und Event-Liste.
 
 ---
 
 ## Neue Migrationen
 
-_(noch keine — Block 1 war additiver i18n-Fix ohne Schema-Änderung.)_
+### `20260611130000_add_event_image` (Block 4)
+Additiv: `ALTER TABLE "Event" ADD COLUMN "imageUrl" TEXT;` — kein Datenverlust.
+
+**Deploy gegen Supabase (vom User auszuführen):**
+```bash
+cd backend
+npx prisma migrate deploy      # wendet die neue Migration an
+npx prisma generate            # Client-Typen aktualisieren
+# optional, falls Demo-Daten neu gesetzt werden sollen:
+# npm run db:seed
+```
+Die lokale Test-DB braucht nichts — `globalSetup.ts` macht `prisma db push --force-reset`
+und liest das Schema direkt.
 
 ---
 
 ## TODO — was ich (der User) morgen früh tun muss
 
-> Wird fortlaufend ergänzt. Stand nach Block 1:
+> Wird fortlaufend ergänzt. Stand nach Block 4 (Teil 1):
 
+- [ ] **Migration deployen:** `cd backend && npx prisma migrate deploy && npx prisma generate`
+      gegen Supabase (neue Spalte `Event.imageUrl`) — siehe „Neue Migrationen".
 - [ ] **Visuell prüfen:** Karte auf `/projects` (Map-Toggle) und `/get-involved` —
       sitzen die Marker jetzt auf Nord-Korfu (~39.7 °N) statt im Ionischen Meer?
-- [ ] **Vorbestehende tsc-Fehler** in den Event-Admin-Formularen beachten (werden in
-      Block 4 mitgefixt, falls Block 4 läuft).
+- [ ] **Bilder ergänzen:** Events haben jetzt ein optionales „Titelbild-URL"-Feld
+      im Admin (wie Projekte) — echte Bild-URLs nach Wunsch eintragen.
+- [x] ~~Vorbestehende tsc-Fehler in den Event-Admin-Formularen~~ — in Block 4 behoben
+      (`EventFormState` ist jetzt ein `type`); `tsc --noEmit` FE+Backend sauber.

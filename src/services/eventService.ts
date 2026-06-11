@@ -73,6 +73,7 @@ export interface EventPayload {
   category: string;
   rewardPoints?: number;
   capacity?: number | null;
+  imageUrl?: string | null;
   projectId?: string | null;
 }
 

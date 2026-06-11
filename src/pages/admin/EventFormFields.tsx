@@ -169,6 +169,26 @@ export default function EventFormFields({ form, set, projects }: Props) {
           </div>
           <div className="sm:col-span-2">
             <label
+              htmlFor="event-image-url"
+              className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
+            >
+              {t('admin.formImageUrl')}
+            </label>
+            <input
+              id="event-image-url"
+              type="url"
+              inputMode="url"
+              value={form.imageUrl}
+              onChange={(e) => set('imageUrl', e.target.value)}
+              placeholder="https://…/image.jpg"
+              className={inputClass}
+            />
+            <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+              {t('admin.formImageUrlHint')}
+            </p>
+          </div>
+          <div className="sm:col-span-2">
+            <label
               htmlFor="event-project"
               className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
             >
