@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Container from './Container';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Leaf, Menu, X, Sun, Moon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -59,7 +60,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <Container>
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link
@@ -162,7 +163,7 @@ export default function Header() {
             )}
           </button>
         </div>
-      </div>
+      </Container>
 
       {/* Mobile nav */}
       {menuOpen && (

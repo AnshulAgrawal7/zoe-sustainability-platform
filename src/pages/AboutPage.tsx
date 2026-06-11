@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Container from '../components/layout/Container';
 import { MapPin, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -26,7 +27,7 @@ export default function AboutPage() {
     <div>
       {/* Hero */}
       <section className="bg-gradient-to-br from-teal-700 to-green-700 py-16 text-white">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <Container maxW="4xl">
           <div className="mb-4 flex items-center gap-2 text-sm text-teal-200">
             <MapPin size={14} aria-hidden="true" />
             <span>{t('about.heroEyebrow')}</span>
@@ -37,12 +38,12 @@ export default function AboutPage() {
           <p className="text-xl leading-relaxed text-teal-100">
             {t('about.heroSubtitle')}
           </p>
-        </div>
+        </Container>
       </section>
 
       {/* What is ZOE */}
       <section className="bg-white py-16 dark:bg-gray-900">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <Container maxW="4xl">
           <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2">
             <div>
               <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
@@ -85,12 +86,12 @@ export default function AboutPage() {
               </ul>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Northern Corfu context */}
       <section className="bg-white py-16 dark:bg-gray-900">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <Container maxW="4xl">
           <h2 className="mb-6 text-center text-2xl font-bold text-gray-900 dark:text-white">
             {t('about.contextTitle')}
           </h2>
@@ -154,12 +155,12 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* CTA */}
       <section className="bg-green-700 py-12 text-white">
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+        <Container maxW="4xl" className="text-center">
           <h2 className="mb-4 text-2xl font-bold text-white">
             {t('about.ctaTitle')}
           </h2>
@@ -185,7 +186,7 @@ export default function AboutPage() {
               {t('about.ctaSdg')}
             </Link>
           </div>
-        </div>
+        </Container>
       </section>
     </div>
   );

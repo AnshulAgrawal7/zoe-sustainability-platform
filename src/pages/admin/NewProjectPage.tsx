@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Container from '../../components/layout/Container';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft } from 'lucide-react';
@@ -101,7 +102,7 @@ export default function NewProjectPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <Container maxW="3xl" className="py-8">
       <Link
         to="/admin/projects"
         className="mb-4 inline-flex items-center gap-1 text-sm text-gray-500 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-400"
@@ -360,6 +361,6 @@ export default function NewProjectPage() {
           </Link>
         </div>
       </form>
-    </div>
+    </Container>
   );
 }

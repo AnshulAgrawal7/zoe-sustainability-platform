@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Container from '../components/layout/Container';
 import {
   Home,
   Wheat,
@@ -67,7 +68,7 @@ export default function AudiencesPage() {
   }[];
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+    <Container maxW="5xl" className="py-10">
       {/* Header */}
       <div className="mb-10">
         <h1 className="mb-3 text-3xl font-bold text-gray-900 dark:text-white">
@@ -286,6 +287,6 @@ export default function AudiencesPage() {
           {t('audiences.ctaButton')}
         </Link>
       </div>
-    </div>
+    </Container>
   );
 }

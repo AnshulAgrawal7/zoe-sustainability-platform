@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../components/layout/Container';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Heart, MessageSquare, AlertCircle } from 'lucide-react';
@@ -93,17 +94,17 @@ export default function IdeaDetailPage() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-20 text-center">
+      <Container maxW="3xl" className="py-20 text-center">
         <p className="text-gray-500 dark:text-gray-400">
           {t('common.loading')}
         </p>
-      </div>
+      </Container>
     );
   }
 
   if (notFound || !idea) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-20 text-center">
+      <Container maxW="3xl" className="py-20 text-center">
         <AlertCircle
           size={40}
           className="mx-auto mb-4 text-gray-400"
@@ -118,12 +119,12 @@ export default function IdeaDetailPage() {
         >
           ← {t('ideaDetail.back')}
         </Link>
-      </div>
+      </Container>
     );
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
+    <Container maxW="3xl" className="py-10">
       <Link
         to="/ideas"
         className="mb-6 inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
@@ -275,6 +276,6 @@ export default function IdeaDetailPage() {
           </p>
         )}
       </section>
-    </div>
+    </Container>
   );
 }

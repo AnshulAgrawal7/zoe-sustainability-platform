@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Plus, Pencil } from 'lucide-react';
@@ -25,7 +26,7 @@ export default function ManageProjectsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <Container maxW="4xl" className="py-8">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           {t('admin.projects')}
@@ -69,6 +70,6 @@ export default function ManageProjectsPage() {
           ))}
         </div>
       )}
-    </div>
+    </Container>
   );
 }

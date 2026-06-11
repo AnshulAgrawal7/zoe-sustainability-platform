@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../../components/layout/Container';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, Trash2 } from 'lucide-react';
@@ -103,7 +104,7 @@ export default function EditEventPage() {
 
   if (notFound) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-20 text-center">
+      <Container maxW="3xl" className="py-20 text-center">
         <p className="text-gray-500 dark:text-gray-400">{t('common.error')}</p>
         <Link
           to="/admin/events"
@@ -111,12 +112,12 @@ export default function EditEventPage() {
         >
           ← {t('adminEvents.title')}
         </Link>
-      </div>
+      </Container>
     );
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <Container maxW="3xl" className="py-8">
       <Link
         to="/admin/events"
         className="mb-4 inline-flex items-center gap-1 text-sm text-gray-500 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-400"
@@ -165,6 +166,6 @@ export default function EditEventPage() {
           </button>
         </div>
       </form>
-    </div>
+    </Container>
   );
 }

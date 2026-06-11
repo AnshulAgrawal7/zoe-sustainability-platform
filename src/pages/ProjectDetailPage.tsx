@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../components/layout/Container';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -178,17 +179,17 @@ export default function ProjectDetailPage() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-4xl px-4 py-20 text-center">
+      <Container maxW="4xl" className="py-20 text-center">
         <p className="text-gray-500 dark:text-gray-400">
           {t('common.loading')}
         </p>
-      </div>
+      </Container>
     );
   }
 
   if (!project) {
     return (
-      <div className="mx-auto max-w-4xl px-4 py-20 text-center">
+      <Container maxW="4xl" className="py-20 text-center">
         <AlertCircle
           size={48}
           className="mx-auto mb-4 text-gray-400"
@@ -203,7 +204,7 @@ export default function ProjectDetailPage() {
         >
           ← {t('nav.projects')}
         </Link>
-      </div>
+      </Container>
     );
   }
 
@@ -242,7 +243,7 @@ export default function ProjectDetailPage() {
     }[project.category] ?? 'bg-gray-400';
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+    <Container maxW="4xl" className="py-10">
       <button
         onClick={() => navigate(-1)}
         className="mb-6 flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
@@ -574,6 +575,6 @@ export default function ProjectDetailPage() {
           </ul>
         </section>
       )}
-    </div>
+    </Container>
   );
 }

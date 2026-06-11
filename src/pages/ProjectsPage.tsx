@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Filter, Users, ArrowRight, Star, List, Map } from 'lucide-react';
@@ -93,7 +94,7 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <Container className="py-10">
       {/* Header */}
       <div className="mb-8">
         <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
@@ -360,6 +361,6 @@ export default function ProjectsPage() {
           )}
         </>
       )}
-    </div>
+    </Container>
   );
 }

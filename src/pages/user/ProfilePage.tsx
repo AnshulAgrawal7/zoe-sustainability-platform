@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Container from '../../components/layout/Container';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../stores/authStore';
 import { useLanguageStore } from '../../stores/languageStore';
@@ -50,7 +51,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="mx-auto max-w-lg px-4 py-8">
+    <Container maxW="lg" className="py-8">
       <h1 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
         {t('nav.profile')}
       </h1>
@@ -176,6 +177,6 @@ export default function ProfilePage() {
           </span>
         </p>
       </div>
-    </div>
+    </Container>
   );
 }

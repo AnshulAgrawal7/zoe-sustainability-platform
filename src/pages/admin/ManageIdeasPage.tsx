@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../../components/layout/Container';
 import { useTranslation } from 'react-i18next';
 import { Lightbulb, Mail } from 'lucide-react';
 import { getIdeas, updateIdeaStatus } from '../../services/ideaService';
@@ -71,7 +72,7 @@ export default function ManageIdeasPage() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <Container maxW="4xl" className="py-8">
       <div className="mb-1 flex items-center gap-2">
         <Lightbulb size={22} className="text-amber-500" aria-hidden="true" />
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -186,6 +187,6 @@ export default function ManageIdeasPage() {
           ))}
         </ul>
       )}
-    </div>
+    </Container>
   );
 }

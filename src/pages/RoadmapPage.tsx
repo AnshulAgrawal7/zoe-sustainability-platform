@@ -1,4 +1,5 @@
 import { CheckCircle2, Circle, Clock, ArrowRight } from 'lucide-react';
+import Container from '../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -49,7 +50,7 @@ export default function RoadmapPage() {
   const phases = t('roadmap.phases', { returnObjects: true }) as PhaseContent[];
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+    <Container maxW="4xl" className="py-10">
       {/* Header */}
       <div className="mb-10">
         <h1 className="mb-3 text-3xl font-bold text-gray-900 dark:text-white">
@@ -171,6 +172,6 @@ export default function RoadmapPage() {
           </Link>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import Container from '../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { Award, ArrowRight } from 'lucide-react';
 import InitiativeTabs from '../components/engagement/InitiativeTabs';
@@ -30,7 +31,7 @@ export default function GetInvolvedPage() {
   const { t } = useTranslation();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <Container className="py-10">
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
         {t('getInvolved.title')}
       </h1>
@@ -94,6 +95,6 @@ export default function GetInvolvedPage() {
           </Link>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

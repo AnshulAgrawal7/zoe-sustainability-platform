@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { GraduationCap, ArrowRight, Folder } from 'lucide-react';
@@ -51,7 +52,7 @@ export default function LearnPage() {
   );
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+    <Container maxW="5xl" className="py-10">
       <div className="mb-6">
         <h1 className="mb-2 flex items-center gap-2 text-3xl font-bold text-gray-900 dark:text-white">
           <GraduationCap
@@ -158,6 +159,6 @@ export default function LearnPage() {
           </ul>
         </>
       )}
-    </div>
+    </Container>
   );
 }

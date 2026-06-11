@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Container from '../components/layout/Container';
 import { Globe, ArrowRight, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sdgs, getSdgByNumber } from '../data/sdgs';
@@ -45,7 +46,7 @@ export default function SDGDashboardPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <Container className="py-10">
       {/* Header */}
       <div className="mb-8">
         <div className="mb-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
@@ -238,6 +239,6 @@ export default function SDGDashboardPage() {
           })}
         </div>
       </section>
-    </div>
+    </Container>
   );
 }

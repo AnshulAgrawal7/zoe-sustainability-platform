@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../components/layout/Container';
 import { useTranslation } from 'react-i18next';
 import { Newspaper, CheckCircle2 } from 'lucide-react';
 import { getFeed } from '../services/feedService';
@@ -59,7 +60,7 @@ export default function NewsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Container maxW="6xl" className="py-8">
       <header className="mb-6">
         <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-sm font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300">
           <Newspaper size={16} aria-hidden="true" />
@@ -138,6 +139,6 @@ export default function NewsPage() {
           </div>
         </>
       )}
-    </div>
+    </Container>
   );
 }

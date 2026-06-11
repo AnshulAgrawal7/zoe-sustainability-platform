@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Container from '../components/layout/Container';
 import {
   Award,
   Star,
@@ -144,7 +145,7 @@ export default function RewardsPage() {
     <div>
       {/* Hero */}
       <section className="bg-gradient-to-br from-green-700 to-teal-700 py-14 text-white">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <Container maxW="4xl">
           <div className="mb-3 flex items-center gap-2 text-sm text-green-100">
             <Award size={14} aria-hidden="true" />
             <span>{t('rewards.heroEyebrow')}</span>
@@ -155,12 +156,12 @@ export default function RewardsPage() {
           <p className="max-w-2xl text-xl leading-relaxed text-green-100">
             {t('rewards.heroSubtitle')}
           </p>
-        </div>
+        </Container>
       </section>
 
       {/* Demo progress tracker */}
       <section className="border-b border-gray-200 bg-white py-10 dark:border-gray-700 dark:bg-gray-900">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        <Container maxW="3xl">
           <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-300">
             <span className="font-semibold">{t('rewards.demoLabel')}</span>{' '}
             {t('rewards.demoText', { points: DEMO_POINTS })}
@@ -241,12 +242,12 @@ export default function RewardsPage() {
               </p>
             )}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Tiers */}
       <section className="bg-gray-50 py-14 dark:bg-gray-900/50">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        <Container maxW="3xl">
           <div className="mb-10 text-center">
             <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
               {t('rewards.tiersTitle')}
@@ -267,12 +268,12 @@ export default function RewardsPage() {
           <p className="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
             {t('rewards.tiersNote')}
           </p>
-        </div>
+        </Container>
       </section>
 
       {/* How to earn points */}
       <section className="bg-white py-14 dark:bg-gray-900">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <Container maxW="4xl">
           <div className="mb-10 text-center">
             <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
               {t('rewards.earnTitle')}
@@ -333,12 +334,12 @@ export default function RewardsPage() {
           <p className="mt-3 text-center text-xs text-gray-400 dark:text-gray-500">
             {t('rewards.earnNote')}
           </p>
-        </div>
+        </Container>
       </section>
 
       {/* Community milestones */}
       <section className="bg-gray-50 py-14 dark:bg-gray-900/50">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <Container maxW="4xl">
           <div className="mb-10 text-center">
             <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
               {t('rewards.milestonesTitle')}
@@ -427,12 +428,12 @@ export default function RewardsPage() {
             </span>{' '}
             {t('rewards.milestonesNote')}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Why this system */}
       <section className="bg-white py-14 dark:bg-gray-900">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <Container maxW="4xl">
           <h2 className="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
             {t('rewards.whyTitle')}
           </h2>
@@ -452,7 +453,7 @@ export default function RewardsPage() {
               </div>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
     </div>
   );

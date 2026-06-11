@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Pencil, AlertTriangle } from 'lucide-react';
@@ -29,7 +30,7 @@ export default function ManageFeedPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <Container maxW="4xl" className="py-8">
       <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
         {t('adminFeed.title')}
       </h1>
@@ -85,6 +86,6 @@ export default function ManageFeedPage() {
           ))}
         </ul>
       )}
-    </div>
+    </Container>
   );
 }

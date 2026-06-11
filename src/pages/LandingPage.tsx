@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -116,7 +117,7 @@ export default function LandingPage() {
     value:
       formatNumber(f.value, i18n.language, {
         maximumFractionDigits: f.fractionDigits ?? 0,
-      }) + (f.unit ? ` ${f.unit}` : ''),
+      }) + (f.unit ? `\u00A0${f.unit}` : ''),
     label: t(f.labelKey),
     source: t(f.sourceKey),
   }));
@@ -192,7 +193,7 @@ export default function LandingPage() {
     <div>
       {/* Hero — compact (Part 2A): lower padding so the next section peeks in */}
       <section className="bg-gradient-to-br from-green-700 via-green-600 to-teal-600 text-white">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <Container className="py-12 sm:py-16">
           <div className="max-w-3xl">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium">
               <Leaf size={16} aria-hidden="true" />
@@ -222,12 +223,12 @@ export default function LandingPage() {
               </Link>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Why ZOE — three pillars */}
       <section className="bg-gray-50 py-10 dark:bg-gray-800">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="mb-8 text-center">
             <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
               {t('landing.pillars.heading')}
@@ -254,13 +255,13 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* What's new — merged feed teaser */}
       {feedTeaser.length > 0 && (
         <section className="bg-gray-50 py-10 dark:bg-gray-800">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Container>
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
@@ -283,7 +284,7 @@ export default function LandingPage() {
                 <FeedCard key={`${item.source}-${item.id}`} item={item} />
               ))}
             </div>
-          </div>
+          </Container>
         </section>
       )}
 
@@ -294,7 +295,7 @@ export default function LandingPage() {
           aria-labelledby="engage-heading"
           className="bg-white py-10 dark:bg-gray-900"
         >
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Container>
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h2
@@ -367,13 +368,13 @@ export default function LandingPage() {
                 </Link>
               ))}
             </div>
-          </div>
+          </Container>
         </section>
       )}
 
       {/* Featured projects */}
       <section className="bg-white py-10 dark:bg-gray-900">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
@@ -423,7 +424,7 @@ export default function LandingPage() {
               );
             })}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Impact stats — documented, sourced programme figures only */}
@@ -431,7 +432,7 @@ export default function LandingPage() {
         className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
         aria-label={t('landing.statsAria')}
       >
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <Container className="py-6">
           <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3">
             {facts.map((f) => (
               <div key={f.key}>
@@ -452,13 +453,13 @@ export default function LandingPage() {
           <p className="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
             {t('landing.stats.disclaimer')}
           </p>
-        </div>
+        </Container>
       </section>
 
       {/* From the community — newest approved citizen ideas (Z3) */}
       {communityIdeas.length > 0 && (
         <section className="bg-gray-50 py-10 dark:bg-gray-800">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Container>
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="mb-2 flex items-center gap-2 text-3xl font-bold text-gray-900 dark:text-white">
@@ -500,14 +501,14 @@ export default function LandingPage() {
                 </Link>
               ))}
             </div>
-          </div>
+          </Container>
         </section>
       )}
 
       {/* Learn & discover — locally-grounded educational content (Z5) */}
       {learnResources.length > 0 && (
         <section className="bg-white py-10 dark:bg-gray-900">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Container>
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="mb-2 flex items-center gap-2 text-3xl font-bold text-gray-900 dark:text-white">
@@ -554,13 +555,13 @@ export default function LandingPage() {
                 </Link>
               ))}
             </div>
-          </div>
+          </Container>
         </section>
       )}
 
       {/* CTA — Participate */}
       <section className="bg-green-700 py-10 text-white">
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+        <Container maxW="4xl" className="text-center">
           <h2 className="mb-4 text-3xl font-bold text-white">
             {t('landing.cta.heading')}
           </h2>
@@ -589,7 +590,7 @@ export default function LandingPage() {
               </Link>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
     </div>
   );

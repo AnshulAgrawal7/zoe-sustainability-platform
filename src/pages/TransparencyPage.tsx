@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../components/layout/Container';
 import {
   Leaf,
   Users,
@@ -70,7 +71,7 @@ export default function TransparencyPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <Container maxW="6xl" className="py-10">
       {/* Header */}
       <div className="mb-8">
         <h1 className="mb-3 text-3xl font-bold text-gray-900 dark:text-white">
@@ -287,6 +288,6 @@ export default function TransparencyPage() {
           {t('transparency.footerText')}
         </p>
       </div>
-    </div>
+    </Container>
   );
 }

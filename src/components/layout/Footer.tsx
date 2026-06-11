@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Container from './Container';
 import { Leaf } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -20,7 +21,7 @@ export default function Footer() {
 
   return (
     <footer className="mt-auto bg-green-950 text-gray-300">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <Container className="py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* Brand */}
           <div className="md:col-span-1">
@@ -108,7 +109,7 @@ export default function Footer() {
         <p className="mt-3 text-center text-xs text-gray-400">
           {t('footer.dsr')}
         </p>
-      </div>
+      </Container>
     </footer>
   );
 }

@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next';
+import Container from '../components/layout/Container';
 import { Lock, Mail } from 'lucide-react';
 
 export default function PrivacyPage() {
   const { t } = useTranslation();
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
+    <Container maxW="3xl" className="py-12">
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-3">
           <Lock
@@ -126,6 +127,6 @@ export default function PrivacyPage() {
           {t('privacy.lastUpdate')}: {t('privacy.lastUpdateDate')}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

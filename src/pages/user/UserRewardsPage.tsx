@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../../components/layout/Container';
 import { useTranslation } from 'react-i18next';
 import { Trophy, Star, Lock } from 'lucide-react';
 import { getMyBadges, getLeaderboard } from '../../services/userService';
@@ -43,7 +44,7 @@ export default function UserRewardsPage() {
   const earnedIds = new Set(badges?.earned.map((ub) => ub.badge.id) ?? []);
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <Container maxW="4xl" className="py-8">
       <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
         {t('rewards.title')}
       </h1>
@@ -180,6 +181,6 @@ export default function UserRewardsPage() {
           </div>
         </div>
       )}
-    </div>
+    </Container>
   );
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Container from '../../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -34,7 +35,7 @@ export default function AdminDashboardPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <Container maxW="4xl" className="py-8">
       <h1 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
         {t('admin.title')}
       </h1>
@@ -216,6 +217,6 @@ export default function AdminDashboardPage() {
           <ArrowRight className="h-5 w-5 text-gray-400" aria-hidden="true" />
         </Link>
       </div>
-    </div>
+    </Container>
   );
 }

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import Container from '../components/layout/Container';
 import { FileText, Mail, AlertTriangle } from 'lucide-react';
 
 /**
@@ -24,7 +25,7 @@ export default function ImprintPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
+    <Container maxW="3xl" className="py-12">
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-3">
           <FileText
@@ -153,6 +154,6 @@ export default function ImprintPage() {
           {t('imprint.lastUpdate')}: {t('imprint.lastUpdateDate')}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
