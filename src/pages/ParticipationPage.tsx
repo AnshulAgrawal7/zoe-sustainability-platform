@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Container from '../components/layout/Container';
 import {
   Lightbulb,
@@ -16,12 +16,13 @@ import { participationOptions } from '../data/metrics';
 import { trackEvent, ANALYTICS_EVENTS } from '../services/analytics';
 import IdeaSubmitForm from '../components/engagement/IdeaSubmitForm';
 
+// J1: exactly three options in one horizontal row, in this order.
+const J1_OPTION_ORDER = ['submit-idea', 'report-issue', 'feedback'] as const;
+
 const optionPoints: Record<string, number> = {
-  'submit-idea': 15,
-  volunteer: 25,
-  'join-event': 20,
-  'report-issue': 10,
-  feedback: 10,
+  'submit-idea': 1,
+  'report-issue': 1,
+  feedback: 1,
 };
 
 const iconMap: Record<string, React.ElementType> = {
@@ -46,6 +47,24 @@ export default function ParticipationPage() {
   const [activeOption, setActiveOption] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [submitted, setSubmitted] = useState(false);
+
+  // J1: the three options in the required order (Submit idea | Report issue |
+  // Give feedback). Built from the central data so icons/keys stay in one place.
+  const options = J1_OPTION_ORDER.map((id) =>
+    participationOptions.find((o) => o.id === id)
+  ).filter((o): o is (typeof participationOptions)[number] => Boolean(o));
+
+  // J1: selecting an option scrolls the page down to the (now-mounted) form.
+  useEffect(() => {
+    if (!activeOption) return;
+    const reduce = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    document.getElementById('participation-form')?.scrollIntoView({
+      behavior: reduce ? 'auto' : 'smooth',
+      block: 'start',
+    });
+  }, [activeOption]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -76,9 +95,9 @@ export default function ParticipationPage() {
         </Link>
       </div>
 
-      {/* Participation options */}
-      <div className="mb-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {participationOptions.map((option) => {
+      {/* Participation options — exactly three, one horizontal row (J1) */}
+      <div className="mb-12 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        {options.map((option) => {
           const Icon = iconMap[option.icon] ?? Lightbulb;
           const isActive = activeOption === option.id;
           return (
