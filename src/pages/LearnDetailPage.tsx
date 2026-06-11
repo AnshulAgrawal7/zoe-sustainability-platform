@@ -132,12 +132,6 @@ export default function LearnDetailPage() {
             </div>
           )}
 
-          {resource.sourceNote && (
-            <p className="mt-6 text-xs text-gray-500 dark:text-gray-400">
-              {t('learnDetail.source')}: {resource.sourceNote}
-            </p>
-          )}
-
           {resource.project && (
             <div className="mt-6 border-t border-gray-100 pt-4 dark:border-gray-700">
               <p className="mb-1 text-xs font-medium text-gray-500 dark:text-gray-400">

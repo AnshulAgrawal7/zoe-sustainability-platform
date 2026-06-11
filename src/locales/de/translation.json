@@ -761,7 +761,7 @@
       "subheading": "Die Umweltgovernance in kleinen Gemeinden mangelt oft an Transparenz und Bürgerbeteiligung. ZOE ändert das mit drei zentralen Grundsätzen.",
       "transparency": {
         "title": "Transparenz",
-        "description": "Projekte dokumentieren ihre Ressourcen, Aktivitäten und – wo erfasst – belegte Ergebnisse mit Quelle. Bürger:innen können nachvollziehen, woran gearbeitet wird."
+        "description": "Projekte dokumentieren ihre Ressourcen, Aktivitäten und – wo erfasst – belegte Ergebnisse. Bürger:innen können nachvollziehen, woran gearbeitet wird."
       },
       "participation": {
         "title": "Bürgerbeteiligung",
@@ -990,7 +990,7 @@
     "footerLabel": "Forschungstransparenz:",
     "footerText": "Dies ist eine Prototyp-Plattform für ein Design-Science-Research-Projekt. Alle gezeigten Daten sind fiktiv und dienen nur der Demonstration der Informationsarchitektur und UX-Konzepte. Ein produktiver Einsatz würde eine verifizierte Datenpipeline aus echten Projektmanagementsystemen erfordern.",
     "documented": {
-      "heading": "Belegte Wirkung (mit Quelle)",
+      "heading": "Belegte Wirkung",
       "intro": "Reale, belegte Zahlen aus der Gemeinde-/Programmkommunikation. Projekte ohne belegte Zahl erscheinen hier nicht.",
       "empty": "Noch keine belegten Zahlen.",
       "illustrativeLabel": "Illustrative Prototyp-Zahlen (Beispieldaten — nicht gemessen)"
@@ -1190,7 +1190,7 @@
     "heroTitle": "Über das ZOE-Programm",
     "heroSubtitle": "ZOE (Ζωή — „Leben\" auf Griechisch) ist das strategische Umweltaktions-Rahmenwerk der Gemeinde Nord-Korfu. Diese digitale Plattform ist die Kommunikations- und Beteiligungsebene des ZOE-Programms.",
     "whatTitle": "Was ist das ZOE-Programm?",
-    "whatP1": "ZOE ist das Umwelt-Dachprogramm der Gemeinde Nord-Korfu. Es koordiniert 31 einzelne Maßnahmen über sechs Achsen — Mobilität, Abfall & Kreislaufwirtschaft, Meeresschutz, Naturdenkmäler, Energie sowie Bildung & Partizipation —, zugeschnitten auf den ökologischen und sozialen Kontext Nord-Korfus. (Programmbeschreibung: Verde.tec 2026.)",
+    "whatP1": "ZOE ist das Umwelt-Dachprogramm der Gemeinde Nord-Korfu. Es koordiniert 31 einzelne Maßnahmen über sechs Achsen — Mobilität, Abfall & Kreislaufwirtschaft, Meeresschutz, Naturdenkmäler, Energie sowie Bildung & Partizipation —, zugeschnitten auf den ökologischen und sozialen Kontext Nord-Korfus.",
     "whatP2": "Das Programm basiert auf den UN-Zielen für nachhaltige Entwicklung (SDGs) und den Prinzipien des European Green Deal, angepasst an den spezifischen ökologischen und sozialen Kontext Nord-Korfus.",
     "whatP3": "Zentral für den ZOE-Ansatz ist die Überzeugung, dass Umweltaktion ohne echte Bürgerbeteiligung und radikale Transparenz nicht gelingen kann. Diese Plattform soll beides ermöglichen.",
     "definitionNote": "Hinweis zum Namen: Vom Gesamtprogramm ist nur der Bereich Meeresschutz formal in einem Gemeinderatsbeschluss dokumentiert (30. Juli 2025). Eine konsolidierte offizielle Gesamtdefinition von ZOE liegt öffentlich nicht vor. Diese Plattform verwendet die breite Lesart — das oben beschriebene Dachprogramm — und existiert auch, um genau dieses Sichtbarkeitsdefizit zu schließen.",

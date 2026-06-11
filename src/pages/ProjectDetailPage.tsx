@@ -219,13 +219,6 @@ export default function ProjectDetailPage() {
             {getDescription()}
           </p>
 
-          {/* Provenance (programme fact, not measured impact) */}
-          {project.sourceNote && (
-            <p className="mb-6 text-xs text-gray-500 dark:text-gray-400">
-              {t('projects.source')}: {project.sourceNote}
-            </p>
-          )}
-
           {/* SDG badges */}
           {sdgs.length > 0 && (
             <div className="mb-6 flex flex-wrap gap-2">
@@ -270,11 +263,6 @@ export default function ProjectDetailPage() {
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                   {metricLabel(m)}
                 </p>
-                {m.source && (
-                  <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
-                    {t('projImpact.source')}: {m.source}
-                  </p>
-                )}
               </li>
             ))}
           </ul>

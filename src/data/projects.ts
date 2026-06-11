@@ -58,7 +58,7 @@ export const projects: Project[] = [
     status: 'Active',
     location: 'Municipality-wide, North Corfu',
     description:
-      'Municipal circular-economy programme: in 2025 it diverted 2,682.699 t of residual waste from landfill — 15.08% of 17,787 t (municipal programme figure: Attica Green Expo 2026 / kerkyrasimera.gr). It runs 20 recycling streams across 210 collection points (up to 95% sorting purity — a separate process measure) and educates 2,000+ pupils; North Corfu hosted the Circular Municipalities Forum (Feb 2025). Figures are municipal programme data, not a ZOE impact measurement.',
+      'Municipal circular-economy programme: in 2025 it diverted 2,682.699 t of residual waste from landfill — 15.08% of 17,787 t. It runs 20 recycling streams across 210 collection points (up to 95% sorting purity) and educates 2,000+ pupils; North Corfu hosted the Circular Municipalities Forum (Feb 2025).',
     problem:
       'Seasonal tourism multiplies waste volumes; without dense collection and sorting infrastructure, recyclables are lost to landfill.',
     expectedImpact:
@@ -182,7 +182,7 @@ export const projects: Project[] = [
     status: 'Completed',
     location: 'Municipality-wide, North Corfu',
     description:
-      'Replacement of 4,866 municipal luminaires with energy-efficient LED, reducing energy use and CO₂ emissions across North Corfu (programme figure: Verde.tec 2026).',
+      'Replacement of 4,866 municipal luminaires with energy-efficient LED, reducing energy use and CO₂ emissions across North Corfu.',
     problem:
       'Older street lighting consumed excess energy and added avoidable CO₂ emissions to municipal operations.',
     expectedImpact:
