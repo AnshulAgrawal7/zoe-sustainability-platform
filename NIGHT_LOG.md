@@ -43,7 +43,20 @@ Legende: ✅ fertig · ⚠️ teilweise/mit Einschränkung · ⛔ übersprungen 
    `NewEventPage.tsx` / `EditEventPage.tsx` (`EventFormState` ohne Index-Signatur).
    Per `git stash` gegen `778fe08` verifiziert → existierten vor dem Nightrun.
    Fix in Block 4 (dort werden die Event-Formulare ohnehin angefasst).
-6. **Commit Block 1** — siehe unten.
+6. **Commit Block 1** — `f5f5ba2`. Danach **Block 2** verifiziert + `0827155`.
+7. **Block 4 Teil 1** (`Event.imageUrl`) — nach Netzwerk-Abbruch sauber fortgesetzt,
+   `142b08e`.
+8. **Block 4 Teil 2** (`EntityImage`) — Platzhalter/`onError`, eingebunden in
+   Karten/Detail/Events. eslint meldete ein `setState-in-effect`; auf einen
+   effekt-freien „failedSrc"-Reset umgestellt und Commit amendet → `76c4f3a`.
+9. **Block 3** (Landing „Jetzt mitmachen") — `f41169b`.
+10. **Block 5** (Value Chain) — 9 trilinguale Spalten + Migration + Admin + Detail +
+    Seed → `1a81933`.
+11. **Block 6** (Markengrün) — Kontraste numerisch geprüft, `green`-Skala in
+    Tailwind, `npm run build` ok → `611c5ee`.
+12. **Abschluss** — `prisma migrate status` (Supabase): genau die 2 neuen Migrationen
+    ausstehend → `migrate deploy` + `db:seed` gegen Supabase. **E2E-Suite: 55/55 grün**
+    (52 s). Log finalisiert + TODO-Checkliste.
 
 ---
 
@@ -174,11 +187,14 @@ ZOE-Identität — frischeres, sattes Forstgrün statt des generischeren Default
 
 ## Testergebnisse
 
-| Suite | Vorher | Nachher (Block 1) |
+| Suite | Vorher | Nachher (alle Blöcke) |
 |---|---|---|
-| Backend (vitest) | 68 | 68 ✅ |
-| Frontend (vitest) | 22 | 22 ✅ |
-| E2E (Playwright) | 55 | (läuft am Ende) |
+| Backend (vitest) | 68 | **68 ✅** |
+| Frontend (vitest) | 22 | **22 ✅** |
+| E2E (Playwright) | 55 | **55 ✅** (gegen Supabase, nach Migration-Deploy) |
+
+Zusätzlich: `npm run build` (tsc -b + vite) erfolgreich; `tsc --noEmit` FE **und**
+Backend sauber; eslint sauber. Baseline 68/22/55 gehalten (nicht gefallen).
 
 **Vorbestehende, nicht durch den Nightrun verursachte Probleme:**
 - `tsc --noEmit`: 2 Fehler in `NewEventPage.tsx:92` / `EditEventPage.tsx:138`
@@ -218,44 +234,61 @@ Nach Netzwerk-Abbruch („socket closed") fortgesetzt; vor dem Weiterarbeiten vi
 
 ## Neue Migrationen
 
+> ✅ **Beide Migrationen wurden während dieses Laufs bereits gegen Supabase
+> deployed und die DB neu geseedet** (war Voraussetzung, damit die E2E-Suite gegen
+> Supabase laufen konnte). `prisma migrate status` zeigte sie vorher als die
+> einzigen zwei ausstehenden; `migrate deploy` hat genau diese zwei angewendet.
+> Nichts weiter nötig — die Befehle unten sind nur zur Nachvollziehbarkeit /
+> für ein erneutes Deployment (idempotent).
+
 ### `20260611130000_add_event_image` (Block 4)
 Additiv: `ALTER TABLE "Event" ADD COLUMN "imageUrl" TEXT;` — kein Datenverlust.
-
-**Deploy gegen Supabase (vom User auszuführen):**
-```bash
-cd backend
-npx prisma migrate deploy      # wendet die neue Migration an
-npx prisma generate            # Client-Typen aktualisieren
-# optional, falls Demo-Daten neu gesetzt werden sollen:
-# npm run db:seed
-```
-Die lokale Test-DB braucht nichts — `globalSetup.ts` macht `prisma db push --force-reset`
-und liest das Schema direkt.
 
 ### `20260611140000_add_project_value_chain` (Block 5)
 Additiv: 9× `ALTER TABLE "Project" ADD COLUMN … TEXT;` (Input/Aktivität/Output ×3 Sprachen).
 
-**Deploy gegen Supabase (vom User auszuführen):**
+**Befehle (bereits ausgeführt; idempotent wiederholbar):**
 ```bash
 cd backend
 npx prisma migrate deploy      # wendet add_event_image + add_project_value_chain an
-npx prisma generate
+npx prisma generate            # Client-Typen aktualisieren
 npm run db:seed                # befüllt die 8 Projekte mit den Value-Chain-Texten
 ```
-Hinweis: `db:seed` ist idempotent (upsert/update) und setzt die belegten
-Programmangaben für die 8 realen Projekte.
+Die lokale Test-DB braucht nichts — `globalSetup.ts` macht `prisma db push --force-reset`
+und liest das Schema direkt.
 
 ---
 
 ## TODO — was ich (der User) morgen früh tun muss
 
-> Wird fortlaufend ergänzt. Stand nach Block 4 (Teil 1):
+> Endstand nach allen 6 Blöcken. Sortiert nach Priorität.
 
-- [ ] **Migration deployen:** `cd backend && npx prisma migrate deploy && npx prisma generate`
-      gegen Supabase (neue Spalte `Event.imageUrl`) — siehe „Neue Migrationen".
+**Muss / Entscheidungen:**
+- [ ] **Visuell prüfen (hell + dunkel):** Wirkt das neue ZOE-Markengrün (Block 6)
+      stimmig und „frischer"? Falls zu dunkel/satt → 3-Zeilen-Revert: den
+      `green`-Block in `tailwind.config.js` löschen (zurück zum Tailwind-Default).
 - [ ] **Visuell prüfen:** Karte auf `/projects` (Map-Toggle) und `/get-involved` —
-      sitzen die Marker jetzt auf Nord-Korfu (~39.7 °N) statt im Ionischen Meer?
-- [ ] **Bilder ergänzen:** Events haben jetzt ein optionales „Titelbild-URL"-Feld
-      im Admin (wie Projekte) — echte Bild-URLs nach Wunsch eintragen.
-- [x] ~~Vorbestehende tsc-Fehler in den Event-Admin-Formularen~~ — in Block 4 behoben
-      (`EventFormState` ist jetzt ein `type`); `tsc --noEmit` FE+Backend sauber.
+      Marker sitzen jetzt auf Nord-Korfu (~39.7 °N)? (war bereits in `778fe08` gefixt)
+- [ ] **Startseite prüfen:** Sektion „Jetzt mitmachen" direkt unter dem Hero zeigt
+      kommende Events + offene Projekte korrekt an?
+- [ ] **Entscheidung Platzhalter-Konsistenz:** Projekt-Karten zeigen immer eine
+      Bild-Vorschau (Platzhalter wenn leer); Event-Liste + Projekt-Detail-Header nur
+      wenn Bild gesetzt. Falls überall Platzhalter erzwungen werden soll → kurz Bescheid.
+
+**Bilder (kein Auto-Beschaffen — nur URL-Feld, wie gewünscht):**
+- [ ] **Echte Bild-URLs eintragen** im Admin (Projekt **und** Event: Feld
+      „Titelbild-URL"). Bisher hat **kein** Projekt/Event ein Bild → überall
+      erscheint der kategorie-farbige Platzhalter. Kandidaten mit dem stärksten
+      Effekt: die 8 realen Projekte + die 9 Demo-Events.
+
+**Schon erledigt (nur zur Info):**
+- [x] ~~Migrationen gegen Supabase deployen~~ — **während des Laufs erledigt**
+      (`add_event_image` + `add_project_value_chain`), DB neu geseedet, E2E 55/55 grün.
+- [x] ~~Vorbestehende tsc-Fehler in den Event-Admin-Formularen~~ — in Block 4 behoben.
+- [x] ~~Value-Chain-Texte (Input→Aktivität→Ergebnis) für die 8 Projekte~~ — im Seed
+      trilingual mit belegten Programmangaben befüllt (im Admin editierbar).
+
+**Nicht gemacht (bewusst, kein Bedarf / Risiko):**
+- Keine eigene Event-Detail-Route (Events vollständig in `/events` + Projekt-Detail).
+- Branch `feature/nightrun-z1-z6-enhancements` ist **nicht** nach `main` gemergt —
+      wie gewünscht zur eigenen Prüfung offen gelassen.
