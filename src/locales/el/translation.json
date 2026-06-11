@@ -505,6 +505,7 @@
     "filterStatus": "Κατάσταση",
     "allStatuses": "Όλα",
     "source": "Πηγή",
+    "sdgLinkAria": "SDG {{n}} — άνοιγμα σελίδας SDG",
     "eventsTitle": "Εκδηλώσεις για αυτό το έργο",
     "prototypeCount": "Πρωτότυπο — {{count}} έργα",
     "valueChain": {

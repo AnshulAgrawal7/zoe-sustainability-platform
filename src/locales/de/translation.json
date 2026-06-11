@@ -505,7 +505,8 @@
     "filterStatus": "Status",
     "allStatuses": "Alle",
     "source": "Quelle",
-    "eventsTitle": "Termine zu diesem Projekt",
+    "sdgLinkAria": "SDG {{n}} — zur SDG-Seite",
+    "eventsTitle": "Veranstaltungen zum Projekt",
     "prototypeCount": "Prototyp — {{count}} Projekte",
     "valueChain": {
       "heading": "So funktioniert es: Input → Aktivität → Ergebnis",

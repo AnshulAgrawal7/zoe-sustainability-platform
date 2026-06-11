@@ -505,6 +505,7 @@
     "filterStatus": "Status",
     "allStatuses": "All",
     "source": "Source",
+    "sdgLinkAria": "SDG {{n}} — open the SDG page",
     "eventsTitle": "Events for this project",
     "prototypeCount": "Prototype — {{count}} projects",
     "valueChain": {

@@ -219,86 +219,23 @@ export default function ProjectDetailPage() {
             {getDescription()}
           </p>
 
-          {/* SDG badges */}
+          {/* SDG badges — link to the internal SDG page (H3) */}
           {sdgs.length > 0 && (
             <div className="mb-6 flex flex-wrap gap-2">
               {sdgs.map((n) => (
-                <span
+                <Link
                   key={n}
-                  className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 dark:border-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+                  to={`/sdg-dashboard#sdg-${n}`}
+                  aria-label={t('projects.sdgLinkAria', { n })}
+                  className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-blue-800 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/50"
                 >
                   SDG {n}
-                </span>
+                </Link>
               ))}
             </div>
           )}
         </div>
       </div>
-
-      {/* Documented impact (Z1) — only real, sourced figures; else honest note */}
-      <section className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8">
-        <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
-          <BarChart3
-            size={18}
-            aria-hidden="true"
-            className="text-green-600 dark:text-green-400"
-          />
-          {t('projImpact.heading')}
-        </h2>
-        {metrics.length > 0 ? (
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {metrics.map((m) => (
-              <li
-                key={m.id}
-                className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/40"
-              >
-                <p className="text-2xl font-bold text-green-700 dark:text-green-400">
-                  {m.value}
-                  {m.unit && (
-                    <span className="ml-1 text-sm font-normal text-gray-500 dark:text-gray-400">
-                      {m.unit}
-                    </span>
-                  )}
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  {metricLabel(m)}
-                </p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            {t('projImpact.notMeasured')}
-          </p>
-        )}
-      </section>
-
-      {/* Value chain — Input -> Activity -> Result (Block 5). Only when filled. */}
-      {valueChainSteps.length > 0 && (
-        <section className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8">
-          <h2 className="mb-5 text-lg font-bold text-gray-900 dark:text-white">
-            {t('projects.valueChain.heading')}
-          </h2>
-          <ol className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {valueChainSteps.map(({ key, Icon, label, text }) => (
-              <li
-                key={key}
-                className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/40"
-              >
-                <div className="mb-2 flex items-center gap-2 text-green-700 dark:text-green-400">
-                  <Icon size={18} aria-hidden="true" />
-                  <span className="text-xs font-semibold uppercase tracking-wide">
-                    {label}
-                  </span>
-                </div>
-                <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-                  {text}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </section>
-      )}
 
       {/* Events linked to this project */}
       {events.length > 0 && (
@@ -384,6 +321,74 @@ export default function ProjectDetailPage() {
               );
             })}
           </ul>
+        </section>
+      )}
+
+      {/* Documented impact (Z1) — shown ONLY for COMPLETED projects (H2).
+          Active/ongoing projects don't render this block. */}
+      {project.status === 'COMPLETED' && (
+        <section className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8">
+          <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+            <BarChart3
+              size={18}
+              aria-hidden="true"
+              className="text-green-600 dark:text-green-400"
+            />
+            {t('projImpact.heading')}
+          </h2>
+          {metrics.length > 0 ? (
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {metrics.map((m) => (
+                <li
+                  key={m.id}
+                  className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/40"
+                >
+                  <p className="text-2xl font-bold text-green-700 dark:text-green-400">
+                    {m.value}
+                    {m.unit && (
+                      <span className="ml-1 text-sm font-normal text-gray-500 dark:text-gray-400">
+                        {m.unit}
+                      </span>
+                    )}
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    {metricLabel(m)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {t('projImpact.notMeasured')}
+            </p>
+          )}
+        </section>
+      )}
+
+      {/* Value chain — Input -> Activity -> Result (Block 5). Only when filled. */}
+      {valueChainSteps.length > 0 && (
+        <section className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8">
+          <h2 className="mb-5 text-lg font-bold text-gray-900 dark:text-white">
+            {t('projects.valueChain.heading')}
+          </h2>
+          <ol className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {valueChainSteps.map(({ key, Icon, label, text }) => (
+              <li
+                key={key}
+                className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/40"
+              >
+                <div className="mb-2 flex items-center gap-2 text-green-700 dark:text-green-400">
+                  <Icon size={18} aria-hidden="true" />
+                  <span className="text-xs font-semibold uppercase tracking-wide">
+                    {label}
+                  </span>
+                </div>
+                <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                  {text}
+                </p>
+              </li>
+            ))}
+          </ol>
         </section>
       )}
 
