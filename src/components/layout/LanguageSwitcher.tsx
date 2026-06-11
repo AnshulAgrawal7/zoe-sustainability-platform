@@ -3,9 +3,10 @@ import { useLanguageStore, type Language } from '../../stores/languageStore';
 
 type FlagCode = 'gb' | 'gr' | 'de';
 
+// Order left→right: Greek, English, German (A3).
 const LANGS: { code: Language; label: string; flag: FlagCode }[] = [
-  { code: 'en', label: 'English', flag: 'gb' },
   { code: 'el', label: 'Ελληνικά', flag: 'gr' },
+  { code: 'en', label: 'English', flag: 'gb' },
   { code: 'de', label: 'Deutsch', flag: 'de' },
 ];
 
@@ -57,8 +58,13 @@ export default function LanguageSwitcher({
   const { t } = useTranslation();
   const { language, setLanguage } = useLanguageStore();
 
-  const flagBox = size === 'md' ? 'h-4 w-[24px]' : 'h-[13px] w-[20px]';
-  const pad = size === 'md' ? 'px-3 py-2 text-sm' : 'px-2 py-1 text-xs';
+  // Flag-only (A3): no visible language code. `md` (mobile menu) keeps a ≥44px
+  // touch target; `sm` (header) is compact.
+  const flagBox = size === 'md' ? 'h-5 w-[30px]' : 'h-[15px] w-[22px]';
+  const pad =
+    size === 'md'
+      ? 'min-h-[44px] min-w-[44px] justify-center px-3 py-2'
+      : 'px-2 py-1.5';
 
   return (
     <div
@@ -76,10 +82,10 @@ export default function LanguageSwitcher({
             aria-pressed={active}
             aria-label={l.label}
             title={l.label}
-            className={`inline-flex items-center gap-1.5 rounded-full font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-gray-900 ${pad} ${
+            className={`inline-flex items-center rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-gray-900 ${pad} ${
               active
-                ? 'bg-white text-green-700 shadow-sm dark:bg-gray-700 dark:text-green-400'
-                : 'text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200'
+                ? 'bg-white shadow-sm dark:bg-gray-700'
+                : 'opacity-60 hover:opacity-100'
             }`}
           >
             <span
@@ -89,8 +95,6 @@ export default function LanguageSwitcher({
             >
               <Flag code={l.flag} />
             </span>
-            {/* Text code (EN/EL/DE) — clear for sighted users; SR uses aria-label */}
-            <span aria-hidden="true">{l.code.toUpperCase()}</span>
           </button>
         );
       })}
