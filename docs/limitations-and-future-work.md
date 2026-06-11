@@ -84,6 +84,12 @@ Legende: ✅ gebaut · 🔨 teilweise/konzipiert · ❌ nicht umgesetzt
 - **Stand:** läuft lokal gegen **Supabase (Postgres, EU/Frankfurt)**; DB austauschbar (nur Connection-String). Frontend/Backend-Deploy (Vercel/Render) als Blueprint vorbereitet (`deploy.md`).
 - **Für ein öffentliches Deployment:** Impressum/Datenschutz **ausgefüllt** + AVVs + Prototyp-Kennzeichnung. **Zwischenoption** für die Präsentation: **passwortgeschütztes** Demo-Deploy (nicht „an die Allgemeinheit gerichtet").
 
+## 9. Domänenmodell: Projekt-Beteiligung (Entscheidung A)
+- **Stand:** Mit Entscheidung A sind nur noch **Events „joinbar"** (Punkte via `EventRegistration`); **Projekte sind „nur ansehen"** — der Projekt-„Join"-CTA und der zugehörige Punktepfad wurden aus dem UI entfernt (Karten-CTA: „Projekt ansehen", `projects.viewProject`).
+- **Bewusst NICHT migriert:** das **`Participation`-Modell**, der Endpoint `POST /api/projects/:id/participate` und die historischen Beteiligungs-Daten **bleiben erhalten** (keine verlustbehaftete Migration).
+- **Future Work:** `Participation` entweder per Cleanup-Migration **entfernen** oder als leichtgewichtiges **„Projekt folgen"** (ohne Punkte) **umfunktionieren** — inkl. UI („Folgen"-Button) und Aufräumen der dann verwaisten `projects.participate/withdraw/participating/joinSuccess/withdrawSuccess`-i18n-Keys. Schema-Diff + Migration vor Umsetzung vorlegen.
+- **Struktur-Ebene:** das Umbrella-Projekt `proj-zoe-programme` (`listed = false`) ist eine reine Struktur-Heimat für übergreifende Events; es zählt nicht in der öffentlichen Projektliste/-zahl, bleibt aber per Direktlink erreichbar (siehe `docs/architecture.md`, ADR „Decision A").
+
 ---
 
 ## Bezug zur DSR

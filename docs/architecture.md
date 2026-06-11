@@ -123,14 +123,16 @@ School
 
 Project
   id, titleEn, titleEl, titleDe, descriptionEn, descriptionEl, descriptionDe
-  sdgIds (JSON string), category, status, rewardPoints, location, maxParticipants,
-  lat?, lng?  (optional WGS84 map coordinates, additive)
+  sdgIds (JSON string), category, status, listed (default true), rewardPoints,
+  location, maxParticipants, lat?, lng?  (optional WGS84 map coordinates, additive)
   → participations[], createdBy(User), posts[], events[]
+  // listed=false → structural/umbrella project: hidden from public lists/counts,
+  //   still reachable by direct link (Decision A)
 
-Event   // concrete dated appointment; optional parent project (1 project → N events)
+Event   // concrete dated appointment; REQUIRED parent project (1 project → N events)
   id, titleEn/El/De, descriptionEn/El/De, date (DateTime), location?,
-  category (project category), rewardPoints, capacity?, projectId?
-  → project(Project?)   // real FK (nullable, ON DELETE SET NULL)
+  category (project category), rewardPoints, capacity?, projectId
+  → project(Project)   // real FK (required, ON DELETE RESTRICT) — Decision A
 
 Post   // news/blog; auto-created on project OPEN/COMPLETED or written by admin
   id, type (PROJECT_NEW|PROJECT_COMPLETED|ANNOUNCEMENT)
@@ -181,9 +183,11 @@ RefreshToken
 
 ### ADR — Events as an entity with a soft RSVP link
 
-- An **`Event`** is a concrete dated appointment that optionally belongs to a
-  **`Project`** (`projectId`, real nullable FK) so one initiative groups many
-  dated activities; standalone events keep `projectId = null`.
+- An **`Event`** is a concrete dated appointment that **belongs to a `Project`**
+  (`projectId`, required FK, `ON DELETE RESTRICT`) so one initiative groups many
+  dated activities (Decision A; was nullable before). Cross-cutting events with
+  no single thematic home attach to the structural **ZOE umbrella project**
+  (`proj-zoe-programme`, `listed = false`).
 - **`EventRegistration.eventId` stays a soft string reference (no FK).** The RSVP
   table predates the `Event` model; adding a hard FK would have rejected
   historical rows on migration. Existence is validated at the application layer
@@ -193,6 +197,27 @@ RefreshToken
   event's `rewardPoints`, mirrors project participation incl. badges) and the
   existing open `POST /events/:eventId/register` (guests: name+email+consent, no
   points). `category` reuses the single `PROJECT_CATEGORIES` source.
+
+### ADR — Decision A: event↔project required, `Project.listed`, join scope
+
+- **Events require a project** (`Event.projectId` `String?` → `String`, FK
+  `ON DELETE RESTRICT`). The migration creates a `proj-zoe-programme` umbrella
+  project (conditionally, only where existing null-project events need a home)
+  and rehomes them before `SET NOT NULL`, so it is correct on both fresh and
+  production DBs.
+- **`Project.listed` (default `true`)** = public visibility. The umbrella project
+  is `listed = false`: **hidden from the public list, count, teasers and filters**
+  (`projectController` list/count filter `listed: true`) but **reachable by direct
+  link** (`GET /api/projects/:id` is unfiltered), so an event detail can link to
+  it. The landing "projects" stat counts `listed = true` projects **dynamically**.
+- **Join scope:** only **events** are joinable (`EventRegistration`). **Projects
+  are view-only** — the project Join/participate CTA and its points path were
+  removed from the UI; card CTA is "View project". A "Follow projects" feature is
+  **deferred** (Future Work).
+- **`Participation` stays** (model + `/projects/:id/participate` endpoint +
+  historical rows) to avoid a lossy migration. Removing/repurposing it as a
+  lightweight "follow" is **Future Work** — see
+  `docs/limitations-and-future-work.md`.
 
 ### ADR — Interactive initiative map
 
