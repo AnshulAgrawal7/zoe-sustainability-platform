@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { projects } from '../data/projects';
 import { LANDING_FACTS } from '../data/landingFacts';
+import logoGemeinde from '../assets/logo-gemeinde-korfu.png';
 import { formatNumber } from '../utils/format';
 import StatusBadge from '../components/ui/StatusBadge';
 import FeedCard from '../components/news/FeedCard';
@@ -207,9 +208,15 @@ export default function LandingPage() {
       <section className="bg-gradient-to-br from-green-700 via-green-600 to-teal-600 text-white">
         <Container className="py-12 sm:py-16">
           <div className="max-w-3xl">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium">
-              <Leaf size={16} aria-hidden="true" />
-              <span>{t('landing.hero.badge')}</span>
+            {/* Municipality crest (transparent PNG) on a white pill for contrast
+                against the green hero. The alt text carries the municipality name
+                that the crest stands for. */}
+            <div className="mb-4 inline-flex items-center rounded-full bg-white/95 px-4 py-2 shadow-sm">
+              <img
+                src={logoGemeinde}
+                alt={t('landing.hero.badge')}
+                className="h-7 w-auto sm:h-8"
+              />
             </div>
             <h1 className="mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl">
               {t('landing.hero.title')}
