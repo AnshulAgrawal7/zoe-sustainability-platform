@@ -904,7 +904,12 @@
     "programmeProgress": "Programme progress (prototype)",
     "contributingProjects": "Contributing projects:",
     "aboutTitle": "About this dashboard",
-    "aboutText": "SDG alignment is self-reported by project coordinators and reviewed by the ZOE team. Progress percentages represent the municipality's own assessment against locally-defined targets. This dashboard is a prototype — a real system would pull live data from verified project reports."
+    "aboutText": "SDG alignment is self-reported by project coordinators and reviewed by the ZOE team. Progress percentages represent the municipality's own assessment against locally-defined targets. This dashboard is a prototype — a real system would pull live data from verified project reports.",
+    "statContributions": "SDG contributions",
+    "unitContributions": "mappings",
+    "contributing": "{{count}} contributing projects",
+    "ofWhichCompleted": "{{count}} completed",
+    "mappingDisclaimer": "This shows how local actions are assigned to the SDGs (per municipal communication). It is a countable mapping, not a measured degree of goal achievement."
   },
   "transparency": {
     "title": "Impact & Transparency Data",

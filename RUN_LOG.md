@@ -11,7 +11,7 @@ WCAG, keine erfundenen Daten, Persistenz in der DB, Commit nach jedem Block.
 | A1 | Z3 öffentliches, moderiertes Ideen-Board | ✅ | `/ideas` + `GET /api/ideas/public` (nur ACCEPTED, keine PII) + Seed + Flow-Text |
 | A2 | Z3 Forum (Kommentare + Likes, moderiert) | ✅ | Comment/CommentLike (additiv), Detailseite mit Kommentaren+Likes, Admin-Moderation |
 | B | Z5 Bildungsinhalte (LearningResource) | ✅ | Entität + /learn (+Detail) + Admin-CRUD (DeepL) + Projekt-Verknüpfung + 4 reale Seeds |
-| C | Z2 SDG-Dashboard ehrlich machen | ⏳ | offen |
+| C | Z2 SDG-Dashboard ehrlich machen | ✅ | Erfundene %-Balken entfernt; zählbare Fakten (beitragende/abgeschlossene Projekte) + Disclaimer |
 | D | Z1 belegte Wirkungszahlen | ⏳ | offen |
 | E | Z4 Missionen (SDT-konform) | ⏳ | offen |
 | F | Z6 hartkodierte Strings → i18n | ⏳ | offen |
@@ -122,6 +122,20 @@ proj-circular. Beschreibend, **keine erfundenen Statistiken**.
 **Tests:** Backend +6 (`learn.test.ts`: Public-Liste mit Projekt, Filter, Detail/404,
 Admin-CRUD 401/403, Create/Update/Delete, invalide Category/Project) → **89**.
 E2E +1 (`learn.spec.ts`: /learn lädt, Detail zeigt Inhalt + Projektlink) → **58**.
+
+### Block C — SDG-Dashboard ehrlich machen (Z2) ✅
+Angemaßte „% erfüllt" entfernt, durch zählbare Zuordnung ersetzt.
+- **Entfernt:** die ProgressBar + „{progress}%" je SDG **und** die erfundene
+  `sdgProgressData` (illustrative Prozente) aus `src/data/sdgs.ts` (samt `SDGProgress`-Import).
+- **Stattdessen je SDG:** „X beitragende Projekte · Y abgeschlossen" (gezählt aus den
+  realen Projektdaten, Status `Completed`).
+- **Übersichts-Stat** „Ø Fortschritt %" → **„SDG-Beiträge"** = zählbare Zahl der
+  Aktion→SDG-Zuordnungen (Summe der SDGs über alle Projekte).
+- **Disclaimer** über den Detailkarten: „…zählbare Zuordnung, kein gemessener
+  Zielerreichungsgrad." UN-Icons/Links/Attribution unverändert.
+- i18n `sdgDashboard.{statContributions,unitContributions,contributing,ofWhichCompleted,mappingDisclaimer}` (EN/DE/EL).
+- Keine Migration, kein Backend. tsc/eslint sauber, FE 22 grün; keine Tests prüften die
+  alten Balken (verifiziert).
 
 ## Neue Migrationen
 _(A1: keine.)_

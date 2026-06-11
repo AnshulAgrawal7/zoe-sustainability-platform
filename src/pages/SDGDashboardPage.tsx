@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Globe, ArrowRight, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { sdgs, sdgProgressData, getSdgByNumber } from '../data/sdgs';
+import { sdgs, getSdgByNumber } from '../data/sdgs';
 import { projects } from '../data/projects';
-import ProgressBar from '../components/ui/ProgressBar';
 import type { SDGNumber } from '../types';
 
 function getProjectsForSdg(sdgNumber: SDGNumber) {
@@ -37,12 +36,11 @@ export default function SDGDashboardPage() {
       unit: t('sdgDashboard.unitProjects'),
     },
     {
-      label: t('sdgDashboard.statAvgProgress'),
-      value: Math.round(
-        sdgProgressData.reduce((a, b) => a + b.progressPercent, 0) /
-          sdgProgressData.length
-      ),
-      unit: t('sdgDashboard.unitPercentPrototype'),
+      // Honest, countable figure: how many action -> SDG mappings exist (not a
+      // fabricated "% achieved"). One project may contribute to several SDGs.
+      label: t('sdgDashboard.statContributions'),
+      value: projects.reduce((sum, p) => sum + p.sdgs.length, 0),
+      unit: t('sdgDashboard.unitContributions'),
     },
   ];
 
@@ -153,13 +151,17 @@ export default function SDGDashboardPage() {
 
       {/* Addressed goals — detail cards */}
       <section aria-label={t('sdgGrid.addressed')}>
+        <p className="mb-4 max-w-3xl text-sm text-gray-600 dark:text-gray-300">
+          {t('sdgDashboard.mappingDisclaimer')}
+        </p>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {addressed.map((number) => {
             const sdg = getSdgByNumber(number);
             if (!sdg) return null;
-            const progressEntry = sdgProgressData.find((d) => d.sdg === number);
             const linkedProjects = getProjectsForSdg(number);
-            const progress = progressEntry?.progressPercent ?? 0;
+            const completedCount = linkedProjects.filter(
+              (p) => p.status === 'Completed'
+            ).length;
 
             return (
               <div
@@ -194,18 +196,20 @@ export default function SDGDashboardPage() {
                     })}
                   </p>
 
-                  {/* Progress */}
-                  <div className="mb-4">
-                    <div className="mb-1 flex justify-between text-xs text-gray-500 dark:text-gray-400">
-                      <span>{t('sdgDashboard.programmeProgress')}</span>
-                      <span>{progress}%</span>
-                    </div>
-                    <ProgressBar
-                      value={progress}
-                      color="bg-green-500"
-                      showLabel={false}
-                    />
-                  </div>
+                  {/* Countable facts (no fabricated % of achievement) */}
+                  <p className="mb-4 text-xs font-medium text-gray-600 dark:text-gray-300">
+                    {t('sdgDashboard.contributing', {
+                      count: linkedProjects.length,
+                    })}
+                    {completedCount > 0 && (
+                      <span className="text-gray-400 dark:text-gray-500">
+                        {' · '}
+                        {t('sdgDashboard.ofWhichCompleted', {
+                          count: completedCount,
+                        })}
+                      </span>
+                    )}
+                  </p>
 
                   {/* Linked projects */}
                   {linkedProjects.length > 0 && (

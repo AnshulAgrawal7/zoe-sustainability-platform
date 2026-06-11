@@ -3,7 +3,7 @@
 // Titles and the "how ZOE contributes" texts are translated (see locales: sdgCatalog.*);
 // the mapping of local actions to SDGs is illustrative.
 
-import type { SDG, SDGNumber, SDGProgress } from '../types';
+import type { SDG, SDGNumber } from '../types';
 
 const SDG_COLORS: Record<SDGNumber, string> = {
   1: '#E5243B',
@@ -45,16 +45,6 @@ export const sdgs: SDG[] = (
 export const getSdgByNumber = (num: number): SDG | undefined =>
   sdgs.find((s) => s.number === num);
 
-// Programme-level progress for the official ZOE SDGs (the 8 above). `projectCount`
-// reflects the seeded ZOE projects mapped to each goal; `progressPercent` is an
-// ILLUSTRATIVE prototype indicator, not a measured value (impact = Phase 5).
-export const sdgProgressData: SDGProgress[] = [
-  { sdg: 4, projectCount: 2, progressPercent: 55 },
-  { sdg: 6, projectCount: 2, progressPercent: 50 },
-  { sdg: 11, projectCount: 3, progressPercent: 45 },
-  { sdg: 12, projectCount: 2, progressPercent: 60 },
-  { sdg: 13, projectCount: 3, progressPercent: 50 },
-  { sdg: 14, projectCount: 2, progressPercent: 45 },
-  { sdg: 15, projectCount: 3, progressPercent: 55 },
-  { sdg: 17, projectCount: 1, progressPercent: 50 },
-];
+// NOTE: a fabricated `sdgProgressData` (illustrative "% achieved" per SDG) was
+// removed in Block C — the SDG dashboard now shows only countable facts
+// (contributing/completed projects), never a measured degree of achievement.

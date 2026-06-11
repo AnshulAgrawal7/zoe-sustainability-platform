@@ -904,7 +904,12 @@
     "programmeProgress": "Programm-Fortschritt (Prototyp)",
     "contributingProjects": "Beitragende Projekte:",
     "aboutTitle": "Über dieses Dashboard",
-    "aboutText": "Die SDG-Zuordnung wird von den Projektkoordinator:innen selbst angegeben und vom ZOE-Team geprüft. Die Fortschritts-Prozentsätze sind die Einschätzung der Gemeinde gegenüber lokal definierten Zielen. Dieses Dashboard ist ein Prototyp — ein echtes System würde Live-Daten aus verifizierten Projektberichten beziehen."
+    "aboutText": "Die SDG-Zuordnung wird von den Projektkoordinator:innen selbst angegeben und vom ZOE-Team geprüft. Die Fortschritts-Prozentsätze sind die Einschätzung der Gemeinde gegenüber lokal definierten Zielen. Dieses Dashboard ist ein Prototyp — ein echtes System würde Live-Daten aus verifizierten Projektberichten beziehen.",
+    "statContributions": "SDG-Beiträge",
+    "unitContributions": "Zuordnungen",
+    "contributing": "{{count}} beitragende Projekte",
+    "ofWhichCompleted": "{{count}} abgeschlossen",
+    "mappingDisclaimer": "Hier wird gezeigt, wie lokale Aktionen den SDGs zugeordnet sind (laut Gemeinde-Kommunikation). Es ist eine zählbare Zuordnung, kein gemessener Zielerreichungsgrad."
   },
   "transparency": {
     "title": "Wirkungs- & Transparenzdaten",
