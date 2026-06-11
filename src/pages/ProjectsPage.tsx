@@ -251,7 +251,7 @@ export default function ProjectsPage() {
                     src={project.imageUrl}
                     alt={getTitle(project)}
                     category={project.category}
-                    className="h-40 w-full"
+                    className="h-32 w-full"
                   />
                   {/* Color bar by category */}
                   <div

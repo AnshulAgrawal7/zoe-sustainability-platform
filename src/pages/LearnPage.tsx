@@ -124,7 +124,7 @@ export default function LearnPage() {
                   src={r.imageUrl}
                   alt={title(r)}
                   category={r.category}
-                  className="h-40 w-full"
+                  className="h-32 w-full"
                 />
                 <div className="flex flex-1 flex-col p-5">
                   <span className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">

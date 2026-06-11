@@ -265,7 +265,7 @@ export default function LandingPage() {
                     src={item.imageUrl}
                     alt={item.title}
                     category={item.category}
-                    className="h-40 w-full"
+                    className="h-32 w-full"
                   />
                   <div className="flex flex-1 flex-col p-5">
                     <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -474,7 +474,7 @@ export default function LandingPage() {
                     src={r.imageUrl}
                     alt={pickLang(r.titleEn, r.titleEl, r.titleDe)}
                     category={r.category}
-                    className="h-36 w-full"
+                    className="h-32 w-full"
                   />
                   <div className="flex flex-1 flex-col p-5">
                     <span className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
