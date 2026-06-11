@@ -273,7 +273,7 @@ async function main() {
       'Monthly coastal cleanup with ARCHELON volunteers. Equipment and a citizen-science litter sheet provided; communal breakfast afterwards. All ages welcome.',
       'Μηνιαίος παράκτιος καθαρισμός με εθελοντές του ΑΡΧΕΛΩΝ. Παρέχονται εξοπλισμός και φύλλο καταγραφής απορριμμάτων· κοινό πρωινό μετά. Για όλες τις ηλικίες.',
       'Monatliche Küstenreinigung mit ARCHELON-Freiwilligen. Ausrüstung und Citizen-Science-Bogen werden gestellt; gemeinsames Frühstück danach. Für alle Altersgruppen.',
-      '2026-07-12T09:00:00.000Z', 'Kassiopi Beach, North Corfu', 'ENVIRONMENT', 'proj-marine', 25, 80),
+      '2026-07-16T09:00:00.000Z', 'Kassiopi Beach, North Corfu', 'ENVIRONMENT', 'proj-marine', 25, 80),
     makeEvent('evt-cleanup-jul25',
       'Second Coastline Cleanup', 'Δεύτερος Παράκτιος Καθαρισμός', 'Zweite Küstenreinigung',
       'Follow-up cleanup along the Almyros stretch, focusing on micro-litter and ghost nets. Boats provided by local fishers.',
