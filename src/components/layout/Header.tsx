@@ -26,7 +26,6 @@ export default function Header() {
         { to: '/projects', label: t('nav.projects') },
         { to: '/events', label: t('nav.events') },
         { to: '/learn', label: t('nav.learn') },
-        { to: '/news', label: t('nav.news') },
       ],
     },
     {
@@ -47,7 +46,10 @@ export default function Header() {
     },
   ];
 
-  const soloLinks = [{ to: '/about', label: t('nav.about') }];
+  const soloLinks = [
+    { to: '/news', label: t('nav.news') },
+    { to: '/about', label: t('nav.about') },
+  ];
 
   async function handleLogout() {
     await logout();
