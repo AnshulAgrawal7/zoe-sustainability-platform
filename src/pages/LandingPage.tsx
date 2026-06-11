@@ -75,7 +75,6 @@ export default function LandingPage() {
   const [openProjects, setOpenProjects] = useState<ApiProject[]>([]);
   const [communityIdeas, setCommunityIdeas] = useState<PublicIdea[]>([]);
   const [learnResources, setLearnResources] = useState<LearningResource[]>([]);
-  const [projectCount, setProjectCount] = useState<number | null>(null);
 
   useEffect(() => {
     // "Get involved now": upcoming events (date asc from the API) take priority,
@@ -86,10 +85,6 @@ export default function LandingPage() {
     getProjects({ status: 'OPEN', limit: 4 })
       .then((data) => setOpenProjects(data.projects))
       .catch(() => setOpenProjects([]));
-    // Dynamic stat: total LISTED projects (all statuses; umbrella excluded).
-    getProjects({ status: 'ALL', limit: 1 })
-      .then((data) => setProjectCount(data.total))
-      .catch(() => setProjectCount(null));
     // New sections: approved community ideas (Z3) + learning resources (Z5).
     getPublicIdeas()
       .then((ideas) => setCommunityIdeas(ideas.slice(0, 3)))
@@ -114,26 +109,14 @@ export default function LandingPage() {
     };
   }, [lang]);
 
-  // Documented programme facts (sourced) for the stats strip. Numbers are raw in
+  // Illustrative demo figures for the stats banner (B2). Numbers are raw in
   // data/landingFacts.ts and formatted to the active locale here via Intl, so the
-  // thousands/decimal separators follow the language (EN "2,682.699" vs DE/EL
-  // "2.682,699") instead of being hand-formatted per translation.
-  const facts = LANDING_FACTS.map((f) => {
-    // The "projects" number is dynamic \u2014 the count of listed projects (falls back
-    // to the documented constant until it loads). "6 action areas" stays in the
-    // curated label string. Other figures are documented constants.
-    const raw =
-      f.key === 'scope' && projectCount !== null ? projectCount : f.value;
-    return {
-      key: f.key,
-      value:
-        formatNumber(raw, i18n.language, {
-          maximumFractionDigits: f.fractionDigits ?? 0,
-        }) + (f.unit ? `\u00A0${f.unit}` : ''),
-      label: t(f.labelKey),
-      source: t(f.sourceKey),
-    };
-  });
+  // thousands separator follows the language (DE/EL "2.389" vs EN "2,389").
+  const facts = LANDING_FACTS.map((f) => ({
+    key: f.key,
+    value: formatNumber(f.value, i18n.language, { maximumFractionDigits: 0 }),
+    label: t(f.labelKey),
+  }));
 
   function pickLang(en: string, el: string, de: string): string {
     if (lang === 'el') return el;
@@ -384,30 +367,29 @@ export default function LandingPage() {
         </section>
       )}
 
-      {/* Impact stats — documented, sourced programme figures only */}
+      {/* Headline figures — green banner (B2). Slimmer than the hero. The three
+          values are DELIBERATELY FICTIONAL demo data (see microcopy). */}
       <section
-        className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+        className="bg-gradient-to-br from-green-700 via-green-600 to-teal-600 text-white"
         aria-label={t('landing.statsAria')}
       >
-        <Container className="py-6">
+        <Container maxW="5xl" className="py-8">
+          <h2 className="mb-6 text-center text-2xl font-bold text-white">
+            {t('landing.stats.heading')}
+          </h2>
           <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3">
             {facts.map((f) => (
               <div key={f.key}>
-                <p className="text-2xl font-bold text-green-700 dark:text-green-400 sm:text-3xl">
+                <p className="text-3xl font-bold text-white sm:text-4xl">
                   {f.value}
                 </p>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                <p className="mt-1 text-sm leading-relaxed text-green-100">
                   {f.label}
                 </p>
-                {f.source && (
-                  <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
-                    {f.source}
-                  </p>
-                )}
               </div>
             ))}
           </div>
-          <p className="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
+          <p className="mt-6 text-center text-xs text-green-100/80">
             {t('landing.stats.disclaimer')}
           </p>
         </Container>

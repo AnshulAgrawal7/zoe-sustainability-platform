@@ -753,7 +753,8 @@
       "getInvolved": "Mitmachen"
     },
     "stats": {
-      "disclaimer": "Belegte Angaben aus dem Gemeindeprogramm, mit Quelle."
+      "heading": "ZOE in Zahlen",
+      "disclaimer": "Fiktive Demonstrationsdaten — dieser Prototyp nutzt erfundene Werte."
     },
     "pillars": {
       "heading": "Warum die ZOE-Plattform?",
@@ -803,17 +804,14 @@
     },
     "statsAria": "Wichtige Kennzahlen",
     "facts": {
-      "led": {
-        "label": "LED-Leuchten umgerüstet",
-        "source": "Verde.tec 2026"
+      "volunteers": {
+        "label": "Freiwillige aktiv in Nord-Korfu"
       },
-      "waste": {
-        "label": "Restmüll ausgeschleust (15,08%)",
-        "source": "Attica Green Expo 2026"
+      "trees": {
+        "label": "heimische Bäume & Olivensetzlinge gepflanzt"
       },
-      "scope": {
-        "label": "Projekte in 6 Handlungsachsen",
-        "source": ""
+      "turtles": {
+        "label": "Schildkröten-Schlüpflinge sicher ins Meer begleitet"
       }
     },
     "community": {

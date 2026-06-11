@@ -753,7 +753,8 @@
       "getInvolved": "Get Involved"
     },
     "stats": {
-      "disclaimer": "Documented municipal programme figures, with sources."
+      "heading": "ZOE by the numbers",
+      "disclaimer": "Fictional demonstration data — this prototype uses invented values."
     },
     "pillars": {
       "heading": "Why the ZOE Platform?",
@@ -803,17 +804,14 @@
     },
     "statsAria": "Key statistics",
     "facts": {
-      "led": {
-        "label": "LED luminaires upgraded",
-        "source": "Verde.tec 2026"
+      "volunteers": {
+        "label": "volunteers already active across North Corfu"
       },
-      "waste": {
-        "label": "residual waste diverted (15.08%)",
-        "source": "Attica Green Expo 2026"
+      "trees": {
+        "label": "native trees & olive saplings planted"
       },
-      "scope": {
-        "label": "projects across 6 action areas",
-        "source": ""
+      "turtles": {
+        "label": "turtle hatchlings safely guided to the sea"
       }
     },
     "community": {
