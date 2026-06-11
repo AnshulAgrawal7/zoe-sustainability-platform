@@ -304,6 +304,32 @@ export interface PublicIdea {
   createdAt: string;
 }
 
+// Learning resources (Z5) — locally-grounded educational content.
+export interface LearningProjectRef {
+  id: string;
+  titleEn: string;
+  titleEl: string;
+  titleDe: string;
+  category: ApiProjectCategory;
+}
+
+export interface LearningResource {
+  id: string;
+  titleEn: string;
+  titleEl: string;
+  titleDe: string;
+  bodyEn: string;
+  bodyEl: string;
+  bodyDe: string;
+  category: ApiProjectCategory;
+  sdgIds: string; // JSON array string
+  imageUrl: string | null;
+  sourceNote: string | null;
+  projectId: string | null;
+  project?: LearningProjectRef | null;
+  createdAt: string;
+}
+
 export type CommentStatus = 'VISIBLE' | 'HIDDEN';
 
 // Public comment on an approved idea — author display name only, no PII.

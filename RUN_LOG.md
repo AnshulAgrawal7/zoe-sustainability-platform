@@ -10,7 +10,7 @@ WCAG, keine erfundenen Daten, Persistenz in der DB, Commit nach jedem Block.
 |---|---|---|---|
 | A1 | Z3 öffentliches, moderiertes Ideen-Board | ✅ | `/ideas` + `GET /api/ideas/public` (nur ACCEPTED, keine PII) + Seed + Flow-Text |
 | A2 | Z3 Forum (Kommentare + Likes, moderiert) | ✅ | Comment/CommentLike (additiv), Detailseite mit Kommentaren+Likes, Admin-Moderation |
-| B | Z5 Bildungsinhalte (LearningResource) | ⏳ | offen |
+| B | Z5 Bildungsinhalte (LearningResource) | ✅ | Entität + /learn (+Detail) + Admin-CRUD (DeepL) + Projekt-Verknüpfung + 4 reale Seeds |
 | C | Z2 SDG-Dashboard ehrlich machen | ⏳ | offen |
 | D | Z1 belegte Wirkungszahlen | ⏳ | offen |
 | E | Z4 Missionen (SDT-konform) | ⏳ | offen |
@@ -89,6 +89,40 @@ E-Mail/Id. Ideen-Einreicher bleiben anonym (A1).
 PII, Like-Toggle, Admin-Hide entfernt aus Public, invalider Status) → **83**.
 E2E +1 (eingeloggt kommentieren → erscheint; Gast sieht kein Formular) → **57**.
 
+### Block B — Bildungsinhalte / LearningResource (Z5) ✅
+Eigenständige, lokal verankerte Bildungsinhalte; Infrastruktur + reale Inhalte.
+
+**Schema (additiv):** `LearningResource` (trilingual title+body, category, sdgIds JSON,
+imageUrl?, sourceNote?, projectId? FK → Project, timestamps). Migration
+`20260611160000_add_learning_resources` (CREATE TABLE/INDEX/FK; FK ON DELETE SET NULL).
+
+**Backend:** `learningController` (public list/detail, admin create/update/delete);
+`routes/learn.ts` (öffentlich `GET /api/learn`, `GET /api/learn/:id`); Admin-CRUD in
+`admin.ts` (`/admin/learn`, validiert: category∈PROJECT_CATEGORIES, sdgIds Array,
+imageUrl URL, projectId existiert). Public-Liste filtert nach category/projectId.
+
+**Frontend:** `/learn` (`LearnPage`, Kategorie-Filter, EntityImage-Karten,
+Projekt-Chip, „Mehr erfahren") und `/learn/:id` (`LearnDetailPage`, Headerbild,
+`whitespace-pre-line`-Text, SDG-Badges, Quelle, Projekt-Link). Projekt-Detailseite
+zeigt verknüpfte Lerninhalte („Mehr erfahren zu diesem Thema"). Admin: `ManageLearnPage`
++ `NewLearnPage` + `EditLearnPage` + `LearnFormFields` (mit `AutoTranslatePanel`/DeepL
+für title+body) + Dashboard-Karte. Service `learnService`, Typ `LearningResource`,
+i18n `learn.*`/`learnDetail.*`/`adminLearn.*` + `nav.learn`.
+
+**Nav-Einordnung:** unter **„Initiativen"** (Projekte · Termine · **Wissen** ·
+Neuigkeiten) — Begründung: die Lerninhalte sind orts-/themenbezogene Inhalte ÜBER die
+Initiativen (Antinioti, Erimitis, Meeresschutz, Recycling) und verlinken auf Projekte,
+ergänzen also „was wir tun" inhaltlich; passt besser zu Initiativen als zu Transparenz.
+
+**Seed:** 4 **reale**, belegte Inhalte, verknüpft mit echten Projekten —
+Antinioti-Lagune (Natura 2000) → proj-antinioti; Erimitis/Naturdenkmäler →
+proj-natural-monuments; Meeresschildkröten/ODEK/ARCHELON → proj-marine; Recycling →
+proj-circular. Beschreibend, **keine erfundenen Statistiken**.
+
+**Tests:** Backend +6 (`learn.test.ts`: Public-Liste mit Projekt, Filter, Detail/404,
+Admin-CRUD 401/403, Create/Update/Delete, invalide Category/Project) → **89**.
+E2E +1 (`learn.spec.ts`: /learn lädt, Detail zeigt Inhalt + Projektlink) → **58**.
+
 ## Neue Migrationen
 _(A1: keine.)_
 
@@ -99,6 +133,13 @@ Additiv: neue Tabellen `Comment` + `CommentLike` (+ Index + FKs), keine Datenän
 **Deploy-Befehl (idempotent):**
 ```bash
 cd backend && npx prisma migrate deploy && npx prisma generate
+```
+
+### `20260611160000_add_learning_resources` (Block B)
+Additiv: neue Tabelle `LearningResource` (+ Index + FK auf Project, ON DELETE SET NULL).
+**Bereits während des Runs gegen Supabase deployed + geseedet** (für E2E nötig).
+```bash
+cd backend && npx prisma migrate deploy && npx prisma generate && npm run db:seed
 ```
 
 ---

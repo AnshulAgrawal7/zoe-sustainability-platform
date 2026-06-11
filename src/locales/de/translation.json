@@ -449,7 +449,8 @@
     "getInvolvedOverview": "Mitmach-Übersicht",
     "sdgContributions": "SDG-Beiträge",
     "keyFigures": "Kennzahlen",
-    "ideas": "Ideen-Board"
+    "ideas": "Ideen-Board",
+    "learn": "Wissen"
   },
   "auth": {
     "login": "Anmelden",
@@ -1403,5 +1404,39 @@
     "onIdea": "zu",
     "likes": "{{count}} Likes",
     "navLabel": "Kommentare moderieren"
+  },
+  "learn": {
+    "title": "Wissen & Hintergrund",
+    "intro": "Lokal verankerter Hintergrund zu Natur, Orten und Initiativen Nordkorfus.",
+    "demoNote": "Prototyp — Bildungsinhalte",
+    "all": "Alle",
+    "filterBy": "Nach Kategorie filtern",
+    "found": "{{count}} Inhalte",
+    "readMore": "Mehr erfahren",
+    "relatedProject": "Verknüpftes Projekt",
+    "empty": "Noch keine Lerninhalte.",
+    "source": "Quelle"
+  },
+  "learnDetail": {
+    "back": "Zurück zu Wissen",
+    "notFound": "Dieser Inhalt ist nicht verfügbar.",
+    "aboutProject": "Verknüpftes Projekt",
+    "source": "Quelle"
+  },
+  "adminLearn": {
+    "title": "Lerninhalte",
+    "subtitle": "Bildungsinhalte anlegen und bearbeiten. Optional mit einem echten Projekt und SDGs verknüpfen.",
+    "navLabel": "Lerninhalte verwalten",
+    "create": "Neuer Inhalt",
+    "edit": "Inhalt bearbeiten",
+    "empty": "Noch keine Lerninhalte.",
+    "delete": "Löschen",
+    "deleteConfirm": "Diesen Lerninhalt löschen?",
+    "formBody": "Text",
+    "formSource": "Quellenangabe",
+    "formSdgs": "Zugehörige SDGs",
+    "formProject": "Verknüpftes Projekt",
+    "noProject": "Kein verknüpftes Projekt",
+    "projectColumn": "Projekt"
   }
 }

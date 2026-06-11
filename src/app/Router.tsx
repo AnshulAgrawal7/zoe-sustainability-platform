@@ -17,6 +17,8 @@ import RewardsPage from '../pages/RewardsPage';
 import GetInvolvedPage from '../pages/GetInvolvedPage';
 import IdeasPage from '../pages/IdeasPage';
 import IdeaDetailPage from '../pages/IdeaDetailPage';
+import LearnPage from '../pages/LearnPage';
+import LearnDetailPage from '../pages/LearnDetailPage';
 import NewsPage from '../pages/NewsPage';
 
 // Auth pages
@@ -34,6 +36,9 @@ import ManageProjectsPage from '../pages/admin/ManageProjectsPage';
 import ManageUsersPage from '../pages/admin/ManageUsersPage';
 import ManageIdeasPage from '../pages/admin/ManageIdeasPage';
 import ManageCommentsPage from '../pages/admin/ManageCommentsPage';
+import ManageLearnPage from '../pages/admin/ManageLearnPage';
+import NewLearnPage from '../pages/admin/NewLearnPage';
+import EditLearnPage from '../pages/admin/EditLearnPage';
 import ManagePostsPage from '../pages/admin/ManagePostsPage';
 import NewProjectPage from '../pages/admin/NewProjectPage';
 import EditProjectPage from '../pages/admin/EditProjectPage';
@@ -59,6 +64,8 @@ const router = createBrowserRouter([
       { path: 'get-involved', element: <GetInvolvedPage /> },
       { path: 'ideas', element: <IdeasPage /> },
       { path: 'ideas/:id', element: <IdeaDetailPage /> },
+      { path: 'learn', element: <LearnPage /> },
+      { path: 'learn/:id', element: <LearnDetailPage /> },
       { path: 'audiences', element: <AudiencesPage /> },
       { path: 'events', element: <EventsPage /> },
       { path: 'transparency', element: <TransparencyPage /> },
@@ -136,6 +143,30 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageCommentsPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/learn',
+        element: (
+          <AdminRoute>
+            <ManageLearnPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/learn/new',
+        element: (
+          <AdminRoute>
+            <NewLearnPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/learn/:id/edit',
+        element: (
+          <AdminRoute>
+            <EditLearnPage />
           </AdminRoute>
         ),
       },

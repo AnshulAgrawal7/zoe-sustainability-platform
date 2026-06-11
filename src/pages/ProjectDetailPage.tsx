@@ -13,14 +13,17 @@ import {
   Boxes,
   Cog,
   Sparkles,
+  GraduationCap,
+  ArrowRight,
 } from 'lucide-react';
 import { getProject, participate, withdraw } from '../services/projectService';
 import { getEvents } from '../services/eventService';
+import { getLearningResources } from '../services/learnService';
 import { getMe } from '../services/userService';
 import EventRegister from '../components/events/EventRegister';
 import EntityImage from '../components/ui/EntityImage';
 import { useAuthStore } from '../stores/authStore';
-import type { ApiProject, ApiEvent } from '../types';
+import type { ApiProject, ApiEvent, LearningResource } from '../types';
 
 const DATE_LOCALES: Record<string, string> = {
   en: 'en-GB',
@@ -38,6 +41,7 @@ export default function ProjectDetailPage() {
 
   const [project, setProject] = useState<ApiProject | null>(null);
   const [events, setEvents] = useState<ApiEvent[]>([]);
+  const [learn, setLearn] = useState<LearningResource[]>([]);
   const [isParticipating, setIsParticipating] = useState(false);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
@@ -72,6 +76,10 @@ export default function ProjectDetailPage() {
     getEvents({ projectId: id })
       .then(setEvents)
       .catch(() => setEvents([]));
+    // Linked learning resources (non-blocking; failure just hides the section).
+    getLearningResources({ projectId: id })
+      .then(setLearn)
+      .catch(() => setLearn([]));
   }, [id, isAuthenticated]);
 
   function getTitle(): string {
@@ -485,6 +493,37 @@ export default function ProjectDetailPage() {
                 </li>
               );
             })}
+          </ul>
+        </section>
+      )}
+
+      {/* Linked learning resources — "learn more about this topic" */}
+      {learn.length > 0 && (
+        <section className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8">
+          <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+            <GraduationCap
+              size={18}
+              aria-hidden="true"
+              className="text-green-600 dark:text-green-400"
+            />
+            {t('learn.title')}
+          </h2>
+          <ul className="space-y-2">
+            {learn.map((r) => (
+              <li key={r.id}>
+                <Link
+                  to={`/learn/${r.id}`}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-green-700 hover:underline dark:text-green-400"
+                >
+                  <ArrowRight size={14} aria-hidden="true" />
+                  {lang === 'el'
+                    ? r.titleEl
+                    : lang === 'de'
+                      ? r.titleDe
+                      : r.titleEn}
+                </Link>
+              </li>
+            ))}
           </ul>
         </section>
       )}

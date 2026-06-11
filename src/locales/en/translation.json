@@ -449,7 +449,8 @@
     "getInvolvedOverview": "Overview",
     "sdgContributions": "SDG contributions",
     "keyFigures": "Key figures",
-    "ideas": "Ideas board"
+    "ideas": "Ideas board",
+    "learn": "Learning"
   },
   "auth": {
     "login": "Login",
@@ -1403,5 +1404,39 @@
     "onIdea": "on",
     "likes": "{{count}} likes",
     "navLabel": "Moderate comments"
+  },
+  "learn": {
+    "title": "Learning & background",
+    "intro": "Locally-grounded background on North Corfu’s nature, places and initiatives.",
+    "demoNote": "Prototype — educational content",
+    "all": "All",
+    "filterBy": "Filter by category",
+    "found": "{{count}} resources",
+    "readMore": "Read more",
+    "relatedProject": "Related project",
+    "empty": "No learning resources yet.",
+    "source": "Source"
+  },
+  "learnDetail": {
+    "back": "Back to learning",
+    "notFound": "This resource is not available.",
+    "aboutProject": "Related project",
+    "source": "Source"
+  },
+  "adminLearn": {
+    "title": "Learning resources",
+    "subtitle": "Create and edit educational content. Optionally link a resource to a real project and SDGs.",
+    "navLabel": "Manage learning content",
+    "create": "New resource",
+    "edit": "Edit resource",
+    "empty": "No learning resources yet.",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this learning resource?",
+    "formBody": "Body",
+    "formSource": "Source note",
+    "formSdgs": "Related SDGs",
+    "formProject": "Linked project",
+    "noProject": "No linked project",
+    "projectColumn": "Project"
   }
 }

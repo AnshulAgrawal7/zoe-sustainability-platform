@@ -5,6 +5,11 @@ import { translateProjectFields } from '../controllers/translationController';
 import { getIdeas, updateIdeaStatus } from '../controllers/ideaController';
 import { getAllComments, setCommentStatus } from '../controllers/commentController';
 import { createEvent, updateEvent, deleteEvent } from '../controllers/eventController';
+import {
+  createLearningResource,
+  updateLearningResource,
+  deleteLearningResource,
+} from '../controllers/learningController';
 import { authenticate } from '../middleware/auth';
 import { adminOnly } from '../middleware/adminOnly';
 import { IDEA_STATUSES, COMMENT_STATUSES, PROJECT_CATEGORIES } from '../constants';
@@ -73,5 +78,23 @@ const eventUpdateValidators = [
 router.post('/events', eventCreateValidators, createEvent);
 router.patch('/events/:id', eventUpdateValidators, updateEvent);
 router.delete('/events/:id', deleteEvent);
+
+// --- Learning resources (Z5, admin CRUD; public read lives on /api/learn) ---
+const learnValidators = [
+  body('titleEn').optional().trim().isLength({ max: 200 }),
+  body('titleEl').optional().trim().isLength({ max: 200 }),
+  body('titleDe').optional().trim().isLength({ max: 200 }),
+  body('bodyEn').optional().isString().isLength({ max: 20000 }),
+  body('bodyEl').optional().isString().isLength({ max: 20000 }),
+  body('bodyDe').optional().isString().isLength({ max: 20000 }),
+  body('category').optional().isIn([...PROJECT_CATEGORIES]),
+  body('sdgIds').optional().isArray(),
+  body('imageUrl').optional({ values: 'falsy' }).isURL({ require_protocol: true }).isLength({ max: 2048 }),
+  body('sourceNote').optional({ values: 'falsy' }).trim().isLength({ max: 500 }),
+  body('projectId').optional({ values: 'falsy' }).isString(),
+];
+router.post('/learn', learnValidators, createLearningResource);
+router.patch('/learn/:id', learnValidators, updateLearningResource);
+router.delete('/learn/:id', deleteLearningResource);
 
 export default router;

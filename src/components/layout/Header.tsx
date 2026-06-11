@@ -25,6 +25,7 @@ export default function Header() {
       links: [
         { to: '/projects', label: t('nav.projects') },
         { to: '/events', label: t('nav.events') },
+        { to: '/learn', label: t('nav.learn') },
         { to: '/news', label: t('nav.news') },
       ],
     },

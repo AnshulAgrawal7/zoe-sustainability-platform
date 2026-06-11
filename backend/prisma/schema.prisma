@@ -73,11 +73,34 @@ model Project {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
-  createdBy      User            @relation("CreatedBy", fields: [createdById], references: [id])
-  createdById    String
-  participations Participation[]
-  posts          Post[]
-  events         Event[]
+  createdBy         User               @relation("CreatedBy", fields: [createdById], references: [id])
+  createdById       String
+  participations    Participation[]
+  posts             Post[]
+  events            Event[]
+  learningResources LearningResource[]
+}
+
+// Self-contained, locally-grounded educational content (Z5). Trilingual; optionally
+// linked to a real Project and/or SDGs. Body is longer text/Markdown. Admin-managed.
+model LearningResource {
+  id         String   @id @default(cuid())
+  titleEn    String
+  titleEl    String
+  titleDe    String
+  bodyEn     String
+  bodyEl     String
+  bodyDe     String
+  category   String
+  sdgIds     String   @default("[]") // JSON array, e.g. "[14, 15]"
+  imageUrl   String?
+  sourceNote String?
+  project    Project? @relation(fields: [projectId], references: [id])
+  projectId  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([projectId])
 }
 
 // A concrete, dated event/appointment (e.g. a beach cleanup on 12.07.). Belongs

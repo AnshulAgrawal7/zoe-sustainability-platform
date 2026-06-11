@@ -403,7 +403,60 @@ async function main() {
       'EDUCATION'),
   ]);
 
-  console.log(`Seeded: ${[p1,p2,p3,p4,p5,p6,p7,p8].length} projects, 4 users, 5 badges, 4 posts, 4 demo ideas`);
+  // --- Learning resources (Z5). REAL, locally-grounded educational content,
+  // linked to the matching real projects. Descriptive (no fabricated statistics).
+  const makeLearn = (
+    id: string,
+    titleEn: string, titleEl: string, titleDe: string,
+    bodyEn: string, bodyEl: string, bodyDe: string,
+    category: string, sdgIds: number[], projectId: string | null,
+    sourceNote: string | null = null,
+  ) =>
+    prisma.learningResource.upsert({
+      where: { id },
+      update: {},
+      create: {
+        id, titleEn, titleEl, titleDe, bodyEn, bodyEl, bodyDe,
+        category, sdgIds: JSON.stringify(sdgIds), projectId, sourceNote,
+      },
+    });
+
+  await Promise.all([
+    makeLearn('learn-antinioti',
+      'The Antinioti Lagoon — a Natura 2000 wetland',
+      'Η Λιμνοθάλασσα Αντινιώτη — υγρότοπος Natura 2000',
+      'Die Antinioti-Lagune — ein Natura-2000-Feuchtgebiet',
+      'The Antinioti Lagoon, between Kassiopi and Roda in north-east Corfu, is a coastal wetland protected under the EU Natura 2000 network. Its reed beds and brackish water host migratory birds, fish and amphibians. The main pressures are agricultural run-off, unregulated access and the loss of traditional land management.',
+      'Η Λιμνοθάλασσα Αντινιώτη, μεταξύ Κασσιόπης και Ρόδα στη βορειοανατολική Κέρκυρα, είναι παράκτιος υγρότοπος που προστατεύεται από το δίκτυο Natura 2000 της ΕΕ. Οι καλαμιώνες και τα υφάλμυρα νερά φιλοξενούν αποδημητικά πουλιά, ψάρια και αμφίβια. Οι κύριες πιέσεις είναι οι αγροτικές απορροές, η ανεξέλεγκτη πρόσβαση και η εγκατάλειψη της παραδοσιακής διαχείρισης.',
+      'Die Antinioti-Lagune zwischen Kassiopi und Roda im Nordosten Korfus ist ein Küstenfeuchtgebiet, das durch das EU-Netzwerk Natura 2000 geschützt ist. Schilfgürtel und Brackwasser beherbergen Zugvögel, Fische und Amphibien. Hauptbelastungen sind landwirtschaftliche Abflüsse, unkontrollierter Zugang und der Verlust traditioneller Landnutzung.',
+      'ENVIRONMENT', [15, 6, 14], 'proj-antinioti', 'EU Natura 2000 network'),
+    makeLearn('learn-erimitis',
+      'Erimitis — a protected natural landscape',
+      'Ερημίτης — ένα προστατευόμενο φυσικό τοπίο',
+      'Erimitis — eine geschützte Naturlandschaft',
+      'The Erimitis area in north-east Corfu combines forest, wetlands and an undeveloped coastline, and is one of the natural monuments North Corfu works to conserve, together with the Nymfes waterfalls and the Agios Panteleimon basin. Conservation here pairs habitat monitoring with reforestation of fire-affected slopes.',
+      'Η περιοχή του Ερημίτη στη βορειοανατολική Κέρκυρα συνδυάζει δάσος, υγροτόπους και αδόμητη ακτή και αποτελεί ένα από τα φυσικά μνημεία που διατηρεί η Βόρεια Κέρκυρα, μαζί με τους καταρράκτες των Νυμφών και τη λεκάνη του Αγίου Παντελεήμονα. Η διατήρηση συνδυάζει την παρακολούθηση οικοτόπων με την αναδάσωση πληγεισών από πυρκαγιά πλαγιών.',
+      'Das Gebiet Erimitis im Nordosten Korfus verbindet Wald, Feuchtgebiete und eine unbebaute Küste und gehört zu den Naturdenkmälern, die Nordkorfu erhält — neben den Nymfes-Wasserfällen und dem Agios-Panteleimon-Becken. Schutz bedeutet hier Lebensraum-Monitoring zusammen mit der Aufforstung brandgeschädigter Hänge.',
+      'ENVIRONMENT', [15, 13], 'proj-natural-monuments'),
+    makeLearn('learn-marine',
+      'Sea turtles and marine mammals off North Corfu',
+      'Θαλάσσιες χελώνες και θαλάσσια θηλαστικά στη Βόρεια Κέρκυρα',
+      'Meeresschildkröten und Meeressäuger vor Nordkorfu',
+      'The waters off North Corfu are home to loggerhead sea turtles and marine mammals. ARCHELON volunteers protect turtle nests on the coast through fencing and awareness work, while ODEK Kerkyra — the local cetacean (whale and dolphin) rescue team — responds to marine-mammal strandings. Citizens can help by reporting nests and strandings and keeping beaches clean.',
+      'Τα νερά της Βόρειας Κέρκυρας φιλοξενούν θαλάσσιες χελώνες καρέτα-καρέτα και θαλάσσια θηλαστικά. Εθελοντές του ΑΡΧΕΛΩΝ προστατεύουν τις φωλιές στην ακτή με περιφράξεις και ενημέρωση, ενώ το ΟΔΕΚ Κέρκυρας — η τοπική ομάδα διάσωσης κητωδών — αντιμετωπίζει τους εκβρασμούς. Οι πολίτες βοηθούν αναφέροντας φωλιές και εκβρασμούς και κρατώντας τις παραλίες καθαρές.',
+      'Die Gewässer vor Nordkorfu beherbergen Unechte Karettschildkröten und Meeressäuger. ARCHELON-Freiwillige schützen Nester an der Küste durch Einzäunung und Aufklärung, während ODEK Kerkyra — das lokale Rettungsteam für Wale und Delfine — auf Strandungen reagiert. Bürger:innen helfen, indem sie Nester und Strandungen melden und Strände sauber halten.',
+      'ENVIRONMENT', [14, 15], 'proj-marine', 'ARCHELON; ODEK Kerkyra'),
+    makeLearn('learn-circular',
+      'How recycling works in North Corfu',
+      'Πώς λειτουργεί η ανακύκλωση στη Βόρεια Κέρκυρα',
+      'Wie Recycling in Nordkorfu funktioniert',
+      'North Corfu runs a municipal circular-economy programme with separate collection across many recycling streams and collection points, feeding a municipal sorting hub. Sorting at home — paper, glass, metal, plastic and organic waste — is the first and most important step; cleaner separation means more material is recovered instead of going to landfill.',
+      'Η Βόρεια Κέρκυρα λειτουργεί δημοτικό πρόγραμμα κυκλικής οικονομίας με χωριστή συλλογή σε πολλά ρεύματα ανακύκλωσης και σημεία συλλογής, που τροφοδοτούν δημοτικό κέντρο διαλογής. Η διαλογή στο σπίτι — χαρτί, γυαλί, μέταλλο, πλαστικό και οργανικά — είναι το πρώτο και πιο σημαντικό βήμα· η καθαρότερη διαλογή σημαίνει ότι ανακτάται περισσότερο υλικό αντί να καταλήγει σε ταφή.',
+      'Nordkorfu betreibt ein kommunales Kreislaufwirtschaftsprogramm mit Getrenntsammlung über viele Wertstoffströme und Sammelpunkte, die ein kommunales Sortierzentrum speisen. Die Trennung zu Hause — Papier, Glas, Metall, Kunststoff und Bioabfall — ist der erste und wichtigste Schritt; sauberere Trennung bedeutet, dass mehr Material zurückgewonnen wird, statt auf der Deponie zu landen.',
+      'COMMUNITY', [12, 11], 'proj-circular', 'Verde.tec 2026 / Attica Green Expo 2026'),
+  ]);
+
+  console.log(`Seeded: ${[p1,p2,p3,p4,p5,p6,p7,p8].length} projects, 4 users, 5 badges, 4 posts, 4 demo ideas, 4 learning resources`);
   console.log('Admin:    admin@zoe-corfu.gr / ZoeAdmin2026!');
   console.log('Users:    citizen1@example.com, citizen2@example.com, tourist@example.com / Test1234!');
 }
