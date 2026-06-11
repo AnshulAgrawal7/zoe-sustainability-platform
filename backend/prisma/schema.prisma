@@ -61,6 +61,9 @@ model Project {
   sdgIds          String // JSON array: "[3, 11, 13]"
   category        String
   status          String    @default("OPEN")
+  // false = structural/umbrella project (e.g. ZOE programme): hidden from public
+  // lists, counts, teasers & filters, but still reachable by direct link.
+  listed          Boolean   @default(true)
   maxParticipants Int?
   rewardPoints    Int       @default(50)
   imageUrl        String?
@@ -142,8 +145,8 @@ model Event {
   rewardPoints  Int      @default(20)
   capacity      Int?
   imageUrl      String? // optional cover image (URL string; no file upload)
-  projectId     String?
-  project       Project? @relation(fields: [projectId], references: [id])
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Restrict)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
