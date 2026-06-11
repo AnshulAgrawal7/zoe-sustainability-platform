@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import { ok, badRequest, notFound, serverError } from '../utils/response';
 import { deleteImages } from '../services/storage';
 
@@ -30,6 +31,19 @@ interface FeedItem {
   needsReview: boolean;
 }
 
+// Detail shape — like FeedItem but carries the FULL body instead of an excerpt.
+interface FeedDetail {
+  id: string;
+  source: 'feed' | 'project';
+  category: string;
+  eventStatus: 'UPCOMING' | 'COMPLETED' | null;
+  date: string;
+  title: string;
+  body: string;
+  images: FeedImage[];
+  needsReview: boolean;
+}
+
 function excerpt(body: string, n = 240): string {
   const clean = body.replace(/\s+/g, ' ').trim();
   return clean.length > n ? `${clean.slice(0, n).trimEnd()}…` : clean;
@@ -47,6 +61,102 @@ function pickAlt(
   return a?.text ?? '';
 }
 
+// One Prisma include reused by the list (findMany) and the detail (findUnique)
+// so both resolve images + alt texts identically.
+const feedPostInclude = {
+  translations: true,
+  images: { orderBy: { order: 'asc' as const }, include: { altTexts: true } },
+} satisfies Prisma.FeedPostInclude;
+
+type FeedPostWithRelations = Prisma.FeedPostGetPayload<{
+  include: typeof feedPostInclude;
+}>;
+
+// Resolved parts shared by both endpoints (full body; the list excerpts it).
+interface FeedParts {
+  category: string;
+  eventStatus: 'UPCOMING' | 'COMPLETED' | null;
+  date: string;
+  title: string;
+  body: string;
+  images: FeedImage[];
+  needsReview: boolean;
+}
+
+function feedPostParts(fp: FeedPostWithRelations, locale: Locale): FeedParts {
+  const tr =
+    fp.translations.find((t) => t.locale === locale) ??
+    fp.translations.find((t) => t.locale === 'el') ??
+    fp.translations[0];
+  return {
+    category: fp.category,
+    eventStatus: fp.eventStatus,
+    date: fp.publishedAt.toISOString(),
+    title: tr?.title ?? '',
+    body: tr?.body ?? '',
+    images: fp.images.map((im) => ({
+      url: im.publicUrl,
+      alt: pickAlt(im.altTexts, locale),
+      width: im.width,
+      height: im.height,
+    })),
+    needsReview: fp.needsReview,
+  };
+}
+
+function projectPostParts(p: Post, locale: Locale): FeedParts {
+  const title =
+    locale === 'de' ? p.titleDe : locale === 'en' ? p.titleEn : p.titleEl;
+  const body = locale === 'de' ? p.bodyDe : locale === 'en' ? p.bodyEn : p.bodyEl;
+  return {
+    category: 'PROJECT_UPDATE',
+    eventStatus: null,
+    date: p.createdAt.toISOString(),
+    title,
+    body,
+    images: p.imageUrl
+      ? [{ url: p.imageUrl, alt: null, width: null, height: null }]
+      : [],
+    needsReview: false,
+  };
+}
+
+function toListItem(
+  id: string,
+  source: 'feed' | 'project',
+  p: FeedParts
+): FeedItem {
+  return {
+    id,
+    source,
+    category: p.category,
+    eventStatus: p.eventStatus,
+    date: p.date,
+    title: p.title,
+    excerpt: excerpt(p.body),
+    images: p.images,
+    needsReview: p.needsReview,
+  };
+}
+
+function toDetail(
+  id: string,
+  source: 'feed' | 'project',
+  p: FeedParts
+): FeedDetail {
+  return {
+    id,
+    source,
+    category: p.category,
+    eventStatus: p.eventStatus,
+    date: p.date,
+    title: p.title,
+    body: p.body,
+    images: p.images,
+    needsReview: p.needsReview,
+  };
+}
+
 // GET /api/feed?locale=el|de|en — public. Merged feed, newest first. Text is
 // resolved to the requested locale with an EL fallback (the imported posts'
 // source language).
@@ -56,65 +166,62 @@ export async function getFeed(req: Request, res: Response) {
 
   try {
     const [feedPosts, projectPosts] = await Promise.all([
-      prisma.feedPost.findMany({
-        include: {
-          translations: true,
-          images: { orderBy: { order: 'asc' }, include: { altTexts: true } },
-        },
-      }),
+      prisma.feedPost.findMany({ include: feedPostInclude }),
       prisma.post.findMany({
         where: { published: true },
         orderBy: { createdAt: 'desc' },
       }),
     ]);
 
-    const items: FeedItem[] = [];
-
-    for (const fp of feedPosts) {
-      const tr =
-        fp.translations.find((t) => t.locale === locale) ??
-        fp.translations.find((t) => t.locale === 'el') ??
-        fp.translations[0];
-      items.push({
-        id: fp.id,
-        source: 'feed',
-        category: fp.category,
-        eventStatus: fp.eventStatus,
-        date: fp.publishedAt.toISOString(),
-        title: tr?.title ?? '',
-        excerpt: excerpt(tr?.body ?? ''),
-        images: fp.images.map((im) => ({
-          url: im.publicUrl,
-          alt: pickAlt(im.altTexts, locale),
-          width: im.width,
-          height: im.height,
-        })),
-        needsReview: fp.needsReview,
-      });
-    }
-
-    for (const p of projectPosts) {
-      const title = locale === 'de' ? p.titleDe : locale === 'en' ? p.titleEn : p.titleEl;
-      const body = locale === 'de' ? p.bodyDe : locale === 'en' ? p.bodyEn : p.bodyEl;
-      items.push({
-        id: p.id,
-        source: 'project',
-        category: 'PROJECT_UPDATE',
-        eventStatus: null,
-        date: p.createdAt.toISOString(),
-        title,
-        excerpt: excerpt(body),
-        images: p.imageUrl
-          ? [{ url: p.imageUrl, alt: null, width: null, height: null }]
-          : [],
-        needsReview: false,
-      });
-    }
+    const items: FeedItem[] = [
+      ...feedPosts.map((fp) =>
+        toListItem(fp.id, 'feed', feedPostParts(fp, locale))
+      ),
+      ...projectPosts.map((p) =>
+        toListItem(p.id, 'project', projectPostParts(p, locale))
+      ),
+    ];
 
     // Newest first (ISO strings sort chronologically).
     items.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 
     ok(res, { items, total: items.length });
+  } catch {
+    serverError(res);
+  }
+}
+
+// GET /api/feed/:source/:id?locale=… — public. One entry (FULL body) from either
+// source. 404 if the id does not exist (or the project post is unpublished).
+export async function getFeedItem(req: Request, res: Response) {
+  const source = req.params['source'];
+  const id = req.params['id'] as string;
+  const q = (req.query['locale'] as string) || 'el';
+  const locale: Locale = LOCALES.includes(q as Locale) ? (q as Locale) : 'el';
+
+  try {
+    if (source === 'feed') {
+      const fp = await prisma.feedPost.findUnique({
+        where: { id },
+        include: feedPostInclude,
+      });
+      if (!fp) {
+        notFound(res);
+        return;
+      }
+      ok(res, toDetail(fp.id, 'feed', feedPostParts(fp, locale)));
+      return;
+    }
+    if (source === 'project') {
+      const p = await prisma.post.findFirst({ where: { id, published: true } });
+      if (!p) {
+        notFound(res);
+        return;
+      }
+      ok(res, toDetail(p.id, 'project', projectPostParts(p, locale)));
+      return;
+    }
+    badRequest(res, 'Invalid source (expected "feed" or "project")');
   } catch {
     serverError(res);
   }

@@ -6,6 +6,7 @@ import app from '../app';
 const prisma = new PrismaClient();
 let feedPostId = '';
 let imageId = '';
+let projectPostId = '';
 let adminToken = '';
 let userToken = '';
 
@@ -43,10 +44,26 @@ beforeAll(async () => {
   });
   feedPostId = post.id;
   imageId = post.images[0]?.id ?? '';
+
+  const project = await prisma.post.create({
+    data: {
+      type: 'ANNOUNCEMENT',
+      titleEn: 'Proj EN',
+      titleEl: 'Proj EL',
+      titleDe: 'Proj DE',
+      bodyEn: 'Full EN body text',
+      bodyEl: 'Πλήρες EL κείμενο',
+      bodyDe: 'Voller DE Text',
+      imageUrl: 'https://x/p.jpg',
+      published: true,
+    },
+  });
+  projectPostId = project.id;
 });
 
 afterAll(async () => {
   await prisma.feedPost.delete({ where: { id: feedPostId } }).catch(() => null);
+  await prisma.post.delete({ where: { id: projectPostId } }).catch(() => null);
   await prisma.$disconnect();
 });
 
@@ -82,6 +99,47 @@ describe('GET /api/feed (merged What’s New feed)', () => {
       (i) => i['id'] === feedPostId
     )!;
     expect(feed['title']).toBe('EL τίτλος');
+  });
+});
+
+describe('GET /api/feed/:source/:id (single entry, full body)', () => {
+  it('returns a feed post with the FULL body, resolved to the locale', async () => {
+    const res = await request(app).get(`/api/feed/feed/${feedPostId}?locale=de`);
+    expect(res.status).toBe(200);
+    expect(res.body.data.source).toBe('feed');
+    expect(res.body.data.title).toBe('DE Titel');
+    expect(res.body.data.body).toBe('DE Text'); // full body, not an excerpt
+    expect(res.body.data.excerpt).toBeUndefined();
+    expect(res.body.data.category).toBe('EVENT');
+    expect(res.body.data.eventStatus).toBe('COMPLETED');
+    expect((res.body.data.images as unknown[]).length).toBe(1);
+  });
+
+  it('falls back to EL for an unknown locale', async () => {
+    const res = await request(app).get(`/api/feed/feed/${feedPostId}?locale=fr`);
+    expect(res.status).toBe(200);
+    expect(res.body.data.body).toBe('EL σώμα');
+  });
+
+  it('returns a project post via source=project', async () => {
+    const res = await request(app).get(
+      `/api/feed/project/${projectPostId}?locale=en`
+    );
+    expect(res.status).toBe(200);
+    expect(res.body.data.source).toBe('project');
+    expect(res.body.data.category).toBe('PROJECT_UPDATE');
+    expect(res.body.data.title).toBe('Proj EN');
+    expect(res.body.data.body).toBe('Full EN body text');
+  });
+
+  it('404 for a missing id', async () => {
+    const res = await request(app).get('/api/feed/feed/does-not-exist');
+    expect(res.status).toBe(404);
+  });
+
+  it('400 for an invalid source', async () => {
+    const res = await request(app).get(`/api/feed/bogus/${feedPostId}`);
+    expect(res.status).toBe(400);
   });
 });
 
