@@ -467,7 +467,7 @@
     "hasAccount": "Already have an account?",
     "forgotPassword": "Forgot password?",
     "language": "Preferred language",
-    "logoutSuccess": "You have been logged out.",
+    "logoutSuccess": "Successfully logged out",
     "loginError": "Invalid email or password.",
     "registerError": "Registration failed. Please try again."
   },

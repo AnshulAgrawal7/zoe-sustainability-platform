@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../stores/authStore';
+import { useToastStore } from '../../stores/toastStore';
 import { logout } from '../../services/authService';
 
 function initials(name: string): string {
@@ -24,6 +25,7 @@ export default function UserMenu() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, isAdmin, clearAuth } = useAuthStore();
+  const showToast = useToastStore((s) => s.showToast);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -53,6 +55,7 @@ export default function UserMenu() {
     await logout();
     clearAuth();
     navigate('/', { replace: true });
+    showToast(t('auth.logoutSuccess'));
   }
 
   const items = [

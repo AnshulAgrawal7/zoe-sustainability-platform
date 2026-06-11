@@ -467,7 +467,7 @@
     "hasAccount": "Bereits ein Konto?",
     "forgotPassword": "Passwort vergessen?",
     "language": "Bevorzugte Sprache",
-    "logoutSuccess": "Sie wurden abgemeldet.",
+    "logoutSuccess": "Erfolgreich ausgeloggt",
     "loginError": "Ungültige E-Mail oder falsches Passwort.",
     "registerError": "Registrierung fehlgeschlagen. Bitte erneut versuchen."
   },

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Header from './Header';
 import Footer from './Footer';
 import PrototypeBanner from '../ui/PrototypeBanner';
+import Toaster from '../ui/Toaster';
 
 export default function Layout() {
   const { i18n } = useTranslation();
@@ -21,6 +22,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <Footer />
+      <Toaster />
     </div>
   );
 }

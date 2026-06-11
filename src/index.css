@@ -12,6 +12,18 @@
   }
 }
 
+/* Toast entrance (used via Tailwind's motion-safe:animate-[fade-in_...]). */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer base {
   /* Compact density (Part 1A): drop the root from 16px to 15px so every
      rem-based size — text AND spacing (py-*, p-*, gap-*) — shrinks ~6%

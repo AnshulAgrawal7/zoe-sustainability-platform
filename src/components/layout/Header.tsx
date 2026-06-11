@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import logoIcon from '../../assets/logo-icon.png';
 import { useAuthStore } from '../../stores/authStore';
 import { useThemeStore } from '../../stores/themeStore';
+import { useToastStore } from '../../stores/toastStore';
 import { logout } from '../../services/authService';
 import LanguageSwitcher from './LanguageSwitcher';
 import UserMenu from './UserMenu';
@@ -18,6 +19,7 @@ export default function Header() {
 
   const { user, isAuthenticated, isAdmin, clearAuth } = useAuthStore();
   const { theme, toggleTheme } = useThemeStore();
+  const showToast = useToastStore((s) => s.showToast);
 
   // Grouped under dropdowns to keep the bar slim (3 dropdowns + 1 solo link).
   // Each route appears exactly once; desktop and mobile nav share these arrays.
@@ -57,6 +59,7 @@ export default function Header() {
     await logout();
     clearAuth();
     navigate('/', { replace: true });
+    showToast(t('auth.logoutSuccess'));
   }
 
   return (
