@@ -74,8 +74,8 @@ test.describe('Event participation', () => {
     await page.getByRole('button', { name: /sign in|anmelden|σύνδεση/i }).click();
     await page.waitForURL('**/dashboard', { timeout: 10000 });
 
-    // Client-side nav to /events via the Discover dropdown (keeps the session).
-    await page.getByRole('button', { name: /discover|entdecken|ανακάλυψη/i }).click();
+    // Client-side nav to /events via the Initiatives dropdown (keeps the session).
+    await page.getByRole('button', { name: /initiatives|initiativen|πρωτοβουλίες/i }).click();
     await page.getByRole('menuitem', { name: /events|termine|εκδηλώσεις/i }).click();
     await page.waitForURL('**/events', { timeout: 10000 });
     await page.waitForTimeout(1500);

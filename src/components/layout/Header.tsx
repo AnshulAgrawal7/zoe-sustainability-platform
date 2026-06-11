@@ -17,30 +17,35 @@ export default function Header() {
   const { user, isAuthenticated, isAdmin, clearAuth } = useAuthStore();
   const { theme, toggleTheme } = useThemeStore();
 
-  // Grouped under dropdowns to keep the bar slim (4 top-level entries).
+  // Grouped under dropdowns to keep the bar slim (3 dropdowns + 1 solo link).
+  // Each route appears exactly once; desktop and mobile nav share these arrays.
   const navGroups = [
     {
-      label: t('nav.discover'),
+      label: t('nav.initiatives'),
       links: [
         { to: '/projects', label: t('nav.projects') },
-        { to: '/sdg-dashboard', label: t('nav.sdgs') },
         { to: '/events', label: t('nav.events') },
         { to: '/news', label: t('nav.news') },
       ],
     },
     {
-      label: t('nav.participate'),
+      label: t('nav.getInvolved'),
       links: [
         { to: '/participate', label: t('nav.submitIdea') },
-        { to: '/get-involved', label: t('nav.projectsEvents') },
+        { to: '/get-involved', label: t('nav.getInvolvedOverview') },
+        { to: '/rewards', label: t('nav.rewards') },
+      ],
+    },
+    {
+      label: t('nav.transparency'),
+      links: [
+        { to: '/sdg-dashboard', label: t('nav.sdgContributions') },
+        { to: '/transparency', label: t('nav.keyFigures') },
       ],
     },
   ];
 
-  const soloLinks = [
-    { to: '/transparency', label: t('nav.transparency') },
-    { to: '/about', label: t('nav.about') },
-  ];
+  const soloLinks = [{ to: '/about', label: t('nav.about') }];
 
   async function handleLogout() {
     await logout();

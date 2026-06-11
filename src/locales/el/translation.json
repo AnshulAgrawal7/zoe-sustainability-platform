@@ -443,10 +443,12 @@
     "getInvolved": "Συμμετοχή",
     "imprint": "Νομικές πληροφορίες",
     "news": "Νέα",
-    "discover": "Ανακάλυψη",
     "overview": "Επισκόπηση",
     "submitIdea": "Υποβολή ιδέας",
-    "projectsEvents": "Έργα & εκδηλώσεις"
+    "initiatives": "Πρωτοβουλίες",
+    "getInvolvedOverview": "Επισκόπηση",
+    "sdgContributions": "Συμβολές SDG",
+    "keyFigures": "Βασικά μεγέθη"
   },
   "auth": {
     "login": "Σύνδεση",

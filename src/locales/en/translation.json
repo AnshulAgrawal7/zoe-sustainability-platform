@@ -443,10 +443,12 @@
     "getInvolved": "Get Involved",
     "imprint": "Imprint",
     "news": "News",
-    "discover": "Discover",
     "overview": "Overview",
     "submitIdea": "Submit an idea",
-    "projectsEvents": "Projects & events"
+    "initiatives": "Initiatives",
+    "getInvolvedOverview": "Overview",
+    "sdgContributions": "SDG contributions",
+    "keyFigures": "Key figures"
   },
   "auth": {
     "login": "Login",

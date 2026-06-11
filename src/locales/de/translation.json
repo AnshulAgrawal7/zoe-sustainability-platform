@@ -427,7 +427,7 @@
     "home": "Startseite",
     "projects": "Projekte",
     "sdgs": "SDGs",
-    "events": "Veranstaltungen",
+    "events": "Termine",
     "rewards": "Belohnungen",
     "about": "Über ZOE",
     "transparency": "Transparenz",
@@ -443,10 +443,12 @@
     "getInvolved": "Mitmachen",
     "imprint": "Impressum",
     "news": "Neuigkeiten",
-    "discover": "Entdecken",
     "overview": "Übersicht",
     "submitIdea": "Idee einreichen",
-    "projectsEvents": "Projekte & Termine"
+    "initiatives": "Initiativen",
+    "getInvolvedOverview": "Mitmach-Übersicht",
+    "sdgContributions": "SDG-Beiträge",
+    "keyFigures": "Kennzahlen"
   },
   "auth": {
     "login": "Anmelden",

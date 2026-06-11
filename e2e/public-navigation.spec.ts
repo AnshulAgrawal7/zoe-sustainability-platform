@@ -18,8 +18,10 @@ test.describe('Public navigation', () => {
   test('main nav links navigate to correct pages', async ({ page }) => {
     await page.goto('/');
 
-    // "Projects" now lives inside the "Discover" dropdown
-    await page.getByRole('button', { name: /discover/i }).click();
+    // "Projects" now lives inside the "Initiatives" dropdown
+    await page
+      .getByRole('button', { name: /initiatives|initiativen|πρωτοβουλίες/i })
+      .click();
     await page.getByRole('menuitem', { name: /projects/i }).click();
     await expect(page).toHaveURL(/\/projects/);
 
