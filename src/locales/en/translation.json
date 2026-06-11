@@ -855,8 +855,19 @@
     "analyticsText": "If web analytics are enabled, this prototype uses a privacy-friendly, cookieless analytics service that sets no cookies, collects no personal data and does not track individuals across sites. Only aggregated, anonymous usage statistics (e.g. page views) are recorded. Analytics are disabled by default in this prototype."
   },
   "getInvolved": {
-    "title": "Get Involved",
-    "subtitle": "Whether you live in Northern Corfu or are visiting for a week — there is a way for you to help protect it. Explore ZOE's initiatives, see how visitors can contribute, and stay informed.",
+    "title": "Get Involved as a Visitor",
+    "subtitle": "Visiting Northern Corfu? You can help protect it during your stay — join a beach clean-up, report what you spot, choose greener options, and discover the local nature.",
+    "quick": {
+      "heading": "More ways to take part during your stay",
+      "events": {
+        "title": "Join an upcoming event",
+        "desc": "Browse beach clean-ups, nature walks and workshops happening while you're here."
+      },
+      "learn": {
+        "title": "Discover the local nature",
+        "desc": "Short reads on the lagoons, sea turtles and protected landscapes of North Corfu."
+      }
+    },
     "initiatives": {
       "heading": "Explore initiatives by theme",
       "intro": "ZOE bundles the municipality's environmental actions into four thematic initiatives. Choose a theme to see the related actions.",

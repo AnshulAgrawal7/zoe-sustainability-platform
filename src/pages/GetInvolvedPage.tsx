@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import Container from '../components/layout/Container';
 import { Link } from 'react-router-dom';
-import { Award, ArrowRight } from 'lucide-react';
-import InitiativeTabs from '../components/engagement/InitiativeTabs';
+import { Award, ArrowRight, CalendarDays, GraduationCap } from 'lucide-react';
 import TouristContribution from '../components/engagement/TouristContribution';
 import NewsletterSignup from '../components/ui/NewsletterSignup';
 import ProjectMap, { type MapPoint } from '../components/map/ProjectMap';
@@ -20,13 +19,14 @@ const mapPoints: MapPoint[] = projects
     lng: p.lng as number,
   }));
 
-/**
- * "Get Involved" — additive page (Iteration 7) bundling three additive,
- * literature-grounded features:
- *  - InitiativeTabs (TP1 / stakeholder "tabs by initiative")
- *  - TouristContribution (TP6 / tourists as a resource)
- *  - NewsletterSignup (stakeholder "newsletter" — concept only)
- */
+// "Get Involved as a Visitor" (J2) — reframed around tourists. The general
+// initiative explorer (residents/overview) lives on the Projects/Initiatives
+// pages; here the focus is low-threshold ways a visitor can help during a stay.
+const QUICK_ACTIONS = [
+  { key: 'events', to: '/events', Icon: CalendarDays },
+  { key: 'learn', to: '/learn', Icon: GraduationCap },
+] as const;
+
 export default function GetInvolvedPage() {
   const { t } = useTranslation();
 
@@ -39,25 +39,45 @@ export default function GetInvolvedPage() {
         {t('getInvolved.subtitle')}
       </p>
 
-      <section aria-labelledby="initiatives-heading" className="mt-10">
+      {/* Tourist contribution — the centrepiece of this page */}
+      <div className="mt-10">
+        <TouristContribution />
+      </div>
+
+      {/* Quick, low-threshold actions during a visit */}
+      <section aria-labelledby="quick-heading" className="mt-12">
         <h2
-          id="initiatives-heading"
+          id="quick-heading"
           className="text-2xl font-bold text-gray-900 dark:text-white"
         >
-          {t('getInvolved.initiatives.heading')}
+          {t('getInvolved.quick.heading')}
         </h2>
-        <p className="mt-2 max-w-2xl text-gray-700 dark:text-gray-300">
-          {t('getInvolved.initiatives.intro')}
-        </p>
-        <div className="mt-6">
-          <InitiativeTabs projects={projects} />
+        <div className="mt-6 grid gap-5 sm:grid-cols-2">
+          {QUICK_ACTIONS.map(({ key, to, Icon }) => (
+            <Link
+              key={key}
+              to={to}
+              className="group flex items-start gap-4 rounded-xl border border-gray-200 bg-white p-5 transition-all hover:border-green-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-600"
+            >
+              <span className="rounded-lg bg-green-100 p-2.5 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                <Icon size={22} aria-hidden="true" />
+              </span>
+              <span className="flex-1">
+                <span className="flex items-center gap-1.5 font-semibold text-gray-900 transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-400">
+                  {t(`getInvolved.quick.${key}.title`)}
+                  <ArrowRight size={15} aria-hidden="true" />
+                </span>
+                <span className="mt-1 block text-sm text-gray-600 dark:text-gray-300">
+                  {t(`getInvolved.quick.${key}.desc`)}
+                </span>
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
 
-      {/* Compact map of the initiatives (Z1 central info / Z5 local identity).
-          The <section> is intentionally NOT a landmark (no accessible name) — the
-          ProjectMap's role="region" already carries the name, so this avoids a
-          duplicate-landmark axe violation. */}
+      {/* Compact map — where the initiatives happen across North Corfu.
+          The ProjectMap's role="region" already carries the accessible name. */}
       <section className="mt-12">
         <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
           {t('map.ariaLabel')}
@@ -66,16 +86,10 @@ export default function GetInvolvedPage() {
       </section>
 
       <div className="mt-12">
-        <TouristContribution />
-      </div>
-
-      <div className="mt-12">
         <NewsletterSignup />
       </div>
 
-      {/* Rewards is a CONSEQUENCE of participation, not a participation path — so it
-          lives here as a secondary link (and in the personal menu), not in the
-          main "Mitmachen" menu. */}
+      {/* Rewards is a CONSEQUENCE of participation, shown as a secondary link. */}
       <div className="mt-12 rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-700 dark:bg-gray-800/50">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">

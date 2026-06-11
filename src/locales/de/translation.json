@@ -855,8 +855,19 @@
     "analyticsText": "Sofern die Webanalyse aktiviert ist, nutzt dieser Prototyp einen datenschutzfreundlichen, cookielosen Analysedienst, der keine Cookies setzt, keine personenbezogenen Daten erhebt und keine Personen seitenübergreifend verfolgt. Erfasst werden ausschließlich aggregierte, anonyme Nutzungsstatistiken (z. B. Seitenaufrufe). Die Webanalyse ist in diesem Prototyp standardmäßig deaktiviert."
   },
   "getInvolved": {
-    "title": "Mitmachen",
-    "subtitle": "Ob Sie in Nord-Korfu leben oder nur eine Woche zu Besuch sind – es gibt einen Weg, wie Sie helfen können. Entdecken Sie die ZOE-Initiativen, erfahren Sie, wie Besucher:innen beitragen können, und bleiben Sie informiert.",
+    "title": "Mitmachen als Tourist",
+    "subtitle": "Zu Besuch in Nord-Korfu? Sie können während Ihres Aufenthalts mithelfen — bei einer Strandreinigung mitmachen, Beobachtungen melden, umweltfreundliche Optionen wählen und die lokale Natur entdecken.",
+    "quick": {
+      "heading": "Weitere Möglichkeiten während Ihres Aufenthalts",
+      "events": {
+        "title": "An einer Veranstaltung teilnehmen",
+        "desc": "Strandreinigungen, Naturspaziergänge und Workshops, die während Ihres Aufenthalts stattfinden."
+      },
+      "learn": {
+        "title": "Die lokale Natur entdecken",
+        "desc": "Kurze Beiträge zu den Lagunen, Meeresschildkröten und Schutzgebieten Nord-Korfus."
+      }
+    },
     "initiatives": {
       "heading": "Initiativen nach Thema entdecken",
       "intro": "ZOE bündelt die Umweltaktionen der Gemeinde in vier thematische Initiativen. Wählen Sie ein Thema, um die zugehörigen Aktionen zu sehen.",
