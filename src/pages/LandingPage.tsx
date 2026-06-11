@@ -231,8 +231,70 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Why ZOE — three pillars */}
+      <section className="bg-gray-50 py-10 dark:bg-gray-800">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
+              {t('landing.pillars.heading')}
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
+              {t('landing.pillars.subheading')}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {pillars.map((p) => (
+              <div
+                key={p.titleKey}
+                className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-900"
+              >
+                <div className={`mb-4 inline-flex rounded-xl p-3 ${p.color}`}>
+                  <p.icon size={24} aria-hidden="true" />
+                </div>
+                <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+                  {t(p.titleKey)}
+                </h3>
+                <p className="leading-relaxed text-gray-600 dark:text-gray-400">
+                  {t(p.descKey)}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* What's new — merged feed teaser */}
+      {feedTeaser.length > 0 && (
+        <section className="bg-gray-50 py-10 dark:bg-gray-800">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+                  {t('landing.news.heading')}
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {t('landing.news.subheading')}
+                </p>
+              </div>
+              <Link
+                to="/news"
+                className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+              >
+                {t('landing.news.viewAll')}
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {feedTeaser.map((item) => (
+                <FeedCard key={`${item.source}-${item.id}`} item={item} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Get involved now — upcoming events first, then OPEN projects. Placed
-          directly under the hero so participation is the first call to action. */}
+          here so participation is the first action after the intro sections. */}
       {engageItems.length > 0 && (
         <section
           aria-labelledby="engage-heading"
@@ -315,35 +377,6 @@ export default function LandingPage() {
         </section>
       )}
 
-      {/* Documented facts strip (Part 2B) — only real, sourced programme figures */}
-      <section
-        className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
-        aria-label={t('landing.statsAria')}
-      >
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3">
-            {facts.map((f) => (
-              <div key={f.key}>
-                <p className="text-2xl font-bold text-green-700 dark:text-green-400 sm:text-3xl">
-                  {f.value}
-                </p>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-                  {f.label}
-                </p>
-                {f.source && (
-                  <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
-                    {f.source}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-          <p className="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
-            {t('landing.stats.disclaimer')}
-          </p>
-        </div>
-      </section>
-
       {/* Featured projects */}
       <section className="bg-white py-10 dark:bg-gray-900">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -396,6 +429,35 @@ export default function LandingPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Impact stats — documented, sourced programme figures only */}
+      <section
+        className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+        aria-label={t('landing.statsAria')}
+      >
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3">
+            {facts.map((f) => (
+              <div key={f.key}>
+                <p className="text-2xl font-bold text-green-700 dark:text-green-400 sm:text-3xl">
+                  {f.value}
+                </p>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                  {f.label}
+                </p>
+                {f.source && (
+                  <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
+                    {f.source}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
+            {t('landing.stats.disclaimer')}
+          </p>
         </div>
       </section>
 
@@ -496,68 +558,6 @@ export default function LandingPage() {
                     </h3>
                   </div>
                 </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* How ZOE works — three pillars */}
-      <section className="bg-gray-50 py-10 dark:bg-gray-800">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-8 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
-              {t('landing.pillars.heading')}
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
-              {t('landing.pillars.subheading')}
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {pillars.map((p) => (
-              <div
-                key={p.titleKey}
-                className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-900"
-              >
-                <div className={`mb-4 inline-flex rounded-xl p-3 ${p.color}`}>
-                  <p.icon size={24} aria-hidden="true" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
-                  {t(p.titleKey)}
-                </h3>
-                <p className="leading-relaxed text-gray-600 dark:text-gray-400">
-                  {t(p.descKey)}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* What's new — merged feed teaser */}
-      {feedTeaser.length > 0 && (
-        <section className="bg-gray-50 py-10 dark:bg-gray-800">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-                  {t('landing.news.heading')}
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {t('landing.news.subheading')}
-                </p>
-              </div>
-              <Link
-                to="/news"
-                className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
-              >
-                {t('landing.news.viewAll')}
-                <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {feedTeaser.map((item) => (
-                <FeedCard key={`${item.source}-${item.id}`} item={item} />
               ))}
             </div>
           </div>
