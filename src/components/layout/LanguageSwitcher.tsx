@@ -57,8 +57,8 @@ export default function LanguageSwitcher({
   const { t } = useTranslation();
   const { language, setLanguage } = useLanguageStore();
 
-  const flagBox = size === 'md' ? 'h-5 w-[30px]' : 'h-[15px] w-[22px]';
-  const pad = size === 'md' ? 'p-2' : 'p-1.5';
+  const flagBox = size === 'md' ? 'h-4 w-[24px]' : 'h-[13px] w-[20px]';
+  const pad = size === 'md' ? 'px-3 py-2 text-sm' : 'px-2 py-1 text-xs';
 
   return (
     <div
@@ -76,10 +76,10 @@ export default function LanguageSwitcher({
             aria-pressed={active}
             aria-label={l.label}
             title={l.label}
-            className={`rounded-full ${pad} transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-gray-900 ${
+            className={`inline-flex items-center gap-1.5 rounded-full font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-gray-900 ${pad} ${
               active
-                ? 'bg-white shadow-sm dark:bg-gray-700'
-                : 'opacity-55 hover:opacity-100'
+                ? 'bg-white text-green-700 shadow-sm dark:bg-gray-700 dark:text-green-400'
+                : 'text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200'
             }`}
           >
             <span
@@ -89,6 +89,8 @@ export default function LanguageSwitcher({
             >
               <Flag code={l.flag} />
             </span>
+            {/* Text code (EN/EL/DE) — clear for sighted users; SR uses aria-label */}
+            <span aria-hidden="true">{l.code.toUpperCase()}</span>
           </button>
         );
       })}
