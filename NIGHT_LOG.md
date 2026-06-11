@@ -10,7 +10,7 @@ Baseline-Tests: **Backend 68 / FE 22 / E2E 55**. DE/EN/EL für alle neuen Texte.
 |---|---|---|
 | 1 — Z1–Z6 Soll-Ist-Abgleich | ✅ | Alle 6 Ziele bereits implementiert; 1 i18n-Lücke (`Prototype —`) geschlossen |
 | 2 — Events unter Projekte | ✅ | Beidseitige Verlinkung + 9 verknüpfte Seed-Events bereits vorhanden; verifiziert, keine toten Links |
-| 3 — Startseite: aktive Projekte/Events oben | ⏳ | Steht aus (nach Block 4) |
+| 3 — Startseite: aktive Projekte/Events oben | ✅ | „Jetzt mitmachen"-Sektion direkt nach Hero: kommende Events zuerst, dann OPEN-Projekte, nutzt `EntityImage` |
 | 4 — Bild-Infrastruktur | ✅ | Teil 1 `Event.imageUrl` + Teil 2 `EntityImage` (Platzhalter + onError) in Projekt-Karten/-Detail + Event-Liste |
 | 5 — Input/Aktivität/Output (Hammer & Champy) | ⏳ | Steht aus |
 | 6 — Grüneres Design | ⏳ | Steht aus |
@@ -118,6 +118,20 @@ ist für den Prototyp nicht erforderlich → nicht hinzugefügt (Scope/Risiko).
 **Lücke bleibt:** keine.
 
 ---
+
+### Block 3 — Startseite „Jetzt mitmachen"
+Neue Sektion in `LandingPage.tsx`, **direkt nach dem Hero** (vor Stats/Pillars/Featured):
+- Lädt `getEvents({ upcoming: true })` (API sortiert nach Datum aufsteigend) und
+  `getProjects({ status: 'OPEN', limit: 4 })` — beide öffentlich, Fehler → leer.
+- **Priorisierung:** kommende Events zuerst, OPEN-Projekte füllen die restlichen
+  Plätze auf; insgesamt 3 Kacheln. Sind keine Events da, erscheinen 3 OPEN-Projekte;
+  ist alles leer, wird die Sektion ausgeblendet.
+- Jede Kachel: `EntityImage`-Vorschau (Block 4), Typ-Badge (Termin/Projekt),
+  Kategorie, Titel, bei Events das Datum, plus CTA-Link (Event → `/events`,
+  Projekt → `/projects/:id`). „Alle ansehen" → `/events` bzw. `/projects`.
+- **i18n:** neue Keys `landing.engage.*` (heading/subheading/viewAll/eventLabel/
+  projectLabel/eventCta/projectCta) in EN/DE/EL.
+- tsc (FE+BE) sauber, eslint sauber, FE 22 grün.
 
 ## Testergebnisse
 

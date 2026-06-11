@@ -12,6 +12,7 @@ import {
   GraduationCap,
   Eye,
   CheckCircle2,
+  CalendarDays,
 } from 'lucide-react';
 import { projects } from '../data/projects';
 import { impactMetrics } from '../data/metrics';
@@ -19,11 +20,32 @@ import { fallbackPosts } from '../data/posts';
 import StatusBadge from '../components/ui/StatusBadge';
 import ProgressBar from '../components/ui/ProgressBar';
 import PostCard from '../components/news/PostCard';
+import EntityImage from '../components/ui/EntityImage';
 import { getPosts } from '../services/postService';
+import { getEvents } from '../services/eventService';
+import { getProjects } from '../services/projectService';
 import { trackEvent, ANALYTICS_EVENTS } from '../services/analytics';
-import type { Post } from '../types';
+import type { Post, ApiEvent, ApiProject } from '../types';
 
 const highlights = projects.filter((p) => p.status === 'Active').slice(0, 3);
+
+const DATE_LOCALES: Record<string, string> = {
+  en: 'en-GB',
+  el: 'el-GR',
+  de: 'de-DE',
+};
+
+// A normalised tile for the "Get involved now" section: upcoming events first,
+// then OPEN projects fill the remaining slots.
+interface EngageItem {
+  key: string;
+  to: string;
+  kind: 'event' | 'project';
+  title: string;
+  category: string;
+  imageUrl: string | null;
+  date?: string;
+}
 
 const categoryIcons: Record<string, React.ElementType> = {
   Biodiversity: TreePine,
@@ -36,14 +58,53 @@ const categoryIcons: Record<string, React.ElementType> = {
 };
 
 export default function LandingPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language.slice(0, 2);
   const [latestPosts, setLatestPosts] = useState<Post[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<ApiEvent[]>([]);
+  const [openProjects, setOpenProjects] = useState<ApiProject[]>([]);
 
   useEffect(() => {
     getPosts({ limit: 3 })
       .then((posts) => setLatestPosts(posts.slice(0, 3)))
       .catch(() => setLatestPosts(fallbackPosts.slice(0, 3)));
+    // "Get involved now": upcoming events (date asc from the API) take priority,
+    // OPEN projects fill the rest. Both calls are public; failures degrade to empty.
+    getEvents({ upcoming: true })
+      .then((events) => setUpcomingEvents(events))
+      .catch(() => setUpcomingEvents([]));
+    getProjects({ status: 'OPEN', limit: 4 })
+      .then((data) => setOpenProjects(data.projects))
+      .catch(() => setOpenProjects([]));
   }, []);
+
+  function pickLang(en: string, el: string, de: string): string {
+    if (lang === 'el') return el;
+    if (lang === 'de') return de;
+    return en;
+  }
+
+  const engageItems: EngageItem[] = [
+    ...upcomingEvents.map<EngageItem>((e) => ({
+      key: `event-${e.id}`,
+      to: '/events',
+      kind: 'event',
+      title: pickLang(e.titleEn, e.titleEl, e.titleDe),
+      category: e.category,
+      imageUrl: e.imageUrl,
+      date: e.date,
+    })),
+    ...openProjects.map<EngageItem>((p) => ({
+      key: `project-${p.id}`,
+      to: `/projects/${p.id}`,
+      kind: 'project',
+      title: pickLang(p.titleEn, p.titleEl, p.titleDe),
+      category: p.category,
+      imageUrl: p.imageUrl,
+    })),
+  ].slice(0, 3);
+
+  const engageViewAll = upcomingEvents.length > 0 ? '/events' : '/projects';
 
   const pillars = [
     {
@@ -120,6 +181,90 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* Get involved now — upcoming events first, then OPEN projects. Placed
+          directly under the hero so participation is the first call to action. */}
+      {engageItems.length > 0 && (
+        <section
+          aria-labelledby="engage-heading"
+          className="bg-white py-16 dark:bg-gray-900"
+        >
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2
+                  id="engage-heading"
+                  className="mb-2 flex items-center gap-2 text-3xl font-bold text-gray-900 dark:text-white"
+                >
+                  <CalendarDays
+                    size={26}
+                    aria-hidden="true"
+                    className="text-green-600 dark:text-green-400"
+                  />
+                  {t('landing.engage.heading')}
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {t('landing.engage.subheading')}
+                </p>
+              </div>
+              <Link
+                to={engageViewAll}
+                className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+              >
+                {t('landing.engage.viewAll')}
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {engageItems.map((item) => (
+                <Link
+                  key={item.key}
+                  to={item.to}
+                  className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:border-green-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-600"
+                >
+                  <EntityImage
+                    src={item.imageUrl}
+                    alt={item.title}
+                    category={item.category}
+                    className="h-40 w-full"
+                  />
+                  <div className="flex flex-1 flex-col p-5">
+                    <div className="mb-2 flex flex-wrap items-center gap-2">
+                      <span className="rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-green-800 dark:bg-green-900/40 dark:text-green-300">
+                        {item.kind === 'event'
+                          ? t('landing.engage.eventLabel')
+                          : t('landing.engage.projectLabel')}
+                      </span>
+                      <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        {t(`projects.category.${item.category}`)}
+                      </span>
+                    </div>
+                    <h3 className="mb-2 line-clamp-2 text-base font-bold text-gray-900 transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-400">
+                      {item.title}
+                    </h3>
+                    {item.date && (
+                      <p className="mb-3 flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                        <CalendarDays size={13} aria-hidden="true" />
+                        {new Date(item.date).toLocaleDateString(
+                          DATE_LOCALES[lang] ?? 'en-GB',
+                          { weekday: 'short', day: 'numeric', month: 'long' }
+                        )}
+                      </p>
+                    )}
+                    <span className="mt-auto inline-flex items-center gap-1 text-xs font-medium text-green-600 dark:text-green-400">
+                      {item.kind === 'event'
+                        ? t('landing.engage.eventCta')
+                        : t('landing.engage.projectCta')}
+                      <ArrowRight size={12} aria-hidden="true" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Stats bar */}
       <section

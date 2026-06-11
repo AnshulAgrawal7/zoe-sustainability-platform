@@ -771,6 +771,15 @@
       "heading": "Was ist neu",
       "subheading": "Aktuelle Updates, abgeschlossene Projekte und Ankündigungen.",
       "viewAll": "Alle Neuigkeiten"
+    },
+    "engage": {
+      "heading": "Jetzt mitmachen",
+      "subheading": "Kommende Termine und offene Projekte in ganz Nordkorfu.",
+      "viewAll": "Alle ansehen",
+      "eventLabel": "Termin",
+      "projectLabel": "Projekt",
+      "eventCta": "Teilnehmen",
+      "projectCta": "Mehr erfahren"
     }
   },
   "privacy": {

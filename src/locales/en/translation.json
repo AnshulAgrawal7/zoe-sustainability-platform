@@ -771,6 +771,15 @@
       "heading": "What's new",
       "subheading": "Latest updates, completed projects and announcements.",
       "viewAll": "All news"
+    },
+    "engage": {
+      "heading": "Get involved now",
+      "subheading": "Upcoming events and open projects across North Corfu.",
+      "viewAll": "View all",
+      "eventLabel": "Event",
+      "projectLabel": "Project",
+      "eventCta": "Join in",
+      "projectCta": "Learn more"
     }
   },
   "privacy": {
