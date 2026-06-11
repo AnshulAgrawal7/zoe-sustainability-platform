@@ -13,7 +13,7 @@ Baseline-Tests: **Backend 68 / FE 22 / E2E 55**. DE/EN/EL für alle neuen Texte.
 | 3 — Startseite: aktive Projekte/Events oben | ✅ | „Jetzt mitmachen"-Sektion direkt nach Hero: kommende Events zuerst, dann OPEN-Projekte, nutzt `EntityImage` |
 | 4 — Bild-Infrastruktur | ✅ | Teil 1 `Event.imageUrl` + Teil 2 `EntityImage` (Platzhalter + onError) in Projekt-Karten/-Detail + Event-Liste |
 | 5 — Input/Aktivität/Output (Hammer & Champy) | ✅ | 9 trilinguale Projekt-Felder + Migration; Detail-Abschnitt „Input → Aktivität → Ergebnis"; Admin-Felder; Seed mit belegten Fakten |
-| 6 — Grüneres Design | ⏳ | Steht aus |
+| 6 — Grüneres Design | ✅ | ZOE-Markengrün als `green`-Skala in Tailwind (eine reversible Stelle); Kontraste WCAG-AA verifiziert (besser als vorher) |
 
 Legende: ✅ fertig · ⚠️ teilweise/mit Einschränkung · ⛔ übersprungen · ⏳ offen
 
@@ -153,6 +153,24 @@ Neue Sektion in `LandingPage.tsx`, **direkt nach dem Hero** (vor Stats/Pillars/F
   „Programmziel" formuliert (keine erfundenen Werte).
 - tsc (FE+BE) sauber, eslint sauber, BE 68 / FE 22 grün (Seed lief im Test-Setup
   fehlerfrei → alle 8 Projekt-Ids getroffen).
+
+### Block 6 — Grüneres Design (konservativ, reversibel)
+Da Grün laut Bestandsaufnahme bereits dominant ist (107× `green-700`, 89× `green-500`,
+82× `green-600` …), wurde **nicht** wahllos umgefärbt, sondern an **einer** Stelle
+zentralisiert: Tailwinds Default-`green`-Skala wird in `tailwind.config.js` durch eine
+**ZOE-Markengrün-Skala** ersetzt (Anker: Markengrün `#2d7d46` bei 600). Damit
+verschieben sich **alle** vorhandenen `*-green-*`-Klassen konsistent auf die
+ZOE-Identität — frischeres, sattes Forstgrün statt des generischeren Default-Grüns.
+- **Reversibel:** den `green`-Block in der Config löschen → zurück zum Default.
+- **WCAG-AA verifiziert** (numerisch, vor dem Anwenden): white-on-600 **5.08**
+  (Default war nur 3.30!), white-on-700 7.29, `green-600`/`700`-Text auf Weiß
+  5.08/7.29, Dark-Mode `green-400` auf gray-900/800 6.50/5.38, `green-300` auf
+  gray-900 9.19 — auf den Schlüsselpaaren durchweg **besser** als die alten Defaults.
+- Dark Mode bleibt funktionsfähig (alle Dark-Paare ≥ AA); `green-950` (1× genutzt)
+  in der Skala enthalten.
+- `npm run build` (tsc -b + vite) erfolgreich, FE 22 grün.
+- **Empfehlung:** kurzer visueller Check in hell + dunkel (siehe TODO). Im Zweifel
+  ist die Änderung mit einem Drei-Zeilen-Revert rückgängig zu machen.
 
 ## Testergebnisse
 
