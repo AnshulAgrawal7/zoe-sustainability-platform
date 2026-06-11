@@ -3,8 +3,20 @@ import type {
   ApiResponse,
   Idea,
   IdeaStatus,
+  PublicIdea,
   ApiProjectCategory,
 } from '../types';
+
+// Public idea board — the server returns only ACCEPTED ideas, no personal data.
+export async function getPublicIdeas(
+  category?: ApiProjectCategory
+): Promise<PublicIdea[]> {
+  const query = category ? `?category=${category}` : '';
+  const res = await api.get<
+    ApiResponse<{ ideas: PublicIdea[]; total: number }>
+  >(`/ideas/public${query}`);
+  return res.data.ideas;
+}
 
 export interface IdeaSubmission {
   title: string;

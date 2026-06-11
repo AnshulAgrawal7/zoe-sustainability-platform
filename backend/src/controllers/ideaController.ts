@@ -43,6 +43,31 @@ export async function createIdea(req: AuthRequest, res: Response) {
   }
 }
 
+// GET /api/ideas/public — public idea board. Returns ONLY admin-approved
+// (ACCEPTED) ideas and, for privacy/DSGVO, selects NO personal fields
+// (submitterName/Email/userId are never exposed). Pre-moderation is enforced
+// server-side here, not in the frontend.
+export async function getPublicIdeas(req: Request, res: Response) {
+  const category = req.query['category'] as string | undefined;
+  try {
+    const ideas = await prisma.idea.findMany({
+      where: { status: 'ACCEPTED', ...(category ? { category } : {}) },
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        category: true,
+        status: true,
+        createdAt: true,
+      },
+    });
+    ok(res, { ideas, total: ideas.length });
+  } catch {
+    serverError(res);
+  }
+}
+
 // GET /api/admin/ideas?status=... — adminOnly (guarded by the admin router).
 export async function getIdeas(req: Request, res: Response) {
   const status = req.query['status'] as string | undefined;

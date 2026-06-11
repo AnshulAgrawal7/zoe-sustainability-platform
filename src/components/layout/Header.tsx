@@ -32,6 +32,7 @@ export default function Header() {
       label: t('nav.getInvolved'),
       links: [
         { to: '/participate', label: t('nav.submitIdea') },
+        { to: '/ideas', label: t('nav.ideas') },
         { to: '/get-involved', label: t('nav.getInvolvedOverview') },
         { to: '/rewards', label: t('nav.rewards') },
       ],

@@ -448,7 +448,8 @@
     "initiatives": "Initiativen",
     "getInvolvedOverview": "Mitmach-Übersicht",
     "sdgContributions": "SDG-Beiträge",
-    "keyFigures": "Kennzahlen"
+    "keyFigures": "Kennzahlen",
+    "ideas": "Ideen-Board"
   },
   "auth": {
     "login": "Anmelden",
@@ -675,7 +676,7 @@
     "categoryPlaceholder": "Kategorie wählen",
     "optionalLabel": "optional",
     "privacyNote": "Deine Idee wird zur Prüfung an die Gemeinde weitergeleitet. Die E-Mail ist freiwillig: Wenn du sie angibst, darf die Gemeinde auf deine Idee antworten; ohne E-Mail bleibt deine Einreichung anonym. Ein Konto ist nicht nötig. (Prototyp: für die Demo gespeichert, kein automatischer Versand.)",
-    "submitSuccess": "Danke! Deine Idee wurde zur Prüfung an die Gemeinde übermittelt.",
+    "submitSuccess": "Danke! Deine Idee wurde zur Prüfung an die Gemeinde übermittelt. Nach Freigabe erscheint sie öffentlich im Ideen-Board.",
     "submitError": "Idee konnte nicht übermittelt werden. Bitte versuche es erneut."
   },
   "sdgs": {
@@ -1362,5 +1363,18 @@
   },
   "popup": {
     "viewProject": "Projekt ansehen →"
+  },
+  "ideasBoard": {
+    "title": "Ideen-Board",
+    "intro": "Von Bürger:innen eingereichte Ideen, von der Gemeinde geprüft und freigegeben, bevor sie hier erscheinen.",
+    "howItWorks": "So funktioniert es: Idee einreichen → die Gemeinde prüft sie → nach Freigabe erscheint sie hier öffentlich.",
+    "demoNote": "Prototyp — freigegebene Bürgerideen",
+    "all": "Alle",
+    "filterBy": "Nach Kategorie filtern",
+    "found": "{{count}} Ideen",
+    "approved": "Freigegeben",
+    "empty": "Noch keine freigegebenen Ideen.",
+    "emptyCta": "Reiche die erste Idee ein",
+    "submitCta": "Idee einreichen"
   }
 }

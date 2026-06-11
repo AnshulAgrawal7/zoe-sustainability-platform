@@ -294,6 +294,16 @@ export interface Post {
 
 export type IdeaStatus = 'NEW' | 'IN_REVIEW' | 'ACCEPTED' | 'DECLINED';
 
+// Public idea-board shape (GET /api/ideas/public). ACCEPTED only, no personal data.
+export interface PublicIdea {
+  id: string;
+  title: string;
+  description: string;
+  category: ApiProjectCategory;
+  status: 'ACCEPTED';
+  createdAt: string;
+}
+
 // Admin-facing shape (GET /api/admin/ideas). `category` reuses ApiProjectCategory.
 export interface Idea {
   id: string;

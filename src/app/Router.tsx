@@ -15,6 +15,7 @@ import TransparencyPage from '../pages/TransparencyPage';
 import AudiencesPage from '../pages/AudiencesPage';
 import RewardsPage from '../pages/RewardsPage';
 import GetInvolvedPage from '../pages/GetInvolvedPage';
+import IdeasPage from '../pages/IdeasPage';
 import NewsPage from '../pages/NewsPage';
 
 // Auth pages
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
       { path: 'sdg-dashboard', element: <SDGDashboardPage /> },
       { path: 'participate', element: <ParticipationPage /> },
       { path: 'get-involved', element: <GetInvolvedPage /> },
+      { path: 'ideas', element: <IdeasPage /> },
       { path: 'audiences', element: <AudiencesPage /> },
       { path: 'events', element: <EventsPage /> },
       { path: 'transparency', element: <TransparencyPage /> },

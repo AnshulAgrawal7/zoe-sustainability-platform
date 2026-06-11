@@ -372,7 +372,38 @@ async function main() {
       p2.id),
   ]);
 
-  console.log(`Seeded: ${[p1,p2,p3,p4,p5,p6,p7,p8].length} projects, 4 users, 5 badges, 4 posts`);
+  // --- Demo citizen ideas (Z3 public board). DEMO DATA: plausible anonymous
+  // citizen suggestions tied to real local features, pre-approved (ACCEPTED) so
+  // the public /ideas board is not empty. No personal data (anonymous).
+  const makeIdea = (
+    id: string, title: string, description: string, category: string,
+  ) =>
+    prisma.idea.upsert({
+      where: { id },
+      update: {},
+      create: { id, title, description, category, status: 'ACCEPTED' },
+    });
+
+  await Promise.all([
+    makeIdea('idea-demo-bikeracks',
+      'Covered bike parking in Acharavi',
+      'Add shaded, covered bicycle racks near the Acharavi seafront and the main bus stops to make cycling easier during the summer heat.',
+      'MOBILITY'),
+    makeIdea('idea-demo-refill',
+      'Water refill stations on the trails',
+      'Install drinking-water refill points along the Erimitis and Nymfes trails to cut down on single-use plastic bottles for hikers.',
+      'ENVIRONMENT'),
+    makeIdea('idea-demo-adoptspot',
+      'Adopt-a-spot for the coastline',
+      'Let families, schools and local businesses adopt a stretch of coastline, keep it clean and report litter through the platform.',
+      'COMMUNITY'),
+    makeIdea('idea-demo-schoolvisits',
+      'School visits to the recycling hub',
+      'Organise regular pupil visits to the municipal sorting hub so children learn first-hand how the 20 recycling streams work.',
+      'EDUCATION'),
+  ]);
+
+  console.log(`Seeded: ${[p1,p2,p3,p4,p5,p6,p7,p8].length} projects, 4 users, 5 badges, 4 posts, 4 demo ideas`);
   console.log('Admin:    admin@zoe-corfu.gr / ZoeAdmin2026!');
   console.log('Users:    citizen1@example.com, citizen2@example.com, tourist@example.com / Test1234!');
 }

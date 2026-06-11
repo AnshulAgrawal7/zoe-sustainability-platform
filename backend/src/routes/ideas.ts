@@ -1,11 +1,15 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import rateLimit from 'express-rate-limit';
-import { createIdea } from '../controllers/ideaController';
+import { createIdea, getPublicIdeas } from '../controllers/ideaController';
 import { optionalAuth } from '../middleware/optionalAuth';
 import { PROJECT_CATEGORIES } from '../constants';
 
 const router = Router();
+
+// Public, read-only idea board — server-side filtered to ACCEPTED ideas only,
+// with no personal data (pre-moderation, Decide-Madrid/Consul style).
+router.get('/public', getPublicIdeas);
 
 // Public, unauthenticated-friendly endpoint → guard against abuse, like the
 // event-registration route (tighter in production).

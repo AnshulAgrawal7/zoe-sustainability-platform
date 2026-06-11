@@ -65,4 +65,30 @@ test.describe('Citizen ideas (Z3)', () => {
       emailRow.locator(`a[href^="mailto:${replyEmail}"]`)
     ).toBeVisible();
   });
+
+  test('public board shows an idea only after the admin approves it (pre-moderation)', async ({
+    page,
+  }) => {
+    const stamp = Date.now();
+    const title = `E2E board ${stamp}`;
+
+    // Citizen submits an idea (status NEW)
+    await submitIdea(page, title, 'ENVIRONMENT');
+
+    // Before approval: the public board must NOT show it
+    await page.goto('/ideas');
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expect(page.getByText(title)).toHaveCount(0);
+
+    // Admin approves it (sets status ACCEPTED via the row's status select)
+    await gotoAdminIdeas(page);
+    const row = page.locator('li').filter({ hasText: title });
+    await expect(row).toBeVisible();
+    await row.locator('select').selectOption('ACCEPTED');
+    await page.waitForTimeout(800); // let the PATCH persist
+
+    // After approval: it appears on the public board
+    await page.goto('/ideas');
+    await expect(page.getByText(title)).toBeVisible({ timeout: 10000 });
+  });
 });

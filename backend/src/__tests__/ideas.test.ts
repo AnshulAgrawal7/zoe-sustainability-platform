@@ -137,3 +137,39 @@ describe('PATCH /api/admin/ideas/:id (admin only)', () => {
     expect(res.status).toBe(403);
   });
 });
+
+describe('GET /api/ideas/public (public board, no login)', () => {
+  it('returns only ACCEPTED ideas and never exposes personal fields', async () => {
+    // A NEW (unapproved) idea with personal data — must NOT be public.
+    const newRes = await request(app).post('/api/ideas').send({
+      title: 'Hidden until approved',
+      description: 'Should not be public yet.',
+      category: 'ENVIRONMENT',
+      submitterName: 'Jane Doe',
+      submitterEmail: 'jane@example.com',
+    });
+    const hiddenId = newRes.body.data.id as string;
+    createdIds.push(hiddenId);
+
+    const res = await request(app).get('/api/ideas/public');
+    expect(res.status).toBe(200);
+    const ideas = res.body.data.ideas as Array<Record<string, unknown>>;
+    expect(Array.isArray(ideas)).toBe(true);
+    expect(ideas.length).toBeGreaterThan(0); // seed has ACCEPTED demo ideas
+    for (const idea of ideas) {
+      expect(idea['status']).toBe('ACCEPTED');
+      expect(idea).not.toHaveProperty('submitterName');
+      expect(idea).not.toHaveProperty('submitterEmail');
+      expect(idea).not.toHaveProperty('userId');
+    }
+    expect(ideas.some((i) => i['id'] === hiddenId)).toBe(false);
+  });
+
+  it('filters by category', async () => {
+    const res = await request(app).get('/api/ideas/public?category=MOBILITY');
+    expect(res.status).toBe(200);
+    (res.body.data.ideas as Array<{ category: string }>).forEach((i) => {
+      expect(i.category).toBe('MOBILITY');
+    });
+  });
+});
