@@ -43,6 +43,10 @@ export async function getProjects(req: Request, res: Response) {
 
   try {
     const where = {
+      // Public list + count: structural/umbrella projects (listed=false) are
+      // hidden. The detail route (getProject) does NOT filter, so they stay
+      // reachable by direct link (e.g. from an event detail page).
+      listed: true,
       ...(category ? { category } : {}),
       ...(status && status !== 'ALL' ? { status } : {}),
     };

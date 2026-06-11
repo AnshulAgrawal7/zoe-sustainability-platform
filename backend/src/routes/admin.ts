@@ -68,7 +68,7 @@ const eventCreateValidators = [
   body('category').isIn([...PROJECT_CATEGORIES]),
   body('rewardPoints').optional().isInt({ min: 0 }),
   body('capacity').optional({ values: 'null' }).isInt({ min: 1 }),
-  body('projectId').optional({ values: 'falsy' }).isString(),
+  body('projectId').isString().trim().notEmpty(), // Decision A: required
   body('location').optional({ values: 'falsy' }).trim().isLength({ max: 200 }),
   body('imageUrl').optional({ values: 'falsy' }).isURL({ require_protocol: true }).isLength({ max: 2048 }),
 ];
@@ -81,6 +81,7 @@ const eventUpdateValidators = [
   body('category').optional().isIn([...PROJECT_CATEGORIES]),
   body('rewardPoints').optional().isInt({ min: 0 }),
   body('capacity').optional({ values: 'null' }).isInt({ min: 1 }),
+  body('projectId').optional({ values: 'falsy' }).isString(),
   body('imageUrl').optional({ values: 'falsy' }).isURL({ require_protocol: true }).isLength({ max: 2048 }),
 ];
 

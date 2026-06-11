@@ -26,7 +26,7 @@ interface EventBody {
   rewardPoints?: number;
   capacity?: number;
   imageUrl?: string;
-  projectId?: string | null;
+  projectId?: string;
 }
 
 // Attach a registration count to each event (the link is a soft string reference,
@@ -91,10 +91,10 @@ export async function createEvent(req: AuthRequest, res: Response) {
 
   const body = req.body as EventBody;
   try {
-    if (body.projectId) {
-      const project = await prisma.project.findUnique({ where: { id: body.projectId } });
-      if (!project) { badRequest(res, 'Linked project does not exist'); return; }
-    }
+    // Decision A: every event must belong to a Project.
+    if (!body.projectId) { badRequest(res, 'A linked project is required'); return; }
+    const project = await prisma.project.findUnique({ where: { id: body.projectId } });
+    if (!project) { badRequest(res, 'Linked project does not exist'); return; }
     const event = await prisma.event.create({
       data: {
         titleEn: body.titleEn ?? '',
@@ -109,7 +109,7 @@ export async function createEvent(req: AuthRequest, res: Response) {
         rewardPoints: body.rewardPoints ?? EVENT_POINTS,
         capacity: body.capacity ?? null,
         imageUrl: body.imageUrl ?? null,
-        projectId: body.projectId ?? null,
+        projectId: body.projectId,
       },
     });
     created(res, event);
@@ -147,7 +147,7 @@ export async function updateEvent(req: AuthRequest, res: Response) {
         ...(body.rewardPoints !== undefined ? { rewardPoints: body.rewardPoints } : {}),
         ...(body.capacity !== undefined ? { capacity: body.capacity } : {}),
         ...(body.imageUrl !== undefined ? { imageUrl: body.imageUrl || null } : {}),
-        ...(body.projectId !== undefined ? { projectId: body.projectId || null } : {}),
+        ...(body.projectId ? { projectId: body.projectId } : {}),
       },
     });
     ok(res, updated);

@@ -53,6 +53,19 @@ describe('GET /api/projects', () => {
     expect(res.status).toBe(200);
     expect(res.body.data.projects.length).toBeLessThanOrEqual(2);
   });
+
+  it('hides structural (listed=false) projects from the list but keeps them reachable by id', async () => {
+    const list = await request(app).get('/api/projects?status=ALL&limit=50');
+    expect(list.status).toBe(200);
+    const ids = (list.body.data.projects as { id: string }[]).map((p) => p.id);
+    expect(ids).not.toContain('proj-zoe-programme');
+
+    // The umbrella project is still reachable by direct link (event detail links to it).
+    const detail = await request(app).get('/api/projects/proj-zoe-programme');
+    expect(detail.status).toBe(200);
+    expect(detail.body.data.id).toBe('proj-zoe-programme');
+    expect(detail.body.data.listed).toBe(false);
+  });
 });
 
 describe('POST /api/projects (admin only)', () => {
