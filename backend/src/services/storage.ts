@@ -4,6 +4,10 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 // must NEVER reach the browser. Reads SUPABASE_URL + SERVICE_ROLE_KEY from the
 // backend env and fails loudly if they are missing.
 export const POST_IMAGES_BUCKET = 'post-images';
+// Cover images for the core entities (projects, events, learning resources) and
+// the project-lifecycle news (`Post`), plus branding assets. Kept separate from
+// the imported-feed bucket so the two import pipelines never collide.
+export const ENTITY_IMAGES_BUCKET = 'entity-images';
 
 export class StorageNotConfiguredError extends Error {
   constructor() {
@@ -35,15 +39,16 @@ export function getStorageClient(): SupabaseClient {
 }
 
 // Create the public bucket if it does not already exist (idempotent).
-export async function ensureBucket(): Promise<void> {
+export async function ensureBucket(
+  bucket: string = POST_IMAGES_BUCKET
+): Promise<void> {
   const sb = getStorageClient();
   const { data: buckets, error } = await sb.storage.listBuckets();
   if (error) throw error;
-  if (!buckets.some((b) => b.name === POST_IMAGES_BUCKET)) {
-    const { error: createErr } = await sb.storage.createBucket(
-      POST_IMAGES_BUCKET,
-      { public: true }
-    );
+  if (!buckets.some((b) => b.name === bucket)) {
+    const { error: createErr } = await sb.storage.createBucket(bucket, {
+      public: true,
+    });
     if (createErr) throw createErr;
   }
 }
@@ -51,21 +56,25 @@ export async function ensureBucket(): Promise<void> {
 export async function uploadImage(
   path: string,
   body: Buffer,
-  contentType: string
+  contentType: string,
+  bucket: string = POST_IMAGES_BUCKET
 ): Promise<{ path: string; publicUrl: string }> {
   const sb = getStorageClient();
   const { error } = await sb.storage
-    .from(POST_IMAGES_BUCKET)
+    .from(bucket)
     .upload(path, body, { contentType, upsert: true });
   if (error) throw error;
-  const { data } = sb.storage.from(POST_IMAGES_BUCKET).getPublicUrl(path);
+  const { data } = sb.storage.from(bucket).getPublicUrl(path);
   return { path, publicUrl: data.publicUrl };
 }
 
 // Remove objects from the bucket (used when deleting a post or an image).
-export async function deleteImages(paths: string[]): Promise<void> {
+export async function deleteImages(
+  paths: string[],
+  bucket: string = POST_IMAGES_BUCKET
+): Promise<void> {
   if (paths.length === 0) return;
   const sb = getStorageClient();
-  const { error } = await sb.storage.from(POST_IMAGES_BUCKET).remove(paths);
+  const { error } = await sb.storage.from(bucket).remove(paths);
   if (error) throw error;
 }
