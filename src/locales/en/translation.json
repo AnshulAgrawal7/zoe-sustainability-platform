@@ -1059,6 +1059,10 @@
     "prototypeNote": "Prototype: all event data and dates are illustrative dummy data.",
     "filterBy": "Filter by:",
     "all": "All",
+    "periodLabel": "Period:",
+    "dateFrom": "From",
+    "dateTo": "To",
+    "clearPeriod": "Clear period",
     "categories": {
       "Biodiversity": "Biodiversity",
       "Circular Economy": "Circular Economy",

@@ -1054,11 +1054,15 @@
     "ctaButton": "Finden Sie Ihre Beteiligungsmöglichkeit"
   },
   "events": {
-    "title": "Veranstaltungen & Initiativen",
+    "title": "Veranstaltungen",
     "intro": "Anstehende Veranstaltungen, Workshops, Säuberungstage und Gemeinde-Foren. Finden Sie eine Aktivität in Ihrer Nähe und machen Sie mit.",
     "prototypeNote": "Prototyp: Alle Veranstaltungsdaten und Termine sind illustrative Beispieldaten.",
     "filterBy": "Filtern nach:",
     "all": "Alle",
+    "periodLabel": "Zeitraum:",
+    "dateFrom": "Von",
+    "dateTo": "Bis",
+    "clearPeriod": "Zeitraum zurücksetzen",
     "categories": {
       "Biodiversity": "Biodiversität",
       "Circular Economy": "Kreislaufwirtschaft",
