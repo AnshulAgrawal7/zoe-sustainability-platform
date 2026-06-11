@@ -2,7 +2,12 @@ import { Router } from 'express';
 import { body } from 'express-validator';
 import rateLimit from 'express-rate-limit';
 import { createIdea, getPublicIdeas } from '../controllers/ideaController';
+import {
+  getPublicIdeaDetail,
+  createComment,
+} from '../controllers/commentController';
 import { optionalAuth } from '../middleware/optionalAuth';
+import { authenticate } from '../middleware/auth';
 import { PROJECT_CATEGORIES } from '../constants';
 
 const router = Router();
@@ -10,6 +15,24 @@ const router = Router();
 // Public, read-only idea board — server-side filtered to ACCEPTED ideas only,
 // with no personal data (pre-moderation, Decide-Madrid/Consul style).
 router.get('/public', getPublicIdeas);
+
+// Public detail of an approved idea + its visible comments (optionalAuth adds
+// `likedByMe`). Defined before `/:id`-style routes — there are none here.
+router.get('/public/:id', optionalAuth, getPublicIdeaDetail);
+
+// Post a comment on an approved idea — logged-in only, rate-limited.
+const commentLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: process.env['NODE_ENV'] === 'production' ? 20 : 200,
+  message: { success: false, error: 'Too many requests, please try again later' },
+});
+router.post(
+  '/:id/comments',
+  commentLimiter,
+  authenticate,
+  [body('body').trim().notEmpty().isLength({ min: 1, max: 2000 })],
+  createComment
+);
 
 // Public, unauthenticated-friendly endpoint → guard against abuse, like the
 // event-registration route (tighter in production).

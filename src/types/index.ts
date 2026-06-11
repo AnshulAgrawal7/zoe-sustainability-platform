@@ -304,6 +304,34 @@ export interface PublicIdea {
   createdAt: string;
 }
 
+export type CommentStatus = 'VISIBLE' | 'HIDDEN';
+
+// Public comment on an approved idea — author display name only, no PII.
+export interface PublicComment {
+  id: string;
+  body: string;
+  createdAt: string;
+  authorName: string;
+  likeCount: number;
+  likedByMe: boolean;
+}
+
+export interface PublicIdeaDetail {
+  idea: PublicIdea;
+  comments: PublicComment[];
+}
+
+// Admin moderation shape (GET /api/admin/comments).
+export interface AdminComment {
+  id: string;
+  body: string;
+  status: CommentStatus;
+  createdAt: string;
+  user: { name: string };
+  idea: { id: string; title: string };
+  _count: { likes: number };
+}
+
 // Admin-facing shape (GET /api/admin/ideas). `category` reuses ApiProjectCategory.
 export interface Idea {
   id: string;

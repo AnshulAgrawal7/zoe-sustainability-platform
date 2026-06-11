@@ -21,3 +21,8 @@ export const IDEA_STATUSES = [
 ] as const;
 
 export type IdeaStatus = (typeof IDEA_STATUSES)[number];
+
+// Moderation state of a comment on an approved idea (Z3 discourse).
+export const COMMENT_STATUSES = ['VISIBLE', 'HIDDEN'] as const;
+
+export type CommentStatus = (typeof COMMENT_STATUSES)[number];

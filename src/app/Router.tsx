@@ -16,6 +16,7 @@ import AudiencesPage from '../pages/AudiencesPage';
 import RewardsPage from '../pages/RewardsPage';
 import GetInvolvedPage from '../pages/GetInvolvedPage';
 import IdeasPage from '../pages/IdeasPage';
+import IdeaDetailPage from '../pages/IdeaDetailPage';
 import NewsPage from '../pages/NewsPage';
 
 // Auth pages
@@ -32,6 +33,7 @@ import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
 import ManageProjectsPage from '../pages/admin/ManageProjectsPage';
 import ManageUsersPage from '../pages/admin/ManageUsersPage';
 import ManageIdeasPage from '../pages/admin/ManageIdeasPage';
+import ManageCommentsPage from '../pages/admin/ManageCommentsPage';
 import ManagePostsPage from '../pages/admin/ManagePostsPage';
 import NewProjectPage from '../pages/admin/NewProjectPage';
 import EditProjectPage from '../pages/admin/EditProjectPage';
@@ -56,6 +58,7 @@ const router = createBrowserRouter([
       { path: 'participate', element: <ParticipationPage /> },
       { path: 'get-involved', element: <GetInvolvedPage /> },
       { path: 'ideas', element: <IdeasPage /> },
+      { path: 'ideas/:id', element: <IdeaDetailPage /> },
       { path: 'audiences', element: <AudiencesPage /> },
       { path: 'events', element: <EventsPage /> },
       { path: 'transparency', element: <TransparencyPage /> },
@@ -125,6 +128,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageIdeasPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/comments',
+        element: (
+          <AdminRoute>
+            <ManageCommentsPage />
           </AdminRoute>
         ),
       },

@@ -91,4 +91,42 @@ test.describe('Citizen ideas (Z3)', () => {
     await page.goto('/ideas');
     await expect(page.getByText(title)).toBeVisible({ timeout: 10000 });
   });
+
+  test('logged-in user can comment on an approved idea; a guest sees a login prompt', async ({
+    page,
+  }) => {
+    const discussionLink = /view discussion|diskussion ansehen|δείτε τη συζήτηση/i;
+
+    // Guest: the discussion page shows no comment textarea (login prompt instead)
+    await page.goto('/ideas');
+    await page.getByRole('link', { name: discussionLink }).first().click();
+    await page.waitForURL(/\/ideas\/.+/);
+    await expect(page.locator('#comment-body')).toHaveCount(0);
+
+    // Log in
+    await page.goto('/login');
+    await page.fill('#email', 'citizen1@example.com');
+    await page.fill('#password', 'Test1234!');
+    await page.getByRole('button', { name: /sign in|log in|anmelden/i }).click();
+    await page.waitForURL('/dashboard', { timeout: 10000 });
+
+    // In-app nav to an idea detail (keeps the in-memory access token)
+    await page
+      .getByRole('button', { name: /get involved|mitmachen|συμμετοχή/i })
+      .click();
+    await page
+      .getByRole('menuitem', {
+        name: /ideas board|ideen-board|πίνακας ιδεών/i,
+      })
+      .click();
+    await page.waitForURL('/ideas');
+    await page.getByRole('link', { name: discussionLink }).first().click();
+    await page.waitForURL(/\/ideas\/.+/);
+
+    // Post a comment → it appears in the list
+    const text = `E2E comment ${Date.now()}`;
+    await page.fill('#comment-body', text);
+    await page.locator('form button[type="submit"]').click();
+    await expect(page.getByText(text)).toBeVisible({ timeout: 10000 });
+  });
 });

@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Lightbulb, CheckCircle2, ArrowRight, Info } from 'lucide-react';
+import {
+  Lightbulb,
+  CheckCircle2,
+  ArrowRight,
+  Info,
+  MessageSquare,
+} from 'lucide-react';
 import { getPublicIdeas } from '../services/ideaService';
 import type { PublicIdea, ApiProjectCategory } from '../types';
 
@@ -166,16 +172,25 @@ export default function IdeasPage() {
                 <p className="mb-3 flex-1 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                   {idea.description}
                 </p>
-                <time
-                  dateTime={idea.createdAt}
-                  className="text-xs text-gray-400 dark:text-gray-500"
-                >
-                  {new Date(idea.createdAt).toLocaleDateString(locale, {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
-                </time>
+                <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-3 dark:border-gray-700">
+                  <time
+                    dateTime={idea.createdAt}
+                    className="text-xs text-gray-400 dark:text-gray-500"
+                  >
+                    {new Date(idea.createdAt).toLocaleDateString(locale, {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </time>
+                  <Link
+                    to={`/ideas/${idea.id}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-green-700 hover:underline dark:text-green-400"
+                  >
+                    <MessageSquare size={13} aria-hidden="true" />
+                    {t('ideasBoard.discuss')}
+                  </Link>
+                </div>
               </li>
             ))}
           </ul>

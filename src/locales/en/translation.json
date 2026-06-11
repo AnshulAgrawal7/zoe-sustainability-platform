@@ -1375,6 +1375,33 @@
     "approved": "Approved",
     "empty": "No approved ideas yet.",
     "emptyCta": "Submit the first idea",
-    "submitCta": "Submit an idea"
+    "submitCta": "Submit an idea",
+    "discuss": "View discussion"
+  },
+  "ideaDetail": {
+    "back": "Back to ideas board",
+    "notFound": "This idea is not available.",
+    "discussion": "Discussion",
+    "commentsCount": "{{count}} comments",
+    "noComments": "No comments yet. Be the first to comment.",
+    "commentLabel": "Your comment",
+    "commentPlaceholder": "Share your thoughts…",
+    "submit": "Post comment",
+    "submitError": "Sorry, your comment could not be posted.",
+    "loginToComment": "Log in to join the discussion.",
+    "login": "Log in",
+    "likeAria": "Like this comment, {{count}} likes"
+  },
+  "adminComments": {
+    "title": "Comments",
+    "subtitle": "Moderate citizen comments on approved ideas. Hidden comments never appear publicly.",
+    "empty": "No comments yet.",
+    "hide": "Hide",
+    "show": "Show",
+    "statusVisible": "Visible",
+    "statusHidden": "Hidden",
+    "onIdea": "on",
+    "likes": "{{count}} likes",
+    "navLabel": "Moderate comments"
   }
 }

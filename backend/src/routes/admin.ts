@@ -3,10 +3,11 @@ import { body } from 'express-validator';
 import { getAllUsers, updateUserRole, getStats } from '../controllers/adminController';
 import { translateProjectFields } from '../controllers/translationController';
 import { getIdeas, updateIdeaStatus } from '../controllers/ideaController';
+import { getAllComments, setCommentStatus } from '../controllers/commentController';
 import { createEvent, updateEvent, deleteEvent } from '../controllers/eventController';
 import { authenticate } from '../middleware/auth';
 import { adminOnly } from '../middleware/adminOnly';
-import { IDEA_STATUSES, PROJECT_CATEGORIES } from '../constants';
+import { IDEA_STATUSES, COMMENT_STATUSES, PROJECT_CATEGORIES } from '../constants';
 
 const router = Router();
 
@@ -31,6 +32,14 @@ router.patch(
   '/ideas/:id',
   [body('status').isIn([...IDEA_STATUSES])],
   updateIdeaStatus
+);
+
+// --- Comment moderation (Z3 discourse) ---
+router.get('/comments', getAllComments);
+router.patch(
+  '/comments/:id',
+  [body('status').isIn([...COMMENT_STATUSES])],
+  setCommentStatus
 );
 
 // --- Events (admin CRUD; public read lives on /api/events) ---

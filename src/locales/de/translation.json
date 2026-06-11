@@ -1375,6 +1375,33 @@
     "approved": "Freigegeben",
     "empty": "Noch keine freigegebenen Ideen.",
     "emptyCta": "Reiche die erste Idee ein",
-    "submitCta": "Idee einreichen"
+    "submitCta": "Idee einreichen",
+    "discuss": "Diskussion ansehen"
+  },
+  "ideaDetail": {
+    "back": "Zurück zum Ideen-Board",
+    "notFound": "Diese Idee ist nicht verfügbar.",
+    "discussion": "Diskussion",
+    "commentsCount": "{{count}} Kommentare",
+    "noComments": "Noch keine Kommentare. Schreibe den ersten.",
+    "commentLabel": "Dein Kommentar",
+    "commentPlaceholder": "Teile deine Gedanken…",
+    "submit": "Kommentar senden",
+    "submitError": "Dein Kommentar konnte leider nicht gesendet werden.",
+    "loginToComment": "Melde dich an, um an der Diskussion teilzunehmen.",
+    "login": "Anmelden",
+    "likeAria": "Diesen Kommentar liken, {{count}} Likes"
+  },
+  "adminComments": {
+    "title": "Kommentare",
+    "subtitle": "Moderiere Bürgerkommentare zu freigegebenen Ideen. Versteckte Kommentare erscheinen nie öffentlich.",
+    "empty": "Noch keine Kommentare.",
+    "hide": "Ausblenden",
+    "show": "Einblenden",
+    "statusVisible": "Sichtbar",
+    "statusHidden": "Versteckt",
+    "onIdea": "zu",
+    "likes": "{{count}} Likes",
+    "navLabel": "Kommentare moderieren"
   }
 }
