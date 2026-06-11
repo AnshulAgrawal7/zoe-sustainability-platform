@@ -18,8 +18,17 @@ WCAG, keine erfundenen Daten, Persistenz in der DB, Commit nach jedem Block.
 
 ## Chronologisches Protokoll
 
-1. Branch `feature/z1-z6-gap-closure` von `main` erstellt. Baseline verifiziert: BE 68 / FE 22.
-2. **Block A1 umgesetzt** (s. u.). BE 68→**70**, FE 22, E2E 55→**56**. Commit folgt.
+1. Branch `feature/z1-z6-gap-closure` von `main`. Baseline: BE 68 / FE 22 / E2E 55.
+2. **A1** (öffentliches Ideen-Board) → `71c200a`. BE 70.
+3. **A2** (Kommentare + Likes, moderiert) → `1f9c791`. BE 83 / E2E 57.
+4. **B** (LearningResource) → `81ff8a7`. BE 89 / E2E 58.
+5. **C** (SDG-Dashboard ehrlich) → `86e7dbc`.
+6. **D** (belegte Wirkungszahlen) → `034e450`. BE 92 / E2E 59.
+7. **F** (i18n-Strings) → `0c6986c`. **E zurückgestellt** (Plan s. u.).
+8. **Abschluss:** volle Suite **BE 92 / FE 22 / E2E 59** grün. Bekannter
+   State-Pollution-Stolperstein in `events.spec.ts:70` (citizen1 hatte eine
+   Alt-Event-Anmeldung aus wiederholten E2E-Läufen gegen das persistente Supabase)
+   — gezielt bereinigt, danach 59/59. **Kein** Code-Regress (Test unverändert).
 
 ## Block-Details
 
@@ -235,7 +244,55 @@ cd backend && npx prisma migrate deploy && npx prisma generate && npm run db:see
 
 ---
 
-## TODO — manuell zu erledigen
-- [ ] **Supabase:** Bereits während des Runs `npm run db:seed` gegen Supabase ausgeführt
-      (Demo-Ideen vorhanden) — bei späteren Schema-Blöcken erneut deployen (s. u.).
-- [ ] Echte Bürgerideen werden über `/participate` eingereicht und im Admin freigegeben.
+## Testergebnisse (Endstand)
+
+| Suite | Baseline | Endstand |
+|---|---|---|
+| Backend (vitest) | 68 | **92** ✅ (+24: ideas-public 2, comments 13, learn 6, metrics 3) |
+| Frontend (vitest) | 22 | **22** ✅ |
+| E2E (Playwright) | 55 | **59** ✅ (+4: Ideen-Board-Moderation, Kommentar-Flow, /learn, /transparency) |
+
+`tsc --noEmit` (FE+BE) sauber, eslint sauber. Baselines nur gestiegen, nie gefallen.
+
+**Hinweis E2E-Idempotenz:** Der Seed legt bewusst keine `EventRegistration`-Zeilen an;
+`events.spec.ts:70` meldet sich für ein Event an. Gegen das **persistente** Supabase
+kann das bei wiederholten Läufen den nächsten Lauf stören (409). Workaround in diesem
+Run: citizen1-Event-Anmeldungen vor dem Lauf entfernen. Dauerhafte Lösung wäre ein
+DB-Reset vor der E2E-Suite (separater Schritt).
+
+---
+
+## TODO — manuell zu erledigen (nach Priorität)
+
+**Migrationen (bereits während des Runs gegen Supabase deployed + geseedet — nur zur
+Nachvollziehbarkeit / falls erneut nötig):**
+- [x] `add_idea_comments` (A2), `add_learning_resources` (B), `add_project_metrics` (D)
+      → `cd backend && npx prisma migrate deploy && npx prisma generate && npm run db:seed`
+- [ ] Falls eine **frische** DB aufgesetzt wird: obige drei Migrationen deployen + seeden.
+
+**Inhalte/Bilder einpflegen (nur URL-Feld, kein Auto-Beschaffen):**
+- [ ] **Bilder** für Projekte, Events und Lerninhalte über die Admin-Bild-URL-Felder
+      ergänzen (aktuell überall Platzhalter).
+- [ ] **Reale Bürgerideen** kommen über `/participate` rein und werden im Admin
+      (`/admin/ideas`) auf ACCEPTED gesetzt → erscheinen auf `/ideas`.
+- [ ] Weitere **Lerninhalte** unter `/admin/learn` ergänzen (DeepL-Auto-Übersetzung
+      vorhanden).
+- [ ] Weitere **belegte Wirkungszahlen**: aktuell nur per Seed (proj-led, proj-circular).
+      Ein Admin-CRUD für `ProjectMetric` wurde NICHT gebaut (bewusst schlank gehalten) —
+      bei Bedarf nachrüsten oder Zahlen per Seed pflegen.
+
+**Visuell prüfen (hell + dunkel, DE/EN/EL):**
+- [ ] `/ideas` + `/ideas/:id` (Board, Moderation, Kommentare/Likes, Gast vs. eingeloggt).
+- [ ] `/learn` + `/learn/:id` + verknüpfte Lerninhalte auf Projekt-Detailseiten.
+- [ ] `/sdg-dashboard` (keine %-Balken mehr, zählbare Fakten + Disclaimer).
+- [ ] `/transparency` (neue „Belegte Wirkung"-Sektion oben; KPI-Grid klar als
+      „illustrativ" gelabelt). Projekt-Detail „Belegte Wirkung" / „noch nicht erfasst".
+- [ ] Admin-Tabs: Kommentare moderieren, Lerninhalte verwalten.
+
+**Übersprungen / nächster Schritt:**
+- [ ] **Block E (Missionen, Z4)** bewusst zurückgestellt — additiver Umsetzungsplan
+      steht oben unter „Block E … ZURÜCKGESTELLT".
+- [ ] Optional: illustrative `progressPercent`-Tabelle auf `/transparency` ganz
+      entfernen (steht aktuell unter Prototyp-/„illustrativ"-Hinweis).
+
+**Branch:** `feature/z1-z6-gap-closure` — **nicht** nach `main` gemergt (zur Prüfung).
