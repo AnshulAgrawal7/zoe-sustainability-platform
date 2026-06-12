@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Container from './Container';
 import { Leaf } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import FooterNewsletter from './FooterNewsletter';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -22,6 +23,13 @@ export default function Footer() {
   return (
     <footer className="mt-auto bg-green-950 text-gray-300">
       <Container className="py-12">
+        {/* Newsletter opt-in — global footer touchpoint (F1) */}
+        <div className="mb-10 border-b border-green-900 pb-10">
+          <div className="max-w-xl">
+            <FooterNewsletter />
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* Brand */}
           <div className="md:col-span-1">

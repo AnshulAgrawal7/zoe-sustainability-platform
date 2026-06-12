@@ -24,7 +24,11 @@ Baseline: FE `tsc` clean · Vitest 22/22 grün.
 | B1 „Was sind die SDGs?"-Abschnitt | DONE | 67872ab | Erklärbox oben auf SDG-Seite, trilingual |
 | C1 Passwort-Sichtbarkeits-Toggle | DONE | 6dee1fd | Reusable `PasswordInput` (Eye/EyeOff, aria-label/pressed) in Login + Register; kein Confirm-Feld vorhanden |
 | D1 Favicon-Konsistenz | DONE | d132cab | Alle Favicon-Assets aus Logo_Icon_transparent.png; stale Alt-Blatt `favicon.svg` entfernt; apple-touch auf dunkles Grün angeglichen; s. Entscheidung |
-| D2 ZOE-Schreibweise vereinheitlichen | DONE | (this) | Audit: bereits durchgängig „ZOE"; 0 Änderungen nötig; s. D2-Befund |
+| D2 ZOE-Schreibweise vereinheitlichen | DONE | c0bc171 | Audit: bereits durchgängig „ZOE"; 0 Änderungen nötig; s. D2-Befund |
+| F1 Newsletter-Feld im Footer (global) | DONE | (this) | `FooterNewsletter`-Widget (E-Mail+Button), trilingual |
+| F2 NewsletterSignup-Tabelle | PARTIAL | (this) | Prisma-Modell + Endpoint `POST /api/newsletter` (idempotent, upsert by email); Migration → PENDING (kein lokaler DB); Endpoint demo-tolerant |
+| F3 Demo-Microcopy | DONE | (this) | „Demo — es werden keine E-Mails versendet." trilingual am Feld |
+| F4 Nur erfassen + Bestätigungs-Toast | DONE | (this) | Kein Double-Opt-In/Versand/Unsubscribe; Erfolgs-Toast |
 
 Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 
@@ -130,7 +134,16 @@ Kein Alt-Blatt-Asset mehr im Repo/HTML.
 
 ## BE-Tests offen
 
-(Befehle zum Nachlaufen, sobald lokale Postgres/Docker verfügbar.)
+Kein lokaler Postgres/Docker → BE-Test-Suite + Schema-Migrationen NICHT
+ausgeführt. Sobald verfügbar (`docker compose up -d` im `backend/`, dann):
+```
+cd backend
+npx prisma migrate dev --name add_newsletter_signup   # NewsletterSignup-Tabelle (F2)
+npm test                                               # BE-Tests inkl. projects (A1: pointsAwarded 0)
+```
+Zu prüfen: A1-Projektteilnahme (0 Punkte), Event-Join (×10 Punkte), Newsletter-
+Endpoint (`POST /api/newsletter`, idempotent by email). Frontend wurde gegen
+`tsc/eslint/build/Vitest` grün gehalten; Backend nur `tsc`-geprüft.
 
 ---
 
@@ -145,6 +158,27 @@ UPDATE "Badge"  SET "threshold"    = "threshold"    * 10;
 UPDATE "User"   SET "points"       = "points"       * 10;  -- bestehende Salden konsistent zu neuen Tiers
 ```
 ⚠️ NICHT idempotent — genau einmal ausführen.
+
+### F2 — NewsletterSignup-Tabelle (Schema-Change)
+Prisma-Modell ist in `schema.prisma` ergänzt (`prisma generate` lief). Migration
+NICHT lokal angewandt (kein DB). Deploy-Pfad:
+```
+# bevorzugt (erzeugt + deployt Migration):
+cd backend && npx prisma migrate dev --name add_newsletter_signup   # lokal
+cd backend && npx prisma migrate deploy                              # prod
+```
+Oder direktes SQL (Prisma-Konvention) gegen Prod:
+```sql
+CREATE TABLE "NewsletterSignup" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "locale" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "NewsletterSignup_pkey" PRIMARY KEY ("id")
+);
+CREATE UNIQUE INDEX "NewsletterSignup_email_key" ON "NewsletterSignup"("email");
+```
+Bis dahin ist der Endpoint demo-tolerant (`stored:false`, Toast erscheint trotzdem).
 
 ### A6 — (optional) Community-Milestone als admin-editierbares DB-Modell
 Aktuell Config. Für Admin-Editierbarkeit später dieses Prisma-Modell + Migration

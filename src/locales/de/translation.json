@@ -724,6 +724,15 @@
     "lightMode": "Hellmodus"
   },
   "footer": {
+    "newsletter": {
+      "heading": "Bleiben Sie informiert",
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "Ihre E-Mail",
+      "subscribe": "Abonnieren",
+      "demoNotice": "Demo — es werden keine E-Mails versendet.",
+      "success": "Danke! Sie sind dabei (Demo).",
+      "invalidEmail": "Bitte eine gültige E-Mail-Adresse eingeben."
+    },
     "madeBy": "ZOE Nachhaltigkeitsplattform",
     "dsr": "Forschungsprototyp · fiktive Daten · keine personenbezogenen Daten erhoben",
     "corfu": "Gemeinde Nordkorfu",

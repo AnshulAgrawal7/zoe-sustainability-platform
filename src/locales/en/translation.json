@@ -724,6 +724,15 @@
     "lightMode": "Light mode"
   },
   "footer": {
+    "newsletter": {
+      "heading": "Stay in the loop",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "Your email",
+      "subscribe": "Subscribe",
+      "demoNotice": "Demo — no emails are sent.",
+      "success": "Thanks! You're on the list (demo).",
+      "invalidEmail": "Please enter a valid email address."
+    },
     "madeBy": "ZOE Sustainability Platform",
     "dsr": "Research prototype · fictional data · no personal data collected",
     "corfu": "Municipality of Northern Corfu",

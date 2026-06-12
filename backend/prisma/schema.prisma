@@ -365,3 +365,13 @@ model FeedPostImageAltText {
 
   @@unique([imageId, locale])
 }
+
+// Newsletter opt-in touchpoint (F). PROTOTYPE: this only RECORDS an email +
+// locale — there is NO mailing/double-opt-in/unsubscribe system (Future Work).
+// `email` is unique so re-submitting the same address is a no-op (idempotent).
+model NewsletterSignup {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  locale    String // 'en' | 'el' | 'de'
+  createdAt DateTime @default(now())
+}
