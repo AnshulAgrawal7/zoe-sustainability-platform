@@ -282,6 +282,43 @@ model CommentLike {
   @@id([commentId, userId])
 }
 
+// One of the five ZOE levels (Σπόρος … Θεματοφύλακας). Admin-editable via
+// /admin/rewards: point ranges, icon and the Greek name live here; the
+// role-specific designation + reward list per audience live in RewardTierRole.
+// `pointsMax = null` marks the open-ended top tier. The frontend keeps a static
+// copy (src/data/rewards.ts + i18n) as PROTOTYPE FALLBACK when the API is down.
+model RewardTier {
+  id        String @id // sporos | phyllo | kladi | fylakas | thematofylakas
+  order     Int    @unique
+  greekName String
+  icon      String // emoji, e.g. 🌱
+  pointsMin Int
+  pointsMax Int?
+
+  roleVariants RewardTierRole[]
+}
+
+// Role-specific level designation + rewards for one tier (4 roles × 5 tiers).
+// `rewards*` are newline-separated lists (one reward per line) — simple to edit
+// in an admin textarea, split into arrays by the API consumers.
+model RewardTierRole {
+  id            String     @id @default(cuid())
+  tier          RewardTier @relation(fields: [tierId], references: [id], onDelete: Cascade)
+  tierId        String
+  role          String // RESIDENT | VISITOR | STUDENT | VOLUNTEER
+  nameEn        String
+  nameEl        String
+  nameDe        String
+  descriptionEn String
+  descriptionEl String
+  descriptionDe String
+  rewardsEn     String
+  rewardsEl     String
+  rewardsDe     String
+
+  @@unique([tierId, role])
+}
+
 model Badge {
   id        String @id @default(cuid())
   nameEn    String

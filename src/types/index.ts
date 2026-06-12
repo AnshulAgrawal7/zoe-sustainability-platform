@@ -272,6 +272,48 @@ export interface ApiResponse<T> {
   error?: string;
 }
 
+// --- ZOE reward levels (admin-editable, served by /api/rewards/tiers) ---
+
+export interface ApiRewardTierRole {
+  id: string;
+  tierId: string;
+  role: UserProfile;
+  nameEn: string;
+  nameEl: string;
+  nameDe: string;
+  descriptionEn: string;
+  descriptionEl: string;
+  descriptionDe: string;
+  /** Newline-separated reward lists (one reward per line). */
+  rewardsEn: string;
+  rewardsEl: string;
+  rewardsDe: string;
+}
+
+export interface ApiRewardTier {
+  id: string;
+  order: number;
+  greekName: string;
+  icon: string;
+  pointsMin: number;
+  pointsMax: number | null;
+  roleVariants: ApiRewardTierRole[];
+}
+
+/** Normalized for the UI: the active language is already picked. */
+export interface UiRewardTier {
+  id: string;
+  greekName: string;
+  icon: string;
+  colorClasses: string;
+  pointsMin: number;
+  pointsMax: number | null;
+  byRole: Record<
+    UserProfile,
+    { name: string; description: string; rewards: string[] }
+  >;
+}
+
 // Citizen report (environmental issue) or feedback from /participate.
 export type SubmissionType = 'REPORT' | 'FEEDBACK';
 

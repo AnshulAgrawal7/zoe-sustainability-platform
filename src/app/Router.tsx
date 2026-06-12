@@ -40,6 +40,7 @@ import ManageProjectsPage from '../pages/admin/ManageProjectsPage';
 import ManageUsersPage from '../pages/admin/ManageUsersPage';
 import ManageIdeasPage from '../pages/admin/ManageIdeasPage';
 import ManageSubmissionsPage from '../pages/admin/ManageSubmissionsPage';
+import ManageRewardsPage from '../pages/admin/ManageRewardsPage';
 import ManageCommentsPage from '../pages/admin/ManageCommentsPage';
 import ManageLearnPage from '../pages/admin/ManageLearnPage';
 import NewLearnPage from '../pages/admin/NewLearnPage';
@@ -151,6 +152,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageSubmissionsPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/rewards',
+        element: (
+          <AdminRoute>
+            <ManageRewardsPage />
           </AdminRoute>
         ),
       },

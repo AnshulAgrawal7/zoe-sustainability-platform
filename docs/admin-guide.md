@@ -165,7 +165,23 @@ Projekt** gehören (ein Projekt → mehrere Termine) oder eigenständig sind.
 
 ---
 
-## 11. Meldungen & Feedback (`/admin/submissions`)
+## 11. Prämien verwalten (`/admin/rewards`)
+
+Die fünf **ZOE-Stufen** (Σπόρος … Θεματοφύλακας) sind hier vollständig
+bearbeitbar — Änderungen sind sofort live auf `/rewards` und im Nutzer-Dashboard:
+
+- **Pro Stufe:** griechischer Name, Icon (Emoji) und **Punktebereich** („Punkte
+  ab"/„Punkte bis"; das Bis-Feld leer lassen = höchste, offene Stufe). Achten
+  Sie darauf, dass die fünf Bereiche lückenlos aneinander anschließen.
+- **Pro Rolle** (Einwohner:in, Besucher:in, Student:in, Freiwillige:r) und in
+  **allen drei Sprachen**: Stufenname, Beschreibung und die **Belohnungsliste**
+  (eine Belohnung pro Zeile).
+- **Speichern** wirkt pro Stufe; die Eingaben werden serverseitig geprüft
+  (Punktebereich plausibel, gültige Rollen).
+
+---
+
+## 12. Meldungen & Feedback (`/admin/submissions`)
 
 Über die Mitmach-Seite (`/participate`) eingereichte **Umweltmeldungen**
 (`REPORT`) und **Feedback** (`FEEDBACK`) landen hier — neueste zuerst, nach Typ

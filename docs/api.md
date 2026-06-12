@@ -382,6 +382,28 @@ Public single post (`404` if not found or unpublished).
 
 ---
 
+## Rewards (`/api/rewards`)
+
+The five ZOE levels (Σπόρος … Θεματοφύλακας) are **admin-editable DB content**:
+point ranges, icon and Greek name per tier, plus role-specific designations,
+descriptions and reward lists (4 roles × 5 tiers, trilingual). The frontend
+keeps a static copy (`src/data/rewards.ts` + i18n) as prototype fallback.
+
+### GET /rewards/tiers
+Public. Tiers ordered by `order`, each with all `roleVariants` (all three
+languages; the client picks). `rewards*` fields are newline-separated lists.
+
+**Response 200:** `{ "success": true, "data": { "tiers": [ { "id": "sporos", "order": 1, "greekName": "Σπόρος", "icon": "🌱", "pointsMin": 0, "pointsMax": 24, "roleVariants": [ { "role": "RESIDENT", "nameEn": "Neighbour", "rewardsEn": "…\n…", … } ] } ] } }`
+
+### PUT /admin/rewards/tiers/:id
+**ADMIN.** Update a tier's base fields (`greekName`, `icon`, `pointsMin`,
+`pointsMax` — `null` for the open-ended top tier) and/or upsert role
+`variants` (full trilingual texts per role). Sanity checks: `pointsMin ≥ 0`,
+`pointsMax > pointsMin`; keeping the five ranges contiguous is the admin's
+responsibility (prototype scope).
+
+---
+
 ## Submissions (`/api/submissions`)
 
 Citizen reports of environmental issues and general feedback from the

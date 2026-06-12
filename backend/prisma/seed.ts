@@ -4,6 +4,7 @@
 
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { seedRewardTiers } from './seedRewardTiers';
 
 const prisma = new PrismaClient();
 
@@ -522,6 +523,9 @@ async function main() {
       },
     ],
   });
+
+  // ZOE levels + role-specific rewards (admin-editable; initial content from i18n).
+  await seedRewardTiers(prisma);
 
   console.log(`Seeded: ${[p1,p2,p3,p4,p5,p6,p7,p8].length} projects, 4 users, 5 badges, 4 posts, 4 demo ideas, 4 learning resources, 5 impact metrics`);
   console.log('Admin:    admin@zoe-corfu.gr / ZoeAdmin2026!');

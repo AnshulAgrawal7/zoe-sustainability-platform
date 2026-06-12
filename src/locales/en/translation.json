@@ -1643,6 +1643,24 @@
     "attribution": "Official UN SDG icons, used unmodified for information under the UN SDG guidelines —",
     "disclaimer": "The content of this publication has not been approved by the United Nations and does not reflect the views of the United Nations or its officials or Member States."
   },
+  "adminRewards": {
+    "title": "Manage Rewards",
+    "cardSubtitle": "Edit ZOE levels, point ranges and rewards",
+    "intro": "The five ZOE levels with their point ranges and the role-specific designations and rewards (per audience, in all three languages). Changes are live for everyone immediately.",
+    "greekName": "Greek name",
+    "icon": "Icon (emoji)",
+    "pointsMin": "Points from",
+    "pointsMax": "Points to",
+    "pointsMaxHint": "empty = top level",
+    "roleTabsLabel": "Edit per role",
+    "nameLabel": "Level name",
+    "descriptionLabel": "Description",
+    "rewardsLabel": "Rewards",
+    "rewardsHint": "One reward per line.",
+    "save": "Save level",
+    "saved": "Level saved.",
+    "saveError": "Could not save the level. Please try again."
+  },
   "adminSubmissions": {
     "title": "Reports & Feedback",
     "cardSubtitle": "Citizen issue reports and feedback",

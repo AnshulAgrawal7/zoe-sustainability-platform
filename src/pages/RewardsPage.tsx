@@ -12,28 +12,27 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import {
-  rewardTiers,
-  rewardActivities,
-  communityMilestones,
-} from '../data/rewards';
+import { rewardActivities, communityMilestones } from '../data/rewards';
 import { PROFILE_OPTIONS } from '../data/profiles';
 import PointsBadge from '../components/ui/PointsBadge';
+import { useRewardTiers, tierForPoints } from '../hooks/useRewardTiers';
 import { useAuthStore } from '../stores/authStore';
-import type { RewardTier, UserProfile } from '../types';
+import type { UiRewardTier, UserProfile } from '../types';
 
 function TierCard({
   tier,
   isCurrent,
   role,
 }: {
-  tier: RewardTier;
+  tier: UiRewardTier;
   isCurrent: boolean;
   role: UserProfile;
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(isCurrent);
-  const base = `rewardData.roleTiers.${role}.${tier.id}`;
+  // Texts come from the admin-editable DB content (i18n as fallback) — already
+  // language-resolved by useRewardTiers.
+  const variant = tier.byRole[role];
   return (
     <div
       className={`rounded-xl border-2 transition-all ${tier.colorClasses} ${
@@ -55,7 +54,7 @@ function TierCard({
             <div className="flex items-center gap-2">
               <span className="text-base font-bold">{tier.greekName}</span>
               <span className="text-sm font-medium opacity-70">
-                — {t(`${base}.name`)}
+                — {variant.name}
               </span>
               {isCurrent && (
                 <span className="rounded-full bg-green-600 px-2 py-0.5 text-xs font-semibold text-white">
@@ -83,13 +82,9 @@ function TierCard({
       </button>
       {open && (
         <div className="border-current/10 border-t px-4 pb-4 pt-3">
-          <p className="mb-3 text-sm opacity-80">{t(`${base}.description`)}</p>
+          <p className="mb-3 text-sm opacity-80">{variant.description}</p>
           <ul className="space-y-1.5">
-            {(
-              t(`${base}.rewards`, {
-                returnObjects: true,
-              }) as string[]
-            ).map((r) => (
+            {variant.rewards.map((r) => (
               <li key={r} className="flex items-start gap-2 text-sm">
                 <Star
                   size={13}
@@ -110,8 +105,10 @@ export default function RewardsPage() {
   const { t } = useTranslation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const user = useAuthStore((s) => s.user);
-  // Role toggle for the tiers: each role has its own level names + rewards
-  // (rewardData.roleTiers.<ROLE>.*). Defaults to the logged-in user's own role.
+  // Admin-editable levels from the DB (static data + i18n as fallback).
+  const { tiers } = useRewardTiers();
+  // Role toggle for the tiers: each role has its own level names + rewards.
+  // Defaults to the logged-in user's own role.
   const [profile, setProfile] = useState<UserProfile>(
     user?.profile ?? 'RESIDENT'
   );
@@ -119,16 +116,9 @@ export default function RewardsPage() {
   // A3: the current level/tier is shown ONLY for logged-in users, from their
   // REAL points (no static demo value anymore — A2).
   const points = user?.points ?? 0;
-  const currentTier =
-    isAuthenticated &&
-    (rewardTiers.find(
-      (tier) =>
-        points >= tier.pointsMin &&
-        (tier.pointsMax === null || points <= tier.pointsMax)
-    ) ??
-      rewardTiers[0]);
+  const currentTier = isAuthenticated && tierForPoints(tiers, points);
   const nextTier = isAuthenticated
-    ? (rewardTiers.find((tier) => tier.pointsMin > points) ?? null)
+    ? (tiers.find((tier) => tier.pointsMin > points) ?? null)
     : null;
   const pointsToNext = nextTier ? nextTier.pointsMin - points : 0;
   const progressInTier =
@@ -178,9 +168,7 @@ export default function RewardsPage() {
                       <p className="text-sm text-gray-500 dark:text-gray-400">
                         {/* Always the USER'S OWN role designation, regardless
                             of which role the tier list below is toggled to. */}
-                        {t(
-                          `rewardData.roleTiers.${user?.profile ?? profile}.${currentTier.id}.name`
-                        )}
+                        {currentTier.byRole[user?.profile ?? profile].name}
                       </p>
                     </div>
                   </div>
@@ -227,9 +215,7 @@ export default function RewardsPage() {
                     </strong>{' '}
                     {t('rewards.toReach', {
                       tier: nextTier.greekName,
-                      name: t(
-                        `rewardData.roleTiers.${user?.profile ?? profile}.${nextTier.id}.name`
-                      ),
+                      name: nextTier.byRole[user?.profile ?? profile].name,
                     })}{' '}
                     {nextTier.icon}
                   </span>
@@ -316,7 +302,7 @@ export default function RewardsPage() {
           </div>
 
           <div className="space-y-3">
-            {rewardTiers.map((tier) => (
+            {tiers.map((tier) => (
               <TierCard
                 key={tier.id}
                 tier={tier}

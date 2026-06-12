@@ -6,6 +6,7 @@ import { getIdeas, updateIdeaStatus } from '../controllers/ideaController';
 import { getAllComments, setCommentStatus } from '../controllers/commentController';
 import { createEvent, updateEvent, deleteEvent, completeEvent } from '../controllers/eventController';
 import { getSubmissions } from '../controllers/submissionController';
+import { updateRewardTier } from '../controllers/rewardController';
 import {
   createLearningResource,
   updateLearningResource,
@@ -94,6 +95,29 @@ router.post('/events/:id/complete', completeEvent);
 
 // --- Citizen reports & feedback (read-only overview for now) ---
 router.get('/submissions', getSubmissions);
+
+// --- ZOE reward levels (point ranges + role-specific designations/rewards) ---
+router.put(
+  '/rewards/tiers/:id',
+  [
+    body('greekName').optional().trim().notEmpty().isLength({ max: 60 }),
+    body('icon').optional().trim().notEmpty().isLength({ max: 16 }),
+    body('pointsMin').optional().isInt({ min: 0 }),
+    body('pointsMax').optional({ values: 'null' }).isInt({ min: 1 }),
+    body('variants').optional().isArray(),
+    body('variants.*.role').optional().isString(),
+    body('variants.*.nameEn').optional().isString().isLength({ max: 120 }),
+    body('variants.*.nameEl').optional().isString().isLength({ max: 120 }),
+    body('variants.*.nameDe').optional().isString().isLength({ max: 120 }),
+    body('variants.*.descriptionEn').optional().isString().isLength({ max: 1000 }),
+    body('variants.*.descriptionEl').optional().isString().isLength({ max: 1000 }),
+    body('variants.*.descriptionDe').optional().isString().isLength({ max: 1000 }),
+    body('variants.*.rewardsEn').optional().isString().isLength({ max: 4000 }),
+    body('variants.*.rewardsEl').optional().isString().isLength({ max: 4000 }),
+    body('variants.*.rewardsDe').optional().isString().isLength({ max: 4000 }),
+  ],
+  updateRewardTier
+);
 
 // --- Learning resources (Z5, admin CRUD; public read lives on /api/learn) ---
 const learnValidators = [

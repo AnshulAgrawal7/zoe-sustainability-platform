@@ -37,3 +37,14 @@ export type SubmissionType = (typeof SUBMISSION_TYPES)[number];
 export const EVENT_STATUSES = ['UPCOMING', 'COMPLETED'] as const;
 
 export type EventStatusValue = (typeof EVENT_STATUSES)[number];
+
+// Self-selected audience profiles (User.profile) — also the reward-track roles
+// of the ZOE levels (RewardTierRole.role).
+export const USER_PROFILES = [
+  'RESIDENT',
+  'VISITOR',
+  'STUDENT',
+  'VOLUNTEER',
+] as const;
+
+export type UserProfileValue = (typeof USER_PROFILES)[number];

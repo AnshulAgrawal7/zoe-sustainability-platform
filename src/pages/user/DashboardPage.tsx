@@ -17,7 +17,7 @@ import {
   getMyEventRegistrations,
   cancelEventRegistration,
 } from '../../services/eventService';
-import { rewardTiers } from '../../data/rewards';
+import { useRewardTiers, tierForPoints } from '../../hooks/useRewardTiers';
 import PointsBadge from '../../components/ui/PointsBadge';
 import type { MyEventRegistration } from '../../types';
 
@@ -54,14 +54,10 @@ export default function DashboardPage() {
   useEffect(loadData, [loadData]);
 
   // Current ZOE tier from the user's REAL points; the level designation is
-  // role-specific (rewardData.roleTiers.<profile>.<tier>.name).
+  // role-specific and admin-editable (DB via useRewardTiers, i18n fallback).
+  const { tiers } = useRewardTiers();
   const points = user?.points ?? 0;
-  const tier =
-    rewardTiers.find(
-      (ti) =>
-        points >= ti.pointsMin &&
-        (ti.pointsMax === null || points <= ti.pointsMax)
-    ) ?? rewardTiers[0];
+  const tier = tierForPoints(tiers, points);
   const profile = user?.profile ?? 'RESIDENT';
 
   function eventTitle(r: MyEventRegistration): string {
@@ -104,7 +100,7 @@ export default function DashboardPage() {
               className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 text-xl dark:bg-amber-900/30"
               aria-hidden="true"
             >
-              {tier.icon}
+              {tier?.icon}
             </span>
             <div>
               <PointsBadge
@@ -112,12 +108,14 @@ export default function DashboardPage() {
                 iconSize={16}
                 className="text-2xl font-bold text-gray-900 dark:text-white [&>svg]:text-amber-500"
               />
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                {t('dashboard.tierLine', {
-                  tier: tier.greekName,
-                  name: t(`rewardData.roleTiers.${profile}.${tier.id}.name`),
-                })}
-              </p>
+              {tier && (
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {t('dashboard.tierLine', {
+                    tier: tier.greekName,
+                    name: tier.byRole[profile].name,
+                  })}
+                </p>
+              )}
             </div>
           </div>
         </div>

@@ -1643,6 +1643,24 @@
     "attribution": "Offizielle UN-SDG-Icons, unverändert und zu Informationszwecken gemäß den UN-SDG-Richtlinien verwendet —",
     "disclaimer": "Die Inhalte dieser Veröffentlichung wurden nicht von den Vereinten Nationen genehmigt und geben nicht die Ansichten der Vereinten Nationen, ihrer Bediensteten oder Mitgliedstaaten wieder."
   },
+  "adminRewards": {
+    "title": "Prämien verwalten",
+    "cardSubtitle": "ZOE-Stufen, Punkteskalen und Belohnungen bearbeiten",
+    "intro": "Die fünf ZOE-Stufen mit ihren Punktebereichen sowie den rollenspezifischen Bezeichnungen und Belohnungen (pro Zielgruppe, in allen drei Sprachen). Änderungen sind sofort für alle live.",
+    "greekName": "Griechischer Name",
+    "icon": "Icon (Emoji)",
+    "pointsMin": "Punkte ab",
+    "pointsMax": "Punkte bis",
+    "pointsMaxHint": "leer = höchste Stufe",
+    "roleTabsLabel": "Pro Rolle bearbeiten",
+    "nameLabel": "Stufenname",
+    "descriptionLabel": "Beschreibung",
+    "rewardsLabel": "Belohnungen",
+    "rewardsHint": "Eine Belohnung pro Zeile.",
+    "save": "Stufe speichern",
+    "saved": "Stufe gespeichert.",
+    "saveError": "Stufe konnte nicht gespeichert werden. Bitte erneut versuchen."
+  },
   "adminSubmissions": {
     "title": "Meldungen & Feedback",
     "cardSubtitle": "Umweltmeldungen und Feedback aus der Bürgerschaft",

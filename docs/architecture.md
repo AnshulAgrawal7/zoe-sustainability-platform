@@ -157,6 +157,17 @@ Submission   // citizen issue report / feedback from /participate (mirrors Idea)
   userId? (linked when logged in), createdAt
   // read-only admin overview (/admin/submissions); no workflow yet
 
+RewardTier   // one of the five ZOE levels — ADMIN-EDITABLE (/admin/rewards)
+  id (sporos|phyllo|kladi|fylakas|thematofylakas), order*, greekName, icon,
+  pointsMin, pointsMax? (null = open-ended top tier)
+  → roleVariants[]
+  // Frontend keeps src/data/rewards.ts + i18n as PROTOTYPE FALLBACK
+
+RewardTierRole   // role-specific designation + rewards (4 roles × 5 tiers)
+  id, tierId, role (RESIDENT|VISITOR|STUDENT|VOLUNTEER),
+  nameEn/El/De, descriptionEn/El/De, rewardsEn/El/De (newline-separated lists)
+  UNIQUE(tierId, role)
+
 Badge
   id, nameEn, nameEl, nameDe, descEn, descEl, descDe, iconName, threshold
   → userBadges[]
