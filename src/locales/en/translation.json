@@ -627,6 +627,7 @@
     "myRewards": "My Rewards",
     "account": "Account menu",
     "points": "{{points}} points",
+    "pointsLinkAria": "{{points}} points — view the rewards programme",
     "home": "Home",
     "projects": "Projects",
     "sdgs": "SDGs",
@@ -756,7 +757,6 @@
     "rolePickerLabel": "Reward track by role",
     "rolePickerHint": "Pick a role to see its level names and rewards.",
     "tiersNote": "All rewards listed are indicative for this prototype and subject to formal programme approval.",
-    "profileFocusSubtitle": "Different profiles benefit most from different actions. Pick a profile to see its reward focus.",
     "earnTitle": "How to Earn Points",
     "earnSubtitle": "Points are awarded for verified participation. Every contribution counts.",
     "thActivity": "Activity",
@@ -775,7 +775,6 @@
     "milestonesTitle": "Community Milestones",
     "milestonesSubtitle": "When the whole community reaches a goal together, everyone benefits. These shared milestones reward collective action.",
     "rewardPrefix": "Reward:",
-    "milestonePoints": "+{{points}} community points",
     "unlocked": "Unlocked!",
     "milestonesNoteLabel": "Prototype note:",
     "milestonesNote": "Milestone progress shown here is illustrative dummy data.",
@@ -798,12 +797,14 @@
   "dashboard": {
     "title": "My Dashboard",
     "welcome": "Welcome back, {{name}}!",
-    "yourProjects": "Your Projects",
     "recentActivity": "Recent activity",
     "totalPoints": "Total points",
     "badgesEarned": "Badges earned",
-    "projectsJoined": "Projects joined",
-    "noActivity": "No activity yet. Join a project to get started!"
+    "eventsJoined": "Events joined",
+    "yourEvents": "My events",
+    "noEvents": "You haven't registered for any events yet. Find one and join in!",
+    "tierLine": "Level: {{tier}} ({{name}})",
+    "pointsPending": "pending"
   },
   "admin": {
     "title": "Admin Dashboard",
@@ -879,11 +880,7 @@
     "subtitle": "The ZOE programme is driven by citizens as much as by the municipality. There are many ways to get involved — from sharing a local idea to volunteering in the field. Choose how you want to participate below.",
     "rewardsLink": "Every action earns ZOE points — see the Rewards Programme",
     "selected": "↑ Selected",
-    "pts": "+{{points}} pts",
-    "prototypeNotice": "Prototype: this form does not send data anywhere. Local success message only.",
     "thankYou": "Thank you for your submission!",
-    "deploymentNote": "In a real deployment, your input would be sent to the ZOE coordination team for review.",
-    "prototypeNote": "Note: This is a prototype. No data was transmitted or stored.",
     "yourName": "Your Name",
     "emailAddress": "Email Address",
     "yourMessage": "Your Message or Idea",
@@ -905,7 +902,9 @@
     "submitError": "Could not submit your idea. Please try again.",
     "accountHint": "Heads up: ZOE points for rewards are earned with an account. Create one to start collecting points for your contributions.",
     "accountHintCta": "Create an account",
-    "profileContact": "Signed in as {{name}} ({{email}}) — taken from your profile."
+    "profileContact": "Signed in as {{name}} ({{email}}) — taken from your profile.",
+    "submissionPrivacyNote": "Your message is sent to the ZOE team at the municipality for review. (Prototype: stored for the demo, not dispatched automatically.)",
+    "submissionSuccess": "Your message has been forwarded to the municipality. The ZOE team reviews every report and all feedback."
   },
   "sdgs": {
     "title": "Sustainable Development Goals",
@@ -1314,7 +1313,6 @@
     "dateFrom": "From",
     "dateTo": "To",
     "clearPeriod": "Clear period",
-    "pointsBadge": "+{{points}} points",
     "categories": {
       "Biodiversity": "Biodiversity",
       "Circular Economy": "Circular Economy",
@@ -1342,11 +1340,22 @@
       "submit": "Confirm registration",
       "cancel": "Cancel",
       "noAccountNote": "No account needed — create one to earn points.",
-      "loginPerk": "You'll earn {{points}} points for joining.",
+      "loginPerk": "You'll earn {{points}} points once the event is completed.",
       "success": "You're registered. See you there!",
-      "successPoints": "You earned {{points}} points!",
-      "error": "Registration failed. Please try again."
+      "error": "Registration failed. Please try again.",
+      "confirmTitle": "Register for this event?",
+      "confirmBody": "We'll save you a spot. Your +{{points}} points are credited as soon as the municipality marks the event as completed — and you can cancel your registration at any time before the event.",
+      "confirmYes": "Yes, register me",
+      "confirmNo": "Not now",
+      "registered": "You are registered for this event.",
+      "pendingNote": "+{{points}} points will be credited once the event is completed.",
+      "cancelCta": "Cancel registration",
+      "cancelled": "Your registration has been cancelled.",
+      "completedNote": "This event has already taken place.",
+      "attended": "You took part — +{{points}} points credited."
     },
+    "statusUpcoming": "Upcoming",
+    "statusCompleted": "Completed",
     "demoNote": "Demo data: events and dates are illustrative examples, not official municipal fixtures."
   },
   "roadmap": {
@@ -1634,6 +1643,17 @@
     "attribution": "Official UN SDG icons, used unmodified for information under the UN SDG guidelines —",
     "disclaimer": "The content of this publication has not been approved by the United Nations and does not reflect the views of the United Nations or its officials or Member States."
   },
+  "adminSubmissions": {
+    "title": "Reports & Feedback",
+    "cardSubtitle": "Citizen issue reports and feedback",
+    "intro": "Environmental issue reports and general feedback submitted via the participation page. Read-only for now — review them here; follow-up actions are future work.",
+    "filterBy": "Filter by type",
+    "all": "All",
+    "typeREPORT": "Issue report",
+    "typeFEEDBACK": "Feedback",
+    "anonymous": "Anonymous",
+    "empty": "No submissions yet."
+  },
   "adminEvents": {
     "title": "Manage Events",
     "create": "Create event",
@@ -1641,6 +1661,13 @@
     "cardSubtitle": "Create and schedule events",
     "totalEvents": "Events",
     "empty": "No events yet.",
+    "complete": "Mark completed",
+    "completeConfirm": "Mark this event as completed? Every registered member receives +{{points}} points — this cannot be undone.",
+    "completeYes": "Yes, complete",
+    "completedToast_one": "Event completed — {{count}} participant received their points.",
+    "completedToast_other": "Event completed — {{count}} participants received their points.",
+    "registeredCount_one": "{{count}} registration",
+    "registeredCount_other": "{{count}} registrations",
     "formDate": "Date & time",
     "formCapacity": "Capacity",
     "formUnlimited": "Unlimited",

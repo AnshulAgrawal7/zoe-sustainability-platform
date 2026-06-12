@@ -30,6 +30,7 @@ model User {
   participations     Participation[]
   eventRegistrations EventRegistration[]
   ideas              Idea[]
+  submissions        Submission[]
   userBadges         UserBadge[]
   refreshTokens      RefreshToken[]
   createdProjects    Project[]           @relation("CreatedBy")
@@ -127,10 +128,12 @@ model LearningResource {
 }
 
 // A concrete, dated event/appointment (e.g. a beach cleanup on 12.07.). Belongs
-// OPTIONALLY to a Project (one project has many events) or stands alone
-// (projectId null). Trilingual like Project. `category` reuses PROJECT_CATEGORIES
-// (validated at the application layer, see constants.ts). Attendance is tracked in
-// EventRegistration (logged-in users earn `rewardPoints`, guests earn none).
+// to a Project (one project has many events). Trilingual like Project. `category`
+// reuses PROJECT_CATEGORIES (validated at the application layer, see constants.ts).
+// Attendance is tracked in EventRegistration. Points are NOT awarded on
+// registration: an admin marks the event COMPLETED (lifecycle below), and only
+// then do registered logged-in users receive `rewardPoints` (guests earn none).
+// status: "UPCOMING" | "COMPLETED" (String, validated at the application layer)
 model Event {
   id            String   @id @default(cuid())
   titleEn       String
@@ -142,6 +145,7 @@ model Event {
   date          DateTime
   location      String?
   category      String
+  status        String   @default("UPCOMING")
   rewardPoints  Int      @default(20)
   capacity      Int?
   imageUrl      String? // optional cover image (URL string; no file upload)
@@ -229,6 +233,25 @@ model Idea {
   comments       Comment[]
 
   @@index([status])
+}
+
+// Citizen report (environmental issue) or general feedback from /participate.
+// Mirrors Idea: open WITHOUT an account — a valid token links `userId`, otherwise
+// the submission is anonymous (optional submitterName/submitterEmail). Admins see
+// these in a read-only overview (/admin/submissions); no review workflow yet
+// (Future Work).
+// type: "REPORT" | "FEEDBACK"
+model Submission {
+  id             String   @id @default(cuid())
+  type           String
+  message        String
+  submitterName  String?
+  submitterEmail String?
+  user           User?    @relation(fields: [userId], references: [id])
+  userId         String?
+  createdAt      DateTime @default(now())
+
+  @@index([type])
 }
 
 // Discourse on an APPROVED citizen idea (Z3). Only logged-in users post

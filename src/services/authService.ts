@@ -2,7 +2,6 @@ import { api, setAccessToken } from './api';
 import type {
   ApiResponse,
   AuthUser,
-  AuthTokens,
   LoginPayload,
   RegisterPayload,
 } from '../types';
@@ -34,11 +33,14 @@ export async function logout(): Promise<void> {
   setAccessToken(null);
 }
 
-export async function refreshToken(): Promise<string | null> {
+// Session bootstrap on app start: the refresh token lives in an httpOnly cookie,
+// so a page reload can silently restore the full session (user + fresh access
+// token) in one round-trip. Returns null for guests / expired sessions.
+export async function initAuth(): Promise<AuthResponse | null> {
   try {
-    const res = await api.post<ApiResponse<AuthTokens>>('/auth/refresh', {});
+    const res = await api.post<ApiResponse<AuthResponse>>('/auth/refresh', {});
     setAccessToken(res.data.accessToken);
-    return res.data.accessToken;
+    return res.data;
   } catch {
     setAccessToken(null);
     return null;

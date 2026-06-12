@@ -143,11 +143,20 @@ Unter **Termine** (`/events`) finden Sie konkrete Veranstaltungen — Reinigungs
 Workshops, Foren. Nach Kategorie filterbar; bei vielen Terminen ist das zugehörige
 **Projekt** verlinkt (Termine erscheinen auch auf der jeweiligen Projekt-Detailseite).
 
-- **Eingeloggt:** Ein Klick auf **Anmelden** trägt Sie ein und Sie erhalten die
-  Punkte des Termins.
+- **Eingeloggt:** Ein Klick auf **Anmelden** öffnet eine Bestätigungsabfrage;
+  danach sind Sie eingetragen. Die **Punkte des Termins sind zunächst
+  „ausstehend"** und werden gutgeschrieben, sobald die Gemeinde den Termin als
+  **abgeschlossen** markiert.
+- **Abmelden:** Solange der Termin nicht abgeschlossen ist, können Sie Ihre
+  Anmeldung jederzeit absagen — direkt am Termin oder im **Dashboard** unter
+  „Meine Veranstaltungen".
 - **Als Gast:** ohne Konto mit Name, E-Mail und Einwilligung anmelden (ohne Punkte —
   ein Konto lohnt sich für die Punkte).
-- Eine Bestätigung wird direkt angezeigt; doppelte Anmeldungen sind nicht möglich.
+- Ihr Anmeldestatus wird gespeichert und beim nächsten Besuch angezeigt;
+  doppelte Anmeldungen sind nicht möglich.
+- Im **Dashboard** sehen Sie neben Ihren Punkten auch Ihre aktuelle
+  ZOE-Stufe und alle Termine, an denen Sie teilnehmen (inkl. ausstehender bzw.
+  gutgeschriebener Punkte).
 
 ---
 

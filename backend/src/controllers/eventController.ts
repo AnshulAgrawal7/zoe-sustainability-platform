@@ -8,9 +8,11 @@ import {
 
 const prisma = new PrismaClient();
 
-// Points granted to a logged-in user for joining an event default to this when an
-// event does not override it. Guests earn none (the incentive to create an
-// account — participation itself stays open).
+// Default reward when an event does not override it. NOTE: points are NOT
+// granted on registration anymore — they are awarded to registered logged-in
+// users when an admin marks the event COMPLETED (see completeEvent). Guests
+// earn none either way (the incentive to create an account — participation
+// itself stays open).
 const EVENT_POINTS = 20;
 
 interface EventBody {
@@ -31,23 +33,41 @@ interface EventBody {
 
 // Attach a registration count to each event (the link is a soft string reference,
 // so we group EventRegistration by eventId rather than via a relation include).
-async function withCounts<T extends { id: string }>(events: T[]) {
-  if (events.length === 0) return events.map((e) => ({ ...e, registeredCount: 0 }));
-  const groups = await prisma.eventRegistration.groupBy({
-    by: ['eventId'],
-    where: { eventId: { in: events.map((e) => e.id) } },
-    _count: { _all: true },
-  });
+// When a logged-in user makes the request, also flag the events they are
+// registered for (`registeredByMe`) so the UI can show cancel instead of register.
+async function withCounts<T extends { id: string }>(events: T[], userId?: string) {
+  if (events.length === 0)
+    return events.map((e) => ({ ...e, registeredCount: 0, registeredByMe: false }));
+  const ids = events.map((e) => e.id);
+  const [groups, mine] = await Promise.all([
+    prisma.eventRegistration.groupBy({
+      by: ['eventId'],
+      where: { eventId: { in: ids } },
+      _count: { _all: true },
+    }),
+    userId
+      ? prisma.eventRegistration.findMany({
+          where: { eventId: { in: ids }, userId },
+          select: { eventId: true },
+        })
+      : Promise.resolve([]),
+  ]);
   const counts = new Map(groups.map((g) => [g.eventId, g._count._all]));
-  return events.map((e) => ({ ...e, registeredCount: counts.get(e.id) ?? 0 }));
+  const mineSet = new Set(mine.map((m) => m.eventId));
+  return events.map((e) => ({
+    ...e,
+    registeredCount: counts.get(e.id) ?? 0,
+    registeredByMe: mineSet.has(e.id),
+  }));
 }
 
 const projectSelect = {
   select: { id: true, titleEn: true, titleEl: true, titleDe: true, category: true },
 };
 
-// GET /api/events — public. Filters: category, projectId, upcoming=true (date>=now).
-export async function getEvents(req: Request, res: Response) {
+// GET /api/events — public (optionalAuth adds registeredByMe). Filters:
+// category, projectId, upcoming=true (date>=now).
+export async function getEvents(req: AuthRequest, res: Response) {
   const category = req.query['category'] as string | undefined;
   const projectId = req.query['projectId'] as string | undefined;
   const upcoming = req.query['upcoming'] === 'true';
@@ -62,14 +82,14 @@ export async function getEvents(req: Request, res: Response) {
       orderBy: { date: 'asc' },
       include: { project: projectSelect },
     });
-    ok(res, { events: await withCounts(events) });
+    ok(res, { events: await withCounts(events, req.user?.userId) });
   } catch {
     serverError(res);
   }
 }
 
-// GET /api/events/:id — public detail.
-export async function getEvent(req: Request, res: Response) {
+// GET /api/events/:id — public detail (optionalAuth adds registeredByMe).
+export async function getEvent(req: AuthRequest, res: Response) {
   const id = req.params['id'] as string;
   try {
     const event = await prisma.event.findUnique({
@@ -77,7 +97,7 @@ export async function getEvent(req: Request, res: Response) {
       include: { project: projectSelect },
     });
     if (!event) { notFound(res); return; }
-    const [withCount] = await withCounts([event]);
+    const [withCount] = await withCounts([event], req.user?.userId);
     ok(res, withCount);
   } catch {
     serverError(res);
@@ -170,9 +190,10 @@ export async function deleteEvent(req: AuthRequest, res: Response) {
   }
 }
 
-// POST /api/events/:id/join — logged-in attendance. Mirrors project participation:
-// awards the event's rewardPoints, prevents double-join, and grants threshold
-// badges. The event must exist (validated here since eventId is a soft reference).
+// POST /api/events/:id/join — logged-in attendance. Creates the registration
+// only: NO points are granted here. They become `pointsPending` and are awarded
+// once an admin marks the event COMPLETED (see completeEvent). The event must
+// exist (validated here since eventId is a soft reference).
 export async function joinEvent(req: AuthRequest, res: Response) {
   const userId = req.user!.userId;
   const eventId = req.params['id'] as string;
@@ -180,6 +201,9 @@ export async function joinEvent(req: AuthRequest, res: Response) {
   try {
     const event = await prisma.event.findUnique({ where: { id: eventId } });
     if (!event) { notFound(res); return; }
+    if (event.status === 'COMPLETED') {
+      forbidden(res, 'This event has already taken place'); return;
+    }
 
     const existing = await prisma.eventRegistration.findUnique({
       where: { userId_eventId: { userId, eventId } },
@@ -191,33 +215,146 @@ export async function joinEvent(req: AuthRequest, res: Response) {
       if (count >= event.capacity) { forbidden(res, 'This event is fully booked'); return; }
     }
 
-    const points = event.rewardPoints;
-    const [registration] = await prisma.$transaction([
-      prisma.eventRegistration.create({ data: { eventId, userId, pointsAwarded: points } }),
-      prisma.user.update({ where: { id: userId }, data: { points: { increment: points } } }),
+    const registration = await prisma.eventRegistration.create({
+      data: { eventId, userId, pointsAwarded: 0 },
+    });
+
+    created(res, {
+      id: registration.id,
+      pointsAwarded: 0,
+      pointsPending: event.rewardPoints,
+      guest: false,
+    });
+  } catch {
+    serverError(res);
+  }
+}
+
+// DELETE /api/events/:id/registration — logged-in cancel. Allowed any time
+// BEFORE the event is completed; afterwards the attendance (and its points)
+// is locked in.
+export async function cancelRegistration(req: AuthRequest, res: Response) {
+  const userId = req.user!.userId;
+  const eventId = req.params['id'] as string;
+
+  try {
+    const registration = await prisma.eventRegistration.findUnique({
+      where: { userId_eventId: { userId, eventId } },
+    });
+    if (!registration) { notFound(res, 'You are not registered for this event'); return; }
+
+    const event = await prisma.event.findUnique({ where: { id: eventId } });
+    if (event?.status === 'COMPLETED') {
+      forbidden(res, 'This event has already taken place — the registration can no longer be cancelled');
+      return;
+    }
+
+    await prisma.eventRegistration.delete({ where: { id: registration.id } });
+    ok(res, null, 'Registration cancelled');
+  } catch {
+    serverError(res);
+  }
+}
+
+// GET /api/events/registrations/me — the logged-in user's event registrations,
+// enriched with the event (manual join: eventId is a soft reference). Drives the
+// dashboard "my events" list incl. pending vs awarded points.
+export async function getMyEventRegistrations(req: AuthRequest, res: Response) {
+  const userId = req.user!.userId;
+  try {
+    const registrations = await prisma.eventRegistration.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+    });
+    const events = await prisma.event.findMany({
+      where: { id: { in: registrations.map((r) => r.eventId) } },
+      include: { project: projectSelect },
+    });
+    const eventMap = new Map(events.map((e) => [e.id, e]));
+    ok(res, {
+      registrations: registrations.map((r) => {
+        const event = eventMap.get(r.eventId) ?? null;
+        return {
+          id: r.id,
+          eventId: r.eventId,
+          createdAt: r.createdAt,
+          pointsAwarded: r.pointsAwarded,
+          // Pending until the admin completes the event (0 once awarded/orphaned).
+          pointsPending:
+            event && event.status !== 'COMPLETED' ? event.rewardPoints : 0,
+          event,
+        };
+      }),
+    });
+  } catch {
+    serverError(res);
+  }
+}
+
+// POST /api/admin/events/:id/complete — adminOnly. Marks the event COMPLETED and
+// awards its rewardPoints to every registered logged-in user that has not been
+// awarded yet (idempotent: re-running never double-awards). Threshold badges are
+// granted afterwards, mirroring the old join-time logic.
+export async function completeEvent(req: AuthRequest, res: Response) {
+  const eventId = req.params['id'] as string;
+
+  try {
+    const event = await prisma.event.findUnique({ where: { id: eventId } });
+    if (!event) { notFound(res); return; }
+
+    const pending = await prisma.eventRegistration.findMany({
+      where: { eventId, userId: { not: null }, pointsAwarded: 0 },
+      select: { id: true, userId: true },
+    });
+
+    await prisma.$transaction([
+      prisma.event.update({ where: { id: eventId }, data: { status: 'COMPLETED' } }),
+      ...pending.flatMap((r) => [
+        prisma.eventRegistration.update({
+          where: { id: r.id },
+          data: { pointsAwarded: event.rewardPoints },
+        }),
+        prisma.user.update({
+          where: { id: r.userId! },
+          data: { points: { increment: event.rewardPoints } },
+        }),
+      ]),
     ]);
 
-    const updatedUser = await prisma.user.findUnique({ where: { id: userId }, select: { points: true } });
-    if (updatedUser) {
-      const earnedBadges = await prisma.badge.findMany({ where: { threshold: { lte: updatedUser.points } } });
+    // Grant any threshold badges the new totals unlock.
+    for (const r of pending) {
+      const user = await prisma.user.findUnique({
+        where: { id: r.userId! },
+        select: { points: true },
+      });
+      if (!user) continue;
+      const earnedBadges = await prisma.badge.findMany({
+        where: { threshold: { lte: user.points } },
+      });
       for (const badge of earnedBadges) {
         await prisma.userBadge.upsert({
-          where: { userId_badgeId: { userId, badgeId: badge.id } },
+          where: { userId_badgeId: { userId: r.userId!, badgeId: badge.id } },
           update: {},
-          create: { userId, badgeId: badge.id },
+          create: { userId: r.userId!, badgeId: badge.id },
         });
       }
     }
 
-    created(res, { id: registration.id, pointsAwarded: points, guest: false });
+    ok(res, {
+      id: event.id,
+      status: 'COMPLETED',
+      awardedCount: pending.length,
+      pointsPerUser: event.rewardPoints,
+    });
   } catch {
     serverError(res);
   }
 }
 
 // POST /api/events/:eventId/register — open to everyone (see optionalAuth).
-// Logged-in users register via their account and earn points; guests provide a
-// name + email + consent and earn nothing.
+// Logged-in users register via their account (points become pending — awarded
+// when the event is completed); guests provide a name + email + consent and
+// earn nothing.
 export async function registerForEvent(req: AuthRequest, res: Response) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -232,6 +369,10 @@ export async function registerForEvent(req: AuthRequest, res: Response) {
     // Resolve the event's reward (soft reference; default if the event row is gone).
     const event = await prisma.event.findUnique({ where: { id: eventId } });
     const points = event?.rewardPoints ?? EVENT_POINTS;
+    if (event?.status === 'COMPLETED') {
+      forbidden(res, 'This event has already taken place');
+      return;
+    }
 
     if (userId) {
       const existing = await prisma.eventRegistration.findUnique({
@@ -241,16 +382,15 @@ export async function registerForEvent(req: AuthRequest, res: Response) {
         conflict(res, 'You are already registered for this event');
         return;
       }
-      const [registration] = await prisma.$transaction([
-        prisma.eventRegistration.create({
-          data: { eventId, userId, pointsAwarded: points },
-        }),
-        prisma.user.update({
-          where: { id: userId },
-          data: { points: { increment: points } },
-        }),
-      ]);
-      created(res, { id: registration.id, pointsAwarded: points, guest: false });
+      const registration = await prisma.eventRegistration.create({
+        data: { eventId, userId, pointsAwarded: 0 },
+      });
+      created(res, {
+        id: registration.id,
+        pointsAwarded: 0,
+        pointsPending: points,
+        guest: false,
+      });
       return;
     }
 

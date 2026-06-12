@@ -1,31 +1,47 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ArrowRight, Check, Loader2 } from 'lucide-react';
+import { ArrowRight, Check, Loader2, CalendarCheck, X } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
-import { joinEvent, registerForEvent } from '../../services/eventService';
+import { useToastStore } from '../../stores/toastStore';
+import {
+  joinEvent,
+  registerForEvent,
+  cancelEventRegistration,
+} from '../../services/eventService';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface EventRegisterProps {
   eventId: string;
-  // The event's own reward (logged-in users earn this on join). Default mirrors
-  // the backend EVENT_POINTS fallback.
+  // The event's own reward (credited AFTER the event is completed). Default
+  // mirrors the backend EVENT_POINTS fallback.
   rewardPoints?: number;
+  /** True when the logged-in user is already registered (from the API). */
+  registered?: boolean;
+  /** True when an admin has marked the event COMPLETED. */
+  completed?: boolean;
+  /** Called after a successful register/cancel so the parent can refetch. */
+  onChanged?: () => void;
 }
 
 // Event RSVP that works WITHOUT an account to lower the participation barrier:
-// logged-in users join in one click and earn the event's points; guests provide
-// name + email + consent and earn none.
+// guests provide name + email + consent (no points). Logged-in users register
+// after an explicit confirmation step, see their registered state on revisit,
+// and can cancel any time before the event is completed. Points are pending
+// until an admin completes the event.
 export default function EventRegister({
   eventId,
   rewardPoints = 20,
+  registered = false,
+  completed = false,
+  onChanged,
 }: EventRegisterProps) {
   const { t } = useTranslation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const user = useAuthStore((s) => s.user);
-  const updateUser = useAuthStore((s) => s.updateUser);
+  const showToast = useToastStore((s) => s.showToast);
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); // guest form
+  const [confirming, setConfirming] = useState(false); // logged-in confirm step
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [consent, setConsent] = useState(false);
@@ -36,7 +52,12 @@ export default function EventRegister({
     email?: string;
     consent?: string;
   }>({});
-  const [done, setDone] = useState<{ points: number } | null>(null);
+  // Local override so the UI flips immediately after register/cancel even
+  // before the parent refetches.
+  const [localRegistered, setLocalRegistered] = useState<boolean | null>(null);
+  const [guestDone, setGuestDone] = useState(false);
+
+  const isRegistered = localRegistered ?? registered;
 
   async function submit(asGuest: boolean) {
     setError('');
@@ -51,18 +72,20 @@ export default function EventRegister({
     }
     setLoading(true);
     try {
-      const result = asGuest
-        ? await registerForEvent(eventId, {
-            guestName: name.trim(),
-            guestEmail: email.trim(),
-            consent,
-          })
-        : await joinEvent(eventId);
-      if (!asGuest && result.pointsAwarded && user) {
-        updateUser({ points: user.points + result.pointsAwarded });
+      if (asGuest) {
+        await registerForEvent(eventId, {
+          guestName: name.trim(),
+          guestEmail: email.trim(),
+          consent,
+        });
+        setGuestDone(true);
+        setOpen(false);
+      } else {
+        await joinEvent(eventId);
+        setLocalRegistered(true);
+        setConfirming(false);
+        onChanged?.();
       }
-      setDone({ points: result.pointsAwarded });
-      setOpen(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : t('events.rsvp.error'));
     } finally {
@@ -70,34 +93,64 @@ export default function EventRegister({
     }
   }
 
-  if (done) {
-    return (
-      <div
-        role="status"
-        className="rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300"
-      >
-        <span className="inline-flex items-center gap-1.5">
-          <Check size={16} aria-hidden="true" />
-          {t('events.rsvp.success')}
-        </span>
-        {done.points > 0 && (
-          <span className="ml-1 font-semibold">
-            {t('events.rsvp.successPoints', { points: done.points })}
+  async function cancel() {
+    setError('');
+    setLoading(true);
+    try {
+      await cancelEventRegistration(eventId);
+      setLocalRegistered(false);
+      showToast(t('events.rsvp.cancelled'));
+      onChanged?.();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t('events.rsvp.error'));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // --- Completed events: registration is closed. ---
+  if (completed) {
+    if (isAuthenticated && isRegistered) {
+      return (
+        <p
+          role="status"
+          className="rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300"
+        >
+          <span className="inline-flex items-center gap-1.5">
+            <Check size={16} aria-hidden="true" />
+            {t('events.rsvp.attended', { points: rewardPoints })}
           </span>
-        )}
-      </div>
+        </p>
+      );
+    }
+    return (
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        {t('events.rsvp.completedNote')}
+      </p>
     );
   }
 
-  // Logged-in → one-click registration.
-  if (isAuthenticated) {
+  // --- Logged-in & already registered → status + cancel. ---
+  if (isAuthenticated && isRegistered) {
     return (
-      <div>
+      <div className="space-y-2">
+        <p
+          role="status"
+          className="rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300"
+        >
+          <span className="inline-flex items-center gap-1.5">
+            <CalendarCheck size={16} aria-hidden="true" />
+            {t('events.rsvp.registered')}
+          </span>
+        </p>
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          {t('events.rsvp.pendingNote', { points: rewardPoints })}
+        </p>
         <button
           type="button"
-          onClick={() => void submit(false)}
+          onClick={() => void cancel()}
           disabled={loading}
-          className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 disabled:opacity-60"
+          className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg border border-rose-300 px-4 py-2.5 text-sm font-medium text-rose-700 transition-colors hover:bg-rose-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2 disabled:opacity-60 dark:border-rose-700 dark:text-rose-400 dark:hover:bg-rose-900/20"
         >
           {loading ? (
             <Loader2
@@ -107,14 +160,11 @@ export default function EventRegister({
             />
           ) : (
             <>
-              {t('events.register')}
-              <ArrowRight size={14} aria-hidden="true" />
+              <X size={14} aria-hidden="true" />
+              {t('events.rsvp.cancelCta')}
             </>
           )}
         </button>
-        <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-          {t('events.rsvp.loginPerk', { points: rewardPoints })}
-        </p>
         {error && (
           <p
             role="alert"
@@ -127,7 +177,99 @@ export default function EventRegister({
     );
   }
 
-  // Guest → reveal a minimal form (name + email + consent).
+  // --- Logged-in & not registered → register with confirmation step. ---
+  if (isAuthenticated) {
+    if (confirming) {
+      return (
+        <div
+          role="alertdialog"
+          aria-labelledby={`rsvp-confirm-title-${eventId}`}
+          aria-describedby={`rsvp-confirm-body-${eventId}`}
+          className="space-y-3 rounded-lg border border-green-200 bg-green-50 p-3 dark:border-green-800 dark:bg-green-900/20"
+        >
+          <p
+            id={`rsvp-confirm-title-${eventId}`}
+            className="text-sm font-semibold text-gray-900 dark:text-white"
+          >
+            {t('events.rsvp.confirmTitle')}
+          </p>
+          <p
+            id={`rsvp-confirm-body-${eventId}`}
+            className="text-xs leading-relaxed text-gray-600 dark:text-gray-300"
+          >
+            {t('events.rsvp.confirmBody', { points: rewardPoints })}
+          </p>
+          {error && (
+            <p
+              role="alert"
+              className="text-xs text-rose-600 dark:text-rose-400"
+            >
+              {error}
+            </p>
+          )}
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => void submit(false)}
+              disabled={loading}
+              className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 disabled:opacity-60"
+            >
+              {loading ? (
+                <Loader2
+                  size={14}
+                  className="motion-safe:animate-spin"
+                  aria-hidden="true"
+                />
+              ) : (
+                t('events.rsvp.confirmYes')
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setConfirming(false);
+                setError('');
+              }}
+              className="min-h-[44px] rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-600 transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+            >
+              {t('events.rsvp.confirmNo')}
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={() => setConfirming(true)}
+          className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+        >
+          {t('events.register')}
+          <ArrowRight size={14} aria-hidden="true" />
+        </button>
+        <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
+          {t('events.rsvp.loginPerk', { points: rewardPoints })}
+        </p>
+      </div>
+    );
+  }
+
+  // --- Guests ---
+  if (guestDone) {
+    return (
+      <p
+        role="status"
+        className="rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300"
+      >
+        <span className="inline-flex items-center gap-1.5">
+          <Check size={16} aria-hidden="true" />
+          {t('events.rsvp.success')}
+        </span>
+      </p>
+    );
+  }
+
   if (!open) {
     return (
       <div>

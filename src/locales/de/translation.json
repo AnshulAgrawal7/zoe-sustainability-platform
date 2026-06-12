@@ -627,6 +627,7 @@
     "myRewards": "Meine Belohnungen",
     "account": "Kontomenü",
     "points": "{{points}} Punkte",
+    "pointsLinkAria": "{{points}} Punkte — zum Prämienprogramm",
     "home": "Startseite",
     "projects": "Projekte",
     "sdgs": "SDGs",
@@ -756,7 +757,6 @@
     "rolePickerLabel": "Belohnungspfad nach Rolle",
     "rolePickerHint": "Wähle eine Rolle, um ihre Level-Namen und Belohnungen zu sehen.",
     "tiersNote": "Alle aufgeführten Belohnungen sind für diesen Prototyp indikativ und stehen unter dem Vorbehalt der formellen Programmgenehmigung.",
-    "profileFocusSubtitle": "Verschiedene Profile profitieren am meisten von unterschiedlichen Aktionen. Wähle ein Profil, um den Belohnungs-Fokus zu sehen.",
     "earnTitle": "So verdienen Sie Punkte",
     "earnSubtitle": "Punkte werden für verifizierte Teilnahme vergeben. Jeder Beitrag zählt.",
     "thActivity": "Aktivität",
@@ -775,7 +775,6 @@
     "milestonesTitle": "Gemeinschafts-Meilensteine",
     "milestonesSubtitle": "Wenn die ganze Gemeinschaft gemeinsam ein Ziel erreicht, profitieren alle. Diese gemeinsamen Meilensteine belohnen kollektives Handeln.",
     "rewardPrefix": "Belohnung:",
-    "milestonePoints": "+{{points}} Gemeinschaftspunkte",
     "unlocked": "Freigeschaltet!",
     "milestonesNoteLabel": "Prototyp-Hinweis:",
     "milestonesNote": "Der hier gezeigte Meilenstein-Fortschritt sind illustrative Beispieldaten.",
@@ -798,12 +797,14 @@
   "dashboard": {
     "title": "Mein Dashboard",
     "welcome": "Willkommen zurück, {{name}}!",
-    "yourProjects": "Ihre Projekte",
     "recentActivity": "Letzte Aktivitäten",
     "totalPoints": "Gesamtpunkte",
     "badgesEarned": "Verdiente Abzeichen",
-    "projectsJoined": "Beigetretene Projekte",
-    "noActivity": "Noch keine Aktivität. Treten Sie einem Projekt bei!"
+    "eventsJoined": "Angemeldete Events",
+    "yourEvents": "Meine Veranstaltungen",
+    "noEvents": "Du bist noch zu keiner Veranstaltung angemeldet. Such dir eine aus und mach mit!",
+    "tierLine": "Stufe: {{tier}} ({{name}})",
+    "pointsPending": "ausstehend"
   },
   "admin": {
     "title": "Admin-Dashboard",
@@ -879,11 +880,7 @@
     "subtitle": "Das ZOE-Programm wird ebenso von den Bürgern wie von der Gemeinde getragen. Es gibt viele Möglichkeiten zur Beteiligung — vom Einreichen einer lokalen Idee bis zum Einsatz vor Ort. Wählen Sie unten, wie Sie teilnehmen möchten.",
     "rewardsLink": "Jede Aktion bringt ZOE-Punkte — zum Belohnungsprogramm",
     "selected": "↑ Ausgewählt",
-    "pts": "+{{points}} Pkt.",
-    "prototypeNotice": "Prototyp: Dieses Formular sendet keine Daten. Nur lokale Erfolgsmeldung.",
     "thankYou": "Vielen Dank für Ihre Einreichung!",
-    "deploymentNote": "In einem echten Deployment würde Ihre Eingabe zur Überprüfung an das ZOE-Koordinationsteam gesendet.",
-    "prototypeNote": "Hinweis: Dies ist ein Prototyp. Es wurden keine Daten übertragen oder gespeichert.",
     "yourName": "Ihr Name",
     "emailAddress": "E-Mail-Adresse",
     "yourMessage": "Ihre Nachricht oder Idee",
@@ -905,7 +902,9 @@
     "submitError": "Idee konnte nicht übermittelt werden. Bitte versuche es erneut.",
     "accountHint": "Hinweis: ZOE-Punkte für Prämien sammelst du nur mit einem Konto. Erstelle eines, um Punkte für deine Beiträge zu sammeln.",
     "accountHintCta": "Konto erstellen",
-    "profileContact": "Angemeldet als {{name}} ({{email}}) — aus deinem Profil übernommen."
+    "profileContact": "Angemeldet als {{name}} ({{email}}) — aus deinem Profil übernommen.",
+    "submissionPrivacyNote": "Deine Nachricht geht zur Prüfung an das ZOE-Team der Gemeinde. (Prototyp: für die Demo gespeichert, kein automatischer Versand.)",
+    "submissionSuccess": "Deine Nachricht wurde an die Gemeinde weitergeleitet. Das ZOE-Team prüft jede Meldung und jedes Feedback."
   },
   "sdgs": {
     "title": "Ziele für nachhaltige Entwicklung",
@@ -1314,7 +1313,6 @@
     "dateFrom": "Von",
     "dateTo": "Bis",
     "clearPeriod": "Zeitraum zurücksetzen",
-    "pointsBadge": "+{{points}} Punkte",
     "categories": {
       "Biodiversity": "Biodiversität",
       "Circular Economy": "Kreislaufwirtschaft",
@@ -1342,11 +1340,22 @@
       "submit": "Anmeldung bestätigen",
       "cancel": "Abbrechen",
       "noAccountNote": "Kein Konto nötig — erstelle eins, um Punkte zu sammeln.",
-      "loginPerk": "Du erhältst {{points}} Punkte für die Teilnahme.",
+      "loginPerk": "Du erhältst {{points}} Punkte, sobald die Veranstaltung abgeschlossen ist.",
       "success": "Du bist angemeldet. Bis bald!",
-      "successPoints": "Du hast {{points}} Punkte erhalten!",
-      "error": "Anmeldung fehlgeschlagen. Bitte versuche es erneut."
+      "error": "Anmeldung fehlgeschlagen. Bitte versuche es erneut.",
+      "confirmTitle": "Für diese Veranstaltung anmelden?",
+      "confirmBody": "Wir reservieren dir einen Platz. Deine +{{points}} Punkte werden gutgeschrieben, sobald die Gemeinde die Veranstaltung als abgeschlossen markiert — und du kannst deine Anmeldung jederzeit vor der Veranstaltung wieder absagen.",
+      "confirmYes": "Ja, anmelden",
+      "confirmNo": "Doch nicht",
+      "registered": "Du bist für diese Veranstaltung angemeldet.",
+      "pendingNote": "+{{points}} Punkte werden gutgeschrieben, sobald die Veranstaltung abgeschlossen ist.",
+      "cancelCta": "Anmeldung absagen",
+      "cancelled": "Deine Anmeldung wurde abgesagt.",
+      "completedNote": "Diese Veranstaltung hat bereits stattgefunden.",
+      "attended": "Du warst dabei — +{{points}} Punkte gutgeschrieben."
     },
+    "statusUpcoming": "Geplant",
+    "statusCompleted": "Abgeschlossen",
     "demoNote": "Demodaten: Termine und Daten sind illustrative Beispiele, keine amtlichen Veranstaltungen."
   },
   "roadmap": {
@@ -1634,6 +1643,17 @@
     "attribution": "Offizielle UN-SDG-Icons, unverändert und zu Informationszwecken gemäß den UN-SDG-Richtlinien verwendet —",
     "disclaimer": "Die Inhalte dieser Veröffentlichung wurden nicht von den Vereinten Nationen genehmigt und geben nicht die Ansichten der Vereinten Nationen, ihrer Bediensteten oder Mitgliedstaaten wieder."
   },
+  "adminSubmissions": {
+    "title": "Meldungen & Feedback",
+    "cardSubtitle": "Umweltmeldungen und Feedback aus der Bürgerschaft",
+    "intro": "Umweltmeldungen und allgemeines Feedback von der Mitmach-Seite. Vorerst nur zur Durchsicht — weitere Aktionen folgen später.",
+    "filterBy": "Nach Typ filtern",
+    "all": "Alle",
+    "typeREPORT": "Umweltmeldung",
+    "typeFEEDBACK": "Feedback",
+    "anonymous": "Anonym",
+    "empty": "Noch keine Einreichungen."
+  },
   "adminEvents": {
     "title": "Termine verwalten",
     "create": "Termin anlegen",
@@ -1641,6 +1661,13 @@
     "cardSubtitle": "Termine anlegen und planen",
     "totalEvents": "Termine",
     "empty": "Noch keine Termine.",
+    "complete": "Abschließen",
+    "completeConfirm": "Diese Veranstaltung als abgeschlossen markieren? Alle angemeldeten Mitglieder erhalten +{{points}} Punkte — das lässt sich nicht rückgängig machen.",
+    "completeYes": "Ja, abschließen",
+    "completedToast_one": "Veranstaltung abgeschlossen — {{count}} Teilnehmer:in hat die Punkte erhalten.",
+    "completedToast_other": "Veranstaltung abgeschlossen — {{count}} Teilnehmer:innen haben ihre Punkte erhalten.",
+    "registeredCount_one": "{{count}} Anmeldung",
+    "registeredCount_other": "{{count}} Anmeldungen",
     "formDate": "Datum & Uhrzeit",
     "formCapacity": "Kapazität",
     "formUnlimited": "Unbegrenzt",

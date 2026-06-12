@@ -1,7 +1,10 @@
+import { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
 import AdminRoute from '../components/auth/AdminRoute';
+import { initAuth } from '../services/authService';
+import { useAuthStore } from '../stores/authStore';
 
 // Public pages
 import LandingPage from '../pages/LandingPage';
@@ -36,6 +39,7 @@ import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
 import ManageProjectsPage from '../pages/admin/ManageProjectsPage';
 import ManageUsersPage from '../pages/admin/ManageUsersPage';
 import ManageIdeasPage from '../pages/admin/ManageIdeasPage';
+import ManageSubmissionsPage from '../pages/admin/ManageSubmissionsPage';
 import ManageCommentsPage from '../pages/admin/ManageCommentsPage';
 import ManageLearnPage from '../pages/admin/ManageLearnPage';
 import NewLearnPage from '../pages/admin/NewLearnPage';
@@ -143,6 +147,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'admin/submissions',
+        element: (
+          <AdminRoute>
+            <ManageSubmissionsPage />
+          </AdminRoute>
+        ),
+      },
+      {
         path: 'admin/comments',
         element: (
           <AdminRoute>
@@ -243,5 +255,42 @@ const router = createBrowserRouter([
 ]);
 
 export default function AppRouter() {
+  // Session bootstrap: restore auth from the httpOnly refresh cookie BEFORE any
+  // route renders, so (a) a page reload never logs the user out and (b) every
+  // initial data fetch already carries the access token (e.g. registeredByMe on
+  // events). Guests resolve quickly with a 401 — the gate is barely visible.
+  const [ready, setReady] = useState(false);
+  const setAuth = useAuthStore((s) => s.setAuth);
+
+  useEffect(() => {
+    let cancelled = false;
+    initAuth()
+      .then((session) => {
+        if (session && !cancelled) setAuth(session.user, session.accessToken);
+      })
+      .finally(() => {
+        if (!cancelled) setReady(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [setAuth]);
+
+  if (!ready) {
+    // Minimal splash — no text needed (sub-second); decorative spinner only.
+    return (
+      <div
+        className="flex min-h-screen items-center justify-center bg-white dark:bg-gray-900"
+        role="status"
+        aria-live="polite"
+      >
+        <div
+          className="h-8 w-8 rounded-full border-4 border-green-600 border-t-transparent motion-safe:animate-spin"
+          aria-hidden="true"
+        />
+      </div>
+    );
+  }
+
   return <RouterProvider router={router} />;
 }

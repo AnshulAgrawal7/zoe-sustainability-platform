@@ -4,7 +4,8 @@ import { getAllUsers, updateUserRole, getStats } from '../controllers/adminContr
 import { translateProjectFields } from '../controllers/translationController';
 import { getIdeas, updateIdeaStatus } from '../controllers/ideaController';
 import { getAllComments, setCommentStatus } from '../controllers/commentController';
-import { createEvent, updateEvent, deleteEvent } from '../controllers/eventController';
+import { createEvent, updateEvent, deleteEvent, completeEvent } from '../controllers/eventController';
+import { getSubmissions } from '../controllers/submissionController';
 import {
   createLearningResource,
   updateLearningResource,
@@ -88,6 +89,11 @@ const eventUpdateValidators = [
 router.post('/events', eventCreateValidators, createEvent);
 router.patch('/events/:id', eventUpdateValidators, updateEvent);
 router.delete('/events/:id', deleteEvent);
+// Lifecycle: mark COMPLETED + award pending points to registered users (idempotent).
+router.post('/events/:id/complete', completeEvent);
+
+// --- Citizen reports & feedback (read-only overview for now) ---
+router.get('/submissions', getSubmissions);
 
 // --- Learning resources (Z5, admin CRUD; public read lives on /api/learn) ---
 const learnValidators = [

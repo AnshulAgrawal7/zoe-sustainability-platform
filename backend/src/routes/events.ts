@@ -6,6 +6,8 @@ import {
   getEvent,
   joinEvent,
   registerForEvent,
+  cancelRegistration,
+  getMyEventRegistrations,
   getEventRegistrationCount,
 } from '../controllers/eventController';
 import { authenticate } from '../middleware/auth';
@@ -22,9 +24,10 @@ const registerLimiter = rateLimit({
   message: { success: false, error: 'Too many requests, please try again later' },
 });
 
-// --- Public read ---
+// --- Public read (optionalAuth adds registeredByMe for logged-in users) ---
 router.get(
   '/',
+  optionalAuth,
   [
     query('category').optional().isIn([...PROJECT_CATEGORIES]),
     query('projectId').optional().isString(),
@@ -33,10 +36,17 @@ router.get(
   getEvents
 );
 
+// The logged-in user's own registrations (dashboard "my events"). Two literal
+// segments, so it never collides with `/:eventId/count` or `/:id` below.
+router.get('/registrations/me', authenticate, getMyEventRegistrations);
+
 router.get('/:eventId/count', getEventRegistrationCount);
 
-// --- Logged-in attendance (earns the event's reward points) ---
+// --- Logged-in attendance (points pending until the event is completed) ---
 router.post('/:id/join', authenticate, joinEvent);
+
+// --- Logged-in cancel (any time before the event is completed) ---
+router.delete('/:id/registration', authenticate, cancelRegistration);
 
 // --- Open RSVP (guests: name + email + consent, no points) ---
 router.post(
@@ -52,6 +62,6 @@ router.post(
 );
 
 // Keep the detail route last so it does not shadow the sub-paths above.
-router.get('/:id', getEvent);
+router.get('/:id', optionalAuth, getEvent);
 
 export default router;

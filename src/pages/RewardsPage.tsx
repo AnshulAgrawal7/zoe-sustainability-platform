@@ -176,8 +176,10 @@ export default function RewardsPage() {
                         {currentTier.greekName}
                       </p>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {/* Always the USER'S OWN role designation, regardless
+                            of which role the tier list below is toggled to. */}
                         {t(
-                          `rewardData.roleTiers.${profile}.${currentTier.id}.name`
+                          `rewardData.roleTiers.${user?.profile ?? profile}.${currentTier.id}.name`
                         )}
                       </p>
                     </div>
@@ -226,7 +228,7 @@ export default function RewardsPage() {
                     {t('rewards.toReach', {
                       tier: nextTier.greekName,
                       name: t(
-                        `rewardData.roleTiers.${profile}.${nextTier.id}.name`
+                        `rewardData.roleTiers.${user?.profile ?? profile}.${nextTier.id}.name`
                       ),
                     })}{' '}
                     {nextTier.icon}
@@ -318,7 +320,13 @@ export default function RewardsPage() {
               <TierCard
                 key={tier.id}
                 tier={tier}
-                isCurrent={!!currentTier && tier.id === currentTier.id}
+                // "Your tier" only applies on the user's OWN role track — when
+                // peeking at another role's levels, nothing is highlighted.
+                isCurrent={
+                  !!currentTier &&
+                  tier.id === currentTier.id &&
+                  user?.profile === profile
+                }
                 role={profile}
               />
             ))}

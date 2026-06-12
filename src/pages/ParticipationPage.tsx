@@ -17,6 +17,7 @@ import { trackEvent, ANALYTICS_EVENTS } from '../services/analytics';
 import IdeaSubmitForm from '../components/engagement/IdeaSubmitForm';
 import PointsBadge from '../components/ui/PointsBadge';
 import AccountPointsHint from '../components/ui/AccountPointsHint';
+import { submitSubmission } from '../services/submissionService';
 import { useAuthStore } from '../stores/authStore';
 
 // J1: exactly three options in one horizontal row, in this order.
@@ -71,6 +72,8 @@ export default function ParticipationPage() {
     type: initialOption ?? '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{
     name?: string;
     email?: string;
@@ -95,7 +98,7 @@ export default function ParticipationPage() {
     });
   }, [activeOption]);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     // Required-field validation with localized messages (guests also need a
     // name + valid email; logged-in users have those from their profile).
@@ -109,13 +112,33 @@ export default function ParticipationPage() {
     setFieldErrors(fe);
     if (Object.keys(fe).length > 0) return;
 
-    setSubmitted(true);
-    // Conversion event — only the selected option type, never the message/PII.
-    trackEvent(ANALYTICS_EVENTS.ideaSubmitted, {
-      type: form.type || 'unknown',
-    });
-    setForm(emptyForm);
-    setFieldErrors({});
+    // Persist — like ideas, reports/feedback land in the admin overview.
+    setSubmitError('');
+    setSubmitting(true);
+    try {
+      await submitSubmission({
+        type: form.type === 'feedback' ? 'FEEDBACK' : 'REPORT',
+        message: form.message.trim(),
+        // Logged-in users are linked via the bearer token server-side.
+        submitterName:
+          isAuthenticated && user ? undefined : form.name.trim() || undefined,
+        submitterEmail:
+          isAuthenticated && user ? undefined : form.email.trim() || undefined,
+      });
+      setSubmitted(true);
+      // Conversion event — only the selected option type, never the message/PII.
+      trackEvent(ANALYTICS_EVENTS.ideaSubmitted, {
+        type: form.type || 'unknown',
+      });
+      setForm(emptyForm);
+      setFieldErrors({});
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error ? err.message : t('participate.submitError')
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -214,8 +237,8 @@ export default function ParticipationPage() {
                   : t('participate.submitButton')}
               </h2>
               {activeOption !== 'submit-idea' && (
-                <p className="mt-1 inline-block rounded border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-300">
-                  {t('participate.prototypeNotice')}
+                <p className="mt-1 max-w-xl text-xs text-gray-500 dark:text-gray-400">
+                  {t('participate.submissionPrivacyNote')}
                 </p>
               )}
             </div>
@@ -241,10 +264,7 @@ export default function ParticipationPage() {
                 {t('participate.thankYou')}
               </h3>
               <p className="mb-2 text-gray-600 dark:text-gray-300">
-                {t('participate.deploymentNote')}
-              </p>
-              <p className="text-sm text-amber-700 dark:text-amber-300">
-                {t('participate.prototypeNote')}
+                {t('participate.submissionSuccess')}
               </p>
               <button
                 onClick={() => {
@@ -366,12 +386,23 @@ export default function ParticipationPage() {
                   </p>
                 )}
               </div>
+              {submitError && (
+                <p
+                  role="alert"
+                  className="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/30 dark:text-red-300"
+                >
+                  {submitError}
+                </p>
+              )}
               <div className="flex items-center gap-4">
                 <button
                   type="submit"
-                  className="rounded-lg bg-green-600 px-6 py-2.5 font-medium text-white transition-colors hover:bg-green-700"
+                  disabled={submitting}
+                  className="rounded-lg bg-green-600 px-6 py-2.5 font-medium text-white transition-colors hover:bg-green-700 disabled:opacity-60"
                 >
-                  {t('participate.submitButton')}
+                  {submitting
+                    ? t('common.loading')
+                    : t('participate.submitButton')}
                 </button>
                 <button
                   type="button"

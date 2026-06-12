@@ -43,11 +43,13 @@ Sets `refreshToken` httpOnly cookie.
 ---
 
 ### POST /auth/refresh
-Exchange refresh token (cookie) for new access token.
+Exchange refresh token (cookie) for a new access token **plus the user**, so a
+page reload restores the whole session in one round-trip (see the frontend's
+auth bootstrap in `AppRouter`).
 
 **Response 200:**
 ```json
-{ "success": true, "data": { "accessToken": "eyJ..." } }
+{ "success": true, "data": { "accessToken": "eyJ...", "user": { "id": "…", "email": "…", "name": "…", "role": "USER", "points": 150, "language": "EL", "profile": "STUDENT" } } }
 ```
 
 ---
@@ -128,34 +130,54 @@ Withdraw from a project (deducts points). **USER auth required.**
 
 ## Events (`/api/events`)
 
-An event is a concrete, dated appointment that optionally belongs to a project
-(`projectId`, nullable) or stands alone. Trilingual; `category` reuses the
-project categories. Attendance is stored in `EventRegistration` (the `eventId` is
-a deliberately soft reference — no FK — so historical RSVPs are preserved).
+An event is a concrete, dated appointment belonging to a project. Trilingual;
+`category` reuses the project categories. Attendance is stored in
+`EventRegistration` (the `eventId` is a deliberately soft reference — no FK — so
+historical RSVPs are preserved).
+
+**Lifecycle:** events start as `status: "UPCOMING"`. Registering awards **no**
+points; the event's `rewardPoints` stay *pending* until an admin marks the event
+`COMPLETED` (`POST /admin/events/:id/complete`), at which point every registered
+logged-in user is credited exactly once. Completed events accept no new
+registrations and no cancellations.
 
 ### GET /events
-Public list. Query filters: `category` (project category), `projectId`,
-`upcoming=true` (date ≥ now). Each event includes the linked `project`
-(id + trilingual titles + category) and a derived `registeredCount`.
+Public list (`optionalAuth`). Query filters: `category` (project category),
+`projectId`, `upcoming=true` (date ≥ now). Each event includes the linked
+`project` (id + trilingual titles + category), a derived `registeredCount`, its
+`status`, and — for logged-in callers — `registeredByMe`.
 
 **Response 200:**
 ```json
-{ "success": true, "data": { "events": [ { "id": "evt-…", "titleEn": "…", "date": "2026-07-12T09:00:00.000Z", "category": "ENVIRONMENT", "rewardPoints": 25, "capacity": 80, "projectId": "proj-marine", "project": { "id": "proj-marine", "titleEn": "…" }, "registeredCount": 12 } ] } }
+{ "success": true, "data": { "events": [ { "id": "evt-…", "titleEn": "…", "date": "2026-07-12T09:00:00.000Z", "category": "ENVIRONMENT", "status": "UPCOMING", "rewardPoints": 25, "capacity": 80, "projectId": "proj-marine", "project": { "id": "proj-marine", "titleEn": "…" }, "registeredCount": 12, "registeredByMe": false } ] } }
 ```
 
 ### GET /events/:id
-Public detail (same shape as a list item).
+Public detail (same shape as a list item; `optionalAuth` adds `registeredByMe`).
+
+### GET /events/registrations/me
+The logged-in user's own registrations, each enriched with the event and the
+pending vs. awarded points. **USER auth required.**
+
+**Response 200:** `{ "success": true, "data": { "registrations": [ { "id": "…", "eventId": "…", "pointsAwarded": 0, "pointsPending": 25, "event": { … } } ] } }`
 
 ### POST /events/:id/join
-Logged-in attendance: earns the event's `rewardPoints`, grants threshold badges.
-**USER auth required.**
+Logged-in attendance: creates the registration only — points stay pending until
+the event is completed. **USER auth required.**
 
-**Response 201:** `{ "success": true, "data": { "id": "…", "pointsAwarded": 25, "guest": false } }`  
-**Error 409:** Already registered.  **Error 403:** Fully booked.  **Error 404:** Event not found.
+**Response 201:** `{ "success": true, "data": { "id": "…", "pointsAwarded": 0, "pointsPending": 25, "guest": false } }`  
+**Error 409:** Already registered.  **Error 403:** Fully booked / event already completed.  **Error 404:** Event not found.
+
+### DELETE /events/:id/registration
+Cancel the own registration — allowed any time **before** the event is
+completed. **USER auth required.**
+
+**Error 403:** Event already completed.  **Error 404:** Not registered.
 
 ### POST /events/:eventId/register
-Open RSVP (rate-limited). Logged-in users earn points; **guests** pass
-`guestName` + `guestEmail` + `consent:true` and earn none. `optionalAuth`.
+Open RSVP (rate-limited). Logged-in users register via their account (points
+pending, as for join); **guests** pass `guestName` + `guestEmail` +
+`consent:true` and earn none. `optionalAuth`. **Error 403** when completed.
 
 ### GET /events/:eventId/count
 Public registration count: `{ "success": true, "data": { "count": 12 } }`.
@@ -271,6 +293,18 @@ Update an event (partial). **ADMIN auth required.**
 Delete an event. **ADMIN auth required.** RSVPs keep their soft `eventId` and are
 not cascaded.
 
+### POST /admin/events/:id/complete
+Mark an event `COMPLETED` and credit its `rewardPoints` to every registered
+logged-in user that has not been credited yet (then grant threshold badges).
+Idempotent — re-running never double-awards. **ADMIN auth required.**
+
+**Response 200:** `{ "success": true, "data": { "id": "…", "status": "COMPLETED", "awardedCount": 3, "pointsPerUser": 25 } }`
+
+### GET /admin/submissions
+Citizen reports & feedback from `/api/submissions` (read-only overview; newest
+first). Optional `?type=REPORT|FEEDBACK`. Includes the linked `user`
+(id/name/email) when the submitter was logged in. **ADMIN auth required.**
+
 ### POST /admin/schools
 Create a school, optionally with a coordinator login (role `SCHOOL`).
 
@@ -345,6 +379,23 @@ Public single post (`404` if not found or unpublished).
 
 ### DELETE /posts/:id
 **ADMIN.** Delete a post.
+
+---
+
+## Submissions (`/api/submissions`)
+
+Citizen reports of environmental issues and general feedback from the
+participation page. Mirrors the ideas flow: open **without** an account
+(rate-limited, `optionalAuth`); a valid token links the submission to the user,
+otherwise it is stored anonymously. Admins review them via
+`GET /admin/submissions` (read-only — no workflow yet, Future Work).
+
+### POST /submissions
+**Body:** `type` (`REPORT | FEEDBACK`), `message` (≤ 4000 chars), optional
+`submitterName` / `submitterEmail` (guests only — logged-in submitters are
+linked via the token).
+
+**Response 201:** `{ "success": true, "data": { "id": "…", "type": "REPORT", "createdAt": "…" } }`
 
 ---
 

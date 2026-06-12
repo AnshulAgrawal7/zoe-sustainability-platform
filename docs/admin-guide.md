@@ -155,5 +155,20 @@ Projekt** gehören (ein Projekt → mehrere Termine) oder eigenständig sind.
 - Verknüpfte Termine erscheinen automatisch auf der **Projekt-Detailseite**
   („Termine zu diesem Projekt") und auf der öffentlichen **Termine-Seite**
   (`/events`).
-- Teilnahme: eingeloggte Nutzer:innen erhalten die Punkte des Termins; Gäste melden
-  sich mit Name/E-Mail/Einwilligung an (ohne Punkte).
+- **Lebenszyklus & Punkte:** Anmeldungen vergeben **keine** Sofort-Punkte. In der
+  Terminliste zeigt **Abschließen** (mit Bestätigungsabfrage) den Termin als
+  `COMPLETED` an und schreibt allen angemeldeten Mitgliedern die Punkte des
+  Termins **einmalig** gut (idempotent — erneutes Abschließen vergibt nichts
+  doppelt). Abgeschlossene Termine nehmen keine neuen Anmeldungen mehr an;
+  Abmeldungen sind dann ebenfalls gesperrt.
+- Gäste melden sich mit Name/E-Mail/Einwilligung an (ohne Punkte).
+
+---
+
+## 11. Meldungen & Feedback (`/admin/submissions`)
+
+Über die Mitmach-Seite (`/participate`) eingereichte **Umweltmeldungen**
+(`REPORT`) und **Feedback** (`FEEDBACK`) landen hier — neueste zuerst, nach Typ
+filterbar. Eingeloggte Einsender:innen sind mit Name/E-Mail verknüpft; Gäste
+erscheinen mit ihren optionalen Angaben oder als „Anonym". Vorerst reine
+Durchsicht (kein Workflow — Future Work).

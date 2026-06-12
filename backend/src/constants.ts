@@ -26,3 +26,14 @@ export type IdeaStatus = (typeof IDEA_STATUSES)[number];
 export const COMMENT_STATUSES = ['VISIBLE', 'HIDDEN'] as const;
 
 export type CommentStatus = (typeof COMMENT_STATUSES)[number];
+
+// Citizen submissions from /participate that are NOT ideas: environmental issue
+// reports and general feedback. Stored for the admin overview (no workflow yet).
+export const SUBMISSION_TYPES = ['REPORT', 'FEEDBACK'] as const;
+
+export type SubmissionType = (typeof SUBMISSION_TYPES)[number];
+
+// Event lifecycle: points are awarded when an admin completes the event.
+export const EVENT_STATUSES = ['UPCOMING', 'COMPLETED'] as const;
+
+export type EventStatusValue = (typeof EVENT_STATUSES)[number];

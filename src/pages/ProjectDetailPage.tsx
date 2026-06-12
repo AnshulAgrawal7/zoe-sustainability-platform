@@ -46,6 +46,15 @@ export default function ProjectDetailPage() {
   // D3: full-size cover image in the shared Lightbox (reused, not rewritten).
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
+  // Events for this project (non-blocking; failure just hides the section).
+  // Reloadable so register/cancel can refresh counts + registeredByMe flags.
+  const loadEvents = () => {
+    if (!id) return;
+    getEvents({ projectId: id })
+      .then(setEvents)
+      .catch(() => setEvents([]));
+  };
+
   useEffect(() => {
     if (!id) return;
     async function load() {
@@ -59,14 +68,12 @@ export default function ProjectDetailPage() {
       }
     }
     void load();
-    // Events for this project (non-blocking; failure just hides the section).
-    getEvents({ projectId: id })
-      .then(setEvents)
-      .catch(() => setEvents([]));
+    loadEvents();
     // Linked learning resources (non-blocking; failure just hides the section).
     getLearningResources({ projectId: id })
       .then(setLearn)
       .catch(() => setLearn([]));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   function getTitle(): string {
@@ -328,11 +335,17 @@ export default function ProjectDetailPage() {
                       />
                     )}
                   </div>
-                  {(spotsLeft == null || spotsLeft > 0) && (
+                  {(ev.status === 'COMPLETED' ||
+                    ev.registeredByMe ||
+                    spotsLeft == null ||
+                    spotsLeft > 0) && (
                     <div className="mt-3 border-t border-gray-100 pt-3 dark:border-gray-700">
                       <EventRegister
                         eventId={ev.id}
                         rewardPoints={ev.rewardPoints}
+                        registered={ev.registeredByMe}
+                        completed={ev.status === 'COMPLETED'}
+                        onChanged={loadEvents}
                       />
                     </div>
                   )}

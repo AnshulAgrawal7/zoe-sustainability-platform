@@ -131,8 +131,12 @@ Project
 
 Event   // concrete dated appointment; REQUIRED parent project (1 project → N events)
   id, titleEn/El/De, descriptionEn/El/De, date (DateTime), location?,
-  category (project category), rewardPoints, capacity?, projectId
+  category (project category), status (UPCOMING|COMPLETED), rewardPoints,
+  capacity?, projectId
   → project(Project)   // real FK (required, ON DELETE RESTRICT) — Decision A
+  // Lifecycle: registering awards NO points. An admin marks the event COMPLETED
+  //   (POST /admin/events/:id/complete) → every registered logged-in user is
+  //   credited rewardPoints exactly once (idempotent), then threshold badges.
 
 Post   // news/blog; auto-created on project OPEN/COMPLETED or written by admin
   id, type (PROJECT_NEW|PROJECT_COMPLETED|ANNOUNCEMENT)
@@ -145,8 +149,13 @@ Participation
 
 EventRegistration   // attendance/RSVP
   id, eventId (SOFT ref to Event.id — no FK), userId?, guestName?, guestEmail?,
-  pointsAwarded, createdAt
+  pointsAwarded (0 until the event is COMPLETED), createdAt
   UNIQUE(userId, eventId)   // logged-in users; guests (null userId) unconstrained
+
+Submission   // citizen issue report / feedback from /participate (mirrors Idea)
+  id, type (REPORT|FEEDBACK), message, submitterName?, submitterEmail?,
+  userId? (linked when logged in), createdAt
+  // read-only admin overview (/admin/submissions); no workflow yet
 
 Badge
   id, nameEn, nameEl, nameDe, descEn, descEl, descDe, iconName, threshold

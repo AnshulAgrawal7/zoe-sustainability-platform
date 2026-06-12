@@ -1,5 +1,5 @@
 import { api } from './api';
-import type { ApiResponse, ApiEvent } from '../types';
+import type { ApiResponse, ApiEvent, MyEventRegistration } from '../types';
 
 export interface GuestRegistration {
   guestName: string;
@@ -9,7 +9,10 @@ export interface GuestRegistration {
 
 export interface RegistrationResult {
   id: string;
+  /** Always 0 on registration — points are credited when the event completes. */
   pointsAwarded: number;
+  /** The event's reward, pending until an admin marks it COMPLETED. */
+  pointsPending?: number;
   guest: boolean;
 }
 
@@ -38,12 +41,37 @@ export async function getEvent(id: string): Promise<ApiEvent> {
   return res.data;
 }
 
-// Logged-in attendance — earns the event's reward points.
+// Logged-in attendance — points become pending until the event is completed.
 export async function joinEvent(eventId: string): Promise<RegistrationResult> {
   const res = await api.post<ApiResponse<RegistrationResult>>(
     `/events/${eventId}/join`,
     {}
   );
+  return res.data;
+}
+
+// Logged-in cancel — allowed any time before the event is completed.
+export async function cancelEventRegistration(eventId: string): Promise<void> {
+  await api.delete<ApiResponse<null>>(`/events/${eventId}/registration`);
+}
+
+// The logged-in user's registrations (dashboard "my events").
+export async function getMyEventRegistrations(): Promise<
+  MyEventRegistration[]
+> {
+  const res = await api.get<
+    ApiResponse<{ registrations: MyEventRegistration[] }>
+  >('/events/registrations/me');
+  return res.data.registrations;
+}
+
+// Admin: mark an event COMPLETED and award pending points (idempotent).
+export async function completeEvent(
+  eventId: string
+): Promise<{ awardedCount: number; pointsPerUser: number }> {
+  const res = await api.post<
+    ApiResponse<{ awardedCount: number; pointsPerUser: number }>
+  >(`/admin/events/${eventId}/complete`, {});
   return res.data;
 }
 

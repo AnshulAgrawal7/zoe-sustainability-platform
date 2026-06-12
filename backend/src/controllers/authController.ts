@@ -152,8 +152,20 @@ export async function refresh(req: Request, res: Response) {
       return;
     }
 
-    const accessToken = signAccessToken({ userId: payload.userId, role: payload.role });
-    ok(res, { accessToken });
+    // Return the user alongside the token so the frontend can restore a full
+    // session from the httpOnly cookie in ONE round-trip (page reload survives
+    // without re-login — see AppRouter's auth bootstrap).
+    const user = await prisma.user.findUnique({
+      where: { id: payload.userId },
+      select: { id: true, email: true, name: true, role: true, points: true, avatarUrl: true, language: true, profile: true },
+    });
+    if (!user) {
+      unauthorized(res, 'User no longer exists');
+      return;
+    }
+
+    const accessToken = signAccessToken({ userId: user.id, role: user.role });
+    ok(res, { accessToken, user });
   } catch {
     unauthorized(res, 'Invalid refresh token');
   }

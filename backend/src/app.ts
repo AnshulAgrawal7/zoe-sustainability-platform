@@ -15,6 +15,7 @@ import learnRouter from './routes/learn';
 import feedRouter from './routes/feed';
 import postsRouter from './routes/posts';
 import newsletterRouter from './routes/newsletter';
+import submissionsRouter from './routes/submissions';
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use('/api/learn', learnRouter);
 app.use('/api/feed', feedRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/newsletter', newsletterRouter);
+app.use('/api/submissions', submissionsRouter);
 
 app.get('/api/health', (_req, res) => {
   res.json({ success: true, data: { status: 'ok', version: '0.1.0' } });

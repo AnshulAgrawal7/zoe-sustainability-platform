@@ -79,6 +79,9 @@ export interface ApiEventProjectRef {
   category: ApiProjectCategory;
 }
 
+// Lifecycle: points are awarded when an admin marks the event COMPLETED.
+export type ApiEventStatus = 'UPCOMING' | 'COMPLETED';
+
 export interface ApiEvent {
   id: string;
   titleEn: string;
@@ -90,13 +93,29 @@ export interface ApiEvent {
   date: string;
   location: string | null;
   category: ApiProjectCategory;
+  status: ApiEventStatus;
   rewardPoints: number;
   capacity: number | null;
   imageUrl: string | null;
   projectId: string | null;
   project?: ApiEventProjectRef | null;
   registeredCount?: number;
+  /** True when the requesting (logged-in) user is registered for this event. */
+  registeredByMe?: boolean;
   createdAt: string;
+}
+
+// One of the logged-in user's event registrations (dashboard "my events").
+// `event` is null if the event row was deleted (soft reference).
+export interface MyEventRegistration {
+  id: string;
+  eventId: string;
+  createdAt: string;
+  /** Points actually credited (0 until the event is completed). */
+  pointsAwarded: number;
+  /** Points still pending until the admin completes the event (else 0). */
+  pointsPending: number;
+  event: ApiEvent | null;
 }
 
 // Text (label/unit/description) is translated — see i18n: impactMetrics.<id>.*
@@ -253,8 +272,18 @@ export interface ApiResponse<T> {
   error?: string;
 }
 
-export interface AuthTokens {
-  accessToken: string;
+// Citizen report (environmental issue) or feedback from /participate.
+export type SubmissionType = 'REPORT' | 'FEEDBACK';
+
+export interface ApiSubmission {
+  id: string;
+  type: SubmissionType;
+  message: string;
+  submitterName: string | null;
+  submitterEmail: string | null;
+  userId: string | null;
+  user?: { id: string; name: string; email: string } | null;
+  createdAt: string;
 }
 
 export interface LoginPayload {

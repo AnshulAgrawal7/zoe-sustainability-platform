@@ -53,12 +53,14 @@ export default function EventsPage() {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
 
-  useEffect(() => {
+  // Reloadable so register/cancel can refresh counts + registeredByMe flags.
+  const loadEvents = () => {
     getEvents()
       .then(setEvents)
       .catch(() => setEvents([]))
       .finally(() => setLoading(false));
-  }, []);
+  };
+  useEffect(loadEvents, []);
 
   function title(e: ApiEvent): string {
     if (lang === 'el') return e.titleEl;
@@ -264,6 +266,11 @@ export default function EventsPage() {
                             className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-300"
                           />
                         )}
+                        {event.status === 'COMPLETED' && (
+                          <span className="rounded-full bg-gray-200 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                            {t('events.statusCompleted')}
+                          </span>
+                        )}
                       </div>
                       <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
                         {title(event)}
@@ -327,12 +334,20 @@ export default function EventsPage() {
                         </div>
                       )}
 
-                      {/* Registration — open to guests (no account needed) */}
-                      {(spotsLeft == null || spotsLeft > 0) && (
+                      {/* Registration — open to guests (no account needed).
+                          Also shown when completed (status note) or when the
+                          user is registered (cancel option), even if full. */}
+                      {(event.status === 'COMPLETED' ||
+                        event.registeredByMe ||
+                        spotsLeft == null ||
+                        spotsLeft > 0) && (
                         <div className="mt-auto border-t border-gray-100 pt-4 dark:border-gray-700">
                           <EventRegister
                             eventId={event.id}
                             rewardPoints={event.rewardPoints}
+                            registered={event.registeredByMe}
+                            completed={event.status === 'COMPLETED'}
+                            onChanged={loadEvents}
                           />
                         </div>
                       )}

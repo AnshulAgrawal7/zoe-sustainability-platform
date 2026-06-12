@@ -175,6 +175,20 @@ export default function AdminDashboardPage() {
           <ArrowRight className="h-5 w-5 text-gray-400" aria-hidden="true" />
         </Link>
         <Link
+          to="/admin/submissions"
+          className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-green-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700"
+        >
+          <div>
+            <p className="font-semibold text-gray-900 dark:text-white">
+              {t('adminSubmissions.title')}
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {t('adminSubmissions.cardSubtitle')}
+            </p>
+          </div>
+          <ArrowRight className="h-5 w-5 text-gray-400" aria-hidden="true" />
+        </Link>
+        <Link
           to="/admin/comments"
           className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-green-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700"
         >

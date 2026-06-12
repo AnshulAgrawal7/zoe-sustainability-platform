@@ -149,12 +149,20 @@ export default function Header() {
             {/* Auth area */}
             {isAuthenticated && user ? (
               <>
-                {/* Points, shown top-right with the turtle symbol. */}
-                <PointsBadge
-                  points={user.points}
-                  iconSize={16}
-                  className="rounded-full bg-amber-50 px-2.5 py-1 text-sm font-semibold text-amber-700 dark:bg-amber-900/20 dark:text-amber-300"
-                />
+                {/* Points, shown top-right — clicking opens the rewards page. */}
+                <Link
+                  to="/rewards"
+                  aria-label={t('nav.pointsLinkAria', {
+                    points: user.points,
+                  })}
+                  className="rounded-full transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 motion-safe:hover:scale-105 dark:focus-visible:ring-offset-gray-900"
+                >
+                  <PointsBadge
+                    points={user.points}
+                    iconSize={16}
+                    className="rounded-full bg-amber-50 px-2.5 py-1 text-sm font-semibold text-amber-700 transition-colors hover:bg-amber-100 dark:bg-amber-900/20 dark:text-amber-300 dark:hover:bg-amber-900/40"
+                  />
+                </Link>
                 <UserMenu />
               </>
             ) : (
@@ -299,11 +307,20 @@ export default function Header() {
                     <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
                       {user.name}
                     </p>
-                    <PointsBadge
-                      points={user.points}
-                      iconSize={14}
-                      className="text-xs font-semibold text-amber-600 dark:text-amber-400"
-                    />
+                    <Link
+                      to="/rewards"
+                      onClick={closeMenu}
+                      aria-label={t('nav.pointsLinkAria', {
+                        points: user.points,
+                      })}
+                      className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
+                    >
+                      <PointsBadge
+                        points={user.points}
+                        iconSize={14}
+                        className="text-xs font-semibold text-amber-600 dark:text-amber-400"
+                      />
+                    </Link>
                   </div>
                 )}
                 <Link
