@@ -13,6 +13,7 @@ import {
 } from '../controllers/eventController';
 import { getSubmissions } from '../controllers/submissionController';
 import { updateRewardTier } from '../controllers/rewardController';
+import { getAdminMetrics } from '../controllers/metricsController';
 import {
   createLearningResource,
   updateLearningResource,
@@ -47,6 +48,9 @@ router.put(
 );
 
 router.get('/stats', getStats);
+
+// Monitoring: page-view/visit counters + activity series (?days=30, ≤365).
+router.get('/metrics', getAdminMetrics);
 
 // --- Citizen ideas (admin review) ---
 router.get('/ideas', getIdeas);

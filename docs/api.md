@@ -410,6 +410,26 @@ responsibility (prototype scope).
 
 ---
 
+## Metrics (`/api/metrics`)
+
+Privacy-by-design monitoring for the admin dashboard: the platform stores
+**aggregate day counters only** (one number per day × path) — no IPs, no user
+agents, no cookies, no visitor-level rows, so no consent banner is needed.
+`/admin` paths are never recorded; admin browsing is also excluded client-side.
+
+### POST /metrics/view
+Anonymous page-view report (rate-limited). **Body:** `path` (app-internal path
+like `/projects`), optional `newVisit: true` (sent once per browser session —
+approximates "visits" without identifying anyone). **Response 200.**
+
+### GET /admin/metrics?days=30
+**ADMIN.** Everything for the monitoring page in one call (`days` 1–365):
+`pageViews`/`visits` per day, `topPages` (top 10), `activity` per-day series
+derived from existing timestamps (logins via RefreshToken, new users, event
+registrations, ideas, submissions, newsletter sign-ups) and `totals`.
+
+---
+
 ## Submissions (`/api/submissions`)
 
 Citizen reports of environmental issues and general feedback from the

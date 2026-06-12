@@ -1081,7 +1081,7 @@
     "processorsTitle": "Auftragsverarbeiter / Drittdienste",
     "processorsText": "Wird dieser Prototyp als Live-Demo betrieben, können folgende Auftragsverarbeiter auf Basis von Auftragsverarbeitungsverträgen (vom Betreiber abzuschließen, EU-Region) eingesetzt werden: Supabase (Hosting von Datenbank & Datei-Speicher) und DeepL (maschinelle Übersetzung der Projekttexte). An diese Dienste werden keine Daten übermittelt, die über das für den Betrieb der Plattform technisch Erforderliche hinausgehen.",
     "analyticsTitle": "Webanalyse",
-    "analyticsText": "Sofern die Webanalyse aktiviert ist, nutzt dieser Prototyp einen datenschutzfreundlichen, cookielosen Analysedienst, der keine Cookies setzt, keine personenbezogenen Daten erhebt und keine Personen seitenübergreifend verfolgt. Erfasst werden ausschließlich aggregierte, anonyme Nutzungsstatistiken (z. B. Seitenaufrufe). Die Webanalyse ist in diesem Prototyp standardmäßig deaktiviert."
+    "analyticsText": "Sofern die Webanalyse aktiviert ist, nutzt dieser Prototyp einen datenschutzfreundlichen, cookielosen Analysedienst, der keine Cookies setzt, keine personenbezogenen Daten erhebt und keine Personen seitenübergreifend verfolgt. Erfasst werden ausschließlich aggregierte, anonyme Nutzungsstatistiken (z. B. Seitenaufrufe). Die Webanalyse ist in diesem Prototyp standardmäßig deaktiviert. Zusätzlich führt die Plattform selbst anonyme, aggregierte Seitenaufruf-Zähler (eine Zahl pro Tag und Seite) für das kommunale Monitoring-Dashboard — ohne IP-Adressen, Geräteinformationen, Cookies oder besucherbezogene Einträge."
   },
   "getInvolved": {
     "title": "Mitmachen als Tourist",
@@ -1644,6 +1644,29 @@
   "sdg": {
     "attribution": "Offizielle UN-SDG-Icons, unverändert und zu Informationszwecken gemäß den UN-SDG-Richtlinien verwendet —",
     "disclaimer": "Die Inhalte dieser Veröffentlichung wurden nicht von den Vereinten Nationen genehmigt und geben nicht die Ansichten der Vereinten Nationen, ihrer Bediensteten oder Mitgliedstaaten wieder."
+  },
+  "adminMonitoring": {
+    "title": "Monitoring",
+    "cardSubtitle": "Besuche, Seitenaufrufe und Plattform-Aktivität",
+    "intro": "Anonyme, aggregierte Nutzungsstatistiken: Seitenaufrufe werden nur als ein Zähler pro Tag und Seite gespeichert — ohne IP-Adressen, Geräte oder Besucherprofile. Admin-Navigation wird nicht mitgezählt.",
+    "periodLabel": "Zeitraum",
+    "periodDays": "Letzte {{count}} Tage",
+    "kpiViews": "Seitenaufrufe",
+    "kpiVisits": "Besuche",
+    "kpiLogins": "Logins",
+    "kpiNewUsers": "Neue Konten",
+    "chartTitle": "Seitenaufrufe pro Tag",
+    "chartAria": "Balkendiagramm der täglichen Seitenaufrufe, insgesamt {{total}}",
+    "topPagesTitle": "Meistbesuchte Seiten",
+    "activityTitle": "Plattform-Aktivität",
+    "rowLogins": "Logins",
+    "rowNewUsers": "Neue Konten",
+    "rowEventRegs": "Event-Anmeldungen",
+    "rowIdeas": "Eingereichte Ideen",
+    "rowSubmissions": "Meldungen & Feedback",
+    "rowNewsletter": "Newsletter-Anmeldungen",
+    "footnote": "Konten insgesamt: {{users}} · Seitenaufrufe seit Start: {{views}}",
+    "empty": "Noch keine Daten erfasst — Statistiken erscheinen, sobald Besucher die Seite nutzen."
   },
   "adminEventRegs": {
     "title": "Anmeldungen",

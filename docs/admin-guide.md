@@ -171,7 +171,25 @@ Projekt** gehören (ein Projekt → mehrere Termine) oder eigenständig sind.
 
 ---
 
-## 11. Belohnungen verwalten (`/admin/rewards`)
+## 11. Monitoring (`/admin/monitoring`)
+
+Anonyme Nutzungs- und Aktivitätsstatistiken, umschaltbar für 7/30/90 Tage:
+
+- **KPI-Karten:** Seitenaufrufe, Besuche (≈ Browser-Sitzungen), Logins,
+  neue Konten im Zeitraum.
+- **Seitenaufrufe pro Tag** als Balkendiagramm und die **meistbesuchten
+  Seiten** (Top 10).
+- **Plattform-Aktivität:** Logins, neue Konten, Event-Anmeldungen, Ideen,
+  Meldungen & Feedback, Newsletter-Anmeldungen — abgeleitet aus den ohnehin
+  vorhandenen Zeitstempeln in der Datenbank.
+- **Datenschutz by design:** Seitenaufrufe werden nur als Tageszähler pro
+  Seite gespeichert (keine IP-Adressen, Geräte, Cookies oder Besucherprofile);
+  `/admin`-Seiten und die Navigation eingeloggter Admins werden nicht gezählt.
+  Es ist daher kein Cookie-Banner erforderlich.
+
+---
+
+## 12. Belohnungen verwalten (`/admin/rewards`)
 
 Die fünf **ZOE-Stufen** (Σπόρος … Θεματοφύλακας) sind hier vollständig
 bearbeitbar — Änderungen sind sofort live auf `/rewards` und im Nutzer-Dashboard:
@@ -187,7 +205,7 @@ bearbeitbar — Änderungen sind sofort live auf `/rewards` und im Nutzer-Dashbo
 
 ---
 
-## 12. Meldungen & Feedback (`/admin/submissions`)
+## 13. Meldungen & Feedback (`/admin/submissions`)
 
 Über die Mitmach-Seite (`/participate`) eingereichte **Umweltmeldungen**
 (`REPORT`) und **Feedback** (`FEEDBACK`) landen hier — neueste zuerst, nach Typ

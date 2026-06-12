@@ -426,6 +426,27 @@ model FeedPostImageAltText {
   @@unique([imageId, locale])
 }
 
+// --- Privacy-by-design monitoring (admin dashboard) ---------------------
+// AGGREGATE-ONLY counters: one row per day × path with a counter. There are
+// deliberately NO visitor-level rows, no IPs, no user agents, no cookies —
+// nothing personal is ever stored, so no consent banner is required.
+// `day` is a UTC date string (YYYY-MM-DD); /admin paths are never recorded.
+
+model PageViewDaily {
+  day   String // YYYY-MM-DD (UTC)
+  path  String
+  count Int    @default(0)
+
+  @@id([day, path])
+}
+
+// One counter per day for "visits" (browser sessions): the client reports a
+// visit once per sessionStorage lifetime — an approximation, never identity.
+model SiteVisitDaily {
+  day   String @id // YYYY-MM-DD (UTC)
+  count Int    @default(0)
+}
+
 // Newsletter opt-in touchpoint (F). PROTOTYPE: this only RECORDS an email +
 // locale — there is NO mailing/double-opt-in/unsubscribe system (Future Work).
 // `email` is unique so re-submitting the same address is a no-op (idempotent).

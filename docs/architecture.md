@@ -178,6 +178,14 @@ UserBadge
 
 RefreshToken
   id, token*, userId, expiresAt
+
+PageViewDaily   // privacy-by-design monitoring: AGGREGATE counters only
+  day (YYYY-MM-DD UTC), path, count
+  PRIMARY KEY (day, path)
+  // no visitor-level rows, no IP/UA/cookies; /admin paths never recorded
+
+SiteVisitDaily   // "visits" ≈ browser sessions (client flags once per session)
+  day (YYYY-MM-DD UTC) PK, count
 ```
 
 ### ADR — School accounts & ranking
