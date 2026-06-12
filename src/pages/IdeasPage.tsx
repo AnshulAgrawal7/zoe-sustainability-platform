@@ -87,7 +87,7 @@ export default function IdeasPage() {
           {t('ideasBoard.howItWorks')}
         </p>
         <Link
-          to="/participate"
+          to="/participate?action=submit-idea"
           className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
         >
           {t('ideasBoard.submitCta')}
@@ -136,7 +136,7 @@ export default function IdeasPage() {
         <div className="py-16 text-center text-gray-500 dark:text-gray-400">
           <p className="mb-3">{t('ideasBoard.empty')}</p>
           <Link
-            to="/participate"
+            to="/participate?action=submit-idea"
             className="font-medium text-green-700 underline dark:text-green-400"
           >
             {t('ideasBoard.emptyCta')}

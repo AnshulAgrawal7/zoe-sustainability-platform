@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 // Points granted to a logged-in user for joining an event default to this when an
 // event does not override it. Guests earn none (the incentive to create an
 // account — participation itself stays open).
-const EVENT_POINTS = 200;
+const EVENT_POINTS = 20;
 
 interface EventBody {
   titleEn?: string;

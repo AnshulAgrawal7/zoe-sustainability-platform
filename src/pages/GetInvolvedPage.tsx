@@ -3,7 +3,6 @@ import Container from '../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { Award, ArrowRight, CalendarDays, GraduationCap } from 'lucide-react';
 import TouristContribution from '../components/engagement/TouristContribution';
-import NewsletterSignup from '../components/ui/NewsletterSignup';
 import ProjectMap, { type MapPoint } from '../components/map/ProjectMap';
 import { projects } from '../data/projects';
 
@@ -84,10 +83,6 @@ export default function GetInvolvedPage() {
         </h2>
         <ProjectMap points={mapPoints} />
       </section>
-
-      <div className="mt-12">
-        <NewsletterSignup />
-      </div>
 
       {/* Rewards is a CONSEQUENCE of participation, shown as a secondary link. */}
       <div className="mt-12 rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-700 dark:bg-gray-800/50">

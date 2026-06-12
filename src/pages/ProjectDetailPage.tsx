@@ -21,7 +21,10 @@ import { getEvents } from '../services/eventService';
 import { getLearningResources } from '../services/learnService';
 import EventRegister from '../components/events/EventRegister';
 import EntityImage from '../components/ui/EntityImage';
+import SdgIcon from '../components/ui/SdgIcon';
+import PointsBadge from '../components/ui/PointsBadge';
 import Lightbox from '../components/news/Lightbox';
+import { formatNumber } from '../utils/format';
 import type { ApiProject, ApiEvent, LearningResource } from '../types';
 
 const DATE_LOCALES: Record<string, string> = {
@@ -133,6 +136,11 @@ export default function ProjectDetailPage() {
   const metrics = project.metrics ?? [];
   const metricLabel = (m: (typeof metrics)[number]): string =>
     lang === 'el' ? m.labelEl : lang === 'de' ? m.labelDe : m.labelEn;
+  // Locale-aware display for raw figures (thousands separators + decimals).
+  const fmt = (v: number | string) => {
+    const n = typeof v === 'number' ? v : parseFloat(v);
+    return Number.isFinite(n) ? formatNumber(n, i18n.language) : String(v);
+  };
   const participantCount = project._count?.participations ?? 0;
   const valueChainSteps = [
     {
@@ -230,18 +238,11 @@ export default function ProjectDetailPage() {
             {getDescription()}
           </p>
 
-          {/* SDG badges — link to the internal SDG page (H3) */}
+          {/* SDG tiles — official UN icons linking to the internal SDG page (H3) */}
           {sdgs.length > 0 && (
             <div className="mb-6 flex flex-wrap gap-2">
               {sdgs.map((n) => (
-                <Link
-                  key={n}
-                  to={`/sdg-dashboard#sdg-${n}`}
-                  aria-label={t('projects.sdgLinkAria', { n })}
-                  className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-blue-800 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/50"
-                >
-                  SDG {n}
-                </Link>
+                <SdgIcon key={n} number={n} size={64} linkToDashboard />
               ))}
             </div>
           )}
@@ -319,6 +320,13 @@ export default function ProjectDetailPage() {
                         {registered}/{capacity}
                       </span>
                     )}
+                    {ev.rewardPoints > 0 && (
+                      <PointsBadge
+                        points={ev.rewardPoints}
+                        showPlus
+                        className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-300"
+                      />
+                    )}
                   </div>
                   {(spotsLeft == null || spotsLeft > 0) && (
                     <div className="mt-3 border-t border-gray-100 pt-3 dark:border-gray-700">
@@ -355,7 +363,7 @@ export default function ProjectDetailPage() {
                   className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/40"
                 >
                   <p className="text-2xl font-bold text-green-700 dark:text-green-400">
-                    {m.value}
+                    {fmt(m.value)}
                     {m.unit && (
                       <span className="ml-1 text-sm font-normal text-gray-500 dark:text-gray-400">
                         {m.unit}

@@ -22,19 +22,19 @@ async function main() {
   const citizen1 = await prisma.user.upsert({
     where: { email: 'citizen1@example.com' },
     update: { profile: 'RESIDENT' },
-    create: { email: 'citizen1@example.com', password: userHash, name: 'Maria Papadopoulou', role: 'USER', points: 3200, language: 'EL', profile: 'RESIDENT' },
+    create: { email: 'citizen1@example.com', password: userHash, name: 'Maria Papadopoulou', role: 'USER', points: 320, language: 'EL', profile: 'RESIDENT' },
   });
 
   const citizen2 = await prisma.user.upsert({
     where: { email: 'citizen2@example.com' },
     update: { profile: 'STUDENT' },
-    create: { email: 'citizen2@example.com', password: userHash, name: 'Nikos Stavros', role: 'USER', points: 1500, language: 'EL', profile: 'STUDENT' },
+    create: { email: 'citizen2@example.com', password: userHash, name: 'Nikos Stavros', role: 'USER', points: 150, language: 'EL', profile: 'STUDENT' },
   });
 
   const tourist = await prisma.user.upsert({
     where: { email: 'tourist@example.com' },
     update: { profile: 'VISITOR' },
-    create: { email: 'tourist@example.com', password: userHash, name: 'Hans Mueller', role: 'USER', points: 500, language: 'DE', profile: 'VISITOR' },
+    create: { email: 'tourist@example.com', password: userHash, name: 'Hans Mueller', role: 'USER', points: 50, language: 'DE', profile: 'VISITOR' },
   });
 
   const badges = await Promise.all([
@@ -46,22 +46,22 @@ async function main() {
     prisma.badge.upsert({
       where: { id: 'badge-activist' },
       update: {},
-      create: { id: 'badge-activist', nameEn: 'Activist', nameEl: 'Ακτιβιστής', nameDe: 'Aktivist', descEn: 'Earned 100 points by participating in ZOE projects.', descEl: 'Κέρδισες 100 πόντους.', descDe: '100 Punkte verdient.', iconName: 'Flame', threshold: 1000 },
+      create: { id: 'badge-activist', nameEn: 'Activist', nameEl: 'Ακτιβιστής', nameDe: 'Aktivist', descEn: 'Earned 100 points by participating in ZOE projects.', descEl: 'Κέρδισες 100 πόντους.', descDe: '100 Punkte verdient.', iconName: 'Flame', threshold: 100 },
     }),
     prisma.badge.upsert({
       where: { id: 'badge-eco-hero' },
       update: {},
-      create: { id: 'badge-eco-hero', nameEn: 'Eco Hero', nameEl: 'Οικολογικός Ήρωας', nameDe: 'Umweltheld', descEn: 'Outstanding commitment to Corfu\'s environment.', descEl: 'Εξαιρετική δέσμευση για το περιβάλλον.', descDe: 'Herausragendes Umweltengagement.', iconName: 'Leaf', threshold: 3000 },
+      create: { id: 'badge-eco-hero', nameEn: 'Eco Hero', nameEl: 'Οικολογικός Ήρωας', nameDe: 'Umweltheld', descEn: 'Outstanding commitment to Corfu\'s environment.', descEl: 'Εξαιρετική δέσμευση για το περιβάλλον.', descDe: 'Herausragendes Umweltengagement.', iconName: 'Leaf', threshold: 300 },
     }),
     prisma.badge.upsert({
       where: { id: 'badge-ambassador' },
       update: {},
-      create: { id: 'badge-ambassador', nameEn: 'Ambassador', nameEl: 'Πρεσβευτής', nameDe: 'Botschafter', descEn: 'You represent ZOE\'s values to your community.', descEl: 'Εκπροσωπείς τις αξίες του ZOE.', descDe: 'Du vertrittst ZOEs Werte.', iconName: 'Star', threshold: 5000 },
+      create: { id: 'badge-ambassador', nameEn: 'Ambassador', nameEl: 'Πρεσβευτής', nameDe: 'Botschafter', descEn: 'You represent ZOE\'s values to your community.', descEl: 'Εκπροσωπείς τις αξίες του ZOE.', descDe: 'Du vertrittst ZOEs Werte.', iconName: 'Star', threshold: 500 },
     }),
     prisma.badge.upsert({
       where: { id: 'badge-legend' },
       update: {},
-      create: { id: 'badge-legend', nameEn: 'Legend', nameEl: 'Θρύλος', nameDe: 'Legende', descEn: 'A legendary contribution to sustainability in Northern Corfu.', descEl: 'Θρυλική συνεισφορά στη βιωσιμότητα.', descDe: 'Legendärer Nachhaltigkeitsbeitrag.', iconName: 'Trophy', threshold: 10000 },
+      create: { id: 'badge-legend', nameEn: 'Legend', nameEl: 'Θρύλος', nameDe: 'Legende', descEn: 'A legendary contribution to sustainability in Northern Corfu.', descEl: 'Θρυλική συνεισφορά στη βιωσιμότητα.', descDe: 'Legendärer Nachhaltigkeitsbeitrag.', iconName: 'Trophy', threshold: 1000 },
     }),
   ]);
 
@@ -273,55 +273,55 @@ async function main() {
       'Monthly coastal cleanup with ARCHELON volunteers. Equipment and a citizen-science litter sheet provided; communal breakfast afterwards. All ages welcome.',
       'Μηνιαίος παράκτιος καθαρισμός με εθελοντές του ΑΡΧΕΛΩΝ. Παρέχονται εξοπλισμός και φύλλο καταγραφής απορριμμάτων· κοινό πρωινό μετά. Για όλες τις ηλικίες.',
       'Monatliche Küstenreinigung mit ARCHELON-Freiwilligen. Ausrüstung und Citizen-Science-Bogen werden gestellt; gemeinsames Frühstück danach. Für alle Altersgruppen.',
-      '2026-07-16T09:00:00.000Z', 'Kassiopi Beach, North Corfu', 'ENVIRONMENT', 'proj-marine', 250, 80),
+      '2026-07-16T09:00:00.000Z', 'Kassiopi Beach, North Corfu', 'ENVIRONMENT', 'proj-marine', 25, 80),
     makeEvent('evt-cleanup-jul25',
       'Second Coastline Cleanup', 'Δεύτερος Παράκτιος Καθαρισμός', 'Zweite Küstenreinigung',
       'Follow-up cleanup along the Almyros stretch, focusing on micro-litter and ghost nets. Boats provided by local fishers.',
       'Συνέχεια καθαρισμού στην παραλία Αλμυρού, με έμφαση στα μικροαπορρίμματα και τα εγκαταλελειμμένα δίχτυα. Σκάφη από τοπικούς αλιείς.',
       'Folge-Reinigung am Strandabschnitt Almyros mit Fokus auf Mikromüll und Geisternetze. Boote von lokalen Fischer:innen.',
-      '2026-07-19T09:00:00.000Z', 'Almyros Beach, North Corfu', 'ENVIRONMENT', 'proj-marine', 250, 60),
+      '2026-07-19T09:00:00.000Z', 'Almyros Beach, North Corfu', 'ENVIRONMENT', 'proj-marine', 25, 60),
     makeEvent('evt-biodiversity-workshop',
       'Wetland Biodiversity Walk', 'Περιήγηση Βιοποικιλότητας Υγροτόπου', 'Biodiversitäts-Spaziergang im Feuchtgebiet',
       'Guided walk around the Antinioti Lagoon to identify wetland birds and plants. Led by local naturalists; binoculars provided.',
       'Καθοδηγούμενη περιήγηση στη Λιμνοθάλασσα Αντινιώτη για αναγνώριση πτηνών και φυτών. Με τοπικούς φυσιοδίφες· παρέχονται κιάλια.',
       'Geführter Rundgang an der Antinioti-Lagune zur Bestimmung von Vögeln und Pflanzen. Mit lokalen Naturkundigen; Ferngläser werden gestellt.',
-      '2026-07-26T08:30:00.000Z', 'Antinioti Lagoon, NE Corfu', 'ENVIRONMENT', 'proj-antinioti', 200, 25),
+      '2026-07-26T08:30:00.000Z', 'Antinioti Lagoon, NE Corfu', 'ENVIRONMENT', 'proj-antinioti', 20, 25),
     makeEvent('evt-recycling-hub',
       'Recycling Hub Open Day', 'Ημέρα Ανοιχτών Θυρών Κέντρου Ανακύκλωσης', 'Tag der offenen Tür im Recycling-Hub',
       'Tour the municipal sorting hub, see the 20 recycling streams in action and join sorting games for children.',
       'Ξενάγηση στο δημοτικό κέντρο διαλογής, παρουσίαση των 20 ρευμάτων ανακύκλωσης και παιχνίδια διαλογής για παιδιά.',
       'Führung durch das kommunale Sortierzentrum, die 20 Wertstoffströme in Aktion und Sortierspiele für Kinder.',
-      '2026-08-02T11:00:00.000Z', 'Municipal Hub, North Corfu', 'COMMUNITY', 'proj-circular', 200, 150),
+      '2026-08-02T11:00:00.000Z', 'Municipal Hub, North Corfu', 'COMMUNITY', 'proj-circular', 20, 150),
     makeEvent('evt-composting-expansion',
       'Community Composting Planning', 'Σχεδιασμός Κοινοτικής Κομποστοποίησης', 'Planung der Gemeinschaftskompostierung',
       'Open planning meeting for villages joining the next composting wave. Hear the pilot results and register interest.',
       'Ανοιχτή συνάντηση σχεδιασμού για χωριά που εντάσσονται στο επόμενο κύμα κομποστοποίησης. Αποτελέσματα πιλότου και δήλωση ενδιαφέροντος.',
       'Offenes Planungstreffen für Dörfer der nächsten Kompostierungswelle. Pilot-Ergebnisse und Interessenbekundung.',
-      '2026-08-23T18:30:00.000Z', 'Town Hall, North Corfu', 'COMMUNITY', 'proj-circular', 200, 80),
+      '2026-08-23T18:30:00.000Z', 'Town Hall, North Corfu', 'COMMUNITY', 'proj-circular', 20, 80),
     makeEvent('evt-water-monitoring',
       'Citizen Water Monitor Training', 'Εκπαίδευση Εθελοντών Παρακολούθησης Νερού', 'Schulung Wasser-Monitoring',
       'Full-day training for new volunteer water-quality monitors: test kits, GPS data entry and the reporting protocol. Certification on completion.',
       'Ολοήμερη εκπαίδευση νέων εθελοντών: κιτ ελέγχου, καταχώριση GPS και πρωτόκολλο αναφοράς. Πιστοποίηση με την ολοκλήρωση.',
       'Ganztägige Schulung für neue Freiwillige: Testkits, GPS-Dateneingabe und Meldeprotokoll. Zertifikat nach Abschluss.',
-      '2026-08-30T08:30:00.000Z', 'Acharavi, North Corfu', 'ENVIRONMENT', 'proj-water-quality', 300, 15),
+      '2026-08-30T08:30:00.000Z', 'Acharavi, North Corfu', 'ENVIRONMENT', 'proj-water-quality', 30, 15),
     makeEvent('evt-reforestation-day',
       'Reforestation Volunteer Day', 'Ημέρα Εθελοντικής Αναδάσωσης', 'Aufforstungs-Freiwilligentag',
       'Plant native trees on a fire-affected slope near the Nymfes waterfalls. Tools and saplings provided.',
       'Φύτευση ιθαγενών δέντρων σε πληγείσα από πυρκαγιά πλαγιά κοντά στους καταρράκτες Νυμφών. Παρέχονται εργαλεία και δενδρύλλια.',
       'Pflanzung heimischer Bäume an einem brandgeschädigten Hang nahe den Nymfes-Wasserfällen. Werkzeug und Setzlinge gestellt.',
-      '2026-09-13T09:00:00.000Z', 'Nymfes, North Corfu', 'ENVIRONMENT', 'proj-natural-monuments', 250, 50),
+      '2026-09-13T09:00:00.000Z', 'Nymfes, North Corfu', 'ENVIRONMENT', 'proj-natural-monuments', 25, 50),
     makeEvent('evt-youth-eco',
       'Youth Eco Workshop', 'Εργαστήριο Νέων για το Περιβάλλον', 'Jugend-Umweltworkshop',
       'Hands-on sustainability workshop for secondary students with the Ionian University. Project ideas pitched by youth teams.',
       'Πρακτικό εργαστήριο βιωσιμότητας για μαθητές με το Ιόνιο Πανεπιστήμιο. Ομάδες νέων παρουσιάζουν ιδέες έργων.',
       'Praxis-Nachhaltigkeitsworkshop für Schüler:innen mit der Ionischen Universität. Jugendteams stellen Projektideen vor.',
-      '2026-09-20T09:00:00.000Z', 'Ionian University, Corfu', 'EDUCATION', 'proj-education', 200, 30),
+      '2026-09-20T09:00:00.000Z', 'Ionian University, Corfu', 'EDUCATION', 'proj-education', 20, 30),
     makeEvent('evt-sdg-forum',
       'Annual ZOE SDG Forum', 'Ετήσιο Φόρουμ SDG του ZOE', 'Jährliches ZOE-SDG-Forum',
       'Public forum on ZOE programme results, SDG progress and community priorities for next year. All citizens welcome; translation available.',
       'Δημόσιο φόρουμ για τα αποτελέσματα του ZOE, την πρόοδο SDG και τις προτεραιότητες της κοινότητας. Ανοιχτό σε όλους· διαθέσιμη μετάφραση.',
       'Öffentliches Forum zu ZOE-Ergebnissen, SDG-Fortschritt und Prioritäten. Alle Bürger:innen willkommen; Übersetzung verfügbar.',
-      '2026-09-27T09:00:00.000Z', 'Kassiopi Community Hall', 'COMMUNITY', 'proj-zoe-programme', 300, 200),
+      '2026-09-27T09:00:00.000Z', 'Kassiopi Community Hall', 'COMMUNITY', 'proj-zoe-programme', 30, 200),
   ]);
 
   // Participations
@@ -333,13 +333,13 @@ async function main() {
     });
 
   await Promise.all([
-    upsertParticipation(citizen1.id, p1.id, 75),
-    upsertParticipation(citizen1.id, p2.id, 50),
-    upsertParticipation(citizen1.id, p5.id, 65),
-    upsertParticipation(citizen1.id, p7.id, 55),
-    upsertParticipation(citizen2.id, p2.id, 50),
-    upsertParticipation(citizen2.id, p6.id, 35),
-    upsertParticipation(tourist.id, p2.id, 50),
+    upsertParticipation(citizen1.id, p1.id, 8),
+    upsertParticipation(citizen1.id, p2.id, 5),
+    upsertParticipation(citizen1.id, p5.id, 7),
+    upsertParticipation(citizen1.id, p7.id, 6),
+    upsertParticipation(citizen2.id, p2.id, 5),
+    upsertParticipation(citizen2.id, p6.id, 4),
+    upsertParticipation(tourist.id, p2.id, 5),
   ]);
 
   // Badges earned

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowLeft, AlertCircle, Folder } from 'lucide-react';
 import { getLearningResource } from '../services/learnService';
 import EntityImage from '../components/ui/EntityImage';
+import SdgIcon from '../components/ui/SdgIcon';
 import Lightbox from '../components/news/Lightbox';
 import type { LearningResource } from '../types';
 
@@ -135,12 +136,7 @@ export default function LearnDetailPage() {
           {sdgs.length > 0 && (
             <div className="mt-6 flex flex-wrap gap-2">
               {sdgs.map((n) => (
-                <span
-                  key={n}
-                  className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 dark:border-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
-                >
-                  SDG {n}
-                </span>
+                <SdgIcon key={n} number={n} size={48} linkToDashboard />
               ))}
             </div>
           )}

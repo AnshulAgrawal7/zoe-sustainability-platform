@@ -372,35 +372,8 @@ export default function LandingPage() {
         </section>
       )}
 
-      {/* Headline figures — green banner (B2). Slimmer than the hero. The three
-          values are DELIBERATELY FICTIONAL demo data (see microcopy). */}
-      <section
-        className="bg-gradient-to-br from-green-700 via-green-600 to-teal-600 text-white"
-        aria-label={t('landing.statsAria')}
-      >
-        <Container maxW="5xl" className="py-8">
-          <h2 className="mb-6 text-center text-2xl font-bold text-white">
-            {t('landing.stats.heading')}
-          </h2>
-          <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3">
-            {facts.map((f) => (
-              <div key={f.key}>
-                <p className="text-3xl font-bold text-white sm:text-4xl">
-                  {f.value}
-                </p>
-                <p className="mt-1 text-sm leading-relaxed text-green-100">
-                  {f.label}
-                </p>
-              </div>
-            ))}
-          </div>
-          <p className="mt-6 text-center text-xs text-green-100/80">
-            {t('landing.stats.disclaimer')}
-          </p>
-        </Container>
-      </section>
-
-      {/* Addressed SDGs — icon row linking to the internal SDG page (B3) */}
+      {/* Addressed SDGs — icon row linking to the internal SDG page (B3).
+          Shown above the headline figures (the "ZOE in numbers" banner). */}
       {addressedSdgs.length > 0 && (
         <section
           aria-labelledby="landing-sdgs-heading"
@@ -438,6 +411,34 @@ export default function LandingPage() {
           </Container>
         </section>
       )}
+
+      {/* Headline figures — green banner (B2). Slimmer than the hero. The three
+          values are DELIBERATELY FICTIONAL demo data (see microcopy). */}
+      <section
+        className="bg-gradient-to-br from-green-700 via-green-600 to-teal-600 text-white"
+        aria-label={t('landing.statsAria')}
+      >
+        <Container maxW="5xl" className="py-8">
+          <h2 className="mb-6 text-center text-2xl font-bold text-white">
+            {t('landing.stats.heading')}
+          </h2>
+          <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3">
+            {facts.map((f) => (
+              <div key={f.key}>
+                <p className="text-3xl font-bold text-white sm:text-4xl">
+                  {f.value}
+                </p>
+                <p className="mt-1 text-sm leading-relaxed text-green-100">
+                  {f.label}
+                </p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 text-center text-xs text-green-100/80">
+            {t('landing.stats.disclaimer')}
+          </p>
+        </Container>
+      </section>
 
       {/* What's new — merged feed teaser */}
       {feedTeaser.length > 0 && (

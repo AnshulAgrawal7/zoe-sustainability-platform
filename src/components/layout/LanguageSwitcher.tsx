@@ -58,8 +58,8 @@ export default function LanguageSwitcher({
   const { t } = useTranslation();
   const { language, setLanguage } = useLanguageStore();
 
-  // Flag-only (A3): no visible language code. `md` (mobile menu) keeps a ≥44px
-  // touch target; `sm` (header) is compact.
+  // Flag-only; the active language is marked with a green pill. `md` (mobile
+  // menu) keeps a ≥44px touch target; `sm` (header) is compact.
   const flagBox = size === 'md' ? 'h-5 w-[30px]' : 'h-[15px] w-[22px]';
   const pad =
     size === 'md'
@@ -83,14 +83,12 @@ export default function LanguageSwitcher({
             aria-label={l.label}
             title={l.label}
             className={`inline-flex items-center rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-gray-900 ${pad} ${
-              active
-                ? 'bg-white shadow-sm dark:bg-gray-700'
-                : 'opacity-60 hover:opacity-100'
+              active ? 'bg-green-600 shadow-sm' : 'opacity-60 hover:opacity-100'
             }`}
           >
             <span
               className={`block ${flagBox} overflow-hidden rounded-[3px] ring-1 ${
-                active ? 'ring-green-500' : 'ring-black/10 dark:ring-white/20'
+                active ? 'ring-white/70' : 'ring-black/10 dark:ring-white/20'
               }`}
             >
               <Flag code={l.flag} />

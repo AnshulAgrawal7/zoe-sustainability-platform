@@ -19,6 +19,7 @@ import { impactMetrics } from '../data/metrics';
 import { projects } from '../data/projects';
 import { getImpactMetrics } from '../services/projectService';
 import StatusBadge from '../components/ui/StatusBadge';
+import { formatNumber } from '../utils/format';
 import type { ApiImpactMetric } from '../types';
 
 const iconMap: Record<string, React.ElementType> = {
@@ -47,6 +48,11 @@ const trendColors = {
 export default function TransparencyPage() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language.slice(0, 2);
+  // Locale-aware display for raw figures (thousands separators + decimals).
+  const fmt = (v: number | string) => {
+    const n = typeof v === 'number' ? v : parseFloat(v);
+    return Number.isFinite(n) ? formatNumber(n, i18n.language) : String(v);
+  };
   const principles = t('transparency.principles', {
     returnObjects: true,
   }) as { title: string; desc: string }[];
@@ -110,7 +116,7 @@ export default function TransparencyPage() {
                 className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-800"
               >
                 <p className="text-2xl font-bold text-green-700 dark:text-green-400">
-                  {m.value}
+                  {fmt(m.value)}
                   {m.unit && (
                     <span className="ml-1 text-sm font-normal text-gray-500 dark:text-gray-400">
                       {m.unit}
@@ -123,11 +129,6 @@ export default function TransparencyPage() {
                 {m.project && (
                   <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
                     {projectTitle(m)}
-                  </p>
-                )}
-                {m.source && (
-                  <p className="mt-2 text-xs text-gray-400 dark:text-gray-500">
-                    {t('projImpact.source')}: {m.source}
                   </p>
                 )}
               </li>
@@ -177,7 +178,7 @@ export default function TransparencyPage() {
                   )}
                 </div>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {metric.value}
+                  {fmt(metric.value)}
                 </p>
                 <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
                   {t(`impactMetrics.${metric.id}.unit`)}
@@ -242,7 +243,7 @@ export default function TransparencyPage() {
                       <StatusBadge status={p.status} />
                     </td>
                     <td className="hidden px-5 py-3.5 text-right text-gray-500 dark:text-gray-400 sm:table-cell">
-                      {p.participantCount.toLocaleString()}
+                      {fmt(p.participantCount)}
                     </td>
                   </tr>
                 ))}

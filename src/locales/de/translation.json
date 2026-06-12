@@ -160,6 +160,18 @@
       "actionLabel": "Feedback teilen"
     }
   },
+  "validation": {
+    "required": "Dieses Feld ist erforderlich.",
+    "name": "Bitte gib deinen Namen ein.",
+    "email": "Bitte gib eine gültige E-Mail-Adresse ein.",
+    "message": "Bitte gib eine Nachricht ein.",
+    "title": "Bitte gib einen Titel ein.",
+    "category": "Bitte wähle eine Kategorie.",
+    "description": "Bitte beschreibe deine Idee.",
+    "password": "Bitte gib ein Passwort ein.",
+    "passwordMin": "Das Passwort muss mindestens 8 Zeichen lang sein.",
+    "consent": "Bitte stimme zu, um fortzufahren."
+  },
   "rewardData": {
     "tiers": {
       "sporos": {
@@ -210,6 +222,196 @@
           "Co-Design-Session: Hilf, die ZOE-Projektprioritäten des nächsten Jahres festzulegen",
           "ZOE-Hüter-Badge"
         ]
+      }
+    },
+    "roleTiers": {
+      "RESIDENT": {
+        "sporos": {
+          "name": "Nachbar:in",
+          "description": "Du bist bei ZOE dabei und kümmerst dich um deine Ecke Nordkorfus.",
+          "rewards": [
+            "Digitales ZOE-Nachbar-Abzeichen",
+            "ZOE-Mitgliedskarte",
+            "Monatlicher lokaler Newsletter"
+          ]
+        },
+        "phyllo": {
+          "name": "Lokale Hilfe",
+          "description": "Du packst in deinem Dorf mit an – kleine Taten summieren sich.",
+          "rewards": [
+            "Vorrang bei lokalen Aufräumaktionen",
+            "Setzlinge aus der Gemeinschaftsbaumschule",
+            "Name auf der Dorf-Helfertafel"
+          ]
+        },
+        "kladi": {
+          "name": "Gemeinschaftssäule",
+          "description": "Ein verlässlicher Teil des lokalen Umweltlebens.",
+          "rewards": [
+            "Gemeindeurkunde mit Unterschrift des Bürgermeisters",
+            "Glas ZOE-Partner-Olivenöl",
+            "Jährliche Kompostzuteilung"
+          ]
+        },
+        "fylakas": {
+          "name": "Dorfwächter:in",
+          "description": "Du schützt Landschaft und Küste deines Dorfes.",
+          "rewards": [
+            "Benannte Patenschaft auf der ZOE-Karte",
+            "10% bei ZOE-zertifizierten Betrieben",
+            "Einladung zum jährlichen ZOE-Forum"
+          ]
+        },
+        "thematofylakas": {
+          "name": "Insel-Hüter:in",
+          "description": "Eine führende Stimme für ein grüneres Nordkorfu.",
+          "rewards": [
+            "Nennung im ZOE-Jahresbericht",
+            "Patenschafts-Plakette der Gemeinde",
+            "Mitgestaltung der lokalen Prioritäten"
+          ]
+        }
+      },
+      "VISITOR": {
+        "sporos": {
+          "name": "Neugieriger Gast",
+          "description": "Willkommen! Dein erster grüner Schritt im Urlaub.",
+          "rewards": [
+            "Digitales ZOE-Gast-Abzeichen",
+            "Nachhaltiger Korfu-Willkommensführer",
+            "Karte mit umweltschonenden Orten"
+          ]
+        },
+        "phyllo": {
+          "name": "Bewusste:r Reisende:r",
+          "description": "Du reist achtsam mit der Insel und ihrer Natur.",
+          "rewards": [
+            "Wiederverwendbare ZOE-Trinkflasche",
+            "Rabatte bei zertifizierten Öko-Anbietern",
+            "Strandreinigungs-Starterset"
+          ]
+        },
+        "kladi": {
+          "name": "Öko-Entdecker:in",
+          "description": "Du machst aktiv mit, während du Nordkorfu entdeckst.",
+          "rewards": [
+            "Gutschein für geführte Naturwanderung",
+            "ZOE-Entdecker-Abzeichen",
+            "Beitrag an der Besucherwand"
+          ]
+        },
+        "fylakas": {
+          "name": "Küsten-Verbündete:r",
+          "description": "Ein:e Gast, der/die die Küste wirklich schützt.",
+          "rewards": [
+            "Namentlicher Dank auf der ZOE-Karte",
+            "10% bei ZOE-zertifizierten Unterkünften & Touren",
+            "Einladung zu einem saisonalen Freiwilligentag"
+          ]
+        },
+        "thematofylakas": {
+          "name": "Ehren-Hüter:in",
+          "description": "Ein:e wiederkehrende:r Freund:in der Umwelt Nordkorfus.",
+          "rewards": [
+            "Ehrenvolle Nennung im ZOE-Jahresbericht",
+            "ZOE-Ehren-Hüter-Zertifikat",
+            "Dauerhafte Einladung zu ZOE-Events"
+          ]
+        }
+      },
+      "STUDENT": {
+        "sporos": {
+          "name": "Lernende:r",
+          "description": "Du beginnst, Lernen mit lokalem Handeln zu verbinden.",
+          "rewards": [
+            "Digitales ZOE-Lern-Abzeichen",
+            "Zugang zu ZOE-Lernmaterialien",
+            "Studierenden-Newsletter"
+          ]
+        },
+        "phyllo": {
+          "name": "Entdecker:in",
+          "description": "Du erkundest Nachhaltigkeit praktisch auf der Insel.",
+          "rewards": [
+            "Vorrang bei Workshop-Plätzen",
+            "Exkursions-Set",
+            "Teilnahmebescheinigung"
+          ]
+        },
+        "kladi": {
+          "name": "Forscher:in",
+          "description": "Du steuerst Daten und Ideen zu lokalen Projekten bei.",
+          "rewards": [
+            "Citizen-Science-Zertifizierung",
+            "Mentoring mit Projektleitungen",
+            "ZOE-Forscher-Abzeichen"
+          ]
+        },
+        "fylakas": {
+          "name": "Öko-Mentor:in",
+          "description": "Du begleitest jüngere Schüler:innen beim Umweltengagement.",
+          "rewards": [
+            "Empfehlungsschreiben der Gemeinde",
+            "Anerkennung als Schulstunden-Leitung",
+            "Einladung zum jährlichen ZOE-Forum"
+          ]
+        },
+        "thematofylakas": {
+          "name": "Jugend-Hüter:in",
+          "description": "Eine junge Führungskraft für die grüne Zukunft Nordkorfus.",
+          "rewards": [
+            "Nennung im ZOE-Jahresbericht",
+            "Jugendsitz bei der Mitgestaltung",
+            "ZOE-Jugend-Hüter-Auszeichnung"
+          ]
+        }
+      },
+      "VOLUNTEER": {
+        "sporos": {
+          "name": "Neuling",
+          "description": "Willkommen in der ZOE-Freiwilligengemeinschaft!",
+          "rewards": [
+            "Digitales ZOE-Freiwilligen-Abzeichen",
+            "Willkommenspaket für Freiwillige",
+            "Monatliches Freiwilligen-Briefing"
+          ]
+        },
+        "phyllo": {
+          "name": "Aktive Hilfe",
+          "description": "Du bist da und packst im Einsatz an.",
+          "rewards": [
+            "ZOE-Freiwilligen-T-Shirt",
+            "Vorrang bei beliebten Events",
+            "Erfasste Freiwilligenstunden"
+          ]
+        },
+        "kladi": {
+          "name": "Teamleitung",
+          "description": "Du hilfst, andere Freiwillige vor Ort zu koordinieren.",
+          "rewards": [
+            "Teamleitungs-Schulung",
+            "Gemeindeurkunde",
+            "ZOE-Teamleitung-Abzeichen"
+          ]
+        },
+        "fylakas": {
+          "name": "Feld-Wächter:in",
+          "description": "Eine vertraute Leitung für praktische Patenschaft.",
+          "rewards": [
+            "Benannte Patenschaft auf der ZOE-Karte",
+            "10% bei ZOE-zertifizierten Betrieben",
+            "Einladung zum jährlichen ZOE-Forum"
+          ]
+        },
+        "thematofylakas": {
+          "name": "Leit-Hüter:in",
+          "description": "Eine treibende Kraft des ZOE-Freiwilligenwesens.",
+          "rewards": [
+            "Nennung im ZOE-Jahresbericht",
+            "Patenschafts-Plakette der Gemeinde",
+            "Mitgestaltung des Freiwilligenprogramms"
+          ]
+        }
       }
     },
     "activities": {
@@ -441,13 +643,14 @@
     "logout": "Abmelden",
     "admin": "Administration",
     "openMenu": "Menü öffnen",
+    "openSection": "Bereich {{section}} öffnen",
     "getInvolved": "Mitmachen",
     "imprint": "Impressum",
     "news": "Neuigkeiten",
     "overview": "Übersicht",
     "submitIdea": "Idee einreichen",
     "initiatives": "Initiativen",
-    "getInvolvedOverview": "Mitmach-Übersicht",
+    "getInvolvedOverview": "Mitmachen als Tourist",
     "sdgContributions": "SDG-Beiträge",
     "keyFigures": "Kennzahlen",
     "ideas": "Ideen-Board",
@@ -509,6 +712,7 @@
     "allStatuses": "Alle",
     "source": "Quelle",
     "sdgLinkAria": "SDG {{n}} — zur SDG-Seite",
+    "sdgIconAlt": "SDG {{n}}: {{title}}",
     "eventsTitle": "Veranstaltungen zum Projekt",
     "prototypeCount": "Prototyp — {{count}} Projekte",
     "valueChain": {
@@ -532,7 +736,7 @@
       "lead": "Registriere dich, nimm an Events teil und sammle Punkte, um verschiedene Level und Belohnungen zu erreichen.",
       "registerCta": "Jetzt registrieren",
       "haveAccount": "Du hast schon einen Account?",
-      "loginCta": "Dann logge dich ein."
+      "loginCta": "Einloggen"
     },
     "yourTier": "Ihre Stufe",
     "pointsRange": "{{min}}–{{max}} Punkte",
@@ -542,12 +746,15 @@
     "currentTier": "Aktuelle Stufe",
     "totalPoints": "Gesamtpunkte",
     "ptsShort": "Pkt.",
+    "pointsAria": "{{points}} ZOE-Punkte",
     "morePoints_one": "{{count}} weiterer Punkt",
     "morePoints_other": "{{count}} weitere Punkte",
     "toReach": "bis zur Stufe {{tier}} ({{name}})",
     "highestTier": "Sie haben die höchste Stufe erreicht. Danke, Θεματοφύλακας!",
     "tiersTitle": "Die fünf ZOE-Stufen",
     "tiersSubtitle": "Jede Stufe schaltet echte, greifbare Anerkennung der Gemeinde und lokaler Partner frei.",
+    "rolePickerLabel": "Belohnungspfad nach Rolle",
+    "rolePickerHint": "Wähle eine Rolle, um ihre Level-Namen und Belohnungen zu sehen.",
     "tiersNote": "Alle aufgeführten Belohnungen sind für diesen Prototyp indikativ und stehen unter dem Vorbehalt der formellen Programmgenehmigung.",
     "profileFocusSubtitle": "Verschiedene Profile profitieren am meisten von unterschiedlichen Aktionen. Wähle ein Profil, um den Belohnungs-Fokus zu sehen.",
     "earnTitle": "So verdienen Sie Punkte",
@@ -695,7 +902,10 @@
     "optionalLabel": "optional",
     "privacyNote": "Deine Idee wird zur Prüfung an die Gemeinde weitergeleitet. Die E-Mail ist freiwillig: Wenn du sie angibst, darf die Gemeinde auf deine Idee antworten; ohne E-Mail bleibt deine Einreichung anonym. Ein Konto ist nicht nötig. (Prototyp: für die Demo gespeichert, kein automatischer Versand.)",
     "submitSuccess": "Danke! Deine Idee wurde zur Prüfung an die Gemeinde übermittelt. Nach Freigabe erscheint sie öffentlich im Ideen-Board.",
-    "submitError": "Idee konnte nicht übermittelt werden. Bitte versuche es erneut."
+    "submitError": "Idee konnte nicht übermittelt werden. Bitte versuche es erneut.",
+    "accountHint": "Hinweis: ZOE-Punkte für Prämien sammelst du nur mit einem Konto. Erstelle eines, um Punkte für deine Beiträge zu sammeln.",
+    "accountHintCta": "Konto erstellen",
+    "profileContact": "Angemeldet als {{name}} ({{email}}) — aus deinem Profil übernommen."
   },
   "sdgs": {
     "title": "Ziele für nachhaltige Entwicklung",
@@ -1104,6 +1314,7 @@
     "dateFrom": "Von",
     "dateTo": "Bis",
     "clearPeriod": "Zeitraum zurücksetzen",
+    "pointsBadge": "+{{points}} Punkte",
     "categories": {
       "Biodiversity": "Biodiversität",
       "Circular Economy": "Kreislaufwirtschaft",

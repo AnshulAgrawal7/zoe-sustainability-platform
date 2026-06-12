@@ -18,32 +18,22 @@ import {
   communityMilestones,
 } from '../data/rewards';
 import { PROFILE_OPTIONS } from '../data/profiles';
+import PointsBadge from '../components/ui/PointsBadge';
 import { useAuthStore } from '../stores/authStore';
 import type { RewardTier, UserProfile } from '../types';
-
-const categoryColors: Record<string, string> = {
-  Action:
-    'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300',
-  Training: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
-  Participation:
-    'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300',
-  Community:
-    'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
-  Business:
-    'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300',
-  Education: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300',
-  Ongoing: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/40 dark:text-cyan-300',
-};
 
 function TierCard({
   tier,
   isCurrent,
+  role,
 }: {
   tier: RewardTier;
   isCurrent: boolean;
+  role: UserProfile;
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(isCurrent);
+  const base = `rewardData.roleTiers.${role}.${tier.id}`;
   return (
     <div
       className={`rounded-xl border-2 transition-all ${tier.colorClasses} ${
@@ -65,7 +55,7 @@ function TierCard({
             <div className="flex items-center gap-2">
               <span className="text-base font-bold">{tier.greekName}</span>
               <span className="text-sm font-medium opacity-70">
-                — {t(`rewardData.tiers.${tier.id}.name`)}
+                — {t(`${base}.name`)}
               </span>
               {isCurrent && (
                 <span className="rounded-full bg-green-600 px-2 py-0.5 text-xs font-semibold text-white">
@@ -74,12 +64,14 @@ function TierCard({
               )}
             </div>
             <p className="mt-0.5 text-xs opacity-70">
-              {tier.pointsMax
-                ? t('rewards.pointsRange', {
-                    min: tier.pointsMin,
-                    max: tier.pointsMax,
-                  })
-                : t('rewards.pointsMin', { min: tier.pointsMin })}
+              <PointsBadge
+                points={
+                  tier.pointsMax
+                    ? `${tier.pointsMin}–${tier.pointsMax}`
+                    : `${tier.pointsMin}+`
+                }
+                iconSize={11}
+              />
             </p>
           </div>
         </div>
@@ -91,12 +83,10 @@ function TierCard({
       </button>
       {open && (
         <div className="border-current/10 border-t px-4 pb-4 pt-3">
-          <p className="mb-3 text-sm opacity-80">
-            {t(`rewardData.tiers.${tier.id}.description`)}
-          </p>
+          <p className="mb-3 text-sm opacity-80">{t(`${base}.description`)}</p>
           <ul className="space-y-1.5">
             {(
-              t(`rewardData.tiers.${tier.id}.rewards`, {
+              t(`${base}.rewards`, {
                 returnObjects: true,
               }) as string[]
             ).map((r) => (
@@ -120,8 +110,11 @@ export default function RewardsPage() {
   const { t } = useTranslation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const user = useAuthStore((s) => s.user);
-  // J4: reward focus per audience profile (data lives in i18n profiles.<id>.*).
-  const [profile, setProfile] = useState<UserProfile>('RESIDENT');
+  // Role toggle for the tiers: each role has its own level names + rewards
+  // (rewardData.roleTiers.<ROLE>.*). Defaults to the logged-in user's own role.
+  const [profile, setProfile] = useState<UserProfile>(
+    user?.profile ?? 'RESIDENT'
+  );
 
   // A3: the current level/tier is shown ONLY for logged-in users, from their
   // REAL points (no static demo value anymore — A2).
@@ -183,7 +176,9 @@ export default function RewardsPage() {
                         {currentTier.greekName}
                       </p>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {t(`rewardData.tiers.${currentTier.id}.name`)}
+                        {t(
+                          `rewardData.roleTiers.${profile}.${currentTier.id}.name`
+                        )}
                       </p>
                     </div>
                   </div>
@@ -192,20 +187,18 @@ export default function RewardsPage() {
                   <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
                     {t('rewards.totalPoints')}
                   </p>
-                  <p className="text-3xl font-bold text-green-700 dark:text-green-400">
-                    {points}
-                  </p>
+                  <PointsBadge
+                    points={points}
+                    iconSize={26}
+                    className="justify-end gap-1.5 text-3xl font-bold text-green-700 dark:text-green-400"
+                  />
                 </div>
               </div>
 
               <div className="mb-2 flex justify-between text-xs text-gray-500 dark:text-gray-400">
-                <span>
-                  {currentTier.pointsMin} {t('rewards.ptsShort')}
-                </span>
+                <PointsBadge points={currentTier.pointsMin} iconSize={11} />
                 {currentTier.pointsMax && (
-                  <span>
-                    {currentTier.pointsMax} {t('rewards.ptsShort')}
-                  </span>
+                  <PointsBadge points={currentTier.pointsMax} iconSize={11} />
                 )}
               </div>
               <div className="mb-3 h-3 w-full rounded-full bg-gray-200 dark:bg-gray-700">
@@ -232,7 +225,9 @@ export default function RewardsPage() {
                     </strong>{' '}
                     {t('rewards.toReach', {
                       tier: nextTier.greekName,
-                      name: t(`rewardData.tiers.${nextTier.id}.name`),
+                      name: t(
+                        `rewardData.roleTiers.${profile}.${nextTier.id}.name`
+                      ),
                     })}{' '}
                     {nextTier.icon}
                   </span>
@@ -278,7 +273,7 @@ export default function RewardsPage() {
       {/* Tiers */}
       <section className="bg-gray-50 py-14 dark:bg-gray-900/50">
         <Container>
-          <div className="mb-10 text-center">
+          <div className="mb-8 text-center">
             <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
               {t('rewards.tiersTitle')}
             </h2>
@@ -286,36 +281,15 @@ export default function RewardsPage() {
               {t('rewards.tiersSubtitle')}
             </p>
           </div>
-          <div className="space-y-3">
-            {rewardTiers.map((tier) => (
-              <TierCard
-                key={tier.id}
-                tier={tier}
-                isCurrent={!!currentTier && tier.id === currentTier.id}
-              />
-            ))}
-          </div>
-          <p className="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
-            {t('rewards.tiersNote')}
-          </p>
-        </Container>
-      </section>
 
-      {/* Reward focus per profile (J4) — tabs switch the tailored focus text */}
-      <section className="bg-white py-14 dark:bg-gray-900">
-        <Container>
-          <div className="mb-8 text-center">
-            <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
-              {t('profiles.rewardFocusTitle')}
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              {t('rewards.profileFocusSubtitle')}
-            </p>
-          </div>
+          {/* Role toggle — level names + rewards differ per role. */}
+          <p className="mb-3 text-center text-sm text-gray-600 dark:text-gray-300">
+            {t('rewards.rolePickerHint')}
+          </p>
           <div
             role="tablist"
-            aria-label={t('profiles.rewardFocusTitle')}
-            className="mb-6 flex flex-wrap justify-center gap-2"
+            aria-label={t('rewards.rolePickerLabel')}
+            className="mb-8 flex flex-wrap justify-center gap-2"
           >
             {PROFILE_OPTIONS.map((p) => {
               const active = profile === p.id;
@@ -326,22 +300,32 @@ export default function RewardsPage() {
                   role="tab"
                   aria-selected={active}
                   onClick={() => setProfile(p.id)}
-                  className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 ${
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 ${
                     active
                       ? 'border-green-600 bg-green-600 text-white'
                       : 'border-gray-300 bg-white text-gray-600 hover:border-green-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300'
                   }`}
                 >
+                  <span aria-hidden="true">{p.emoji}</span>
                   {t(`profiles.${p.id}.label`)}
                 </button>
               );
             })}
           </div>
-          <div className="rounded-xl border border-gray-200 bg-gray-50 p-6 text-center dark:border-gray-700 dark:bg-gray-800">
-            <p className="leading-relaxed text-gray-700 dark:text-gray-300">
-              {t(`profiles.${profile}.reward`)}
-            </p>
+
+          <div className="space-y-3">
+            {rewardTiers.map((tier) => (
+              <TierCard
+                key={tier.id}
+                tier={tier}
+                isCurrent={!!currentTier && tier.id === currentTier.id}
+                role={profile}
+              />
+            ))}
           </div>
+          <p className="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
+            {t('rewards.tiersNote')}
+          </p>
         </Container>
       </section>
 
@@ -363,9 +347,6 @@ export default function RewardsPage() {
                   <th className="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-300">
                     {t('rewards.thActivity')}
                   </th>
-                  <th className="hidden px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-300 sm:table-cell">
-                    {t('rewards.thCategory')}
-                  </th>
                   <th className="px-4 py-3 text-right font-semibold text-gray-600 dark:text-gray-300">
                     {t('rewards.thPoints')}
                   </th>
@@ -384,18 +365,16 @@ export default function RewardsPage() {
                     <td className="px-4 py-3 text-gray-700 dark:text-gray-200">
                       {t(`rewardData.activities.${activity.id}`)}
                     </td>
-                    <td className="hidden px-4 py-3 sm:table-cell">
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                          categoryColors[activity.category] ??
-                          'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
-                        }`}
-                      >
-                        {t(`rewards.categories.${activity.category}`)}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-right font-semibold text-green-700 dark:text-green-400">
-                      +{activity.points}
+                    <td className="px-4 py-3 text-right">
+                      <PointsBadge
+                        points={
+                          activity.pointsMax
+                            ? `${activity.points}–${activity.pointsMax}`
+                            : activity.points
+                        }
+                        showPlus
+                        className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-300"
+                      />
                     </td>
                   </tr>
                 ))}
@@ -464,11 +443,11 @@ export default function RewardsPage() {
                           {t(`rewardData.milestones.${milestone.id}.reward`)}
                         </p>
                         {/* A6: milestone as a point source — bonus on reaching it */}
-                        <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
-                          {t('rewards.milestonePoints', {
-                            points: milestone.points,
-                          })}
-                        </span>
+                        <PointsBadge
+                          points={milestone.points}
+                          showPlus
+                          className="mt-1.5 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-300"
+                        />
                       </div>
                     </div>
                     <span

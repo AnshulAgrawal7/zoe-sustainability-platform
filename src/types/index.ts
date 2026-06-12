@@ -134,6 +134,8 @@ export interface RewardTier {
 export interface RewardActivity {
   id: string;
   points: number;
+  /** Upper bound when the activity awards a range (e.g. events grant 20–30). */
+  pointsMax?: number;
   icon: string;
   category: string;
 }

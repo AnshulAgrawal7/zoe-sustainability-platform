@@ -10,19 +10,25 @@ import {
   X,
   Award,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { participationOptions } from '../data/metrics';
 import { trackEvent, ANALYTICS_EVENTS } from '../services/analytics';
 import IdeaSubmitForm from '../components/engagement/IdeaSubmitForm';
+import PointsBadge from '../components/ui/PointsBadge';
+import AccountPointsHint from '../components/ui/AccountPointsHint';
+import { useAuthStore } from '../stores/authStore';
 
 // J1: exactly three options in one horizontal row, in this order.
 const J1_OPTION_ORDER = ['submit-idea', 'report-issue', 'feedback'] as const;
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Points earned for each action (logged-in users only — see the account hint).
 const optionPoints: Record<string, number> = {
-  'submit-idea': 1,
-  'report-issue': 1,
-  feedback: 1,
+  'submit-idea': 15,
+  'report-issue': 10,
+  feedback: 5,
 };
 
 const iconMap: Record<string, React.ElementType> = {
@@ -44,9 +50,32 @@ const emptyForm: FormState = { name: '', email: '', type: '', message: '' };
 
 export default function ParticipationPage() {
   const { t } = useTranslation();
-  const [activeOption, setActiveOption] = useState<string | null>(null);
-  const [form, setForm] = useState<FormState>(emptyForm);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const user = useAuthStore((s) => s.user);
+  const [searchParams] = useSearchParams();
+
+  // Deep-link support (J1 / from the ideas board): /participate?action=submit-idea
+  // preselects the matching tile so the user lands straight on the form.
+  const requested = searchParams.get('action');
+  const initialOption = (J1_OPTION_ORDER as readonly string[]).includes(
+    requested ?? ''
+  )
+    ? requested
+    : null;
+
+  const [activeOption, setActiveOption] = useState<string | null>(
+    initialOption
+  );
+  const [form, setForm] = useState<FormState>({
+    ...emptyForm,
+    type: initialOption ?? '',
+  });
   const [submitted, setSubmitted] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<{
+    name?: string;
+    email?: string;
+    message?: string;
+  }>({});
 
   // J1: the three options in the required order (Submit idea | Report issue |
   // Give feedback). Built from the central data so icons/keys stay in one place.
@@ -68,12 +97,25 @@ export default function ParticipationPage() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    // Required-field validation with localized messages (guests also need a
+    // name + valid email; logged-in users have those from their profile).
+    const fe: typeof fieldErrors = {};
+    if (!(isAuthenticated && user)) {
+      if (!form.name.trim()) fe.name = t('validation.name');
+      if (!form.email.trim() || !EMAIL_RE.test(form.email.trim()))
+        fe.email = t('validation.email');
+    }
+    if (!form.message.trim()) fe.message = t('validation.message');
+    setFieldErrors(fe);
+    if (Object.keys(fe).length > 0) return;
+
     setSubmitted(true);
     // Conversion event — only the selected option type, never the message/PII.
     trackEvent(ANALYTICS_EVENTS.ideaSubmitted, {
       type: form.type || 'unknown',
     });
     setForm(emptyForm);
+    setFieldErrors({});
   }
 
   return (
@@ -94,6 +136,9 @@ export default function ParticipationPage() {
           {t('participate.rewardsLink')}
         </Link>
       </div>
+
+      {/* Account hint — points are earned only with an account (shown to guests). */}
+      <AccountPointsHint className="mb-10" />
 
       {/* Participation options — exactly three, one horizontal row (J1) */}
       <div className="mb-12 grid grid-cols-1 gap-5 sm:grid-cols-3">
@@ -143,9 +188,11 @@ export default function ParticipationPage() {
                     : t(`participationOpts.${option.id}.actionLabel`) + ' →'}
                 </span>
                 {optionPoints[option.id] && (
-                  <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
-                    {t('participate.pts', { points: optionPoints[option.id] })}
-                  </span>
+                  <PointsBadge
+                    points={optionPoints[option.id]}
+                    showPlus
+                    className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-300"
+                  />
                 )}
               </div>
             </button>
@@ -157,7 +204,7 @@ export default function ParticipationPage() {
       {activeOption && (
         <div
           id="participation-form"
-          className="mb-10 rounded-xl border border-green-200 bg-white p-6 shadow-sm dark:border-green-800 dark:bg-gray-800 sm:p-8"
+          className="mb-10 scroll-mt-24 rounded-xl border border-green-200 bg-white p-6 shadow-sm dark:border-green-800 dark:bg-gray-800 sm:p-8"
         >
           <div className="mb-6 flex items-center justify-between">
             <div>
@@ -210,47 +257,83 @@ export default function ParticipationPage() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="part-name"
-                    className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >
-                    {t('participate.yourName')}
-                  </label>
-                  <input
-                    id="part-name"
-                    type="text"
-                    value={form.name}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, name: e.target.value }))
-                    }
-                    required
-                    placeholder={t('participate.namePlaceholder')}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                  />
+            <form onSubmit={handleSubmit} noValidate className="space-y-5">
+              {isAuthenticated && user ? (
+                // Logged-in: contact details are taken from the profile, fixed.
+                <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-300">
+                  {t('participate.profileContact', {
+                    name: user.name,
+                    email: user.email,
+                  })}
                 </div>
-                <div>
-                  <label
-                    htmlFor="part-email"
-                    className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >
-                    {t('participate.emailAddress')}
-                  </label>
-                  <input
-                    id="part-email"
-                    type="email"
-                    value={form.email}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, email: e.target.value }))
-                    }
-                    required
-                    placeholder={t('participate.emailPlaceholder')}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                  />
+              ) : (
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="part-name"
+                      className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    >
+                      {t('participate.yourName')}
+                    </label>
+                    <input
+                      id="part-name"
+                      type="text"
+                      value={form.name}
+                      onChange={(e) => {
+                        setForm((f) => ({ ...f, name: e.target.value }));
+                        setFieldErrors((fe) => ({ ...fe, name: undefined }));
+                      }}
+                      placeholder={t('participate.namePlaceholder')}
+                      aria-invalid={!!fieldErrors.name}
+                      aria-describedby={
+                        fieldErrors.name ? 'part-name-err' : undefined
+                      }
+                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                    />
+                    {fieldErrors.name && (
+                      <p
+                        id="part-name-err"
+                        role="alert"
+                        className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+                      >
+                        {fieldErrors.name}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="part-email"
+                      className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    >
+                      {t('participate.emailAddress')}
+                    </label>
+                    <input
+                      id="part-email"
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => {
+                        setForm((f) => ({ ...f, email: e.target.value }));
+                        setFieldErrors((fe) => ({ ...fe, email: undefined }));
+                      }}
+                      placeholder={t('participate.emailPlaceholder')}
+                      aria-invalid={!!fieldErrors.email}
+                      aria-describedby={
+                        fieldErrors.email ? 'part-email-err' : undefined
+                      }
+                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                    />
+                    {fieldErrors.email && (
+                      <p
+                        id="part-email-err"
+                        role="alert"
+                        className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+                      >
+                        {fieldErrors.email}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
               <div>
                 <label
                   htmlFor="part-message"
@@ -262,13 +345,26 @@ export default function ParticipationPage() {
                   id="part-message"
                   rows={5}
                   value={form.message}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, message: e.target.value }))
-                  }
-                  required
+                  onChange={(e) => {
+                    setForm((f) => ({ ...f, message: e.target.value }));
+                    setFieldErrors((fe) => ({ ...fe, message: undefined }));
+                  }}
                   placeholder={t('participate.messagePlaceholder')}
+                  aria-invalid={!!fieldErrors.message}
+                  aria-describedby={
+                    fieldErrors.message ? 'part-message-err' : undefined
+                  }
                   className="w-full resize-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
+                {fieldErrors.message && (
+                  <p
+                    id="part-message-err"
+                    role="alert"
+                    className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+                  >
+                    {fieldErrors.message}
+                  </p>
+                )}
               </div>
               <div className="flex items-center gap-4">
                 <button

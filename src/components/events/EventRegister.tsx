@@ -4,6 +4,8 @@ import { ArrowRight, Check, Loader2 } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
 import { joinEvent, registerForEvent } from '../../services/eventService';
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 interface EventRegisterProps {
   eventId: string;
   // The event's own reward (logged-in users earn this on join). Default mirrors
@@ -16,7 +18,7 @@ interface EventRegisterProps {
 // name + email + consent and earn none.
 export default function EventRegister({
   eventId,
-  rewardPoints = 200,
+  rewardPoints = 20,
 }: EventRegisterProps) {
   const { t } = useTranslation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -29,10 +31,24 @@ export default function EventRegister({
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{
+    name?: string;
+    email?: string;
+    consent?: string;
+  }>({});
   const [done, setDone] = useState<{ points: number } | null>(null);
 
   async function submit(asGuest: boolean) {
     setError('');
+    if (asGuest) {
+      const fe: typeof fieldErrors = {};
+      if (!name.trim()) fe.name = t('validation.name');
+      if (!email.trim() || !EMAIL_RE.test(email.trim()))
+        fe.email = t('validation.email');
+      if (!consent) fe.consent = t('validation.consent');
+      setFieldErrors(fe);
+      if (Object.keys(fe).length > 0) return;
+    }
     setLoading(true);
     try {
       const result = asGuest
@@ -136,6 +152,7 @@ export default function EventRegister({
         e.preventDefault();
         void submit(true);
       }}
+      noValidate
       className="max-w-sm space-y-2.5"
     >
       <div>
@@ -145,13 +162,28 @@ export default function EventRegister({
         <input
           id={`rsvp-name-${eventId}`}
           type="text"
-          required
           autoComplete="name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            setName(e.target.value);
+            setFieldErrors((fe) => ({ ...fe, name: undefined }));
+          }}
           placeholder={t('events.rsvp.guestName')}
+          aria-invalid={!!fieldErrors.name}
+          aria-describedby={
+            fieldErrors.name ? `rsvp-name-err-${eventId}` : undefined
+          }
           className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
         />
+        {fieldErrors.name && (
+          <p
+            id={`rsvp-name-err-${eventId}`}
+            role="alert"
+            className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+          >
+            {fieldErrors.name}
+          </p>
+        )}
       </div>
       <div>
         <label htmlFor={`rsvp-email-${eventId}`} className="sr-only">
@@ -160,24 +192,47 @@ export default function EventRegister({
         <input
           id={`rsvp-email-${eventId}`}
           type="email"
-          required
           autoComplete="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setFieldErrors((fe) => ({ ...fe, email: undefined }));
+          }}
           placeholder={t('events.rsvp.guestEmail')}
+          aria-invalid={!!fieldErrors.email}
+          aria-describedby={
+            fieldErrors.email ? `rsvp-email-err-${eventId}` : undefined
+          }
           className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
         />
+        {fieldErrors.email && (
+          <p
+            id={`rsvp-email-err-${eventId}`}
+            role="alert"
+            className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+          >
+            {fieldErrors.email}
+          </p>
+        )}
       </div>
       <label className="flex items-start gap-2 text-xs text-gray-600 dark:text-gray-400">
         <input
           type="checkbox"
-          required
           checked={consent}
-          onChange={(e) => setConsent(e.target.checked)}
+          onChange={(e) => {
+            setConsent(e.target.checked);
+            setFieldErrors((fe) => ({ ...fe, consent: undefined }));
+          }}
+          aria-invalid={!!fieldErrors.consent}
           className="mt-0.5 h-4 w-4 rounded border-gray-300 text-green-600 focus-visible:ring-2 focus-visible:ring-green-500"
         />
         <span>{t('events.rsvp.consent')}</span>
       </label>
+      {fieldErrors.consent && (
+        <p role="alert" className="text-xs text-rose-600 dark:text-rose-400">
+          {fieldErrors.consent}
+        </p>
+      )}
       {error && (
         <p role="alert" className="text-xs text-rose-600 dark:text-rose-400">
           {error}

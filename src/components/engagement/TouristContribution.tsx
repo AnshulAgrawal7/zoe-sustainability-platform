@@ -53,10 +53,6 @@ export default function TouristContribution() {
         ))}
       </ul>
 
-      <p className="mt-6 border-l-4 border-green-600 bg-gray-50 px-4 py-3 text-sm italic text-gray-600 dark:bg-gray-800 dark:text-gray-300">
-        {t('getInvolved.tourists.evidenceNote')}
-      </p>
-
       <Link
         to="/participate"
         className="mt-6 inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"

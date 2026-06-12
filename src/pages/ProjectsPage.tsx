@@ -6,6 +6,7 @@ import { Filter, Users, ArrowRight } from 'lucide-react';
 import { getProjects } from '../services/projectService';
 import ProjectMap, { type MapPoint } from '../components/map/ProjectMap';
 import EntityImage from '../components/ui/EntityImage';
+import SdgIcon from '../components/ui/SdgIcon';
 import {
   projectCategoryHex,
   PROJECT_CATEGORY_KEYS,
@@ -297,18 +298,13 @@ export default function ProjectsPage() {
                       </p>
                     )}
                     {sdgs.length > 0 && (
-                      <div className="mb-3 flex flex-wrap gap-1">
-                        {sdgs.slice(0, 4).map((n) => (
-                          <span
-                            key={n}
-                            className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-300"
-                          >
-                            SDG {n}
-                          </span>
+                      <div className="mb-3 flex flex-wrap items-center gap-1.5">
+                        {sdgs.slice(0, 5).map((n) => (
+                          <SdgIcon key={n} number={n} size={34} />
                         ))}
-                        {sdgs.length > 4 && (
+                        {sdgs.length > 5 && (
                           <span className="text-xs text-gray-400">
-                            +{sdgs.length - 4}
+                            +{sdgs.length - 5}
                           </span>
                         )}
                       </div>

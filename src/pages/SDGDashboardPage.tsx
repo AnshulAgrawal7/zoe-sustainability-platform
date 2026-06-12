@@ -149,21 +149,6 @@ export default function SDGDashboardPage() {
             );
           })}
         </ul>
-        {/* UN SDG icon usage: attribution + required disclaimer (icons used
-            unmodified for informational purposes — see public/sdg-icons/README). */}
-        <p className="mt-4 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
-          {t('sdg.attribution')}{' '}
-          <a
-            href="https://www.un.org/sustainabledevelopment"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-green-700 dark:hover:text-green-400"
-          >
-            un.org/sustainabledevelopment
-          </a>
-          {'. '}
-          {t('sdg.disclaimer')}
-        </p>
       </section>
 
       {/* Addressed goals — detail cards */}

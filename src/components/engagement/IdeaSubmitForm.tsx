@@ -37,11 +37,21 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
   const [email, setEmail] = useState(user?.email ?? '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{
+    title?: string;
+    category?: string;
+    description?: string;
+  }>({});
   const [done, setDone] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!category) return;
+    const fe: typeof fieldErrors = {};
+    if (!title.trim()) fe.title = t('validation.title');
+    if (!category) fe.category = t('validation.category');
+    if (!description.trim()) fe.description = t('validation.description');
+    setFieldErrors(fe);
+    if (Object.keys(fe).length > 0) return;
     setError('');
     setLoading(true);
     try {
@@ -96,12 +106,25 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
         <input
           id="idea-title"
           type="text"
-          required
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {
+            setTitle(e.target.value);
+            setFieldErrors((fe) => ({ ...fe, title: undefined }));
+          }}
           placeholder={t('participate.ideaTitlePlaceholder')}
+          aria-invalid={!!fieldErrors.title}
+          aria-describedby={fieldErrors.title ? 'idea-title-err' : undefined}
           className={inputClass}
         />
+        {fieldErrors.title && (
+          <p
+            id="idea-title-err"
+            role="alert"
+            className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+          >
+            {fieldErrors.title}
+          </p>
+        )}
       </div>
 
       <div>
@@ -110,9 +133,15 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
         </label>
         <select
           id="idea-category"
-          required
           value={category}
-          onChange={(e) => setCategory(e.target.value as ApiProjectCategory)}
+          onChange={(e) => {
+            setCategory(e.target.value as ApiProjectCategory);
+            setFieldErrors((fe) => ({ ...fe, category: undefined }));
+          }}
+          aria-invalid={!!fieldErrors.category}
+          aria-describedby={
+            fieldErrors.category ? 'idea-category-err' : undefined
+          }
           className={inputClass}
         >
           <option value="" disabled>
@@ -124,6 +153,15 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
             </option>
           ))}
         </select>
+        {fieldErrors.category && (
+          <p
+            id="idea-category-err"
+            role="alert"
+            className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+          >
+            {fieldErrors.category}
+          </p>
+        )}
       </div>
 
       <div>
@@ -133,50 +171,75 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
         <textarea
           id="idea-message"
           rows={5}
-          required
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => {
+            setDescription(e.target.value);
+            setFieldErrors((fe) => ({ ...fe, description: undefined }));
+          }}
           placeholder={t('participate.messagePlaceholder')}
+          aria-invalid={!!fieldErrors.description}
+          aria-describedby={
+            fieldErrors.description ? 'idea-message-err' : undefined
+          }
           className={`${inputClass} resize-none`}
         />
+        {fieldErrors.description && (
+          <p
+            id="idea-message-err"
+            role="alert"
+            className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+          >
+            {fieldErrors.description}
+          </p>
+        )}
       </div>
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="idea-name" className={labelClass}>
-            {t('participate.yourName')}{' '}
-            <span className="font-normal text-gray-400">
-              ({t('participate.optionalLabel')})
-            </span>
-          </label>
-          <input
-            id="idea-name"
-            type="text"
-            autoComplete="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder={t('participate.namePlaceholder')}
-            className={inputClass}
-          />
+      {user ? (
+        // Logged-in: contact details are taken from the profile, fixed.
+        <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-300">
+          {t('participate.profileContact', {
+            name: user.name,
+            email: user.email,
+          })}
         </div>
-        <div>
-          <label htmlFor="idea-email" className={labelClass}>
-            {t('participate.emailAddress')}{' '}
-            <span className="font-normal text-gray-400">
-              ({t('participate.optionalLabel')})
-            </span>
-          </label>
-          <input
-            id="idea-email"
-            type="email"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={t('participate.emailPlaceholder')}
-            className={inputClass}
-          />
+      ) : (
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="idea-name" className={labelClass}>
+              {t('participate.yourName')}{' '}
+              <span className="font-normal text-gray-400">
+                ({t('participate.optionalLabel')})
+              </span>
+            </label>
+            <input
+              id="idea-name"
+              type="text"
+              autoComplete="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={t('participate.namePlaceholder')}
+              className={inputClass}
+            />
+          </div>
+          <div>
+            <label htmlFor="idea-email" className={labelClass}>
+              {t('participate.emailAddress')}{' '}
+              <span className="font-normal text-gray-400">
+                ({t('participate.optionalLabel')})
+              </span>
+            </label>
+            <input
+              id="idea-email"
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={t('participate.emailPlaceholder')}
+              className={inputClass}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {error && (
         <p

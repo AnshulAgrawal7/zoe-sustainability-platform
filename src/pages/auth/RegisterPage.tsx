@@ -19,10 +19,23 @@ export default function RegisterPage() {
   const [language, setLanguage] = useState<UserLanguage>('EN');
   const [profile, setProfile] = useState<UserProfile>('RESIDENT');
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{
+    name?: string;
+    email?: string;
+    password?: string;
+  }>({});
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const fe: typeof fieldErrors = {};
+    if (!name.trim()) fe.name = t('validation.name');
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      fe.email = t('validation.email');
+    if (!password) fe.password = t('validation.password');
+    else if (password.length < 8) fe.password = t('validation.passwordMin');
+    setFieldErrors(fe);
+    if (Object.keys(fe).length > 0) return;
     setError('');
     setLoading(true);
     try {
@@ -88,11 +101,24 @@ export default function RegisterPage() {
                 id="name"
                 type="text"
                 autoComplete="name"
-                required
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setFieldErrors((fe) => ({ ...fe, name: undefined }));
+                }}
+                aria-invalid={!!fieldErrors.name}
+                aria-describedby={fieldErrors.name ? 'reg-name-err' : undefined}
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
+              {fieldErrors.name && (
+                <p
+                  id="reg-name-err"
+                  role="alert"
+                  className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+                >
+                  {fieldErrors.name}
+                </p>
+              )}
             </div>
             <div>
               <label
@@ -105,11 +131,26 @@ export default function RegisterPage() {
                 id="reg-email"
                 type="email"
                 autoComplete="email"
-                required
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setFieldErrors((fe) => ({ ...fe, email: undefined }));
+                }}
+                aria-invalid={!!fieldErrors.email}
+                aria-describedby={
+                  fieldErrors.email ? 'reg-email-err' : undefined
+                }
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
+              {fieldErrors.email && (
+                <p
+                  id="reg-email-err"
+                  role="alert"
+                  className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+                >
+                  {fieldErrors.email}
+                </p>
+              )}
             </div>
             <div>
               <label
@@ -121,11 +162,21 @@ export default function RegisterPage() {
               <PasswordInput
                 id="reg-password"
                 autoComplete="new-password"
-                required
                 minLength={8}
                 value={password}
-                onChange={setPassword}
+                onChange={(v) => {
+                  setPassword(v);
+                  setFieldErrors((fe) => ({ ...fe, password: undefined }));
+                }}
               />
+              {fieldErrors.password && (
+                <p
+                  role="alert"
+                  className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+                >
+                  {fieldErrors.password}
+                </p>
+              )}
             </div>
             <div>
               <label

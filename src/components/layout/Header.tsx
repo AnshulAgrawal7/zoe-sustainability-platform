@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Container from './Container';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, ChevronRight, ChevronLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import logoIcon from '../../assets/logo-icon.png';
 import { useAuthStore } from '../../stores/authStore';
@@ -11,11 +11,15 @@ import { logout } from '../../services/authService';
 import LanguageSwitcher from './LanguageSwitcher';
 import UserMenu from './UserMenu';
 import NavDropdown from './NavDropdown';
+import PointsBadge from '../ui/PointsBadge';
 
 export default function Header() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  // Mobile menu drill-down: null = top level (the 5 sections); otherwise the
+  // label of the group whose sub-items are currently shown.
+  const [mobileGroup, setMobileGroup] = useState<string | null>(null);
 
   const { user, isAuthenticated, isAdmin, clearAuth } = useAuthStore();
   const { theme, toggleTheme } = useThemeStore();
@@ -61,6 +65,14 @@ export default function Header() {
     navigate('/', { replace: true });
     showToast(t('auth.logoutSuccess'));
   }
+
+  // Close the mobile menu and reset the drill-down to the top level.
+  function closeMenu() {
+    setMenuOpen(false);
+    setMobileGroup(null);
+  }
+
+  const activeGroup = navGroups.find((g) => g.label === mobileGroup) ?? null;
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900">
@@ -136,7 +148,15 @@ export default function Header() {
 
             {/* Auth area */}
             {isAuthenticated && user ? (
-              <UserMenu />
+              <>
+                {/* Points, shown top-right with the turtle symbol. */}
+                <PointsBadge
+                  points={user.points}
+                  iconSize={16}
+                  className="rounded-full bg-amber-50 px-2.5 py-1 text-sm font-semibold text-amber-700 dark:bg-amber-900/20 dark:text-amber-300"
+                />
+                <UserMenu />
+              </>
             ) : (
               <div className="flex items-center gap-2">
                 <Link
@@ -158,7 +178,7 @@ export default function Header() {
           {/* Mobile toggle */}
           <button
             className="rounded-md p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 lg:hidden"
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() => (menuOpen ? closeMenu() : setMenuOpen(true))}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? t('common.close') : t('nav.openMenu')}
@@ -180,16 +200,24 @@ export default function Header() {
           className="border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 lg:hidden"
         >
           <div className="space-y-1 px-4 py-3">
-            {navGroups.map((group) => (
-              <div key={group.label}>
+            {activeGroup ? (
+              /* Drill-down: a back control returns to the five top-level items. */
+              <div>
+                <button
+                  onClick={() => setMobileGroup(null)}
+                  className="flex w-full items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+                >
+                  <ChevronLeft size={16} aria-hidden="true" />
+                  {t('common.back')}
+                </button>
                 <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
-                  {group.label}
+                  {activeGroup.label}
                 </p>
-                {group.links.map((link) => (
+                {activeGroup.links.map((link) => (
                   <NavLink
                     key={link.to}
                     to={link.to}
-                    onClick={() => setMenuOpen(false)}
+                    onClick={closeMenu}
                     className={({ isActive }) =>
                       `block rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                         isActive
@@ -206,27 +234,46 @@ export default function Header() {
                   </NavLink>
                 ))}
               </div>
-            ))}
-            {soloLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={() => setMenuOpen(false)}
-                className={({ isActive }) =>
-                  `block rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-green-700 dark:text-gray-300 dark:hover:bg-gray-800'
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <span aria-current={isActive ? 'page' : undefined}>
-                    {link.label}
-                  </span>
-                )}
-              </NavLink>
-            ))}
+            ) : (
+              /* Top level: the five sections — groups drill in, solo links go direct. */
+              <>
+                {navGroups.map((group) => (
+                  <button
+                    key={group.label}
+                    onClick={() => setMobileGroup(group.label)}
+                    aria-label={t('nav.openSection', { section: group.label })}
+                    className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-green-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-green-400"
+                  >
+                    <span>{group.label}</span>
+                    <ChevronRight
+                      size={16}
+                      aria-hidden="true"
+                      className="text-gray-400 dark:text-gray-500"
+                    />
+                  </button>
+                ))}
+                {soloLinks.map((link) => (
+                  <NavLink
+                    key={link.to}
+                    to={link.to}
+                    onClick={closeMenu}
+                    className={({ isActive }) =>
+                      `block rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                        isActive
+                          ? 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                          : 'text-gray-600 hover:bg-gray-50 hover:text-green-700 dark:text-gray-300 dark:hover:bg-gray-800'
+                      }`
+                    }
+                  >
+                    {({ isActive }) => (
+                      <span aria-current={isActive ? 'page' : undefined}>
+                        {link.label}
+                      </span>
+                    )}
+                  </NavLink>
+                ))}
+              </>
+            )}
             <div className="mt-2 flex items-center gap-2 border-t border-gray-100 pt-2 dark:border-gray-800">
               <LanguageSwitcher size="md" />
               <button
@@ -248,27 +295,34 @@ export default function Header() {
             {isAuthenticated ? (
               <div className="space-y-1 pt-1">
                 {user && (
-                  <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
-                    {user.name}
-                  </p>
+                  <div className="flex items-center justify-between gap-2 px-3 pb-1">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
+                      {user.name}
+                    </p>
+                    <PointsBadge
+                      points={user.points}
+                      iconSize={14}
+                      className="text-xs font-semibold text-amber-600 dark:text-amber-400"
+                    />
+                  </div>
                 )}
                 <Link
                   to="/dashboard"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={closeMenu}
                   className="block rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
                 >
                   {t('nav.dashboard')}
                 </Link>
                 <Link
                   to="/my-rewards"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={closeMenu}
                   className="block rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
                 >
                   {t('nav.myRewards')}
                 </Link>
                 <Link
                   to="/profile"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={closeMenu}
                   className="block rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
                 >
                   {t('nav.profile')}
@@ -276,7 +330,7 @@ export default function Header() {
                 {isAdmin && (
                   <Link
                     to="/admin"
-                    onClick={() => setMenuOpen(false)}
+                    onClick={closeMenu}
                     className="block rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
                   >
                     {t('nav.admin')}
@@ -284,7 +338,7 @@ export default function Header() {
                 )}
                 <button
                   onClick={() => {
-                    setMenuOpen(false);
+                    closeMenu();
                     void handleLogout();
                   }}
                   className="block w-full rounded-md px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
@@ -296,14 +350,14 @@ export default function Header() {
               <div className="space-y-1 pt-1">
                 <Link
                   to="/login"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={closeMenu}
                   className="block rounded-md px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300"
                 >
                   {t('nav.login')}
                 </Link>
                 <Link
                   to="/register"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={closeMenu}
                   className="block rounded-lg bg-green-600 px-3 py-2 text-center text-sm font-medium text-white"
                 >
                   {t('nav.register')}

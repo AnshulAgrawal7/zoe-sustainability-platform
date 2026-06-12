@@ -15,6 +15,10 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{
+    email?: string;
+    password?: string;
+  }>({});
   const [loading, setLoading] = useState(false);
 
   const from =
@@ -22,6 +26,12 @@ export default function LoginPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const fe: typeof fieldErrors = {};
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      fe.email = t('validation.email');
+    if (!password) fe.password = t('validation.password');
+    setFieldErrors(fe);
+    if (Object.keys(fe).length > 0) return;
     setError('');
     setLoading(true);
     try {
@@ -81,11 +91,24 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 autoComplete="email"
-                required
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setFieldErrors((fe) => ({ ...fe, email: undefined }));
+                }}
+                aria-invalid={!!fieldErrors.email}
+                aria-describedby={fieldErrors.email ? 'email-err' : undefined}
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
+              {fieldErrors.email && (
+                <p
+                  id="email-err"
+                  role="alert"
+                  className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+                >
+                  {fieldErrors.email}
+                </p>
+              )}
             </div>
             <div>
               <label
@@ -97,10 +120,20 @@ export default function LoginPage() {
               <PasswordInput
                 id="password"
                 autoComplete="current-password"
-                required
                 value={password}
-                onChange={setPassword}
+                onChange={(v) => {
+                  setPassword(v);
+                  setFieldErrors((fe) => ({ ...fe, password: undefined }));
+                }}
               />
+              {fieldErrors.password && (
+                <p
+                  role="alert"
+                  className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+                >
+                  {fieldErrors.password}
+                </p>
+              )}
             </div>
             <button
               type="submit"

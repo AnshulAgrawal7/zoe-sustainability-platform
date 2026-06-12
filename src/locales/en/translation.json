@@ -160,6 +160,18 @@
       "actionLabel": "Share Feedback"
     }
   },
+  "validation": {
+    "required": "This field is required.",
+    "name": "Please enter your name.",
+    "email": "Please enter a valid email address.",
+    "message": "Please enter a message.",
+    "title": "Please enter a title.",
+    "category": "Please choose a category.",
+    "description": "Please describe your idea.",
+    "password": "Please enter a password.",
+    "passwordMin": "Password must be at least 8 characters.",
+    "consent": "Please give your consent to continue."
+  },
   "rewardData": {
     "tiers": {
       "sporos": {
@@ -210,6 +222,196 @@
           "Co-design session: help set next year's ZOE project priorities",
           "ZOE Steward badge"
         ]
+      }
+    },
+    "roleTiers": {
+      "RESIDENT": {
+        "sporos": {
+          "name": "Neighbour",
+          "description": "You've joined ZOE and started caring for your corner of Northern Corfu.",
+          "rewards": [
+            "Digital ZOE Neighbour badge",
+            "ZOE community membership card",
+            "Monthly local newsletter"
+          ]
+        },
+        "phyllo": {
+          "name": "Local Helper",
+          "description": "You show up for your village — small actions that add up.",
+          "rewards": [
+            "Priority sign-up for local clean-ups",
+            "Seedlings from the community nursery",
+            "Name on the village helpers board"
+          ]
+        },
+        "kladi": {
+          "name": "Community Pillar",
+          "description": "A dependable part of local environmental life.",
+          "rewards": [
+            "Municipal certificate signed by the Mayor",
+            "Jar of ZOE partner olive oil",
+            "Annual compost allocation"
+          ]
+        },
+        "fylakas": {
+          "name": "Village Guardian",
+          "description": "You help protect your village's landscape and shoreline.",
+          "rewards": [
+            "Named stewardship on the ZOE map",
+            "10% at ZOE-certified local businesses",
+            "Invitation to the annual ZOE Forum"
+          ]
+        },
+        "thematofylakas": {
+          "name": "Island Steward",
+          "description": "A leading resident voice for a greener Northern Corfu.",
+          "rewards": [
+            "Named in the ZOE Annual Report",
+            "Stewardship plaque from the Municipality",
+            "Co-design next year's local priorities"
+          ]
+        }
+      },
+      "VISITOR": {
+        "sporos": {
+          "name": "Curious Guest",
+          "description": "Welcome! You've taken your first green step during your stay.",
+          "rewards": [
+            "Digital ZOE Guest badge",
+            "Sustainable Corfu welcome guide",
+            "Map of low-impact spots"
+          ]
+        },
+        "phyllo": {
+          "name": "Mindful Traveller",
+          "description": "You travel lightly on the island and its nature.",
+          "rewards": [
+            "Reusable ZOE water bottle",
+            "Discounts with certified eco-operators",
+            "Beach clean-up starter kit"
+          ]
+        },
+        "kladi": {
+          "name": "Eco Explorer",
+          "description": "You actively join in while exploring Northern Corfu.",
+          "rewards": [
+            "Guided nature-walk voucher",
+            "ZOE Explorer badge",
+            "Feature on the visitors' wall"
+          ]
+        },
+        "fylakas": {
+          "name": "Coastal Ally",
+          "description": "A visitor who genuinely helps protect the coast.",
+          "rewards": [
+            "Named thank-you on the ZOE map",
+            "10% at ZOE-certified stays & tours",
+            "Invitation to a seasonal volunteer day"
+          ]
+        },
+        "thematofylakas": {
+          "name": "Honorary Steward",
+          "description": "A returning friend of Northern Corfu's environment.",
+          "rewards": [
+            "Honorary mention in the ZOE Annual Report",
+            "ZOE Honorary Steward certificate",
+            "Standing invitation to ZOE events"
+          ]
+        }
+      },
+      "STUDENT": {
+        "sporos": {
+          "name": "Learner",
+          "description": "You're starting to connect learning with local action.",
+          "rewards": [
+            "Digital ZOE Learner badge",
+            "Access to ZOE learning materials",
+            "Student newsletter"
+          ]
+        },
+        "phyllo": {
+          "name": "Explorer",
+          "description": "You explore sustainability hands-on around the island.",
+          "rewards": [
+            "Priority workshop places",
+            "Field-trip kit",
+            "Certificate of participation"
+          ]
+        },
+        "kladi": {
+          "name": "Researcher",
+          "description": "You contribute data and ideas to local projects.",
+          "rewards": [
+            "Citizen-science certification",
+            "Mentoring with project leads",
+            "ZOE Researcher badge"
+          ]
+        },
+        "fylakas": {
+          "name": "Eco Mentor",
+          "description": "You guide younger students in environmental action.",
+          "rewards": [
+            "Reference letter from the Municipality",
+            "School-session lead credit",
+            "Invitation to the annual ZOE Forum"
+          ]
+        },
+        "thematofylakas": {
+          "name": "Youth Steward",
+          "description": "A youth leader shaping Northern Corfu's green future.",
+          "rewards": [
+            "Named in the ZOE Annual Report",
+            "Youth seat at the co-design session",
+            "ZOE Youth Steward award"
+          ]
+        }
+      },
+      "VOLUNTEER": {
+        "sporos": {
+          "name": "Newcomer",
+          "description": "Welcome to the ZOE volunteer community!",
+          "rewards": [
+            "Digital ZOE Volunteer badge",
+            "Volunteer welcome pack",
+            "Monthly volunteer briefing"
+          ]
+        },
+        "phyllo": {
+          "name": "Active Helper",
+          "description": "You turn up and get things done in the field.",
+          "rewards": [
+            "ZOE volunteer t-shirt",
+            "Priority for popular events",
+            "Logged volunteer-hours record"
+          ]
+        },
+        "kladi": {
+          "name": "Team Lead",
+          "description": "You help coordinate fellow volunteers on the ground.",
+          "rewards": [
+            "Team-lead training",
+            "Municipal certificate",
+            "ZOE Team Lead badge"
+          ]
+        },
+        "fylakas": {
+          "name": "Field Guardian",
+          "description": "A trusted lead for hands-on stewardship.",
+          "rewards": [
+            "Named stewardship on the ZOE map",
+            "10% at ZOE-certified businesses",
+            "Invitation to the annual ZOE Forum"
+          ]
+        },
+        "thematofylakas": {
+          "name": "Lead Steward",
+          "description": "A driving force behind ZOE volunteering.",
+          "rewards": [
+            "Named in the ZOE Annual Report",
+            "Stewardship plaque from the Municipality",
+            "Co-design next year's volunteer programme"
+          ]
+        }
       }
     },
     "activities": {
@@ -441,13 +643,14 @@
     "logout": "Logout",
     "admin": "Admin",
     "openMenu": "Open menu",
+    "openSection": "Open {{section}} section",
     "getInvolved": "Get Involved",
     "imprint": "Imprint",
     "news": "News",
     "overview": "Overview",
     "submitIdea": "Submit an idea",
     "initiatives": "Initiatives",
-    "getInvolvedOverview": "Overview",
+    "getInvolvedOverview": "Get involved as a tourist",
     "sdgContributions": "SDG contributions",
     "keyFigures": "Key figures",
     "ideas": "Ideas board",
@@ -509,6 +712,7 @@
     "allStatuses": "All",
     "source": "Source",
     "sdgLinkAria": "SDG {{n}} — open the SDG page",
+    "sdgIconAlt": "SDG {{n}}: {{title}}",
     "eventsTitle": "Events for this project",
     "prototypeCount": "Prototype — {{count}} projects",
     "valueChain": {
@@ -532,7 +736,7 @@
       "lead": "Sign up, join events and collect points to reach different levels and rewards.",
       "registerCta": "Register now",
       "haveAccount": "Already have an account?",
-      "loginCta": "Then log in."
+      "loginCta": "Log in"
     },
     "yourTier": "Your tier",
     "pointsRange": "{{min}}–{{max}} points",
@@ -542,12 +746,15 @@
     "currentTier": "Current tier",
     "totalPoints": "Total points",
     "ptsShort": "pts",
+    "pointsAria": "{{points}} ZOE points",
     "morePoints_one": "{{count}} more point",
     "morePoints_other": "{{count}} more points",
     "toReach": "to reach {{tier}} ({{name}})",
     "highestTier": "You have reached the highest tier. Thank you, Θεματοφύλακας!",
     "tiersTitle": "The Five ZOE Tiers",
     "tiersSubtitle": "Each tier unlocks real, tangible recognition from the municipality and local partners.",
+    "rolePickerLabel": "Reward track by role",
+    "rolePickerHint": "Pick a role to see its level names and rewards.",
     "tiersNote": "All rewards listed are indicative for this prototype and subject to formal programme approval.",
     "profileFocusSubtitle": "Different profiles benefit most from different actions. Pick a profile to see its reward focus.",
     "earnTitle": "How to Earn Points",
@@ -695,7 +902,10 @@
     "optionalLabel": "optional",
     "privacyNote": "Your idea is sent to the municipality for review. The email is optional: if you provide it, the municipality may reply to your idea; without it your submission stays anonymous. No account is required. (Prototype: stored for the demo, not sent automatically.)",
     "submitSuccess": "Thanks! Your idea has been submitted to the municipality for review. Once approved, it appears on the public ideas board.",
-    "submitError": "Could not submit your idea. Please try again."
+    "submitError": "Could not submit your idea. Please try again.",
+    "accountHint": "Heads up: ZOE points for rewards are earned with an account. Create one to start collecting points for your contributions.",
+    "accountHintCta": "Create an account",
+    "profileContact": "Signed in as {{name}} ({{email}}) — taken from your profile."
   },
   "sdgs": {
     "title": "Sustainable Development Goals",
@@ -1104,6 +1314,7 @@
     "dateFrom": "From",
     "dateTo": "To",
     "clearPeriod": "Clear period",
+    "pointsBadge": "+{{points}} points",
     "categories": {
       "Biodiversity": "Biodiversity",
       "Circular Economy": "Circular Economy",

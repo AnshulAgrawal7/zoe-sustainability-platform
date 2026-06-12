@@ -7,48 +7,58 @@ export const rewardTiers: RewardTier[] = [
     id: 'sporos',
     greekName: 'Σπόρος',
     pointsMin: 0,
-    pointsMax: 249,
+    pointsMax: 24,
     icon: '🌱',
     colorClasses: 'bg-lime-50 border-lime-300 text-lime-800',
   },
   {
     id: 'phyllo',
     greekName: 'Φύλλο',
-    pointsMin: 250,
-    pointsMax: 999,
+    pointsMin: 25,
+    pointsMax: 99,
     icon: '🍃',
     colorClasses: 'bg-green-50 border-green-300 text-green-800',
   },
   {
     id: 'kladi',
     greekName: 'Κλαδί',
-    pointsMin: 1000,
-    pointsMax: 2499,
+    pointsMin: 100,
+    pointsMax: 249,
     icon: '🌿',
     colorClasses: 'bg-teal-50 border-teal-300 text-teal-800',
   },
   {
     id: 'fylakas',
     greekName: 'Φύλακας',
-    pointsMin: 2500,
-    pointsMax: 4999,
+    pointsMin: 250,
+    pointsMax: 499,
     icon: '🛡️',
     colorClasses: 'bg-emerald-50 border-emerald-300 text-emerald-800',
   },
   {
     id: 'thematofylakas',
     greekName: 'Θεματοφύλακας',
-    pointsMin: 5000,
+    pointsMin: 500,
     pointsMax: null,
     icon: '🏛️',
     colorClasses: 'bg-cyan-50 border-cyan-400 text-cyan-900',
   },
 ];
 
-// Reduced to two illustrative examples (J3); no emojis on the point rows.
+// The headline point sources, consistent with the participation options
+// (submit idea 15 · report issue 10 · feedback 5) and events (20–30 each).
+// No emojis on the point rows.
 export const rewardActivities: RewardActivity[] = [
-  { id: 'submit-idea', points: 10, icon: '', category: 'Participation' },
-  { id: 'attend-event', points: 20, icon: '', category: 'Action' },
+  { id: 'submit-idea', points: 15, icon: '', category: 'Participation' },
+  { id: 'report-issue', points: 10, icon: '', category: 'Participation' },
+  { id: 'give-feedback', points: 5, icon: '', category: 'Participation' },
+  {
+    id: 'attend-event',
+    points: 20,
+    pointsMax: 30,
+    icon: '',
+    category: 'Action',
+  },
 ];
 
 // Community milestones as a point source (A6) — DEMO DATA. Each = a collective
@@ -62,20 +72,20 @@ export const communityMilestones: CommunityMilestone[] = [
     target: 100,
     current: 73,
     unlocked: false,
-    points: 500,
+    points: 50,
   },
   {
     id: 'volunteer-hours-500',
     target: 500,
     current: 500,
     unlocked: true,
-    points: 1000,
+    points: 100,
   },
   {
     id: 'participants-1000',
     target: 1000,
-    current: 1000,
-    unlocked: true,
-    points: 2000,
+    current: 640,
+    unlocked: false,
+    points: 200,
   },
 ];

@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { getEvents } from '../services/eventService';
 import EventRegister from '../components/events/EventRegister';
 import EntityImage from '../components/ui/EntityImage';
+import PointsBadge from '../components/ui/PointsBadge';
+import AccountPointsHint from '../components/ui/AccountPointsHint';
 import { projectCategoryVisual } from '../components/ui/categoryVisuals';
 import type { ApiEvent, ApiProjectCategory } from '../types';
 
@@ -103,6 +105,9 @@ export default function EventsPage() {
           {t('events.demoNote')}
         </p>
       </div>
+
+      {/* Account hint — points/rewards for attending require an account. */}
+      <AccountPointsHint className="mb-6" />
 
       {/* Category filter */}
       <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -251,6 +256,13 @@ export default function EventsPage() {
                               project: projectTitle(event),
                             })}
                           </Link>
+                        )}
+                        {event.rewardPoints > 0 && (
+                          <PointsBadge
+                            points={event.rewardPoints}
+                            showPlus
+                            className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-900/30 dark:text-amber-300"
+                          />
                         )}
                       </div>
                       <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
