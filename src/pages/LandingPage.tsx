@@ -3,13 +3,9 @@ import Container from '../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  Leaf,
   Users,
   BarChart3,
   ArrowRight,
-  Waves,
-  TreePine,
-  Recycle,
   GraduationCap,
   Eye,
   CheckCircle2,
@@ -20,7 +16,6 @@ import { projects } from '../data/projects';
 import { LANDING_FACTS } from '../data/landingFacts';
 import logoGemeinde from '../assets/logo-gemeinde-korfu.png';
 import { formatNumber } from '../utils/format';
-import StatusBadge from '../components/ui/StatusBadge';
 import FeedCard from '../components/news/FeedCard';
 import EntityImage from '../components/ui/EntityImage';
 import { getFeed } from '../services/feedService';
@@ -36,8 +31,6 @@ import type {
   PublicIdea,
   LearningResource,
 } from '../types';
-
-const highlights = projects.filter((p) => p.status === 'Active').slice(0, 3);
 
 // Addressed SDGs (B3) — derived from the project data (single source of truth),
 // shown as an icon row that links to the internal SDG page.
@@ -66,16 +59,6 @@ interface EngageItem {
   imageUrl: string | null;
   date?: string;
 }
-
-const categoryIcons: Record<string, React.ElementType> = {
-  Biodiversity: TreePine,
-  'Circular Economy': Recycle,
-  'Waste Reduction': Recycle,
-  Education: GraduationCap,
-  'Water Protection': Waves,
-  'Sustainable Tourism': Leaf,
-  'Community Action': Users,
-};
 
 export default function LandingPage() {
   const { t, i18n } = useTranslation();
@@ -239,60 +222,71 @@ export default function LandingPage() {
         </Container>
       </section>
 
-      {/* Featured projects */}
-      <section className="bg-white py-10 dark:bg-gray-900">
-        <Container>
-          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-                {t('landing.featured.heading')}
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                {t('landing.featured.subheading')}
-              </p>
+      {/* Featured projects — OPEN projects from the API (real cover images) */}
+      {openProjects.length > 0 && (
+        <section className="bg-white py-10 dark:bg-gray-900">
+          <Container>
+            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+                  {t('landing.featured.heading')}
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {t('landing.featured.subheading')}
+                </p>
+              </div>
+              <Link
+                to="/projects"
+                className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+              >
+                {t('landing.featured.viewAll')}
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
             </div>
-            <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 whitespace-nowrap font-semibold text-green-700 transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
-            >
-              {t('landing.featured.viewAll')}
-              <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {highlights.map((project) => {
-              const Icon = categoryIcons[project.category] ?? Leaf;
-              return (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {openProjects.slice(0, 3).map((project) => (
                 <Link
                   key={project.id}
                   to={`/projects/${project.id}`}
-                  className="group overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:border-green-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-600"
+                  className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:border-green-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-600"
                 >
-                  <div
-                    className={`h-3 ${project.thumbnailColor}`}
-                    aria-hidden="true"
+                  {/* Cover preview — image or category-gradient fallback (same one
+                    source as every other card on the site). */}
+                  <EntityImage
+                    src={project.imageUrl}
+                    alt={pickLang(
+                      project.titleEn,
+                      project.titleEl,
+                      project.titleDe
+                    )}
+                    category={project.category}
+                    className="h-40 w-full"
                   />
-                  <div className="p-5">
-                    <div className="mb-3 flex items-start justify-between gap-2">
-                      <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                        <Icon size={16} aria-hidden="true" />
-                        <span className="text-xs">{project.category}</span>
-                      </div>
-                      <StatusBadge status={project.status} />
-                    </div>
-                    <h3 className="mb-2 font-semibold text-gray-900 transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-400">
-                      {project.title}
+                  <div className="flex flex-1 flex-col p-5">
+                    <span className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      {t(`projects.category.${project.category}`)}
+                    </span>
+                    <h3 className="mb-2 line-clamp-2 font-semibold text-gray-900 transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-400">
+                      {pickLang(
+                        project.titleEn,
+                        project.titleEl,
+                        project.titleDe
+                      )}
                     </h3>
                     <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
-                      {project.description}
+                      {pickLang(
+                        project.descriptionEn,
+                        project.descriptionEl,
+                        project.descriptionDe
+                      )}
                     </p>
                   </div>
                 </Link>
-              );
-            })}
-          </div>
-        </Container>
-      </section>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* Get involved now — upcoming events first, then OPEN projects. Placed
           here so participation is the first action after the intro sections. */}
