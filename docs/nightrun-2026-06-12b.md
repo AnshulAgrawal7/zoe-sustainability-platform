@@ -22,7 +22,8 @@ Baseline: FE `tsc` clean · Vitest 22/22 grün.
 | A5 Punkte ×10 (Faktor 10) | DONE | 0481ae1 | Config+Seed+EVENT_POINTS ×10; Prod-Rows → PENDING; s. A5-Tabelle |
 | A6 Community-Milestones als Punktquelle | DONE | 244502a | Config (3 Demo-Milestones + points), auf Rewards-Seite; DB-Modell-Pfad → PENDING; s. Entscheidung |
 | B1 „Was sind die SDGs?"-Abschnitt | DONE | 67872ab | Erklärbox oben auf SDG-Seite, trilingual |
-| C1 Passwort-Sichtbarkeits-Toggle | DONE | (this) | Reusable `PasswordInput` (Eye/EyeOff, aria-label/pressed) in Login + Register; kein Confirm-Feld vorhanden |
+| C1 Passwort-Sichtbarkeits-Toggle | DONE | 6dee1fd | Reusable `PasswordInput` (Eye/EyeOff, aria-label/pressed) in Login + Register; kein Confirm-Feld vorhanden |
+| D1 Favicon-Konsistenz | DONE | (this) | Alle Favicon-Assets aus Logo_Icon_transparent.png; stale Alt-Blatt `favicon.svg` entfernt; apple-touch auf dunkles Grün angeglichen; s. Entscheidung |
 
 Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 
@@ -83,6 +84,17 @@ Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 **Nicht geändert (bewusst):** `Project.rewardPoints` (50/60/65…, nach A1 unbenutzt),
 Test-Fixtures (`events.test.ts` rewardPoints 35 — self-consistent), Schema-`@default(20)`
 auf Event (Controller setzt den Wert immer explizit → DB-Default nie genutzt).
+
+## D1 — Favicon-Konsistenz (Befund + Fix)
+
+Header-Icon (oben links) und Favicon stammen BEIDE aus derselben Quelle
+`Logo_Icon_transparent.png`. Header = transparente Variante; Favicon = grüne
+Wortmarke auf weißem Rundeck (bewusste, jüngste Nutzer-Entscheidung — auf dunklen
+Tabs lesbar). `index.html` verweist korrekt auf `/favicon.png` (128, Marke) +
+`/favicon.ico` (Marke, multi-size) + `/apple-touch-icon.png`. **Fix:** stale,
+nicht mehr referenziertes Alt-Blatt-Icon `public/favicon.svg` entfernt;
+`apple-touch-icon.png` mit demselben dunkleren Grün neu generiert (Farbkonsistenz).
+Kein Alt-Blatt-Asset mehr im Repo/HTML.
 
 ## EL-REVIEW offen
 
