@@ -752,6 +752,7 @@
     "morePoints_other": "{{count}} more points",
     "toReach": "to reach {{tier}} ({{name}})",
     "highestTier": "You have reached the highest tier. Thank you, Θεματοφύλακας!",
+    "nextTierRewards": "What awaits you at {{tier}} ({{name}}):",
     "tiersTitle": "The Five ZOE Tiers",
     "tiersSubtitle": "Each tier unlocks real, tangible recognition from the municipality and local partners.",
     "rolePickerLabel": "Reward track by role",

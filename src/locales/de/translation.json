@@ -752,6 +752,7 @@
     "morePoints_other": "{{count}} weitere Punkte",
     "toReach": "bis zur Stufe {{tier}} ({{name}})",
     "highestTier": "Sie haben die höchste Stufe erreicht. Danke, Θεματοφύλακας!",
+    "nextTierRewards": "Das erwartet dich auf {{tier}} ({{name}}):",
     "tiersTitle": "Die fünf ZOE-Stufen",
     "tiersSubtitle": "Jede Stufe schaltet echte, greifbare Anerkennung der Gemeinde und lokaler Partner frei.",
     "rolePickerLabel": "Belohnungspfad nach Rolle",
@@ -1652,7 +1653,7 @@
     "empty": "Für diese Veranstaltung gibt es noch keine Anmeldungen."
   },
   "adminRewards": {
-    "title": "Prämien verwalten",
+    "title": "Belohnungen verwalten",
     "cardSubtitle": "ZOE-Stufen, Punkteskalen und Belohnungen bearbeiten",
     "intro": "Die fünf ZOE-Stufen mit ihren Punktebereichen sowie den rollenspezifischen Bezeichnungen und Belohnungen (pro Zielgruppe, in allen drei Sprachen). Änderungen sind sofort für alle live.",
     "greekName": "Griechischer Name",

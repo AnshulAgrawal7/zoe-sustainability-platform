@@ -36,7 +36,7 @@ export default function Footer() {
             <img
               src={logoIcon}
               alt={t('footer.brand')}
-              className="mb-3 h-12 w-auto"
+              className="mb-3 h-16 w-auto"
             />
             <p className="text-sm leading-relaxed text-gray-400">
               {t('footer.tagline')}

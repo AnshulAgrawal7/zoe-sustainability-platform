@@ -171,7 +171,7 @@ Projekt** gehören (ein Projekt → mehrere Termine) oder eigenständig sind.
 
 ---
 
-## 11. Prämien verwalten (`/admin/rewards`)
+## 11. Belohnungen verwalten (`/admin/rewards`)
 
 Die fünf **ZOE-Stufen** (Σπόρος … Θεματοφύλακας) sind hier vollständig
 bearbeitbar — Änderungen sind sofort live auf `/rewards` und im Nutzer-Dashboard:
