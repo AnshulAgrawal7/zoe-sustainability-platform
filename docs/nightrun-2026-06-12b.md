@@ -20,7 +20,8 @@ Baseline: FE `tsc` clean · Vitest 22/22 grün.
 | A3 Tier nur für eingeloggte User | DONE | (this) | currentTier nur bei isAuthenticated, aus user.points |
 | A4 Ausgeloggt: 2 CTAs (Register/Login) | DONE | c7a20df | rewards.guest.* trilingual; Links /register + /login |
 | A5 Punkte ×10 (Faktor 10) | DONE | 0481ae1 | Config+Seed+EVENT_POINTS ×10; Prod-Rows → PENDING; s. A5-Tabelle |
-| A6 Community-Milestones als Punktquelle | DONE | (this) | Config (3 Demo-Milestones + points), auf Rewards-Seite; DB-Modell-Pfad → PENDING; s. Entscheidung |
+| A6 Community-Milestones als Punktquelle | DONE | 244502a | Config (3 Demo-Milestones + points), auf Rewards-Seite; DB-Modell-Pfad → PENDING; s. Entscheidung |
+| B1 „Was sind die SDGs?"-Abschnitt | DONE | (this) | Erklärbox oben auf SDG-Seite, trilingual |
 
 Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 

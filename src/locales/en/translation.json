@@ -943,6 +943,10 @@
   },
   "sdgDashboard": {
     "eyebrow": "UN Sustainable Development Goals",
+    "whatAreSdgs": {
+      "heading": "What are the SDGs?",
+      "body": "The Sustainable Development Goals (SDGs) are 17 global goals adopted by all UN member states in 2015 — a shared plan to end poverty, protect the planet and secure peace and prosperity by 2030. ZOE maps its local environmental actions in Northern Corfu to the goals they advance, so you can see how community work here connects to the global agenda."
+    },
     "title": "SDG Dashboard",
     "intro": "The ZOE programme aligns all projects to relevant UN Sustainable Development Goals. This dashboard shows which goals are addressed, how many projects contribute to each, and illustrative progress estimates.",
     "prototypeNoteLabel": "Prototype note:",

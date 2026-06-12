@@ -65,6 +65,22 @@ export default function SDGDashboardPage() {
         </div>
       </div>
 
+      {/* What are the SDGs? — plain-language intro (B1) */}
+      <section
+        aria-labelledby="what-are-sdgs-heading"
+        className="mb-10 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8"
+      >
+        <h2
+          id="what-are-sdgs-heading"
+          className="mb-3 text-xl font-bold text-gray-900 dark:text-white"
+        >
+          {t('sdgDashboard.whatAreSdgs.heading')}
+        </h2>
+        <p className="max-w-3xl leading-relaxed text-gray-700 dark:text-gray-300">
+          {t('sdgDashboard.whatAreSdgs.body')}
+        </p>
+      </section>
+
       {/* Overview row */}
       <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
         {stats.map((item) => (

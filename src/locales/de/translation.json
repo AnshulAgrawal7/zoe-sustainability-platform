@@ -943,6 +943,10 @@
   },
   "sdgDashboard": {
     "eyebrow": "UN-Ziele für nachhaltige Entwicklung",
+    "whatAreSdgs": {
+      "heading": "Was sind die SDGs?",
+      "body": "Die Ziele für nachhaltige Entwicklung (SDGs) sind 17 globale Ziele, die 2015 von allen UN-Mitgliedstaaten beschlossen wurden — ein gemeinsamer Plan, um bis 2030 Armut zu beenden, den Planeten zu schützen und Frieden und Wohlstand zu sichern. ZOE ordnet seine lokalen Umweltaktionen in Nord-Korfu den Zielen zu, zu denen sie beitragen, damit sichtbar wird, wie die Arbeit vor Ort mit der globalen Agenda zusammenhängt."
+    },
     "title": "SDG-Dashboard",
     "intro": "Das ZOE-Programm ordnet alle Projekte den relevanten UN-Zielen für nachhaltige Entwicklung zu. Dieses Dashboard zeigt, welche Ziele adressiert werden, wie viele Projekte zu jedem beitragen, und veranschaulichende Fortschrittsschätzungen.",
     "prototypeNoteLabel": "Prototyp-Hinweis:",
