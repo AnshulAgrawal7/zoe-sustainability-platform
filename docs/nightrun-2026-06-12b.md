@@ -37,6 +37,24 @@ Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 
 ---
 
+## Abschluss
+
+Alle Aufgaben A–F + Reports G/DB adressiert: **A1–A6, B1, C1, D1–D2, E1, F1, F3, F4
+DONE; F2 PARTIAL** (Modell+Endpoint gebaut, Migration → PENDING, kein lokaler DB).
+Kein BLOCKED/SKIPPED. D2 + E1 = Audits ohne nötige Änderung; G + DB = Reports.
+
+**Finale Verifikation (grün):** FE `tsc` · `eslint` · Vitest **22/22** · `vite build`
+· Backend `tsc`. **BE-Test-Suite + Schema-Migrationen nicht ausgeführt** (kein
+lokaler Postgres/Docker) → „BE-Tests offen".
+
+**Prod-Stand:** Diese Run hat NICHTS gegen Prod geschrieben. PENDING (manuell):
+A5-Punkte-×10-Updates, NewsletterSignup-Migration (F2), optional A6-Milestone-DB-Modell.
+
+**Kein Merge auf `main`.** Branch `feat/rewards-and-polish` (von `main`/`3f19697`) +
+Log liegen für die Review bereit.
+
+---
+
 ## Entscheidungen
 
 - **Branch-Basis = `main`/`3f19697` (statt feat/landing-overhaul/`4457ecb`):**
