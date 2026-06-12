@@ -28,7 +28,8 @@ Baseline: FE `tsc` clean · Vitest 22/22 grün.
 | F1 Newsletter-Feld im Footer (global) | DONE | (this) | `FooterNewsletter`-Widget (E-Mail+Button), trilingual |
 | F2 NewsletterSignup-Tabelle | PARTIAL | (this) | Prisma-Modell + Endpoint `POST /api/newsletter` (idempotent, upsert by email); Migration → PENDING (kein lokaler DB); Endpoint demo-tolerant |
 | F3 Demo-Microcopy | DONE | (this) | „Demo — es werden keine E-Mails versendet." trilingual am Feld |
-| F4 Nur erfassen + Bestätigungs-Toast | DONE | (this) | Kein Double-Opt-In/Versand/Unsubscribe; Erfolgs-Toast |
+| F4 Nur erfassen + Bestätigungs-Toast | DONE | e491e0c | Kein Double-Opt-In/Versand/Unsubscribe; Erfolgs-Toast |
+| E1 i18n-Vollständigkeit | DONE | (this) | Audit: EN/DE/EL je 924 Keys, 0 fehlend, kein echtes Englisch-in-DE; neue A/B/C/F-Keys trilingual; s. E1-Befund |
 
 Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 
@@ -114,9 +115,24 @@ nicht mehr referenziertes Alt-Blatt-Icon `public/favicon.svg` entfernt;
 `apple-touch-icon.png` mit demselben dunkleren Grün neu generiert (Farbkonsistenz).
 Kein Alt-Blatt-Asset mehr im Repo/HTML.
 
+## E1 — i18n-Vollständigkeit (Audit)
+
+Flach-Vergleich der drei Locales: **EN/DE/EL je 924 Keys, 0 fehlende Keys** (volle
+Parität, keine durchscheinenden Keys). „Englisch-in-DE"-Heuristik (DE-Wert == EN-Wert,
+>3 Zeichen): 11 Treffer, **alle legitim** — deutsche Lehnwörter (Dashboard, Filter,
+Status, Details, Input, optional), Beispiel-Platzhalter (Maria Georgiou,
+maria@example.com) oder „[optional]". → **0 echte Lücken, keine Fills nötig.** Alle
+neuen Texte aus A/B/C/F sind EN+DE+EL vollständig.
+
 ## EL-REVIEW offen
 
-(Keys mit unsicherem EL — bitte gegenlesen.)
+Selbst verfasste EL-Strings dieses Laufs (nicht muttersprachlich geprüft — bitte
+gegenlesen):
+- `rewards.guest.{lead,registerCta,haveAccount,loginCta}` (A4)
+- `rewards.milestonePoints` (A6)
+- `sdgDashboard.whatAreSdgs.{heading,body}` (B1)
+- `auth.{showPassword,hidePassword}` (C1)
+- `footer.newsletter.{heading,emailLabel,emailPlaceholder,subscribe,demoNotice,success,invalidEmail}` (F)
 
 ---
 
