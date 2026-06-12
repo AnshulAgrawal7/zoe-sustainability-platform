@@ -29,7 +29,9 @@ Baseline: FE `tsc` clean · Vitest 22/22 grün.
 | F2 NewsletterSignup-Tabelle | PARTIAL | (this) | Prisma-Modell + Endpoint `POST /api/newsletter` (idempotent, upsert by email); Migration → PENDING (kein lokaler DB); Endpoint demo-tolerant |
 | F3 Demo-Microcopy | DONE | (this) | „Demo — es werden keine E-Mails versendet." trilingual am Feld |
 | F4 Nur erfassen + Bestätigungs-Toast | DONE | e491e0c | Kein Double-Opt-In/Versand/Unsubscribe; Erfolgs-Toast |
-| E1 i18n-Vollständigkeit | DONE | (this) | Audit: EN/DE/EL je 924 Keys, 0 fehlend, kein echtes Englisch-in-DE; neue A/B/C/F-Keys trilingual; s. E1-Befund |
+| E1 i18n-Vollständigkeit | DONE | 975b9ab | Audit: EN/DE/EL je 924 Keys, 0 fehlend, kein echtes Englisch-in-DE; neue A/B/C/F-Keys trilingual; s. E1-Befund |
+| G Zahlen-/Dummy-Audit (Report) | DONE | (this) | s. ZAHLEN-AUDIT; 4 Inkonsistenzen markiert; nichts geändert |
+| DB DB-Vollständigkeits-Check (Report) | DONE | (this) | s. DB-VOLLSTÄNDIGKEIT; Content vollständig in DB, mehrere Seiten lesen aber static-Fallback |
 
 Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 
@@ -136,15 +138,67 @@ gegenlesen):
 
 ---
 
-## ZAHLEN-AUDIT
+## ZAHLEN-AUDIT (G — nur Befund, nichts geändert)
 
-(G — Tabelle: Wert | Ort | DB vs. Dummy | Herkunft.)
+| Wert | Ort (Datei/Seite) | DB vs. Dummy | Herkunft / Hinweis |
+|---|---|---|---|
+| 640 / 2.389 / 127 | Landing KPI-Banner · `data/landingFacts.ts` | **Dummy (hartkodiert)** | bewusste Demo (B2) |
+| Active-Projects-Karten | Landing „Aktive Projekte" | **DB (dynamisch)** | live API `getProjects(OPEN)` |
+| „X von 17 SDGs adressiert", aktive/abgeschlossene Projekte, „SDG-Beiträge" | `SDGDashboardPage` Übersicht | **static (Dummy)** ⚠️ | aus `data/projects.ts`-Fallback, NICHT live DB |
+| SDG-Kachel „X abgeschlossen" (K1) | `SDGDashboardPage` | **static (Dummy)** ⚠️ | `data/projects.ts` (completed-Filter) |
+| Projekt-Impact „Belegte Wirkung" (z. B. 4.866, 2.682,699 t, 15,08 %) | `ProjectDetailPage` `project.metrics` | **DB** | 5× `ProjectMetric` (echte Programmzahlen) |
+| Transparenz-Metriken | `TransparencyPage` | **DB + static-Fallback** | `getImpactMetrics()` (live) + `data/metrics.ts` |
+| Projekt-Beschreibungszahlen (4.866 LED, 2.682,699 t …) | DB `Project.description*` | **DB** | Seed/Programmzahlen (als Demo deklariert, Quellen in L1 entfernt) |
+| About-Kontextzahlen (~102.000, 4 Mio., 350–400 t, 3,5 Mio.) | i18n `about.contextStats` | **Dummy (hartkodiert)** | Kontext mit Quellenangaben (ELSTAT 2021 etc.) |
+| Reward-Tiers 0–5000, Earning 10/20, Milestone-points 500/1000/2000 | `data/rewards.ts` | **Dummy (Config, ×10)** | Demo-Config (A5/A6) |
+| Demo-Milestones current/target (73/100, 500/500, 1000/1000) | `data/rewards.ts` | **Dummy** | Demo-Fortschritt |
+| Event-Punkte 200–300, `EVENT_POINTS` 200 | DB `Event.rewardPoints` / Controller | **DB / Konstante (×10)** | Seed/DB (Prod-×10 → PENDING) |
+| Badge-thresholds 0/1000/3000/5000/10000 | DB `Badge` (×10) | **DB** | Seed (UI nutzt aber Config-Tiers, nicht Badges) |
+
+**Markierte Inkonsistenzen (⚠️):**
+1. **SDG-Seite rechnet aus `data/projects.ts`-Fallback statt Live-DB** → driftet,
+   falls Projekte nur in der DB geändert/ergänzt werden (Counts aktualisieren nicht).
+2. **Rewards-System komplett static** (Config, keine DB) — Punkte/Tiers/Milestones
+   nicht editierbar, nicht in DB.
+3. **`data/projects.ts` ist ein manuelles static-Duplikat der DB-Projekte** →
+   Drift-Risiko zwischen Fallback und DB.
+4. **Badge-DB-Modell (5 Zeilen) wird vom Rewards-UI nicht genutzt** (UI = Config-Tiers).
 
 ---
 
-## DB-VOLLSTÄNDIGKEIT
+## DB-VOLLSTÄNDIGKEIT (DB — nur Befund, keine Migration)
 
-(DB — Befund pro Entität.)
+Live-Prod-DB (read-only, nach run-A-Cleanup):
+
+| Entität | Zeilen | mit Bild | volle EN/EL/DE-Texte |
+|---|---|---|---|
+| `Project` | 9 (8 listed + 1 Umbrella) | 8/9 (Umbrella ohne Bild, korrekt) | **9/9** |
+| `Event` | 9 | 8/9 (`evt-reforestation-day` ohne Bild) | **9/9** |
+| `LearningResource` | 4 | 4/4 | **4/4** |
+| `Post` (Lifecycle-News) | 3 | 3/3 | **3/3** |
+| `FeedPost` (FB-Import) | 20 | 100 Bilder | je 20 EN/DE/EL |
+| `ProjectMetric` | 5 | — | — |
+| `Badge` / `User` / `Idea` | 5 / 4 / 4 | — | — |
+
+→ **Alle vier Content-Entitäten (Project/Event/Learn/News) + FeedPost liegen
+vollständig & trilingual in der DB, mit Bildern.** Inhalt ist persistent.
+
+**ABER: Frontend-hartkodierte Inhalte, die NICHT (live) aus der DB kommen:**
+- **`data/projects.ts`** — static Duplikat der 9 Projekte (Fallback). Genutzt von
+  `SDGDashboardPage`, `LandingPage` (addressedSdgs), `GetInvolvedPage` (Karte),
+  `TransparencyPage`. Diese Seiten lesen das STATIC-Duplikat, nicht die Live-DB.
+- **`data/rewards.ts`** — Tiers, Activities, Community-Milestones: komplett static,
+  KEIN Rewards-DB-Modell. (A6-DB-Modell-Pfad → PENDING.)
+- **`data/landingFacts.ts`** — 640/2.389/127 (Demo-KPIs), nicht in DB.
+- **`data/metrics.ts`** — Transparenz-Fallback (DB wird zusätzlich gefetcht).
+- **`data/sdgs.ts`** — SDG-Katalog (17 Metadaten): static Referenzdaten (ok so).
+- **`data/profiles.ts` / `data/audiences.ts` / `data/posts.ts`** — static Referenz/Fallback.
+- **i18n `about.contextStats`** — 4 Kontextzahlen hartkodiert im Locale.
+- **`Badge`-DB-Modell** vorhanden (5), aber vom Rewards-UI ungenutzt.
+
+**Empfehlung (nicht umgesetzt):** SDG-/Landing-/GetInvolved-Seiten auf die Live-API
+umstellen (statt `data/projects.ts`), und das Rewards-System (inkl. A6-Milestones)
+auf DB-Modelle heben (Admin-Editierbarkeit) — beides größere Folge-Refactors.
 
 ---
 
