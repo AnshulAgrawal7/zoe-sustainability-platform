@@ -23,7 +23,8 @@ Baseline: FE `tsc` clean · Vitest 22/22 grün.
 | A6 Community-Milestones als Punktquelle | DONE | 244502a | Config (3 Demo-Milestones + points), auf Rewards-Seite; DB-Modell-Pfad → PENDING; s. Entscheidung |
 | B1 „Was sind die SDGs?"-Abschnitt | DONE | 67872ab | Erklärbox oben auf SDG-Seite, trilingual |
 | C1 Passwort-Sichtbarkeits-Toggle | DONE | 6dee1fd | Reusable `PasswordInput` (Eye/EyeOff, aria-label/pressed) in Login + Register; kein Confirm-Feld vorhanden |
-| D1 Favicon-Konsistenz | DONE | (this) | Alle Favicon-Assets aus Logo_Icon_transparent.png; stale Alt-Blatt `favicon.svg` entfernt; apple-touch auf dunkles Grün angeglichen; s. Entscheidung |
+| D1 Favicon-Konsistenz | DONE | d132cab | Alle Favicon-Assets aus Logo_Icon_transparent.png; stale Alt-Blatt `favicon.svg` entfernt; apple-touch auf dunkles Grün angeglichen; s. Entscheidung |
+| D2 ZOE-Schreibweise vereinheitlichen | DONE | (this) | Audit: bereits durchgängig „ZOE"; 0 Änderungen nötig; s. D2-Befund |
 
 Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 
@@ -84,6 +85,19 @@ Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 **Nicht geändert (bewusst):** `Project.rewardPoints` (50/60/65…, nach A1 unbenutzt),
 Test-Fixtures (`events.test.ts` rewardPoints 35 — self-consistent), Schema-`@default(20)`
 auf Event (Controller setzt den Wert immer explizit → DB-Default nie genutzt).
+
+## D2 — ZOE-Schreibweise (Audit, 0 Änderungen)
+
+Konvention: Markenname als Versalien **„ZOE"** im Fließtext/UI (EN/DE), griechisches
+„Ζωή" nur als bewusste Wortmarke/Erklärung („ZOE (Ζωή — ‚Leben')"). Grep über ALLE
+getrackten Quellen (`*.ts/*.tsx/*.json/*.html`, ohne node_modules) nach `\bZoe\b`
+(Title-Case) und Wort-`zoe` (lowercase):
+- **„Zoe" (Title-Case): 0 Treffer.** Marke bereits durchgängig „ZOE".
+- **lowercase „zoe": nur** in der E-Mail-Domain `…@zoe-corfu.gr` (legitim, kein
+  Markenname im Fließtext).
+- **„Ζωή": nur** als Wortmarke/Erklärung (z. B. `about.heroSubtitle` „ZOE (Ζωή — …)").
+- FeedPost-Importe ohnehin ausgenommen.
+→ Keine Vereinheitlichung nötig; Konvention ist bereits erfüllt.
 
 ## D1 — Favicon-Konsistenz (Befund + Fix)
 
