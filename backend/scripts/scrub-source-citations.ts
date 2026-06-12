@@ -16,16 +16,22 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 const DRY = process.argv.includes('--dry-run');
 
-// Parenthetical citation clause, e.g. "(programme figure: Verde.tec 2026)".
+// Any parenthetical that CONTAINS a source/figure-provenance keyword, e.g.
+// "(Verde.tec 2026)", "(programme figure: Verde.tec 2026)", "(municipal programme
+// figure)", "(στοιχείο προγράμματος)", "(Programmangabe)". The lookahead keys on
+// the content, so it matches regardless of where the keyword sits in the clause.
+// DELIBERATELY does NOT list "programme target" / "στόχος προγράμματος" /
+// "Programmziel": those are honest goal qualifiers, not source citations — kept.
 const PAREN =
-  /\s*\((?:programme figure|municipal programme figure|Programme figure|Programmangabe|Programmbeschreibung|programme description|στοιχείο προγράμματος|στοιχείο\s*:|Περιγραφή προγράμματος)[^)]*\)/g;
-// Standalone "these are programme data, not impact" disclaimers.
+  /\s*\((?=[^)]*(?:Verde\.tec|Attica Green Expo|kerkyrasimera|life-news|programme figure|municipal programme figure|Programmangaben?|Programmbeschreibung|programme description|στοιχείο|Περιγραφή προγράμματος))[^)]*\)/gi;
+// Standalone provenance sentences (optionally carrying a trailing "(…)" source).
 const SENT =
-  /\s*(?:Figures are municipal programme data, not a ZOE impact measurement\.|Municipal programme data, not a ZOE impact measurement\.|Στοιχεία προγράμματος, όχι μέτρηση επίδρασης\.|Programmangaben, keine Wirkungsmessung\.)/g;
+  /\s*(?:Figures are (?:municipal )?programme data(?:\s*\([^)]*\))?\.|Figures are municipal programme data, not a ZOE impact measurement\.|Municipal programme data, not a ZOE impact measurement\.|Στοιχεία προγράμματος, όχι μέτρηση επίδρασης\.|Programmangaben, keine Wirkungsmessung\.)/gi;
 
 function scrub(s: string | null): string | null {
   if (!s) return s;
-  return s.replace(PAREN, '').replace(SENT, '').replace(/\s{2,}/g, ' ').trim();
+  // SENT first (it swallows a trailing "(…)" source as one unit), then PAREN.
+  return s.replace(SENT, '').replace(PAREN, '').replace(/\s{2,}/g, ' ').trim();
 }
 
 async function main() {
