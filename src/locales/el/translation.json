@@ -467,6 +467,8 @@
     "noAccount": "Δεν έχετε λογαριασμό;",
     "hasAccount": "Έχετε ήδη λογαριασμό;",
     "forgotPassword": "Ξεχάσατε τον κωδικό;",
+    "showPassword": "Εμφάνιση κωδικού",
+    "hidePassword": "Απόκρυψη κωδικού",
     "language": "Προτιμώμενη γλώσσα",
     "logoutSuccess": "Αποσυνδεθήκατε με επιτυχία",
     "loginError": "Λανθασμένο email ή κωδικός.",

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LogIn } from 'lucide-react';
+import PasswordInput from '../../components/ui/PasswordInput';
 import { login } from '../../services/authService';
 import { useAuthStore } from '../../stores/authStore';
 
@@ -93,14 +94,12 @@ export default function LoginPage() {
               >
                 {t('auth.password')}
               </label>
-              <input
+              <PasswordInput
                 id="password"
-                type="password"
                 autoComplete="current-password"
                 required
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                onChange={setPassword}
               />
             </div>
             <button

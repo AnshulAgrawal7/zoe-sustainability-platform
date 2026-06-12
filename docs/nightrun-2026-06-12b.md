@@ -21,7 +21,8 @@ Baseline: FE `tsc` clean · Vitest 22/22 grün.
 | A4 Ausgeloggt: 2 CTAs (Register/Login) | DONE | c7a20df | rewards.guest.* trilingual; Links /register + /login |
 | A5 Punkte ×10 (Faktor 10) | DONE | 0481ae1 | Config+Seed+EVENT_POINTS ×10; Prod-Rows → PENDING; s. A5-Tabelle |
 | A6 Community-Milestones als Punktquelle | DONE | 244502a | Config (3 Demo-Milestones + points), auf Rewards-Seite; DB-Modell-Pfad → PENDING; s. Entscheidung |
-| B1 „Was sind die SDGs?"-Abschnitt | DONE | (this) | Erklärbox oben auf SDG-Seite, trilingual |
+| B1 „Was sind die SDGs?"-Abschnitt | DONE | 67872ab | Erklärbox oben auf SDG-Seite, trilingual |
+| C1 Passwort-Sichtbarkeits-Toggle | DONE | (this) | Reusable `PasswordInput` (Eye/EyeOff, aria-label/pressed) in Login + Register; kein Confirm-Feld vorhanden |
 
 Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 

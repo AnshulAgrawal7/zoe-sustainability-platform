@@ -467,6 +467,8 @@
     "noAccount": "Noch kein Konto?",
     "hasAccount": "Bereits ein Konto?",
     "forgotPassword": "Passwort vergessen?",
+    "showPassword": "Passwort anzeigen",
+    "hidePassword": "Passwort verbergen",
     "language": "Bevorzugte Sprache",
     "logoutSuccess": "Erfolgreich ausgeloggt",
     "loginError": "Ungültige E-Mail oder falsches Passwort.",

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { UserPlus } from 'lucide-react';
+import PasswordInput from '../../components/ui/PasswordInput';
 import { register } from '../../services/authService';
 import { useAuthStore } from '../../stores/authStore';
 import type { UserLanguage, UserProfile } from '../../types';
@@ -117,15 +118,13 @@ export default function RegisterPage() {
               >
                 {t('auth.password')}
               </label>
-              <input
+              <PasswordInput
                 id="reg-password"
-                type="password"
                 autoComplete="new-password"
                 required
                 minLength={8}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                onChange={setPassword}
               />
             </div>
             <div>
