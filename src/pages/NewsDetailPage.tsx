@@ -89,7 +89,8 @@ export default function NewsDetailPage() {
         {t('newsDetail.back')}
       </Link>
 
-      <article>
+      {/* Single-column full-text article → reading-width column (FU2-2). */}
+      <article className="mx-auto max-w-prose">
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <span
             className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${categoryColor(entry.category)}`}

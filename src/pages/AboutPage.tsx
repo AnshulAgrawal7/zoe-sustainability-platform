@@ -27,7 +27,7 @@ export default function AboutPage() {
     <div>
       {/* Hero */}
       <section className="bg-gradient-to-br from-teal-700 to-green-700 py-16 text-white">
-        <Container maxW="4xl">
+        <Container>
           <div className="mb-4 flex items-center gap-2 text-sm text-teal-200">
             <MapPin size={14} aria-hidden="true" />
             <span>{t('about.heroEyebrow')}</span>
@@ -43,7 +43,7 @@ export default function AboutPage() {
 
       {/* What is ZOE */}
       <section className="bg-white py-16 dark:bg-gray-900">
-        <Container maxW="4xl">
+        <Container>
           <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2">
             <div>
               <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
@@ -91,7 +91,7 @@ export default function AboutPage() {
 
       {/* Northern Corfu context */}
       <section className="bg-white py-16 dark:bg-gray-900">
-        <Container maxW="4xl">
+        <Container>
           <h2 className="mb-6 text-center text-2xl font-bold text-gray-900 dark:text-white">
             {t('about.contextTitle')}
           </h2>
@@ -160,7 +160,7 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section className="bg-green-700 py-12 text-white">
-        <Container maxW="4xl" className="text-center">
+        <Container className="text-center">
           <h2 className="mb-4 text-2xl font-bold text-white">
             {t('about.ctaTitle')}
           </h2>

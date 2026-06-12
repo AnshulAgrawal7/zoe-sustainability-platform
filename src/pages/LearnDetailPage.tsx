@@ -101,7 +101,10 @@ export default function LearnDetailPage() {
         {t('learnDetail.back')}
       </Link>
 
-      <article className="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+      {/* Single-column full-text article → constrained to a comfortable reading
+          width inside the (landing-wide) container. Multi-column pages keep their
+          grid-column width instead (FU2-2). */}
+      <article className="mx-auto max-w-prose overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
         {resource.imageUrl && (
           <button
             type="button"
