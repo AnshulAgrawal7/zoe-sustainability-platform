@@ -137,7 +137,7 @@ export default function RewardsPage() {
     <div>
       {/* Hero */}
       <section className="bg-gradient-to-br from-green-700 to-teal-700 py-14 text-white">
-        <Container maxW="4xl">
+        <Container>
           <div className="mb-3 flex items-center gap-2 text-sm text-green-100">
             <Award size={14} aria-hidden="true" />
             <span>{t('rewards.heroEyebrow')}</span>
@@ -153,7 +153,7 @@ export default function RewardsPage() {
 
       {/* Demo progress tracker */}
       <section className="border-b border-gray-200 bg-white py-10 dark:border-gray-700 dark:bg-gray-900">
-        <Container maxW="3xl">
+        <Container>
           <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-300">
             <span className="font-semibold">{t('rewards.demoLabel')}</span>{' '}
             {t('rewards.demoText', { points: DEMO_POINTS })}
@@ -239,7 +239,7 @@ export default function RewardsPage() {
 
       {/* Tiers */}
       <section className="bg-gray-50 py-14 dark:bg-gray-900/50">
-        <Container maxW="3xl">
+        <Container>
           <div className="mb-10 text-center">
             <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
               {t('rewards.tiersTitle')}
@@ -265,7 +265,7 @@ export default function RewardsPage() {
 
       {/* Reward focus per profile (J4) — tabs switch the tailored focus text */}
       <section className="bg-white py-14 dark:bg-gray-900">
-        <Container maxW="3xl">
+        <Container>
           <div className="mb-8 text-center">
             <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
               {t('profiles.rewardFocusTitle')}
@@ -309,7 +309,7 @@ export default function RewardsPage() {
 
       {/* How to earn points */}
       <section className="border-t border-gray-100 bg-white py-14 dark:border-gray-800 dark:bg-gray-900">
-        <Container maxW="4xl">
+        <Container>
           <div className="mb-10 text-center">
             <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
               {t('rewards.earnTitle')}
@@ -372,7 +372,7 @@ export default function RewardsPage() {
 
       {/* Community milestones */}
       <section className="bg-gray-50 py-14 dark:bg-gray-900/50">
-        <Container maxW="4xl">
+        <Container>
           <div className="mb-10 text-center">
             <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
               {t('rewards.milestonesTitle')}
