@@ -396,6 +396,16 @@ export async function registerForEvent(req: AuthRequest, res: Response) {
       return;
     }
 
+    // Capacity is enforced on EVERY registration path (members AND guests) —
+    // mirrors joinEvent, otherwise the open RSVP could overbook a full event.
+    if (event?.capacity != null) {
+      const count = await prisma.eventRegistration.count({ where: { eventId } });
+      if (count >= event.capacity) {
+        forbidden(res, 'This event is fully booked');
+        return;
+      }
+    }
+
     if (userId) {
       const existing = await prisma.eventRegistration.findUnique({
         where: { userId_eventId: { userId, eventId } },

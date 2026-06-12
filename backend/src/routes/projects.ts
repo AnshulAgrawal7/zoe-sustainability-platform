@@ -12,6 +12,7 @@ import {
 } from '../controllers/projectController';
 import { authenticate } from '../middleware/auth';
 import { adminOnly } from '../middleware/adminOnly';
+import { optionalAuth } from '../middleware/optionalAuth';
 import { PROJECT_CATEGORIES } from '../constants';
 
 const router = Router();
@@ -25,8 +26,10 @@ const valueChainValidators = [
   body(f).optional({ values: 'falsy' }).isString().isLength({ max: 2000 })
 );
 
+// optionalAuth: DRAFT rows are only visible to admins (list + filters).
 router.get(
   '/',
+  optionalAuth,
   [
     query('page').optional().isInt({ min: 1 }),
     query('limit').optional().isInt({ min: 1, max: 50 }),
@@ -39,7 +42,8 @@ router.get(
 // Aggregated documented impact figures — must precede the `/:id` route.
 router.get('/impact', getImpactMetrics);
 
-router.get('/:id', getProject);
+// optionalAuth: drafts stay hidden for the public but readable for admins.
+router.get('/:id', optionalAuth, getProject);
 
 router.post(
   '/',

@@ -34,12 +34,20 @@ interface ProjectBody {
   imageUrl?: string;
 }
 
-export async function getProjects(req: Request, res: Response) {
+export async function getProjects(req: AuthRequest, res: Response) {
   const page = Math.max(1, parseInt(req.query['page'] as string) || 1);
   const limit = Math.min(50, parseInt(req.query['limit'] as string) || 12);
   const category = req.query['category'] as string | undefined;
   // Default to OPEN; 'ALL' returns every status (Open + Completed + …).
   const status = (req.query['status'] as string) || 'OPEN';
+  const isAdmin = req.user?.role === 'ADMIN';
+
+  // DRAFT rows are unpublished: non-admins never see them — neither via
+  // ?status=DRAFT (empty result) nor inside ?status=ALL (excluded below).
+  if (!isAdmin && status === 'DRAFT') {
+    ok(res, { projects: [], total: 0, page, pages: 0 });
+    return;
+  }
 
   try {
     const where = {
@@ -48,7 +56,11 @@ export async function getProjects(req: Request, res: Response) {
       // reachable by direct link (e.g. from an event detail page).
       listed: true,
       ...(category ? { category } : {}),
-      ...(status && status !== 'ALL' ? { status } : {}),
+      ...(status && status !== 'ALL'
+        ? { status }
+        : isAdmin
+          ? {}
+          : { status: { not: 'DRAFT' } }),
     };
 
     const [projects, total] = await Promise.all([
@@ -86,7 +98,7 @@ export async function getImpactMetrics(_req: Request, res: Response) {
   }
 }
 
-export async function getProject(req: Request, res: Response) {
+export async function getProject(req: AuthRequest, res: Response) {
   const id = req.params['id'] as string;
   try {
     const project = await prisma.project.findUnique({
@@ -97,6 +109,12 @@ export async function getProject(req: Request, res: Response) {
       },
     });
     if (!project) { notFound(res); return; }
+    // Drafts are unpublished content — only admins may read them by direct
+    // link (optionalAuth on the route attaches the role when present).
+    if (project.status === 'DRAFT' && req.user?.role !== 'ADMIN') {
+      notFound(res);
+      return;
+    }
     ok(res, project);
   } catch {
     serverError(res);

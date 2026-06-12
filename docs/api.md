@@ -79,7 +79,9 @@ List projects. Public endpoint.
 ---
 
 ### GET /projects/:id
-Get single project. Public endpoint.
+Get single project. Public endpoint (`optionalAuth`). **DRAFT projects return
+404 for non-admins** — drafts are unpublished content; the list endpoints
+likewise never include DRAFT rows for the public (incl. `?status=ALL`).
 
 **Response 200:** `{ "success": true, "data": { ...project, "_count": { "participations": 3 } } }`
 
@@ -177,7 +179,8 @@ completed. **USER auth required.**
 ### POST /events/:eventId/register
 Open RSVP (rate-limited). Logged-in users register via their account (points
 pending, as for join); **guests** pass `guestName` + `guestEmail` +
-`consent:true` and earn none. `optionalAuth`. **Error 403** when completed.
+`consent:true` and earn none. `optionalAuth`. **Error 403** when the event is
+completed **or fully booked** (capacity is enforced on every path).
 
 ### GET /events/:eventId/count
 Public registration count: `{ "success": true, "data": { "count": 12 } }`.
