@@ -16,8 +16,8 @@
       "reward": "Als Schüler:in oder Student:in bekommst du extra für Learning-by-doing — Schul-Solar, Citizen-Science-Monitoring und Bildungsprojekte."
     },
     "VOLUNTEER": {
-      "label": "Volontär:in",
-      "reward": "Als Volontär:in bekommst du fürs Organisieren und Anleiten — Aktionen koordinieren und andere mitnehmen. Ziel: Stufe Botschafter."
+      "label": "Freiwillige:r",
+      "reward": "Als Freiwillige:r bekommst du fürs Organisieren und Anleiten — Aktionen koordinieren und andere mitnehmen. Ziel: Stufe Botschafter."
     }
   },
   "sdgGrid": {
@@ -1358,6 +1358,9 @@
     "statusUpcoming": "Geplant",
     "statusCompleted": "Abgeschlossen",
     "demoNote": "Demodaten: Termine und Daten sind illustrative Beispiele, keine amtlichen Veranstaltungen."
+  },
+  "eventDetail": {
+    "registerHeading": "Mitmachen"
   },
   "roadmap": {
     "title": "Plattform-Roadmap",

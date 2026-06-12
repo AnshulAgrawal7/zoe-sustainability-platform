@@ -1359,6 +1359,9 @@
     "statusCompleted": "Completed",
     "demoNote": "Demo data: events and dates are illustrative examples, not official municipal fixtures."
   },
+  "eventDetail": {
+    "registerHeading": "Take part"
+  },
   "roadmap": {
     "title": "Platform Roadmap",
     "intro": "The ZOE platform follows an iterative Design Science Research process. This roadmap describes the planned phases from the current MVP prototype through to a full production system.",

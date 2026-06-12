@@ -65,42 +65,6 @@ export default function SDGDashboardPage() {
         </div>
       </div>
 
-      {/* What are the SDGs? — plain-language intro (B1) */}
-      <section
-        aria-labelledby="what-are-sdgs-heading"
-        className="mb-10 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8"
-      >
-        <h2
-          id="what-are-sdgs-heading"
-          className="mb-3 text-xl font-bold text-gray-900 dark:text-white"
-        >
-          {t('sdgDashboard.whatAreSdgs.heading')}
-        </h2>
-        <p className="max-w-3xl leading-relaxed text-gray-700 dark:text-gray-300">
-          {t('sdgDashboard.whatAreSdgs.body')}
-        </p>
-      </section>
-
-      {/* Overview row */}
-      <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {stats.map((item) => (
-          <div
-            key={item.label}
-            className="rounded-xl border border-gray-200 bg-white p-4 text-center dark:border-gray-700 dark:bg-gray-800"
-          >
-            <p className="text-2xl font-bold text-green-700 dark:text-green-400">
-              {item.value}
-              <span className="ml-1 text-sm font-normal text-gray-500 dark:text-gray-400">
-                {item.unit}
-              </span>
-            </p>
-            <p className="mt-1 text-xs text-gray-600 dark:text-gray-300">
-              {item.label}
-            </p>
-          </div>
-        ))}
-      </div>
-
       {/* All 17 SDGs — clickable grid linking to the official UN pages */}
       <section aria-labelledby="all-sdgs-heading" className="mb-12">
         <h2
@@ -149,6 +113,22 @@ export default function SDGDashboardPage() {
             );
           })}
         </ul>
+      </section>
+
+      {/* What are the SDGs? — plain-language intro (B1) */}
+      <section
+        aria-labelledby="what-are-sdgs-heading"
+        className="mb-10 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8"
+      >
+        <h2
+          id="what-are-sdgs-heading"
+          className="mb-3 text-xl font-bold text-gray-900 dark:text-white"
+        >
+          {t('sdgDashboard.whatAreSdgs.heading')}
+        </h2>
+        <p className="max-w-3xl leading-relaxed text-gray-700 dark:text-gray-300">
+          {t('sdgDashboard.whatAreSdgs.body')}
+        </p>
       </section>
 
       {/* Addressed goals — detail cards */}
@@ -233,6 +213,26 @@ export default function SDGDashboardPage() {
           })}
         </div>
       </section>
+
+      {/* Overview row — key figures (KPIs) */}
+      <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {stats.map((item) => (
+          <div
+            key={item.label}
+            className="rounded-xl border border-gray-200 bg-white p-4 text-center dark:border-gray-700 dark:bg-gray-800"
+          >
+            <p className="text-2xl font-bold text-green-700 dark:text-green-400">
+              {item.value}
+              <span className="ml-1 text-sm font-normal text-gray-500 dark:text-gray-400">
+                {item.unit}
+              </span>
+            </p>
+            <p className="mt-1 text-xs text-gray-600 dark:text-gray-300">
+              {item.label}
+            </p>
+          </div>
+        ))}
+      </div>
     </Container>
   );
 }

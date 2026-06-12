@@ -120,7 +120,7 @@ export default function LandingPage() {
   const engageItems: EngageItem[] = [
     ...upcomingEvents.map<EngageItem>((e) => ({
       key: `event-${e.id}`,
-      to: '/events',
+      to: `/events/${e.id}`,
       kind: 'event',
       title: pickLang(e.titleEn, e.titleEl, e.titleDe),
       category: e.category,

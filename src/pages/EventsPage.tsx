@@ -275,7 +275,12 @@ export default function EventsPage() {
                         )}
                       </div>
                       <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-                        {title(event)}
+                        <Link
+                          to={`/events/${event.id}`}
+                          className="hover:text-green-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:hover:text-green-400"
+                        >
+                          {title(event)}
+                        </Link>
                       </h2>
                       <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                         {description(event)}

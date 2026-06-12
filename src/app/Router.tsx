@@ -14,6 +14,7 @@ import ProjectDetailPage from '../pages/ProjectDetailPage';
 import SDGDashboardPage from '../pages/SDGDashboardPage';
 import ParticipationPage from '../pages/ParticipationPage';
 import EventsPage from '../pages/EventsPage';
+import EventDetailPage from '../pages/EventDetailPage';
 import TransparencyPage from '../pages/TransparencyPage';
 import AudiencesPage from '../pages/AudiencesPage';
 import RewardsPage from '../pages/RewardsPage';
@@ -78,6 +79,7 @@ const router = createBrowserRouter([
       { path: 'learn/:id', element: <LearnDetailPage /> },
       { path: 'audiences', element: <AudiencesPage /> },
       { path: 'events', element: <EventsPage /> },
+      { path: 'events/:id', element: <EventDetailPage /> },
       { path: 'transparency', element: <TransparencyPage /> },
       { path: 'rewards', element: <RewardsPage /> },
       { path: 'news', element: <NewsPage /> },
