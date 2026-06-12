@@ -200,17 +200,20 @@ export default function LandingPage() {
       {/* Hero — compact (Part 2A): lower padding so the next section peeks in */}
       <section className="bg-gradient-to-br from-green-700 via-green-600 to-teal-600 text-white">
         <Container className="py-12 sm:py-16">
-          <div className="max-w-3xl">
-            {/* Municipality crest (transparent PNG) on a white pill for contrast
-                against the green hero. The alt text carries the municipality name
-                that the crest stands for. */}
-            <div className="mb-4 inline-flex items-center rounded-full bg-white/95 px-4 py-2 shadow-sm">
+          {/* Municipality crest — large, centered, on a clean light card ABOVE
+              the headline. The artwork is dark-on-transparent, so it needs a
+              light surface to stay legible on the green hero gradient. The alt
+              text carries the municipality name the crest stands for. */}
+          <div className="mb-8 flex justify-center sm:mb-10">
+            <div className="rounded-2xl bg-white px-8 py-5 shadow-lg ring-1 ring-black/5 sm:px-10 sm:py-6">
               <img
                 src={logoGemeinde}
                 alt={t('landing.hero.badge')}
-                className="h-7 w-auto sm:h-8"
+                className="h-16 w-auto sm:h-24 lg:h-32"
               />
             </div>
+          </div>
+          <div className="max-w-3xl">
             <h1 className="mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl">
               {t('landing.hero.title')}
             </h1>

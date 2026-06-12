@@ -65,7 +65,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900">
       <Container>
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-20 items-center justify-between">
           {/* Logo — ZOE brand mark (links home). The link carries the accessible
               name, so the image is decorative. */}
           <Link
@@ -77,7 +77,7 @@ export default function Header() {
               src={logoIcon}
               alt=""
               aria-hidden="true"
-              className="h-9 w-auto sm:h-10"
+              className="h-12 w-auto sm:h-14"
             />
           </Link>
 
