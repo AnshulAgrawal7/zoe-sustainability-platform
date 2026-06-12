@@ -3,11 +3,11 @@ import Container from '../../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Trophy, Star, Lock, ArrowRight, TrendingUp } from 'lucide-react';
-import { getMyBadges, getLeaderboard } from '../../services/userService';
+import { getMyBadges } from '../../services/userService';
 import { useRewardTiers, tierForPoints } from '../../hooks/useRewardTiers';
 import { useAuthStore } from '../../stores/authStore';
 import PointsBadge from '../../components/ui/PointsBadge';
-import type { ApiBadge, ApiUserBadge, LeaderboardEntry } from '../../types';
+import type { ApiBadge, ApiUserBadge } from '../../types';
 
 interface BadgesData {
   earned: ApiUserBadge[];
@@ -24,15 +24,15 @@ export default function UserRewardsPage() {
   const { tiers } = useRewardTiers();
 
   const [badges, setBadges] = useState<BadgesData | null>(null);
-  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // No leaderboard here by design: an individual citizen ranking would expose
+  // names + points and create social friction in a small island community
+  // (see docs/design-rationale-matrix.md B3) — community milestones on
+  // /rewards fill that role instead.
   useEffect(() => {
-    Promise.all([getMyBadges(), getLeaderboard()])
-      .then(([b, lb]) => {
-        setBadges(b);
-        setLeaderboard(lb);
-      })
+    getMyBadges()
+      .then(setBadges)
       .catch(() => null)
       .finally(() => setLoading(false));
   }, []);
@@ -75,9 +75,9 @@ export default function UserRewardsPage() {
           {t('common.loading')}
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {/* Left: Points + Badges */}
-          <div className="space-y-6 lg:col-span-2">
+        <div className="max-w-3xl">
+          {/* Points + Badges */}
+          <div className="space-y-6">
             {/* Points + current ZOE level (same content as /rewards) */}
             <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
               <div className="mb-4 flex items-center gap-3">
@@ -255,43 +255,6 @@ export default function UserRewardsPage() {
                 })}
               </div>
             </div>
-          </div>
-
-          {/* Right: Leaderboard */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-              {t('rewards.leaderboard')}
-            </h2>
-            <ol className="space-y-3">
-              {leaderboard.map((entry, i) => (
-                <li key={entry.id} className="flex items-center gap-3">
-                  <span
-                    className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-                      i === 0
-                        ? 'bg-amber-400 text-white'
-                        : i === 1
-                          ? 'bg-gray-300 text-gray-700 dark:bg-gray-600 dark:text-white'
-                          : i === 2
-                            ? 'bg-orange-300 text-white'
-                            : 'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
-                    }`}
-                  >
-                    {i + 1}
-                  </span>
-                  <span className="flex-1 truncate text-sm text-gray-800 dark:text-gray-200">
-                    {entry.name}
-                  </span>
-                  <span className="text-xs font-semibold text-amber-600 dark:text-amber-400">
-                    {entry.points}
-                  </span>
-                </li>
-              ))}
-              {leaderboard.length === 0 && (
-                <li className="text-sm text-gray-500 dark:text-gray-400">
-                  {t('common.loading')}
-                </li>
-              )}
-            </ol>
           </div>
         </div>
       )}

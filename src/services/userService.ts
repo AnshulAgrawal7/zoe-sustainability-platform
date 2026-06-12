@@ -4,7 +4,6 @@ import type {
   AuthUser,
   ApiUserBadge,
   ApiBadge,
-  LeaderboardEntry,
   ApiParticipation,
 } from '../types';
 
@@ -40,8 +39,7 @@ export async function getMyBadges(): Promise<BadgesResponse> {
   return res.data;
 }
 
-export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
-  const res =
-    await api.get<ApiResponse<LeaderboardEntry[]>>('/users/leaderboard');
-  return res.data;
-}
+// NOTE: the former individual leaderboard (GET /users/leaderboard) was removed
+// for privacy reasons — it exposed user names + points publicly. The DSR
+// rationale (docs/design-rationale-matrix.md B3) argues against an individual
+// citizen ranking anyway; community milestones on /rewards fill that role.

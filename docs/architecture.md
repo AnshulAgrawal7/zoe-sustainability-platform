@@ -87,7 +87,6 @@ Full documentation: `docs/api.md`
 | `GET /api/users/me` | Own profile | USER |
 | `PUT /api/users/me` | Update profile | USER |
 | `GET /api/users/me/badges` | Own badges | USER |
-| `GET /api/users/leaderboard` | Top 10 | — |
 | `GET /api/admin/users` | All users | ADMIN |
 | `PUT /api/admin/users/:id/role` | Change role | ADMIN |
 | `GET /api/admin/stats` | Dashboard stats | ADMIN |

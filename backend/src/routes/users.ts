@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { getMe, updateMe, getMyBadges, getLeaderboard } from '../controllers/userController';
+import { getMe, updateMe, getMyBadges } from '../controllers/userController';
 import { authenticate } from '../middleware/auth';
 
 const router = Router();
@@ -21,6 +21,8 @@ router.put(
 
 router.get('/me/badges', authenticate, getMyBadges);
 
-router.get('/leaderboard', getLeaderboard);
+// NOTE: GET /leaderboard was removed for privacy: it exposed user names +
+// points without auth. The DSR rationale argues against individual citizen
+// rankings anyway (docs/design-rationale-matrix.md B3).
 
 export default router;

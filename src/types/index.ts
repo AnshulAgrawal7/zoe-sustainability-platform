@@ -354,14 +354,6 @@ export interface RegisterPayload {
   profile?: UserProfile;
 }
 
-export interface LeaderboardEntry {
-  id: string;
-  name: string;
-  points: number;
-  avatarUrl: string | null;
-  _count: { participations: number };
-}
-
 // --- News / blog posts ---
 
 export type PostType = 'PROJECT_NEW' | 'PROJECT_COMPLETED' | 'ANNOUNCEMENT';

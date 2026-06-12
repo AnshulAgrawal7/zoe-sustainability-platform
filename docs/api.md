@@ -213,13 +213,10 @@ Get own badges + all available badges. **Auth required.**
 
 ---
 
-### GET /users/leaderboard
-Top 10 users by points. **Public.**
-
-**Response 200:**
-```json
-{ "success": true, "data": [ { "id": "...", "name": "Maria", "points": 320, "_count": { "participations": 4 } }, ... ] }
-```
+> **Removed:** `GET /users/leaderboard` — the public individual leaderboard
+> exposed user names + points and was removed for privacy. The DSR rationale
+> argues against individual citizen rankings (design-rationale-matrix B3);
+> community milestones on /rewards serve the collective-goal function instead.
 
 ---
 

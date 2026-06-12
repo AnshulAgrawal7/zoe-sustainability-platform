@@ -81,15 +81,3 @@ export async function getMyBadges(req: AuthRequest, res: Response) {
   }
 }
 
-export async function getLeaderboard(_req: AuthRequest, res: Response) {
-  try {
-    const users = await prisma.user.findMany({
-      orderBy: { points: 'desc' },
-      take: 10,
-      select: { id: true, name: true, points: true, avatarUrl: true, _count: { select: { participations: true } } },
-    });
-    ok(res, users);
-  } catch {
-    serverError(res);
-  }
-}
