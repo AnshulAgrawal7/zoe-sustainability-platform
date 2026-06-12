@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Container from './Container';
-import { Leaf } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import logoIcon from '../../assets/logo-icon.png';
 import FooterNewsletter from './FooterNewsletter';
 
 export default function Footer() {
@@ -31,12 +31,13 @@ export default function Footer() {
         </div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          {/* Brand */}
+          {/* Brand — same ZOE logo as the header (the alt carries the name). */}
           <div className="md:col-span-1">
-            <div className="mb-3 flex items-center gap-2 font-bold text-white">
-              <Leaf size={20} className="text-green-400" aria-hidden="true" />
-              <span>{t('footer.brand')}</span>
-            </div>
+            <img
+              src={logoIcon}
+              alt={t('footer.brand')}
+              className="mb-3 h-12 w-auto"
+            />
             <p className="text-sm leading-relaxed text-gray-400">
               {t('footer.tagline')}
             </p>
