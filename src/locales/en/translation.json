@@ -566,6 +566,7 @@
     "milestonesTitle": "Community Milestones",
     "milestonesSubtitle": "When the whole community reaches a goal together, everyone benefits. These shared milestones reward collective action.",
     "rewardPrefix": "Reward:",
+    "milestonePoints": "+{{points}} community points",
     "unlocked": "Unlocked!",
     "milestonesNoteLabel": "Prototype note:",
     "milestonesNote": "Milestone progress shown here is illustrative dummy data.",

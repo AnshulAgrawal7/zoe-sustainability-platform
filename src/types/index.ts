@@ -141,9 +141,13 @@ export interface RewardActivity {
 // Text (label/reward) is translated — see i18n: rewardData.milestones.<id>.*
 export interface CommunityMilestone {
   id: string;
+  /** Collective threshold/condition to reach (e.g. 1000 participants). */
   target: number;
+  /** Demo progress towards the threshold. */
   current: number;
   unlocked: boolean;
+  /** Bonus points awarded to the community when the milestone is reached (A6). */
+  points: number;
 }
 
 // Text (name/tagline/description/keyConcerns/channel labels/entryPoint/barrierNote)

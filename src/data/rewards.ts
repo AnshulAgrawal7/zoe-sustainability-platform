@@ -51,10 +51,31 @@ export const rewardActivities: RewardActivity[] = [
   { id: 'attend-event', points: 20, icon: '', category: 'Action' },
 ];
 
+// Community milestones as a point source (A6) — DEMO DATA. Each = a collective
+// threshold for North Corfu that, when reached, awards bonus `points` to the
+// community. Trilingual label/reward live in i18n (rewardData.milestones.<id>).
+// (Config now; an admin-editable `CommunityMilestone` DB model is the future
+// path — see run-log PENDING.)
 export const communityMilestones: CommunityMilestone[] = [
-  { id: 'residents-100', target: 100, current: 73, unlocked: false },
-  { id: 'volunteer-hours-500', target: 500, current: 500, unlocked: true },
-  { id: 'eco-businesses-10', target: 10, current: 6, unlocked: false },
-  { id: 'feedback-200', target: 200, current: 148, unlocked: false },
-  { id: 'participants-1000', target: 1000, current: 1000, unlocked: true },
+  {
+    id: 'residents-100',
+    target: 100,
+    current: 73,
+    unlocked: false,
+    points: 500,
+  },
+  {
+    id: 'volunteer-hours-500',
+    target: 500,
+    current: 500,
+    unlocked: true,
+    points: 1000,
+  },
+  {
+    id: 'participants-1000',
+    target: 1000,
+    current: 1000,
+    unlocked: true,
+    points: 2000,
+  },
 ];

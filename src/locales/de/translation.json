@@ -566,6 +566,7 @@
     "milestonesTitle": "Gemeinschafts-Meilensteine",
     "milestonesSubtitle": "Wenn die ganze Gemeinschaft gemeinsam ein Ziel erreicht, profitieren alle. Diese gemeinsamen Meilensteine belohnen kollektives Handeln.",
     "rewardPrefix": "Belohnung:",
+    "milestonePoints": "+{{points}} Gemeinschaftspunkte",
     "unlocked": "Freigeschaltet!",
     "milestonesNoteLabel": "Prototyp-Hinweis:",
     "milestonesNote": "Der hier gezeigte Meilenstein-Fortschritt sind illustrative Beispieldaten.",

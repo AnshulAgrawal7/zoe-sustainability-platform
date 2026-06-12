@@ -19,7 +19,8 @@ Baseline: FE `tsc` clean · Vitest 22/22 grün.
 | A2 Statischen „Current Tier"-Block entfernen | DONE | (this) | Demo-Progress-Tracker (DEMO_POINTS=130) komplett raus |
 | A3 Tier nur für eingeloggte User | DONE | (this) | currentTier nur bei isAuthenticated, aus user.points |
 | A4 Ausgeloggt: 2 CTAs (Register/Login) | DONE | c7a20df | rewards.guest.* trilingual; Links /register + /login |
-| A5 Punkte ×10 (Faktor 10) | DONE | (this) | Config+Seed+EVENT_POINTS ×10; Prod-Rows → PENDING; s. A5-Tabelle |
+| A5 Punkte ×10 (Faktor 10) | DONE | 0481ae1 | Config+Seed+EVENT_POINTS ×10; Prod-Rows → PENDING; s. A5-Tabelle |
+| A6 Community-Milestones als Punktquelle | DONE | (this) | Config (3 Demo-Milestones + points), auf Rewards-Seite; DB-Modell-Pfad → PENDING; s. Entscheidung |
 
 Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 
@@ -37,6 +38,14 @@ Legende: DONE · PARTIAL · BLOCKED · SKIPPED
   `schema.prisma` ergänzt + `prisma generate`, Migrations-SQL via `migrate diff`
   generiert und in PENDING gelegt. KEINE lokale Anwendung/kein Test möglich →
   „BE-Tests offen".
+- **A6 = Config statt DB-Modell:** Das gesamte Rewards-Subsystem (Tiers,
+  Activities, Milestones) ist aktuell statische Config (`data/rewards.ts`) + i18n —
+  es gibt KEIN Rewards-DB-Modell. Ein einzelnes Milestone-DB-Modell in Isolation
+  wäre inkonsistent (bräuchte Route/Controller/Service/Fallback) UND ohne lokale
+  Postgres nicht anwend-/testbar. „Das Einfachste" = Config (konsistent). Für die
+  geforderte Admin-Editierbarkeit ist das `CommunityMilestone`-Prisma-Modell +
+  Migrations-SQL in PENDING skizziert (Pfad, wenn Rewards→DB migriert wird).
+  Milestones klar als Demo-Daten markiert (`rewards.milestonesNote`).
 
 ---
 
@@ -108,3 +117,39 @@ UPDATE "Badge"  SET "threshold"    = "threshold"    * 10;
 UPDATE "User"   SET "points"       = "points"       * 10;  -- bestehende Salden konsistent zu neuen Tiers
 ```
 ⚠️ NICHT idempotent — genau einmal ausführen.
+
+### A6 — (optional) Community-Milestone als admin-editierbares DB-Modell
+Aktuell Config. Für Admin-Editierbarkeit später dieses Prisma-Modell + Migration
+(Werte aus `data/rewards.ts` als Seed):
+```prisma
+model CommunityMilestone {
+  id        String   @id @default(cuid())
+  target    Int
+  points    Int
+  current   Int      @default(0)
+  unlocked  Boolean  @default(false)
+  labelEn   String
+  labelEl   String
+  labelDe   String
+  descEn    String
+  descEl    String
+  descDe    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+```
+Migration-SQL (Postgres):
+```sql
+CREATE TABLE "CommunityMilestone" (
+  "id" TEXT PRIMARY KEY, "target" INTEGER NOT NULL, "points" INTEGER NOT NULL,
+  "current" INTEGER NOT NULL DEFAULT 0, "unlocked" BOOLEAN NOT NULL DEFAULT false,
+  "labelEn" TEXT NOT NULL, "labelEl" TEXT NOT NULL, "labelDe" TEXT NOT NULL,
+  "descEn" TEXT NOT NULL, "descEl" TEXT NOT NULL, "descDe" TEXT NOT NULL,
+  "order" INTEGER NOT NULL DEFAULT 0,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+```
+Danach: Backend-Route `GET /api/rewards/milestones` + Admin-CRUD + Frontend liest
+DB (Fallback auf Config). Erst sinnvoll, wenn das ganze Rewards-System auf DB zieht.
