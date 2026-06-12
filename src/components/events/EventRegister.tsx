@@ -16,7 +16,7 @@ interface EventRegisterProps {
 // name + email + consent and earn none.
 export default function EventRegister({
   eventId,
-  rewardPoints = 20,
+  rewardPoints = 200,
 }: EventRegisterProps) {
   const { t } = useTranslation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);

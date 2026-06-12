@@ -7,38 +7,38 @@ export const rewardTiers: RewardTier[] = [
     id: 'sporos',
     greekName: 'Σπόρος',
     pointsMin: 0,
-    pointsMax: 24,
+    pointsMax: 249,
     icon: '🌱',
     colorClasses: 'bg-lime-50 border-lime-300 text-lime-800',
   },
   {
     id: 'phyllo',
     greekName: 'Φύλλο',
-    pointsMin: 25,
-    pointsMax: 99,
+    pointsMin: 250,
+    pointsMax: 999,
     icon: '🍃',
     colorClasses: 'bg-green-50 border-green-300 text-green-800',
   },
   {
     id: 'kladi',
     greekName: 'Κλαδί',
-    pointsMin: 100,
-    pointsMax: 249,
+    pointsMin: 1000,
+    pointsMax: 2499,
     icon: '🌿',
     colorClasses: 'bg-teal-50 border-teal-300 text-teal-800',
   },
   {
     id: 'fylakas',
     greekName: 'Φύλακας',
-    pointsMin: 250,
-    pointsMax: 499,
+    pointsMin: 2500,
+    pointsMax: 4999,
     icon: '🛡️',
     colorClasses: 'bg-emerald-50 border-emerald-300 text-emerald-800',
   },
   {
     id: 'thematofylakas',
     greekName: 'Θεματοφύλακας',
-    pointsMin: 500,
+    pointsMin: 5000,
     pointsMax: null,
     icon: '🏛️',
     colorClasses: 'bg-cyan-50 border-cyan-400 text-cyan-900',
@@ -47,8 +47,8 @@ export const rewardTiers: RewardTier[] = [
 
 // Reduced to two illustrative examples (J3); no emojis on the point rows.
 export const rewardActivities: RewardActivity[] = [
-  { id: 'submit-idea', points: 1, icon: '', category: 'Participation' },
-  { id: 'attend-event', points: 2, icon: '', category: 'Action' },
+  { id: 'submit-idea', points: 10, icon: '', category: 'Participation' },
+  { id: 'attend-event', points: 20, icon: '', category: 'Action' },
 ];
 
 export const communityMilestones: CommunityMilestone[] = [
