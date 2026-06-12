@@ -45,19 +45,6 @@ export async function getProject(id: string): Promise<ApiProject> {
   return res.data;
 }
 
-export async function participate(
-  projectId: string
-): Promise<{ pointsAwarded: number }> {
-  const res = await api.post<
-    ApiResponse<{ participation: unknown; pointsAwarded: number }>
-  >(`/projects/${projectId}/participate`, {});
-  return { pointsAwarded: res.data.pointsAwarded };
-}
-
-export async function withdraw(projectId: string): Promise<void> {
-  await api.delete(`/projects/${projectId}/participate`);
-}
-
 export async function createProject(
   data: Partial<ApiProject> & { sdgIds: number[] }
 ): Promise<ApiProject> {

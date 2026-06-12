@@ -107,14 +107,15 @@ describe('POST /api/projects (admin only)', () => {
 });
 
 describe('POST /api/projects/:id/participate', () => {
-  it('allows a user to participate and returns pointsAwarded', async () => {
+  it('allows a user to participate and awards no points (A1)', async () => {
     if (!testProjectId) return;
     const res = await request(app)
       .post(`/api/projects/${testProjectId}/participate`)
       .set('Authorization', `Bearer ${userToken}`);
 
     expect(res.status).toBe(200);
-    expect(res.body.data.pointsAwarded).toBe(30);
+    // Projects no longer award points — only events/actions do.
+    expect(res.body.data.pointsAwarded).toBe(0);
   });
 
   it('rejects duplicate participation with 409', async () => {

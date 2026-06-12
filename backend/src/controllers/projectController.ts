@@ -229,24 +229,14 @@ export async function participate(req: AuthRequest, res: Response) {
     });
     if (existing) { conflict(res, 'Already participating in this project'); return; }
 
-    const [participation] = await prisma.$transaction([
-      prisma.participation.create({ data: { userId, projectId, pointsAwarded: project.rewardPoints } }),
-      prisma.user.update({ where: { id: userId }, data: { points: { increment: project.rewardPoints } } }),
-    ]);
+    // A1: projects award NO points anymore — only events/actions do. The join
+    // record is still created (participant tracking), but pointsAwarded = 0 and
+    // the user's points are not touched (no project point path).
+    const participation = await prisma.participation.create({
+      data: { userId, projectId, pointsAwarded: 0 },
+    });
 
-    const updatedUser = await prisma.user.findUnique({ where: { id: userId }, select: { points: true } });
-    if (updatedUser) {
-      const earnedBadges = await prisma.badge.findMany({ where: { threshold: { lte: updatedUser.points } } });
-      for (const badge of earnedBadges) {
-        await prisma.userBadge.upsert({
-          where: { userId_badgeId: { userId, badgeId: badge.id } },
-          update: {},
-          create: { userId, badgeId: badge.id },
-        });
-      }
-    }
-
-    ok(res, { participation, pointsAwarded: project.rewardPoints });
+    ok(res, { participation, pointsAwarded: 0 });
   } catch {
     serverError(res);
   }
@@ -262,10 +252,11 @@ export async function withdrawParticipation(req: AuthRequest, res: Response) {
     });
     if (!existing) { notFound(res, 'Participation not found'); return; }
 
-    await prisma.$transaction([
-      prisma.participation.delete({ where: { userId_projectId: { userId, projectId } } }),
-      prisma.user.update({ where: { id: userId }, data: { points: { decrement: existing.pointsAwarded } } }),
-    ]);
+    // A1: no project point path — just remove the join record (pointsAwarded was
+    // 0, so the user's points are unaffected).
+    await prisma.participation.delete({
+      where: { userId_projectId: { userId, projectId } },
+    });
 
     ok(res, null, 'Participation withdrawn');
   } catch {

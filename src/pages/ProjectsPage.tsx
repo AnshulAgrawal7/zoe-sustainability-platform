@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Container from '../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Filter, Users, ArrowRight, Star } from 'lucide-react';
+import { Filter, Users, ArrowRight } from 'lucide-react';
 import { getProjects } from '../services/projectService';
 import ProjectMap, { type MapPoint } from '../components/map/ProjectMap';
 import EntityImage from '../components/ui/EntityImage';
@@ -286,10 +286,6 @@ export default function ProjectsPage() {
                             {t(`projects.status.${project.status}`)}
                           </span>
                         )}
-                      </span>
-                      <span className="flex shrink-0 items-center gap-1 text-xs font-semibold text-amber-600 dark:text-amber-400">
-                        <Star size={12} aria-hidden="true" />
-                        {project.rewardPoints}
                       </span>
                     </div>
                     <h2 className="mb-2 line-clamp-2 text-base font-bold text-gray-900 transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-400">

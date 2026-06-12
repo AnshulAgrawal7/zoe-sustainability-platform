@@ -14,7 +14,8 @@ Baseline: FE `tsc` clean · Vitest 22/22 grün.
 
 | Aufgabe | Status | Commit | Notiz |
 |---|---|---|---|
-| (Setup) Branch + Log | DONE | — | s. Entscheidung Branch-Basis |
+| (Setup) Branch + Log | DONE | f840fa0 | s. Entscheidung Branch-Basis |
+| A1 Projekte vergeben keine Punkte | DONE | (this) | s. A1-Liste unten |
 
 Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 
@@ -34,6 +35,22 @@ Legende: DONE · PARTIAL · BLOCKED · SKIPPED
   „BE-Tests offen".
 
 ---
+
+## A1 — Entfernte/deaktivierte projektgebundene Punktepfade
+
+- **Backend `projectController.participate`**: User-Punkte-Increment + Badge-on-
+  Points-Logik entfernt → `pointsAwarded: 0`, User-`points` werden nicht mehr
+  angefasst. Join-Record (Teilnehmer-Tracking) bleibt.
+- **Backend `withdrawParticipation`**: Punkte-Decrement entfernt.
+- **`backend/__tests__/projects.test.ts`**: Assertion `pointsAwarded` 30 → 0.
+- **`src/services/projectService.ts`**: tote `participate`/`withdraw` (keine
+  Caller — Join-CTA war bereits via Decision A deaktiviert) entfernt.
+- **`ProjectsPage`**: projektgebundene Punkte-Anzeige (`<Star> {rewardPoints}`)
+  + ungenutzter `Star`-Import entfernt.
+- **Admin `NewProjectPage` + `EditProjectPage`**: `rewardPoints`-Input entfernt.
+- **Behalten (bewusst):** Spalte `Project.rewardPoints` (DB, vestigial, nicht
+  angezeigt/genutzt) + Form-Default (sendet 50, backend-seitig ignoriert) — kein
+  destruktiver Schema-Change nötig. Nur Events/Aktionen vergeben Punkte.
 
 ## EL-REVIEW offen
 
