@@ -8,6 +8,7 @@ import EventRegister from '../components/events/EventRegister';
 import EntityImage from '../components/ui/EntityImage';
 import PointsBadge from '../components/ui/PointsBadge';
 import AccountPointsHint from '../components/ui/AccountPointsHint';
+import { useAuthStore } from '../stores/authStore';
 import { projectCategoryVisual } from '../components/ui/categoryVisuals';
 import type { ApiEvent, ApiProjectCategory } from '../types';
 
@@ -45,6 +46,7 @@ export default function EventsPage() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language.slice(0, 2);
   const locale = LOCALES[lang] ?? 'en-GB';
+  const isAdmin = useAuthStore((s) => s.isAdmin);
 
   const [events, setEvents] = useState<ApiEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -335,9 +337,11 @@ export default function EventsPage() {
                       )}
 
                       {/* Registration — open to guests (no account needed).
-                          Also shown when completed (status note) or when the
-                          user is registered (cancel option), even if full. */}
-                      {(event.status === 'COMPLETED' ||
+                          Also shown when completed (status note), when the
+                          user is registered (cancel option) even if full, and
+                          always for admins (manage-registrations link). */}
+                      {(isAdmin ||
+                        event.status === 'COMPLETED' ||
                         event.registeredByMe ||
                         spotsLeft == null ||
                         spotsLeft > 0) && (

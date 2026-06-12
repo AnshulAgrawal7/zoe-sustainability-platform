@@ -1,5 +1,10 @@
 import { api } from './api';
-import type { ApiResponse, ApiEvent, MyEventRegistration } from '../types';
+import type {
+  ApiResponse,
+  ApiEvent,
+  MyEventRegistration,
+  AdminEventRegistration,
+} from '../types';
 
 export interface GuestRegistration {
   guestName: string;
@@ -63,6 +68,17 @@ export async function getMyEventRegistrations(): Promise<
     ApiResponse<{ registrations: MyEventRegistration[] }>
   >('/events/registrations/me');
   return res.data.registrations;
+}
+
+// Admin: who is registered for an event (members + guests, newest first).
+export async function getEventRegistrationsAdmin(eventId: string): Promise<{
+  event: ApiEvent;
+  registrations: AdminEventRegistration[];
+}> {
+  const res = await api.get<
+    ApiResponse<{ event: ApiEvent; registrations: AdminEventRegistration[] }>
+  >(`/admin/events/${eventId}/registrations`);
+  return res.data;
 }
 
 // Admin: mark an event COMPLETED and award pending points (idempotent).

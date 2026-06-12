@@ -291,6 +291,28 @@ export async function getMyEventRegistrations(req: AuthRequest, res: Response) {
   }
 }
 
+// GET /api/admin/events/:id/registrations — adminOnly. Who is registered for an
+// event: members (linked user incl. points status) and guests (name/email),
+// newest first. Read-only — admins manage attendance, they don't join.
+export async function getEventRegistrationsAdmin(req: AuthRequest, res: Response) {
+  const eventId = req.params['id'] as string;
+  try {
+    const event = await prisma.event.findUnique({
+      where: { id: eventId },
+      include: { project: projectSelect },
+    });
+    if (!event) { notFound(res); return; }
+    const registrations = await prisma.eventRegistration.findMany({
+      where: { eventId },
+      orderBy: { createdAt: 'desc' },
+      include: { user: { select: { id: true, name: true, email: true } } },
+    });
+    ok(res, { event, registrations, total: registrations.length });
+  } catch {
+    serverError(res);
+  }
+}
+
 // POST /api/admin/events/:id/complete — adminOnly. Marks the event COMPLETED and
 // awards its rewardPoints to every registered logged-in user that has not been
 // awarded yet (idempotent: re-running never double-awards). Threshold badges are

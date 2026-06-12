@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react';
 import Container from '../../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Plus, Pencil, Calendar, CheckCircle2, Loader2 } from 'lucide-react';
+import {
+  Plus,
+  Pencil,
+  Calendar,
+  CheckCircle2,
+  Loader2,
+  Users,
+} from 'lucide-react';
 import { getEvents, completeEvent } from '../../services/eventService';
 import { useToastStore } from '../../stores/toastStore';
 import type { ApiEvent } from '../../types';
@@ -121,6 +128,15 @@ export default function ManageEventsPage() {
                   </p>
                 </div>
                 <div className="flex shrink-0 items-center gap-2">
+                  <Link
+                    to={`/admin/events/${e.id}/registrations`}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-3 py-2 text-xs font-medium text-gray-600 transition-colors hover:border-green-400 hover:text-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:border-gray-600 dark:text-gray-300 dark:hover:text-green-400"
+                  >
+                    <Users size={14} aria-hidden="true" />
+                    {t('adminEventRegs.linkLabel', {
+                      count: e.registeredCount ?? 0,
+                    })}
+                  </Link>
                   {e.status !== 'COMPLETED' && confirmingId !== e.id && (
                     <button
                       type="button"

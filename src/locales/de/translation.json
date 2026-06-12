@@ -1352,7 +1352,8 @@
       "cancelCta": "Anmeldung absagen",
       "cancelled": "Deine Anmeldung wurde abgesagt.",
       "completedNote": "Diese Veranstaltung hat bereits stattgefunden.",
-      "attended": "Du warst dabei — +{{points}} Punkte gutgeschrieben."
+      "attended": "Du warst dabei — +{{points}} Punkte gutgeschrieben.",
+      "adminView": "Anmeldungen verwalten"
     },
     "statusUpcoming": "Geplant",
     "statusCompleted": "Abgeschlossen",
@@ -1642,6 +1643,13 @@
   "sdg": {
     "attribution": "Offizielle UN-SDG-Icons, unverändert und zu Informationszwecken gemäß den UN-SDG-Richtlinien verwendet —",
     "disclaimer": "Die Inhalte dieser Veröffentlichung wurden nicht von den Vereinten Nationen genehmigt und geben nicht die Ansichten der Vereinten Nationen, ihrer Bediensteten oder Mitgliedstaaten wieder."
+  },
+  "adminEventRegs": {
+    "title": "Anmeldungen",
+    "linkLabel": "Teilnehmer ({{count}})",
+    "member": "Mitglied",
+    "guest": "Gast",
+    "empty": "Für diese Veranstaltung gibt es noch keine Anmeldungen."
   },
   "adminRewards": {
     "title": "Prämien verwalten",

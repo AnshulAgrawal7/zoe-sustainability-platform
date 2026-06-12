@@ -51,6 +51,7 @@ import ManagePostsPage from '../pages/admin/ManagePostsPage';
 import NewProjectPage from '../pages/admin/NewProjectPage';
 import EditProjectPage from '../pages/admin/EditProjectPage';
 import ManageEventsPage from '../pages/admin/ManageEventsPage';
+import EventRegistrationsPage from '../pages/admin/EventRegistrationsPage';
 import NewEventPage from '../pages/admin/NewEventPage';
 import EditEventPage from '../pages/admin/EditEventPage';
 import AccessibilityPage from '../pages/AccessibilityPage';
@@ -256,6 +257,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <EditEventPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/events/:id/registrations',
+        element: (
+          <AdminRoute>
+            <EventRegistrationsPage />
           </AdminRoute>
         ),
       },

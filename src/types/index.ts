@@ -272,6 +272,19 @@ export interface ApiResponse<T> {
   error?: string;
 }
 
+// One registration row in the admin attendance overview: either a member
+// (`user` set) or a guest (guestName/guestEmail set).
+export interface AdminEventRegistration {
+  id: string;
+  eventId: string;
+  createdAt: string;
+  pointsAwarded: number;
+  guestName: string | null;
+  guestEmail: string | null;
+  userId: string | null;
+  user: { id: string; name: string; email: string } | null;
+}
+
 // --- ZOE reward levels (admin-editable, served by /api/rewards/tiers) ---
 
 export interface ApiRewardTierRole {

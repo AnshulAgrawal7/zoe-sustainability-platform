@@ -4,7 +4,13 @@ import { getAllUsers, updateUserRole, getStats } from '../controllers/adminContr
 import { translateProjectFields } from '../controllers/translationController';
 import { getIdeas, updateIdeaStatus } from '../controllers/ideaController';
 import { getAllComments, setCommentStatus } from '../controllers/commentController';
-import { createEvent, updateEvent, deleteEvent, completeEvent } from '../controllers/eventController';
+import {
+  createEvent,
+  updateEvent,
+  deleteEvent,
+  completeEvent,
+  getEventRegistrationsAdmin,
+} from '../controllers/eventController';
 import { getSubmissions } from '../controllers/submissionController';
 import { updateRewardTier } from '../controllers/rewardController';
 import {
@@ -92,6 +98,8 @@ router.patch('/events/:id', eventUpdateValidators, updateEvent);
 router.delete('/events/:id', deleteEvent);
 // Lifecycle: mark COMPLETED + award pending points to registered users (idempotent).
 router.post('/events/:id/complete', completeEvent);
+// Attendance overview: members + guests registered for one event (read-only).
+router.get('/events/:id/registrations', getEventRegistrationsAdmin);
 
 // --- Citizen reports & feedback (read-only overview for now) ---
 router.get('/submissions', getSubmissions);

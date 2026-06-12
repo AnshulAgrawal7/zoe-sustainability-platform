@@ -293,6 +293,12 @@ Update an event (partial). **ADMIN auth required.**
 Delete an event. **ADMIN auth required.** RSVPs keep their soft `eventId` and are
 not cascaded.
 
+### GET /admin/events/:id/registrations
+Attendance overview for one event: every registration with the linked member
+(`user`: id/name/email + `pointsAwarded`, 0 = pending) or the guest details
+(`guestName`/`guestEmail`), newest first, plus the `event` itself. Read-only.
+**ADMIN auth required.**
+
 ### POST /admin/events/:id/complete
 Mark an event `COMPLETED` and credit its `rewardPoints` to every registered
 logged-in user that has not been credited yet (then grant threshold badges).

@@ -1,6 +1,14 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowRight, Check, Loader2, CalendarCheck, X } from 'lucide-react';
+import {
+  ArrowRight,
+  Check,
+  Loader2,
+  CalendarCheck,
+  Users,
+  X,
+} from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
 import { useToastStore } from '../../stores/toastStore';
 import {
@@ -38,6 +46,7 @@ export default function EventRegister({
 }: EventRegisterProps) {
   const { t } = useTranslation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const isAdmin = useAuthStore((s) => s.isAdmin);
   const showToast = useToastStore((s) => s.showToast);
 
   const [open, setOpen] = useState(false); // guest form
@@ -106,6 +115,21 @@ export default function EventRegister({
     } finally {
       setLoading(false);
     }
+  }
+
+  // --- Admins manage attendance, they don't join: instead of the register
+  // button they get a link to the registrations overview (works for completed
+  // events too). Checked FIRST so no register/cancel UI ever shows for admins.
+  if (isAdmin) {
+    return (
+      <Link
+        to={`/admin/events/${eventId}/registrations`}
+        className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg border border-green-600 px-4 py-2.5 text-sm font-medium text-green-700 transition-colors hover:bg-green-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:text-green-400 dark:hover:bg-green-900/20"
+      >
+        <Users size={14} aria-hidden="true" />
+        {t('events.rsvp.adminView')}
+      </Link>
+    );
   }
 
   // --- Completed events: registration is closed. ---

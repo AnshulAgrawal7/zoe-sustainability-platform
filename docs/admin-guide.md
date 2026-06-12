@@ -155,6 +155,12 @@ Projekt** gehören (ein Projekt → mehrere Termine) oder eigenständig sind.
 - Verknüpfte Termine erscheinen automatisch auf der **Projekt-Detailseite**
   („Termine zu diesem Projekt") und auf der öffentlichen **Termine-Seite**
   (`/events`).
+- **Teilnehmer einsehen:** Jede Zeile der Terminliste hat einen
+  **„Teilnehmer (N)"**-Button → `/admin/events/:id/registrations` zeigt alle
+  Anmeldungen (Mitglieder mit Name/E-Mail und Punktestatus „ausstehend"/
+  gutgeschrieben; Gäste entsprechend markiert). Auf den öffentlichen
+  Event-Karten sehen Admins statt des Anmelde-Buttons den Link
+  **„Anmeldungen verwalten"** — Admins nehmen selbst nicht an Terminen teil.
 - **Lebenszyklus & Punkte:** Anmeldungen vergeben **keine** Sofort-Punkte. In der
   Terminliste zeigt **Abschließen** (mit Bestätigungsabfrage) den Termin als
   `COMPLETED` an und schreibt allen angemeldeten Mitgliedern die Punkte des

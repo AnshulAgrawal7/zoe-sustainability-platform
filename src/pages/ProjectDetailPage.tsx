@@ -23,6 +23,7 @@ import EventRegister from '../components/events/EventRegister';
 import EntityImage from '../components/ui/EntityImage';
 import SdgIcon from '../components/ui/SdgIcon';
 import PointsBadge from '../components/ui/PointsBadge';
+import { useAuthStore } from '../stores/authStore';
 import Lightbox from '../components/news/Lightbox';
 import { formatNumber } from '../utils/format';
 import type { ApiProject, ApiEvent, LearningResource } from '../types';
@@ -38,6 +39,7 @@ export default function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const lang = i18n.language.slice(0, 2);
+  const isAdmin = useAuthStore((s) => s.isAdmin);
 
   const [project, setProject] = useState<ApiProject | null>(null);
   const [events, setEvents] = useState<ApiEvent[]>([]);
@@ -335,7 +337,8 @@ export default function ProjectDetailPage() {
                       />
                     )}
                   </div>
-                  {(ev.status === 'COMPLETED' ||
+                  {(isAdmin ||
+                    ev.status === 'COMPLETED' ||
                     ev.registeredByMe ||
                     spotsLeft == null ||
                     spotsLeft > 0) && (
