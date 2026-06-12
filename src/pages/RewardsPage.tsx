@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Container from '../components/layout/Container';
 import {
   Award,
@@ -8,6 +9,7 @@ import {
   CheckCircle,
   Circle,
   TrendingUp,
+  ArrowRight,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -16,9 +18,8 @@ import {
   communityMilestones,
 } from '../data/rewards';
 import { PROFILE_OPTIONS } from '../data/profiles';
+import { useAuthStore } from '../stores/authStore';
 import type { RewardTier, UserProfile } from '../types';
-
-const DEMO_POINTS = 130;
 
 const categoryColors: Record<string, string> = {
   Action:
@@ -117,21 +118,32 @@ function TierCard({
 
 export default function RewardsPage() {
   const { t } = useTranslation();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const user = useAuthStore((s) => s.user);
   // J4: reward focus per audience profile (data lives in i18n profiles.<id>.*).
   const [profile, setProfile] = useState<UserProfile>('RESIDENT');
-  const currentTier = rewardTiers.find(
-    (tier) =>
-      DEMO_POINTS >= tier.pointsMin &&
-      (tier.pointsMax === null || DEMO_POINTS <= tier.pointsMax)
-  )!;
-  const nextTier =
-    rewardTiers.find((tier) => tier.pointsMin > DEMO_POINTS) ?? null;
-  const pointsToNext = nextTier ? nextTier.pointsMin - DEMO_POINTS : 0;
-  const progressInTier = currentTier.pointsMax
-    ? ((DEMO_POINTS - currentTier.pointsMin) /
-        (currentTier.pointsMax - currentTier.pointsMin)) *
-      100
-    : 100;
+
+  // A3: the current level/tier is shown ONLY for logged-in users, from their
+  // REAL points (no static demo value anymore — A2).
+  const points = user?.points ?? 0;
+  const currentTier =
+    isAuthenticated &&
+    (rewardTiers.find(
+      (tier) =>
+        points >= tier.pointsMin &&
+        (tier.pointsMax === null || points <= tier.pointsMax)
+    ) ??
+      rewardTiers[0]);
+  const nextTier = isAuthenticated
+    ? (rewardTiers.find((tier) => tier.pointsMin > points) ?? null)
+    : null;
+  const pointsToNext = nextTier ? nextTier.pointsMin - points : 0;
+  const progressInTier =
+    currentTier && currentTier.pointsMax
+      ? ((points - currentTier.pointsMin) /
+          (currentTier.pointsMax - currentTier.pointsMin)) *
+        100
+      : 100;
 
   return (
     <div>
@@ -151,91 +163,117 @@ export default function RewardsPage() {
         </Container>
       </section>
 
-      {/* Demo progress tracker */}
-      <section className="border-b border-gray-200 bg-white py-10 dark:border-gray-700 dark:bg-gray-900">
-        <Container>
-          <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-300">
-            <span className="font-semibold">{t('rewards.demoLabel')}</span>{' '}
-            {t('rewards.demoText', { points: DEMO_POINTS })}
-          </div>
-
-          <div className="rounded-xl border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-            <div className="mb-4 flex items-start justify-between gap-4">
-              <div>
-                <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
-                  {t('rewards.currentTier')}
-                </p>
-                <div className="flex items-center gap-2">
-                  <span className="text-3xl" aria-hidden="true">
-                    {currentTier.icon}
-                  </span>
-                  <div>
-                    <p className="text-lg font-bold text-gray-900 dark:text-white">
-                      {currentTier.greekName}
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {t(`rewardData.tiers.${currentTier.id}.name`)}
-                    </p>
+      {/* Current level — logged-in: real tier + progress (A3); logged-out: two
+          CTAs to register / log in (A4). The old static demo block is gone (A2). */}
+      {currentTier ? (
+        <section className="border-b border-gray-200 bg-white py-10 dark:border-gray-700 dark:bg-gray-900">
+          <Container>
+            <div className="rounded-xl border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
+              <div className="mb-4 flex items-start justify-between gap-4">
+                <div>
+                  <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+                    {t('rewards.currentTier')}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-3xl" aria-hidden="true">
+                      {currentTier.icon}
+                    </span>
+                    <div>
+                      <p className="text-lg font-bold text-gray-900 dark:text-white">
+                        {currentTier.greekName}
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {t(`rewardData.tiers.${currentTier.id}.name`)}
+                      </p>
+                    </div>
                   </div>
                 </div>
+                <div className="text-right">
+                  <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+                    {t('rewards.totalPoints')}
+                  </p>
+                  <p className="text-3xl font-bold text-green-700 dark:text-green-400">
+                    {points}
+                  </p>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
-                  {t('rewards.totalPoints')}
-                </p>
-                <p className="text-3xl font-bold text-green-700 dark:text-green-400">
-                  {DEMO_POINTS}
-                </p>
-              </div>
-            </div>
 
-            <div className="mb-2 flex justify-between text-xs text-gray-500 dark:text-gray-400">
-              <span>
-                {currentTier.pointsMin} {t('rewards.ptsShort')}
-              </span>
-              {currentTier.pointsMax && (
+              <div className="mb-2 flex justify-between text-xs text-gray-500 dark:text-gray-400">
                 <span>
-                  {currentTier.pointsMax} {t('rewards.ptsShort')}
+                  {currentTier.pointsMin} {t('rewards.ptsShort')}
                 </span>
+                {currentTier.pointsMax && (
+                  <span>
+                    {currentTier.pointsMax} {t('rewards.ptsShort')}
+                  </span>
+                )}
+              </div>
+              <div className="mb-3 h-3 w-full rounded-full bg-gray-200 dark:bg-gray-700">
+                <div
+                  className="h-3 rounded-full bg-green-600 transition-all"
+                  style={{ width: `${Math.min(progressInTier, 100)}%` }}
+                  role="progressbar"
+                  aria-valuenow={points}
+                  aria-valuemin={currentTier.pointsMin}
+                  aria-valuemax={currentTier.pointsMax ?? points}
+                />
+              </div>
+
+              {nextTier ? (
+                <p className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300">
+                  <TrendingUp
+                    size={14}
+                    className="text-green-600 dark:text-green-400"
+                    aria-hidden="true"
+                  />
+                  <span>
+                    <strong>
+                      {t('rewards.morePoints', { count: pointsToNext })}
+                    </strong>{' '}
+                    {t('rewards.toReach', {
+                      tier: nextTier.greekName,
+                      name: t(`rewardData.tiers.${nextTier.id}.name`),
+                    })}{' '}
+                    {nextTier.icon}
+                  </span>
+                </p>
+              ) : (
+                <p className="text-sm font-semibold text-green-700 dark:text-green-400">
+                  {t('rewards.highestTier')}
+                </p>
               )}
             </div>
-            <div className="mb-3 h-3 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-              <div
-                className="h-3 rounded-full bg-green-600 transition-all"
-                style={{ width: `${Math.min(progressInTier, 100)}%` }}
-                role="progressbar"
-                aria-valuenow={DEMO_POINTS}
-                aria-valuemin={currentTier.pointsMin}
-                aria-valuemax={currentTier.pointsMax ?? DEMO_POINTS}
-              />
+          </Container>
+        </section>
+      ) : (
+        <section className="border-b border-gray-200 bg-white py-12 dark:border-gray-700 dark:bg-gray-900">
+          <Container>
+            <div className="rounded-2xl border border-green-200 bg-green-50 p-6 dark:border-green-800 dark:bg-green-900/20 sm:p-8">
+              <p className="max-w-2xl text-lg leading-relaxed text-gray-800 dark:text-gray-100">
+                {t('rewards.guest.lead')}
+              </p>
+              <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+                <Link
+                  to="/register"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                >
+                  {t('rewards.guest.registerCta')}
+                  <ArrowRight size={18} aria-hidden="true" />
+                </Link>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  {t('rewards.guest.haveAccount')}{' '}
+                  <Link
+                    to="/login"
+                    className="font-medium text-green-700 underline transition-colors hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+                  >
+                    {t('rewards.guest.loginCta')}
+                  </Link>
+                </p>
+              </div>
             </div>
-
-            {nextTier ? (
-              <p className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300">
-                <TrendingUp
-                  size={14}
-                  className="text-green-600 dark:text-green-400"
-                  aria-hidden="true"
-                />
-                <span>
-                  <strong>
-                    {t('rewards.morePoints', { count: pointsToNext })}
-                  </strong>{' '}
-                  {t('rewards.toReach', {
-                    tier: nextTier.greekName,
-                    name: t(`rewardData.tiers.${nextTier.id}.name`),
-                  })}{' '}
-                  {nextTier.icon}
-                </span>
-              </p>
-            ) : (
-              <p className="text-sm font-semibold text-green-700 dark:text-green-400">
-                {t('rewards.highestTier')}
-              </p>
-            )}
-          </div>
-        </Container>
-      </section>
+          </Container>
+        </section>
+      )}
 
       {/* Tiers */}
       <section className="bg-gray-50 py-14 dark:bg-gray-900/50">
@@ -253,7 +291,7 @@ export default function RewardsPage() {
               <TierCard
                 key={tier.id}
                 tier={tier}
-                isCurrent={tier.id === currentTier.id}
+                isCurrent={!!currentTier && tier.id === currentTier.id}
               />
             ))}
           </div>

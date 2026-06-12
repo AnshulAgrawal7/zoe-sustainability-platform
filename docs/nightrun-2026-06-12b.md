@@ -15,7 +15,10 @@ Baseline: FE `tsc` clean · Vitest 22/22 grün.
 | Aufgabe | Status | Commit | Notiz |
 |---|---|---|---|
 | (Setup) Branch + Log | DONE | f840fa0 | s. Entscheidung Branch-Basis |
-| A1 Projekte vergeben keine Punkte | DONE | (this) | s. A1-Liste unten |
+| A1 Projekte vergeben keine Punkte | DONE | 5910610 | s. A1-Liste unten |
+| A2 Statischen „Current Tier"-Block entfernen | DONE | (this) | Demo-Progress-Tracker (DEMO_POINTS=130) komplett raus |
+| A3 Tier nur für eingeloggte User | DONE | (this) | currentTier nur bei isAuthenticated, aus user.points |
+| A4 Ausgeloggt: 2 CTAs (Register/Login) | DONE | (this) | rewards.guest.* trilingual; Links /register + /login |
 
 Legende: DONE · PARTIAL · BLOCKED · SKIPPED
 

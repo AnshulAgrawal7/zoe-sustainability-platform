@@ -526,6 +526,12 @@
     "heroEyebrow": "ZOE Community Rewards",
     "heroTitle": "Earn Recognition for Your Impact",
     "heroSubtitle": "Every action you take for Northern Corfu earns points. Rise through five Greek-named tiers — from Σπόρος (Seed) to Θεματοφύλακας (Steward) — and unlock real recognition from the municipality and local community.",
+    "guest": {
+      "lead": "Sign up, join events and collect points to reach different levels and rewards.",
+      "registerCta": "Register now",
+      "haveAccount": "Already have an account?",
+      "loginCta": "Then log in."
+    },
     "yourTier": "Your tier",
     "pointsRange": "{{min}}–{{max}} points",
     "pointsMin": "{{min}}+ points",

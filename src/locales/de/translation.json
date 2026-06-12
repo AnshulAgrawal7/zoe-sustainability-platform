@@ -526,6 +526,12 @@
     "heroEyebrow": "ZOE Community-Belohnungen",
     "heroTitle": "Anerkennung für Ihre Wirkung verdienen",
     "heroSubtitle": "Jede Aktion für Nord-Korfu bringt Punkte. Steigen Sie durch fünf griechisch benannte Stufen auf — von Σπόρος (Samen) bis Θεματοφύλακας (Hüter) — und schalten Sie echte Anerkennung der Gemeinde und der lokalen Gemeinschaft frei.",
+    "guest": {
+      "lead": "Registriere dich, nimm an Events teil und sammle Punkte, um verschiedene Level und Belohnungen zu erreichen.",
+      "registerCta": "Jetzt registrieren",
+      "haveAccount": "Du hast schon einen Account?",
+      "loginCta": "Dann logge dich ein."
+    },
     "yourTier": "Ihre Stufe",
     "pointsRange": "{{min}}–{{max}} Punkte",
     "pointsMin": "{{min}}+ Punkte",
