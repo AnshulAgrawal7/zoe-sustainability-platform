@@ -69,7 +69,10 @@ export default function ParticipationPage() {
     initialOption
   );
   // Within "submit-idea": choose between a plain idea and a full event proposal.
-  const [ideaKind, setIdeaKind] = useState<'IDEA' | 'EVENT'>('IDEA');
+  // Deep-link `?kind=event` (e.g. from the events page) preselects the event tab.
+  const [ideaKind, setIdeaKind] = useState<'IDEA' | 'EVENT'>(
+    searchParams.get('kind') === 'event' ? 'EVENT' : 'IDEA'
+  );
   const [form, setForm] = useState<FormState>({
     ...emptyForm,
     type: initialOption ?? '',

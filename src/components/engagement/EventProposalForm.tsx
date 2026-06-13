@@ -59,8 +59,8 @@ export default function EventProposalForm({ onClose }: Props) {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    getProjects()
-      .then((p) => setProjects(p))
+    getProjects({ status: 'ALL', limit: 50 })
+      .then((d) => setProjects(d.projects))
       .catch(() => setProjects([]));
   }, []);
 

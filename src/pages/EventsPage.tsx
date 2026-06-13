@@ -110,6 +110,22 @@ export default function EventsPage() {
         </p>
       </div>
 
+      {/* Contribute-your-own-event hint, near the top → opens the proposal form
+          directly on the Event tab. */}
+      <div className="mb-6 flex flex-col gap-3 rounded-xl border border-teal-200 bg-teal-50 p-4 dark:border-teal-800 dark:bg-teal-900/20 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-teal-800 dark:text-teal-200">
+          <span className="font-semibold">{t('events.suggestTitle')}</span>{' '}
+          {t('events.suggestText')}
+        </p>
+        <Link
+          to="/participate?action=submit-idea&kind=event"
+          className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2"
+        >
+          <CalendarPlus size={16} aria-hidden="true" />
+          {t('events.suggestLink')}
+        </Link>
+      </div>
+
       {/* Account hint — points/rewards for attending require an account. */}
       <AccountPointsHint className="mb-6" />
 
@@ -368,23 +384,6 @@ export default function EventsPage() {
           )}
         </>
       )}
-
-      {/* Contribute-your-own-event CTA → the event-proposal flow on /participate. */}
-      <div className="mt-10 rounded-xl border border-teal-200 bg-teal-50 p-6 text-center dark:border-teal-800 dark:bg-teal-900/20">
-        <h2 className="mb-2 font-semibold text-teal-900 dark:text-teal-200">
-          {t('events.suggestTitle')}
-        </h2>
-        <p className="mb-4 text-sm text-teal-700 dark:text-teal-300">
-          {t('events.suggestText')}
-        </p>
-        <Link
-          to="/participate?action=submit-idea"
-          className="inline-flex items-center gap-2 rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-teal-700"
-        >
-          <CalendarPlus size={16} aria-hidden="true" />
-          {t('events.suggestLink')}
-        </Link>
-      </div>
     </Container>
   );
 }

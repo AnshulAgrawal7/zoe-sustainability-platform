@@ -963,7 +963,8 @@
     "accessibility": "Accessibility",
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
-    "legalNavAria": "Legal navigation"
+    "legalNavAria": "Legal navigation",
+    "socialAria": "Follow us on {{network}} (opens in a new tab)"
   },
   "accessibility": {
     "title": "Accessibility Statement",

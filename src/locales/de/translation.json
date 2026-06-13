@@ -963,7 +963,8 @@
     "accessibility": "Barrierefreiheit",
     "privacy": "Datenschutzerklärung",
     "imprint": "Impressum",
-    "legalNavAria": "Rechtliche Navigation"
+    "legalNavAria": "Rechtliche Navigation",
+    "socialAria": "Folge uns auf {{network}} (öffnet in neuem Tab)"
   },
   "accessibility": {
     "title": "Barrierefreiheitserklärung",
