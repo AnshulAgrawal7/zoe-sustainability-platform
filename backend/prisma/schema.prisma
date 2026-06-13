@@ -17,6 +17,9 @@ datasource db {
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
+  // Public pseudonymous handle — shown in all community contexts (comments,
+  // leaderboard, @mentions) INSTEAD of the real name/email. Unique, lowercased.
+  username  String   @unique
   password  String
   name      String
   role      String   @default("USER")
@@ -27,15 +30,18 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  participations     Participation[]
-  eventRegistrations EventRegistration[]
-  ideas              Idea[]
-  submissions        Submission[]
-  userBadges         UserBadge[]
-  refreshTokens      RefreshToken[]
-  createdProjects    Project[]           @relation("CreatedBy")
-  comments           Comment[]
-  commentLikes       CommentLike[]
+  participations       Participation[]
+  eventRegistrations   EventRegistration[]
+  ideas                Idea[]
+  submissions          Submission[]
+  eventProposals       EventProposal[]
+  userBadges           UserBadge[]
+  refreshTokens        RefreshToken[]
+  createdProjects      Project[]           @relation("CreatedBy")
+  comments             Comment[]
+  commentLikes         CommentLike[]
+  notifications        Notification[]      @relation("Recipient")
+  actorNotifications   Notification[]      @relation("Actor")
 }
 
 // category: "ENVIRONMENT" | "MOBILITY" | "COMMUNITY" | "EDUCATION" | "CULTURE"
@@ -144,13 +150,16 @@ model Event {
   descriptionDe String
   date          DateTime
   location      String?
+  lat           Float? // optional map coordinate (WGS84), geocoded from `location`
+  lng           Float?
   category      String
   status        String   @default("UPCOMING")
   rewardPoints  Int      @default(20)
   capacity      Int?
-  imageUrl      String? // optional cover image (URL string; no file upload)
+  imageUrl      String? // cover image — Supabase Storage public URL (upload or external)
   projectId     String
   project       Project  @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  comments      Comment[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -254,21 +263,78 @@ model Submission {
   @@index([type])
 }
 
-// Discourse on an APPROVED citizen idea (Z3). Only logged-in users post
-// (anti-spam, Decide-Madrid/Consul style); admins moderate via `status`.
-// status: "VISIBLE" | "HIDDEN" (hidden comments never appear publicly).
+// Citizen-submitted EVENT proposal (community). Unlike an Idea, this is NOT shown
+// on the public idea board: an admin reviews it and, on approval, it is converted
+// into a real Event (the admin form is pre-filled with these fields and the single
+// source language is auto-translated into EN/EL/DE). Open WITHOUT an account; a
+// valid token links `userId`, otherwise anonymous (optional submitterName/Email).
+// lang: source language "EN" | "EL" | "DE". status: "NEW" | "CONVERTED" | "DECLINED".
+model EventProposal {
+  id             String    @id @default(cuid())
+  title          String
+  description    String
+  lang           String    @default("EN")
+  category       String
+  date           DateTime
+  location       String?
+  lat            Float?
+  lng            Float?
+  capacity       Int?
+  rewardPoints   Int?
+  imageUrl       String?
+  projectId      String? // suggested project (optional; admin confirms/assigns)
+  status         String    @default("NEW")
+  submitterName  String?
+  submitterEmail String?
+  user           User?     @relation(fields: [userId], references: [id])
+  userId         String?
+  createdEventId String? // the Event created from this proposal, once converted
+  createdAt      DateTime  @default(now())
+
+  @@index([status])
+}
+
+// In-app notification for a USER (e.g. "X mentioned you in a comment"). Drives the
+// citizen-facing bell. `read` clears the unread count. `type`: "MENTION" (only kind
+// for now). `actor` is who triggered it; commentId/eventId/ideaId give the target
+// link. Distinct from the ADMIN bell, which is computed (no rows).
+model Notification {
+  id        String   @id @default(cuid())
+  user      User     @relation("Recipient", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  type      String   @default("MENTION")
+  actor     User?    @relation("Actor", fields: [actorId], references: [id])
+  actorId   String?
+  comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String?
+  eventId   String?
+  ideaId    String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId, read])
+}
+
+// Discourse on an APPROVED citizen idea (Z3) OR an event (community networking).
+// Exactly ONE of ideaId/eventId is set (enforced at the application layer). Only
+// logged-in users post (anti-spam, Decide-Madrid/Consul style); admins moderate
+// via `status`. status: "VISIBLE" | "HIDDEN" (hidden comments never appear).
 model Comment {
   id        String        @id @default(cuid())
-  idea      Idea          @relation(fields: [ideaId], references: [id])
-  ideaId    String
+  idea      Idea?         @relation(fields: [ideaId], references: [id])
+  ideaId    String?
+  event     Event?        @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId   String?
   user      User          @relation(fields: [userId], references: [id])
   userId    String
   body      String
   status    String        @default("VISIBLE")
   createdAt DateTime      @default(now())
   likes     CommentLike[]
+  mentions  Notification[]
 
   @@index([ideaId])
+  @@index([eventId])
 }
 
 // One like per user per comment (toggle). Composite PK enforces uniqueness.

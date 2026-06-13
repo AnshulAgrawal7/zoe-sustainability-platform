@@ -54,8 +54,12 @@ async function request<T>(
   options: RequestInit = {},
   isRetry = false
 ): Promise<T> {
+  // For multipart uploads (FormData body) the browser must set Content-Type
+  // itself (with the multipart boundary), so we omit our JSON default.
+  const isFormData =
+    typeof FormData !== 'undefined' && options.body instanceof FormData;
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
     ...(options.headers as Record<string, string>),
   };
 
@@ -97,4 +101,6 @@ export const api = {
   patch: <T>(path: string, body: unknown) =>
     request<T>(path, { method: 'PATCH', body: JSON.stringify(body) }),
   delete: <T>(path: string) => request<T>(path, { method: 'DELETE' }),
+  upload: <T>(path: string, form: FormData) =>
+    request<T>(path, { method: 'POST', body: form }),
 };

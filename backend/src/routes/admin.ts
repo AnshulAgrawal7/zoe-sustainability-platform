@@ -13,6 +13,11 @@ import {
 } from '../controllers/eventController';
 import { getSubmissions } from '../controllers/submissionController';
 import { getAdminNotifications } from '../controllers/notificationController';
+import {
+  getEventProposals,
+  getEventProposal,
+  updateEventProposal,
+} from '../controllers/eventProposalController';
 import { updateRewardTier } from '../controllers/rewardController';
 import { getAdminMetrics } from '../controllers/metricsController';
 import {
@@ -31,7 +36,12 @@ import {
 } from '../controllers/feedController';
 import { authenticate } from '../middleware/auth';
 import { adminOnly } from '../middleware/adminOnly';
-import { IDEA_STATUSES, COMMENT_STATUSES, PROJECT_CATEGORIES } from '../constants';
+import {
+  IDEA_STATUSES,
+  COMMENT_STATUSES,
+  PROJECT_CATEGORIES,
+  EVENT_PROPOSAL_STATUSES,
+} from '../constants';
 
 const router = Router();
 
@@ -87,6 +97,8 @@ const eventCreateValidators = [
   body('capacity').optional({ values: 'null' }).isInt({ min: 1 }),
   body('projectId').isString().trim().notEmpty(), // Decision A: required
   body('location').optional({ values: 'falsy' }).trim().isLength({ max: 200 }),
+  body('lat').optional({ values: 'null' }).isFloat({ min: -90, max: 90 }),
+  body('lng').optional({ values: 'null' }).isFloat({ min: -180, max: 180 }),
   body('imageUrl').optional({ values: 'falsy' }).isURL({ require_protocol: true }).isLength({ max: 2048 }),
 ];
 
@@ -99,6 +111,9 @@ const eventUpdateValidators = [
   body('rewardPoints').optional().isInt({ min: 0 }),
   body('capacity').optional({ values: 'null' }).isInt({ min: 1 }),
   body('projectId').optional({ values: 'falsy' }).isString(),
+  body('location').optional({ values: 'falsy' }).trim().isLength({ max: 200 }),
+  body('lat').optional({ values: 'null' }).isFloat({ min: -90, max: 90 }),
+  body('lng').optional({ values: 'null' }).isFloat({ min: -180, max: 180 }),
   body('imageUrl').optional({ values: 'falsy' }).isURL({ require_protocol: true }).isLength({ max: 2048 }),
 ];
 
@@ -112,6 +127,18 @@ router.get('/events/:id/registrations', getEventRegistrationsAdmin);
 
 // --- Citizen reports & feedback (read-only overview for now) ---
 router.get('/submissions', getSubmissions);
+
+// --- Citizen event proposals (review → convert into a real Event) ---
+router.get('/event-proposals', getEventProposals);
+router.get('/event-proposals/:id', getEventProposal);
+router.patch(
+  '/event-proposals/:id',
+  [
+    body('status').isIn([...EVENT_PROPOSAL_STATUSES]),
+    body('createdEventId').optional({ values: 'falsy' }).isString(),
+  ],
+  updateEventProposal
+);
 
 // --- ZOE reward levels (point ranges + role-specific designations/rewards) ---
 router.put(

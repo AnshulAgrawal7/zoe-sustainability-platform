@@ -5,8 +5,22 @@ import { PrismaClient } from '@prisma/client';
 import { signAccessToken, signRefreshToken, verifyToken, getRefreshExpiresAt } from '../utils/jwt';
 import { ok, created, badRequest, unauthorized, conflict, serverError } from '../utils/response';
 import type { AuthRequest } from '../middleware/auth';
+import { generateUniqueUsername, isValidUsername, normalizeUsername } from '../utils/username';
 
 const prisma = new PrismaClient();
+
+// Fields of the User that are safe to return to the client (never password).
+const PUBLIC_USER_SELECT = {
+  id: true,
+  email: true,
+  username: true,
+  name: true,
+  role: true,
+  points: true,
+  avatarUrl: true,
+  language: true,
+  profile: true,
+} as const;
 
 const REFRESH_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -47,10 +61,11 @@ export async function register(req: Request, res: Response) {
     return;
   }
 
-  const { email, password, name, language = 'EN', profile = 'RESIDENT' } = req.body as {
+  const { email, password, name, username, language = 'EN', profile = 'RESIDENT' } = req.body as {
     email: string;
     password: string;
     name: string;
+    username?: string;
     language?: 'EN' | 'EL' | 'DE';
     profile?: 'RESIDENT' | 'VISITOR' | 'STUDENT' | 'VOLUNTEER';
   };
@@ -62,10 +77,28 @@ export async function register(req: Request, res: Response) {
       return;
     }
 
+    // Resolve the public username: use the requested one (validated + unique) or
+    // auto-derive a unique handle from the display name.
+    let finalUsername: string;
+    if (username !== undefined) {
+      finalUsername = normalizeUsername(username);
+      if (!isValidUsername(finalUsername)) {
+        badRequest(res, 'Invalid username');
+        return;
+      }
+      const taken = await prisma.user.findUnique({ where: { username: finalUsername } });
+      if (taken) {
+        conflict(res, 'Username already taken');
+        return;
+      }
+    } else {
+      finalUsername = await generateUniqueUsername(prisma, name);
+    }
+
     const hashed = await bcrypt.hash(password, 12);
     const user = await prisma.user.create({
-      data: { email, password: hashed, name, language, profile },
-      select: { id: true, email: true, name: true, role: true, points: true, language: true, profile: true },
+      data: { email, password: hashed, name, username: finalUsername, language, profile },
+      select: PUBLIC_USER_SELECT,
     });
 
     // Auto-award newcomer badge
@@ -124,9 +157,11 @@ export async function login(req: Request, res: Response) {
       user: {
         id: user.id,
         email: user.email,
+        username: user.username,
         name: user.name,
         role: user.role,
         points: user.points,
+        avatarUrl: user.avatarUrl,
         language: user.language,
         profile: user.profile,
       },
@@ -157,7 +192,7 @@ export async function refresh(req: Request, res: Response) {
     // without re-login — see AppRouter's auth bootstrap).
     const user = await prisma.user.findUnique({
       where: { id: payload.userId },
-      select: { id: true, email: true, name: true, role: true, points: true, avatarUrl: true, language: true, profile: true },
+      select: PUBLIC_USER_SELECT,
     });
     if (!user) {
       unauthorized(res, 'User no longer exists');

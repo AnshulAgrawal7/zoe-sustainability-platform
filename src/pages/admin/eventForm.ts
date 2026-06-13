@@ -21,6 +21,8 @@ export type EventFormState = {
   descriptionDe: string;
   date: string; // value of <input type="datetime-local">
   location: string;
+  lat: number | null;
+  lng: number | null;
   category: (typeof EVENT_CATEGORIES)[number];
   rewardPoints: number | string;
   capacity: number | string;
@@ -37,6 +39,8 @@ export const emptyEventForm: EventFormState = {
   descriptionDe: '',
   date: '',
   location: '',
+  lat: null,
+  lng: null,
   category: 'ENVIRONMENT',
   rewardPoints: 20,
   capacity: '',

@@ -170,7 +170,9 @@
     "description": "Bitte beschreibe deine Idee.",
     "password": "Bitte gib ein Passwort ein.",
     "passwordMin": "Das Passwort muss mindestens 8 Zeichen lang sein.",
-    "consent": "Bitte stimme zu, um fortzufahren."
+    "consent": "Bitte stimme zu, um fortzufahren.",
+    "username": "Benutzername: 3–20 Zeichen, nur Kleinbuchstaben, Ziffern oder Unterstrich.",
+    "date": "Bitte Datum und Uhrzeit wählen."
   },
   "rewardData": {
     "tiers": {
@@ -657,7 +659,8 @@
     "ideas": "Ideen-Board",
     "learn": "Wissen",
     "mainNavAria": "Hauptnavigation",
-    "mobileNavAria": "Mobile Navigation"
+    "mobileNavAria": "Mobile Navigation",
+    "leaderboard": "Bestenliste"
   },
   "auth": {
     "login": "Anmelden",
@@ -676,7 +679,10 @@
     "language": "Bevorzugte Sprache",
     "logoutSuccess": "Erfolgreich ausgeloggt",
     "loginError": "Ungültige E-Mail oder falsches Passwort.",
-    "registerError": "Registrierung fehlgeschlagen. Bitte erneut versuchen."
+    "registerError": "Registrierung fehlgeschlagen. Bitte erneut versuchen.",
+    "username": "Benutzername",
+    "usernameHint": "Wird öffentlich statt deines Namens angezeigt. 3–20 Zeichen: a–z, 0–9, Unterstrich.",
+    "usernamePublicHint": "Dein öffentlicher Name — sichtbar bei Kommentaren und in der Bestenliste (nie dein echter Name oder deine E-Mail)."
   },
   "projects": {
     "title": "ZOE Projekte",
@@ -1331,8 +1337,8 @@
     "spotsLeft_one": "{{count}} Platz frei",
     "spotsLeft_other": "{{count}} Plätze frei",
     "register": "Anmelden",
-    "suggestText": "Möchten Sie eine neue Veranstaltung oder Initiative vorschlagen?",
-    "suggestLink": "Reichen Sie Ihre Idee auf der Beteiligungsseite ein →",
+    "suggestText": "Schlage ein Event für Nordkorfu vor. Sobald ein Admin es prüft und freigibt, erscheint es hier für alle.",
+    "suggestLink": "Event-Idee einreichen",
     "rsvp": {
       "guestName": "Dein Name",
       "guestEmail": "E-Mail-Adresse",
@@ -1357,10 +1363,12 @@
     },
     "statusUpcoming": "Geplant",
     "statusCompleted": "Abgeschlossen",
-    "demoNote": "Demodaten: Termine und Daten sind illustrative Beispiele, keine amtlichen Veranstaltungen."
+    "demoNote": "Demodaten: Termine und Daten sind illustrative Beispiele, keine amtlichen Veranstaltungen.",
+    "suggestTitle": "Du möchtest dein eigenes Event beitragen?"
   },
   "eventDetail": {
-    "registerHeading": "Mitmachen"
+    "registerHeading": "Mitmachen",
+    "locationHeading": "Ort"
   },
   "roadmap": {
     "title": "Plattform-Roadmap",
@@ -1647,7 +1655,8 @@
     "someone": "Jemand",
     "ideaSubmitted": "{{name}} hat eine neue Idee eingereicht",
     "reportSubmitted": "{{name}} hat ein Umweltproblem gemeldet",
-    "feedbackSubmitted": "{{name}} hat neues Feedback gesendet"
+    "feedbackSubmitted": "{{name}} hat neues Feedback gesendet",
+    "eventProposalSubmitted": "{{name}} hat ein Event vorgeschlagen"
   },
   "ideaStatus": {
     "NEW": "Neu",
@@ -1748,7 +1757,8 @@
     "loading": "Karte wird geladen …",
     "noLocation": "Keine Standortdaten für diese Projekte.",
     "legendLabel": "Projektkategorien",
-    "ariaLabel": "Karte der ZOE-Initiativen"
+    "ariaLabel": "Karte der ZOE-Initiativen",
+    "locationOf": "Karte mit dem Ort von {{name}}"
   },
   "popup": {
     "viewProject": "Projekt ansehen →"
@@ -1791,7 +1801,8 @@
     "statusHidden": "Versteckt",
     "onIdea": "zu",
     "likes": "{{count}} Likes",
-    "navLabel": "Kommentare moderieren"
+    "navLabel": "Kommentare moderieren",
+    "onEvent": "zu Event"
   },
   "learn": {
     "title": "Wissen & Hintergrund",
@@ -1890,5 +1901,97 @@
     "deleteImageConfirm": "Dieses Bild löschen (auch aus dem Speicher)?",
     "saved": "Gespeichert",
     "sourceFolder": "Quellordner"
+  },
+  "comments": {
+    "discussion": "Diskussion",
+    "count": "{{count}} Kommentare",
+    "count_one": "{{count}} Kommentar",
+    "count_other": "{{count}} Kommentare",
+    "accountHint": "Alle können die Diskussion lesen. Zum Kommentieren brauchst du ein Konto.",
+    "login": "Anmelden",
+    "empty": "Noch keine Kommentare — starte die Diskussion.",
+    "label": "Dein Kommentar",
+    "placeholder": "Teile deine Gedanken… erwähne andere mit @benutzername",
+    "submit": "Kommentar posten",
+    "submitError": "Dein Kommentar konnte nicht gepostet werden. Bitte erneut versuchen.",
+    "likeAria": "Diesen Kommentar liken ({{count}} Likes)"
+  },
+  "mentions": {
+    "suggestionsAria": "Benutzernamen-Vorschläge"
+  },
+  "userNotifications": {
+    "bell": "Benachrichtigungen",
+    "bellWithCount": "{{count}} neue Benachrichtigungen",
+    "bellWithCount_one": "{{count}} neue Benachrichtigung",
+    "bellWithCount_other": "{{count}} neue Benachrichtigungen",
+    "title": "Benachrichtigungen",
+    "empty": "Noch keine Benachrichtigungen.",
+    "someone": "Jemand",
+    "onEvent": "einem Event",
+    "onIdea": "einer Idee",
+    "mentioned": "{{actor}} hat dich in einem Kommentar zu {{where}} erwähnt"
+  },
+  "address": {
+    "placeholder": "Adresse eingeben…",
+    "hint": "Wähle einen Vorschlag, um den Ort auf der Karte zu setzen. Adresssuche über OpenStreetMap.",
+    "clear": "Adresse löschen",
+    "suggestionsAria": "Adressvorschläge"
+  },
+  "imageUpload": {
+    "choose": "Vom Gerät hochladen",
+    "uploading": "Wird hochgeladen…",
+    "urlLabel": "Oder Bild-URL einfügen",
+    "tooLarge": "Das Bild ist zu groß (max. 5 MB).",
+    "failed": "Upload fehlgeschlagen. Bitte erneut versuchen.",
+    "remove": "Bild entfernen"
+  },
+  "leaderboard": {
+    "title": "Bestenliste",
+    "subtitle": "Top-Mitwirkende nach Punkten. Nur Benutzernamen — keine echten Namen oder E-Mails.",
+    "empty": "Noch keine Einträge.",
+    "you": "Du",
+    "rank": "Platz {{rank}}",
+    "projects": "{{count}} Projekte",
+    "projects_one": "{{count}} Projekt",
+    "projects_other": "{{count}} Projekte",
+    "privacyNote": "Nur angemeldete Mitglieder sehen diese Liste, und es werden ausschließlich pseudonyme Benutzernamen angezeigt."
+  },
+  "eventProposal": {
+    "kindLabel": "Was möchtest du einreichen?",
+    "kindIdea": "Eine Idee",
+    "kindEvent": "Ein Event",
+    "intro": "Schlage ein Event in deiner Sprache vor. Ein Admin prüft es und veröffentlicht es nach Freigabe als echtes Event (wir übersetzen es in die anderen Sprachen).",
+    "titleLabel": "Event-Titel",
+    "dateLabel": "Wunschdatum & Uhrzeit",
+    "descriptionLabel": "Beschreibung",
+    "locationLabel": "Ort",
+    "capacityLabel": "Kapazität (optional)",
+    "projectLabel": "Zugehöriges Projekt (optional)",
+    "noProject": "Kein bestimmtes Projekt",
+    "imageLabel": "Titelbild (optional)",
+    "imageLoginHint": "Melde dich an, um deinem Vorschlag ein Titelbild hinzuzufügen.",
+    "submit": "Event-Idee einreichen",
+    "thankYouTitle": "Danke für deine Event-Idee!",
+    "thankYouBody": "Unser Team prüft sie. Nach Freigabe erscheint sie für alle auf der Event-Seite."
+  },
+  "eventProposalStatus": {
+    "NEW": "Neu",
+    "CONVERTED": "Veröffentlicht",
+    "DECLINED": "Abgelehnt"
+  },
+  "adminEventProposals": {
+    "title": "Event-Vorschläge",
+    "subtitle": "Von Bürger:innen vorgeschlagene Events. Prüfen und in echte Events überführen.",
+    "cardSubtitle": "Bürger-Event-Vorschläge prüfen",
+    "filterLabel": "Nach Status filtern",
+    "all": "Alle",
+    "empty": "Keine Event-Vorschläge.",
+    "anonymous": "Anonym",
+    "reviewAndCreate": "Prüfen & Event erstellen",
+    "decline": "Ablehnen",
+    "viewEvent": "Veröffentlichtes Event ansehen",
+    "reviewTitle": "Vorschlag prüfen & Event erstellen",
+    "prefillNote": "Dieses Formular ist aus einem Bürgervorschlag vorausgefüllt und automatisch übersetzt. Bitte prüfe alle Felder vor dem Speichern.",
+    "loadError": "Der Vorschlag konnte nicht geladen werden."
   }
 }

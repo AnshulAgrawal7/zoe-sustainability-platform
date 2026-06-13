@@ -5,6 +5,7 @@ import {
   Lightbulb,
   AlertTriangle,
   MessageSquare,
+  CalendarPlus,
   type LucideIcon,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -30,12 +31,14 @@ const KIND_ICON: Record<NotificationKind, LucideIcon> = {
   IDEA: Lightbulb,
   REPORT: AlertTriangle,
   FEEDBACK: MessageSquare,
+  EVENT_PROPOSAL: CalendarPlus,
 };
 
 const KIND_ICON_CLASS: Record<NotificationKind, string> = {
   IDEA: 'text-amber-500',
   REPORT: 'text-rose-500',
   FEEDBACK: 'text-blue-500',
+  EVENT_PROPOSAL: 'text-teal-500',
 };
 
 function readLastSeen(): number {
@@ -46,7 +49,9 @@ function readLastSeen(): number {
 
 // Where each kind is reviewed/approved by an admin.
 function routeFor(kind: NotificationKind): string {
-  return kind === 'IDEA' ? '/admin/ideas' : '/admin/submissions';
+  if (kind === 'IDEA') return '/admin/ideas';
+  if (kind === 'EVENT_PROPOSAL') return '/admin/event-proposals';
+  return '/admin/submissions';
 }
 
 export default function AdminNotificationBell() {
@@ -121,9 +126,11 @@ export default function AdminNotificationBell() {
     const key =
       n.kind === 'IDEA'
         ? 'ideaSubmitted'
-        : n.kind === 'REPORT'
-          ? 'reportSubmitted'
-          : 'feedbackSubmitted';
+        : n.kind === 'EVENT_PROPOSAL'
+          ? 'eventProposalSubmitted'
+          : n.kind === 'REPORT'
+            ? 'reportSubmitted'
+            : 'feedbackSubmitted';
     return t(`adminNotifications.${key}`, { name });
   }
 

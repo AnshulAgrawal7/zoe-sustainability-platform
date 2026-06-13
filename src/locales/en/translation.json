@@ -170,7 +170,9 @@
     "description": "Please describe your idea.",
     "password": "Please enter a password.",
     "passwordMin": "Password must be at least 8 characters.",
-    "consent": "Please give your consent to continue."
+    "consent": "Please give your consent to continue.",
+    "username": "Username must be 3–20 characters: lowercase letters, digits or underscore.",
+    "date": "Please choose a date and time."
   },
   "rewardData": {
     "tiers": {
@@ -657,7 +659,8 @@
     "ideas": "Ideas board",
     "learn": "Learning",
     "mainNavAria": "Main navigation",
-    "mobileNavAria": "Mobile navigation"
+    "mobileNavAria": "Mobile navigation",
+    "leaderboard": "Leaderboard"
   },
   "auth": {
     "login": "Login",
@@ -676,7 +679,10 @@
     "language": "Preferred language",
     "logoutSuccess": "Successfully logged out",
     "loginError": "Invalid email or password.",
-    "registerError": "Registration failed. Please try again."
+    "registerError": "Registration failed. Please try again.",
+    "username": "Username",
+    "usernameHint": "Shown publicly instead of your name. 3–20 chars: a–z, 0–9, underscore.",
+    "usernamePublicHint": "Your public handle — shown on comments and the leaderboard (never your real name or email)."
   },
   "projects": {
     "title": "ZOE Projects",
@@ -1331,8 +1337,8 @@
     "spotsLeft_one": "{{count}} spot left",
     "spotsLeft_other": "{{count}} spots left",
     "register": "Register",
-    "suggestText": "Want to suggest a new event or initiative?",
-    "suggestLink": "Submit your idea on the Participation page →",
+    "suggestText": "Propose an event for North Corfu. Once an admin reviews and approves it, it appears here for everyone.",
+    "suggestLink": "Submit an event idea",
     "rsvp": {
       "guestName": "Your name",
       "guestEmail": "Email address",
@@ -1357,10 +1363,12 @@
     },
     "statusUpcoming": "Upcoming",
     "statusCompleted": "Completed",
-    "demoNote": "Demo data: events and dates are illustrative examples, not official municipal fixtures."
+    "demoNote": "Demo data: events and dates are illustrative examples, not official municipal fixtures.",
+    "suggestTitle": "Want to contribute your own event?"
   },
   "eventDetail": {
-    "registerHeading": "Take part"
+    "registerHeading": "Take part",
+    "locationHeading": "Location"
   },
   "roadmap": {
     "title": "Platform Roadmap",
@@ -1647,7 +1655,8 @@
     "someone": "Someone",
     "ideaSubmitted": "{{name}} submitted a new idea",
     "reportSubmitted": "{{name}} reported an environmental issue",
-    "feedbackSubmitted": "{{name}} sent new feedback"
+    "feedbackSubmitted": "{{name}} sent new feedback",
+    "eventProposalSubmitted": "{{name}} proposed a new event"
   },
   "ideaStatus": {
     "NEW": "New",
@@ -1748,7 +1757,8 @@
     "loading": "Loading map…",
     "noLocation": "No location data for these projects.",
     "legendLabel": "Project categories",
-    "ariaLabel": "Map of ZOE initiatives"
+    "ariaLabel": "Map of ZOE initiatives",
+    "locationOf": "Map showing the location of {{name}}"
   },
   "popup": {
     "viewProject": "View project →"
@@ -1791,7 +1801,8 @@
     "statusHidden": "Hidden",
     "onIdea": "on",
     "likes": "{{count}} likes",
-    "navLabel": "Moderate comments"
+    "navLabel": "Moderate comments",
+    "onEvent": "on event"
   },
   "learn": {
     "title": "Learning & background",
@@ -1890,5 +1901,97 @@
     "deleteImageConfirm": "Delete this image (also from storage)?",
     "saved": "Saved",
     "sourceFolder": "Source folder"
+  },
+  "comments": {
+    "discussion": "Discussion",
+    "count": "{{count}} comments",
+    "count_one": "{{count}} comment",
+    "count_other": "{{count}} comments",
+    "accountHint": "Everyone can read the discussion. To write a comment you need an account.",
+    "login": "Log in",
+    "empty": "No comments yet — be the first to start the discussion.",
+    "label": "Your comment",
+    "placeholder": "Share your thoughts… mention others with @username",
+    "submit": "Post comment",
+    "submitError": "Your comment could not be posted. Please try again.",
+    "likeAria": "Like this comment ({{count}} likes)"
+  },
+  "mentions": {
+    "suggestionsAria": "Username suggestions"
+  },
+  "userNotifications": {
+    "bell": "Notifications",
+    "bellWithCount": "{{count}} new notifications",
+    "bellWithCount_one": "{{count}} new notification",
+    "bellWithCount_other": "{{count}} new notifications",
+    "title": "Notifications",
+    "empty": "No notifications yet.",
+    "someone": "Someone",
+    "onEvent": "an event",
+    "onIdea": "an idea",
+    "mentioned": "{{actor}} mentioned you in a comment on {{where}}"
+  },
+  "address": {
+    "placeholder": "Start typing an address…",
+    "hint": "Pick a suggestion to place it on the map. Address search via OpenStreetMap.",
+    "clear": "Clear address",
+    "suggestionsAria": "Address suggestions"
+  },
+  "imageUpload": {
+    "choose": "Upload from device",
+    "uploading": "Uploading…",
+    "urlLabel": "Or paste an image URL",
+    "tooLarge": "The image is too large (max 5 MB).",
+    "failed": "Upload failed. Please try again.",
+    "remove": "Remove image"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "subtitle": "Top contributors by points. Usernames only — no real names or emails.",
+    "empty": "No entries yet.",
+    "you": "You",
+    "rank": "Rank {{rank}}",
+    "projects": "{{count}} projects",
+    "projects_one": "{{count}} project",
+    "projects_other": "{{count}} projects",
+    "privacyNote": "Only logged-in members can see this ranking, and only pseudonymous usernames are shown."
+  },
+  "eventProposal": {
+    "kindLabel": "What would you like to submit?",
+    "kindIdea": "An idea",
+    "kindEvent": "An event",
+    "intro": "Suggest an event in your language. An admin reviews it and, once approved, it is published as a real event (we translate it into the other languages).",
+    "titleLabel": "Event title",
+    "dateLabel": "Preferred date & time",
+    "descriptionLabel": "Description",
+    "locationLabel": "Location",
+    "capacityLabel": "Capacity (optional)",
+    "projectLabel": "Related project (optional)",
+    "noProject": "No specific project",
+    "imageLabel": "Cover image (optional)",
+    "imageLoginHint": "Log in to add a cover image to your proposal.",
+    "submit": "Submit event idea",
+    "thankYouTitle": "Thank you for your event idea!",
+    "thankYouBody": "Our team will review it. Once approved, it appears on the events page for everyone."
+  },
+  "eventProposalStatus": {
+    "NEW": "New",
+    "CONVERTED": "Published",
+    "DECLINED": "Declined"
+  },
+  "adminEventProposals": {
+    "title": "Event proposals",
+    "subtitle": "Citizen-suggested events. Review and turn them into real events.",
+    "cardSubtitle": "Review citizen event proposals",
+    "filterLabel": "Filter by status",
+    "all": "All",
+    "empty": "No event proposals.",
+    "anonymous": "Anonymous",
+    "reviewAndCreate": "Review & create event",
+    "decline": "Decline",
+    "viewEvent": "View published event",
+    "reviewTitle": "Review proposal & create event",
+    "prefillNote": "This form is pre-filled from a citizen proposal and auto-translated. Please review every field before saving.",
+    "loadError": "The proposal could not be loaded."
   }
 }

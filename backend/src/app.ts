@@ -16,8 +16,12 @@ import feedRouter from './routes/feed';
 import postsRouter from './routes/posts';
 import newsletterRouter from './routes/newsletter';
 import submissionsRouter from './routes/submissions';
+import eventProposalsRouter from './routes/eventProposals';
 import rewardsRouter from './routes/rewards';
 import metricsRouter from './routes/metrics';
+import geocodeRouter from './routes/geocode';
+import uploadsRouter from './routes/uploads';
+import notificationsRouter from './routes/notifications';
 
 const app = express();
 
@@ -62,8 +66,12 @@ app.use('/api/feed', feedRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/newsletter', newsletterRouter);
 app.use('/api/submissions', submissionsRouter);
+app.use('/api/event-proposals', eventProposalsRouter);
 app.use('/api/rewards', rewardsRouter);
 app.use('/api/metrics', metricsRouter);
+app.use('/api/geocode', geocodeRouter);
+app.use('/api/uploads', uploadsRouter);
+app.use('/api/notifications', notificationsRouter);
 
 app.get('/api/health', (_req, res) => {
   res.json({ success: true, data: { status: 'ok', version: '0.1.0' } });

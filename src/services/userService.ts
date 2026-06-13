@@ -5,6 +5,7 @@ import type {
   ApiUserBadge,
   ApiBadge,
   ApiParticipation,
+  LeaderboardEntry,
 } from '../types';
 
 interface MeResponse extends AuthUser {
@@ -26,6 +27,7 @@ export async function getMe(): Promise<MeResponse> {
 
 export async function updateMe(data: {
   name?: string;
+  username?: string;
   language?: string;
   avatarUrl?: string;
   profile?: string;
@@ -39,7 +41,22 @@ export async function getMyBadges(): Promise<BadgesResponse> {
   return res.data;
 }
 
-// NOTE: the former individual leaderboard (GET /users/leaderboard) was removed
-// for privacy reasons — it exposed user names + points publicly. The DSR
-// rationale (docs/design-rationale-matrix.md B3) argues against an individual
-// citizen ranking anyway; community milestones on /rewards fill that role.
+// Leaderboard — logged-in only, pseudonymous usernames (never names/emails).
+// Reintroduced with privacy safeguards; see docs/design-rationale-matrix.md B3.
+export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
+  const res =
+    await api.get<ApiResponse<{ entries: LeaderboardEntry[] }>>(
+      '/users/leaderboard'
+    );
+  return res.data.entries;
+}
+
+// Username autocomplete for @mentions (logged-in only).
+export async function searchUsernames(
+  q: string
+): Promise<{ username: string; avatarUrl: string | null }[]> {
+  const res = await api.get<
+    ApiResponse<{ users: { username: string; avatarUrl: string | null }[] }>
+  >(`/users/search?q=${encodeURIComponent(q)}`);
+  return res.data.users;
+}

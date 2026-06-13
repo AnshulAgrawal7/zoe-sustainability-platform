@@ -48,3 +48,20 @@ export const USER_PROFILES = [
 ] as const;
 
 export type UserProfileValue = (typeof USER_PROFILES)[number];
+
+// Public username rules: 3–20 chars, lowercase letters/digits/underscore. Shown
+// in all community contexts instead of the real name (privacy / pseudonymity).
+export const USERNAME_MIN = 3;
+export const USERNAME_MAX = 20;
+export const USERNAME_REGEX = /^[a-z0-9_]+$/;
+
+// Source language of a citizen event proposal + its review lifecycle.
+export const APP_LANGUAGES = ['EN', 'EL', 'DE'] as const;
+export type AppLanguageValue = (typeof APP_LANGUAGES)[number];
+
+export const EVENT_PROPOSAL_STATUSES = ['NEW', 'CONVERTED', 'DECLINED'] as const;
+export type EventProposalStatus = (typeof EVENT_PROPOSAL_STATUSES)[number];
+
+// User-facing notification kinds (citizen bell). Only mentions for now.
+export const NOTIFICATION_TYPES = ['MENTION'] as const;
+export type NotificationType = (typeof NOTIFICATION_TYPES)[number];

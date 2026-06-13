@@ -160,11 +160,40 @@ Workshops, Foren. Nach Kategorie filterbar; bei vielen Terminen ist das zugehör
 
 ---
 
-## 9. Plattform-Übersicht
+## 9. Dein Username
+
+Bei der Registrierung wählst du einen **Username** (3–20 Zeichen: Kleinbuchstaben,
+Ziffern, Unterstrich). Er wird **öffentlich** angezeigt — bei Kommentaren, in der
+Bestenliste und bei Erwähnungen — **anstelle** deines echten Namens oder deiner
+E-Mail. Du kannst ihn jederzeit unter `/profile` ändern (muss eindeutig sein).
+
+## 10. Bestenliste
+
+Unter `/leaderboard` (nur für eingeloggte Mitglieder) siehst du die Mitglieder
+mit den meisten Punkten — ausschließlich mit **Username**, nie mit echtem Namen.
+Dein eigener Eintrag ist hervorgehoben.
+
+## 11. Mitdiskutieren: Event-Kommentare & Erwähnungen
+
+Auf jeder Event-Seite gibt es eine **Diskussion**. **Lesen** können alle; zum
+**Schreiben** brauchst du ein Konto (ein Hinweis steht über jeder Kommentar-Box).
+Mit **`@username`** erwähnst du andere — beim Tippen von `@` erscheinen Vorschläge.
+Erwähnte erhalten eine **Benachrichtigung** über die **Glocke** oben rechts (mit
+Zähler für Ungelesenes): „@du wurde in einem Kommentar erwähnt".
+
+## 12. Eigenes Event vorschlagen
+
+Über `/participate` → „Submit an Idea" → Umschalter **Event** kannst du ein
+**eigenes Event** vorschlagen (Titel, Beschreibung, Wunschdatum, Ort per
+Adresssuche, optional Bild). Ein Admin prüft den Vorschlag; nach Freigabe wird er
+als echtes Event veröffentlicht und erscheint unter `/events` (und auf der Karte).
+
+## 13. Plattform-Übersicht
 
 | Seite | Beschreibung |
 |---|---|
 | `/` | Startseite — Überblick + Neuigkeiten |
+| `/leaderboard` | Bestenliste nach Punkten (Usernames, Login) |
 | `/projects` | Alle offenen Projekte |
 | `/projects/:id` | Projektdetails + Teilnahme-Button |
 | `/sdg-dashboard` | SDG-Fortschritte im Überblick |

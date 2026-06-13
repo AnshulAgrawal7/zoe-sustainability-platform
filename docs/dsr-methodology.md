@@ -190,3 +190,26 @@ This prototype is explicitly **Version 1**. DSR is inherently iterative. The roa
 - **Version 4:** Production deployment + summative evaluation
 
 Each version should be preceded by evaluation and followed by documented iteration rationale.
+
+### Documented iteration (2026-06-13)
+
+A community/engagement iteration was added, with one notable **reversal of an
+earlier design decision**:
+
+- **Pseudonymous usernames** were introduced (unique, mandatory at registration).
+  All community surfaces now show the username instead of the real name/email.
+- **Individual leaderboard reinstated under privacy safeguards.** Earlier the
+  individual ranking was deliberately removed (design-rationale-matrix **B3**:
+  neighbour-friction in a small island community, Putnam 1993; Hamari et al.
+  2014). It returns as **logged-in-only** and **pseudonymous** (`GET
+  /users/leaderboard`): the auth gate + pseudonymity mitigate the social-friction
+  risk while restoring the goal-setting benefit (Landers et al. 2017). Community
+  milestones remain the primary collective-goal mechanism.
+- **Citizen event proposals** (separate `EventProposal` entity) feed an admin
+  review queue and, on approval, are auto-translated (DeepL) and converted into a
+  real Event — co-design / participatory channel (Relevance Cycle).
+- **Event discussion with @mentions + in-app notifications** (read by all, write
+  for members) to support pre-event networking (bonding social capital).
+- **Address geocoding (OpenStreetMap/Nominatim)** and **device image upload**
+  (Supabase Storage) for events/projects — lower the data-entry barrier and put
+  events on the map.

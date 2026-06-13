@@ -114,6 +114,8 @@ export interface EventPayload {
   descriptionDe: string;
   date: string;
   location?: string;
+  lat?: number | null;
+  lng?: number | null;
   category: string;
   rewardPoints?: number;
   capacity?: number | null;

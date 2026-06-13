@@ -234,7 +234,40 @@ Eintrag bearbeitet/freigegeben werden kann:
 - Ideen → **Bürger-Ideen** (`/admin/ideas`) — dort Status auf
   `Angenommen`/`Abgelehnt` setzen.
 - Meldungen/Feedback → **Meldungen & Feedback** (`/admin/submissions`).
+- Event-Vorschläge → **Event-Vorschläge** (`/admin/event-proposals`).
 
 Sobald die Glocke geöffnet wird, gilt alles als „gesehen" und der Zähler
 verschwindet — die Einträge bleiben aber in der Liste, bis sie bearbeitet sind.
 Der „gesehen"-Stand wird pro Gerät/Browser gespeichert.
+
+---
+
+## 15. Event-Vorschläge von Bürger:innen (`/admin/event-proposals`)
+
+Bürger:innen können über die Mitmach-Seite (`/participate` → „Submit an Idea" →
+Umschalter **Event**) ein **Event** vorschlagen — in **einer** Sprache, mit
+Titel, Beschreibung, Wunschdatum, Ort (Adresssuche → Karte), optional Kapazität,
+Projektbezug und Titelbild. Vorschläge erscheinen **nicht** auf der öffentlichen
+Ideen-Pinnwand, sondern nur hier (und in der Admin-Glocke).
+
+**Workflow:**
+
+1. In der Liste (`/admin/event-proposals`, nach Status filterbar) den Vorschlag
+   prüfen. „Ablehnen" setzt ihn auf **Abgelehnt**.
+2. **„Prüfen & Event erstellen"** öffnet das normale Event-Formular, **vorausgefüllt**
+   mit den Vorschlagsdaten. Die eine Sprache wird per **DeepL automatisch** in
+   die anderen beiden übersetzt — **bitte alle Felder prüfen** und ein Projekt
+   zuordnen (Pflicht).
+3. **Speichern** erstellt das echte Event (erscheint ab sofort unter `/events`
+   und auf der Karte, wenn Koordinaten gesetzt sind) und markiert den Vorschlag
+   als **Veröffentlicht** (mit Link zum erzeugten Event).
+
+**Bilder & Orte:** Beim Erstellen/Bearbeiten von Events und Projekten kann jetzt
+ein Bild **direkt vom Gerät hochgeladen** werden (oder per URL); es wird in
+Supabase Storage abgelegt und die öffentliche URL in der DB gespeichert. Orte
+werden über eine **Adresssuche** (OpenStreetMap) eingegeben — die Auswahl setzt
+Koordinaten, die das Event auf der Karte anzeigen.
+
+**Usernames:** In allen Community-Ansichten (Kommentare, Bestenliste,
+Erwähnungen, Vorschlags-Einsender) wird der **pseudonyme Username** angezeigt,
+nie echter Name oder E-Mail.

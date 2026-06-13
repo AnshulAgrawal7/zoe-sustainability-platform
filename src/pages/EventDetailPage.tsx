@@ -12,14 +12,21 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { getEvent } from '../services/eventService';
+import {
+  getEventComments,
+  postEventComment,
+  toggleCommentLike,
+} from '../services/commentService';
 import EventRegister from '../components/events/EventRegister';
 import EntityImage from '../components/ui/EntityImage';
 import PointsBadge from '../components/ui/PointsBadge';
 import AccountPointsHint from '../components/ui/AccountPointsHint';
 import Lightbox from '../components/news/Lightbox';
+import LocationMap from '../components/map/LocationMap';
+import CommentThread from '../components/comments/CommentThread';
 import { useAuthStore } from '../stores/authStore';
 import { projectCategoryVisual } from '../components/ui/categoryVisuals';
-import type { ApiEvent } from '../types';
+import type { ApiEvent, PublicComment } from '../types';
 
 const DATE_LOCALES: Record<string, string> = {
   en: 'en-GB',
@@ -34,10 +41,12 @@ export default function EventDetailPage() {
   const lang = i18n.language.slice(0, 2);
   const locale = DATE_LOCALES[lang] ?? 'en-GB';
   const isAdmin = useAuthStore((s) => s.isAdmin);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   const [event, setEvent] = useState<ApiEvent | null>(null);
   const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [comments, setComments] = useState<PublicComment[]>([]);
 
   // Reloadable so register/cancel refreshes counts + registeredByMe flags.
   const loadEvent = () => {
@@ -48,6 +57,32 @@ export default function EventDetailPage() {
       .finally(() => setLoading(false));
   };
   useEffect(loadEvent, [id]);
+
+  useEffect(() => {
+    if (!id) return;
+    getEventComments(id)
+      .then(setComments)
+      .catch(() => setComments([]));
+  }, [id]);
+
+  async function handleComment(body: string) {
+    if (!id) return;
+    const comment = await postEventComment(id, body);
+    setComments((prev) => [...prev, comment]);
+  }
+
+  async function handleLike(commentId: string) {
+    try {
+      const { liked, likeCount } = await toggleCommentLike(commentId);
+      setComments((prev) =>
+        prev.map((c) =>
+          c.id === commentId ? { ...c, likedByMe: liked, likeCount } : c
+        )
+      );
+    } catch {
+      /* a failed like is non-critical */
+    }
+  }
 
   function title(e: ApiEvent): string {
     if (lang === 'el') return e.titleEl;
@@ -266,6 +301,41 @@ export default function EventDetailPage() {
             {t('events.fullyBooked')}
           </p>
         )}
+      </section>
+
+      {/* Map — shown when the event has geocoded coordinates */}
+      {event.lat != null && event.lng != null && (
+        <section className="mb-6">
+          <h2 className="mb-3 flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-white">
+            <MapPin
+              size={18}
+              aria-hidden="true"
+              className="text-green-600 dark:text-green-400"
+            />
+            {t('eventDetail.locationHeading')}
+          </h2>
+          {event.location && (
+            <p className="mb-2 text-sm text-gray-600 dark:text-gray-300">
+              {event.location}
+            </p>
+          )}
+          <LocationMap
+            lat={event.lat}
+            lng={event.lng}
+            label={title(event)}
+            category={event.category}
+          />
+        </section>
+      )}
+
+      {/* Discussion */}
+      <section className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800 sm:p-8">
+        <CommentThread
+          comments={comments}
+          isAuthenticated={isAuthenticated}
+          onSubmit={handleComment}
+          onLike={handleLike}
+        />
       </section>
 
       {lightboxOpen && event.imageUrl && (

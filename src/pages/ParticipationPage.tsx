@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { participationOptions } from '../data/metrics';
 import { trackEvent, ANALYTICS_EVENTS } from '../services/analytics';
 import IdeaSubmitForm from '../components/engagement/IdeaSubmitForm';
+import EventProposalForm from '../components/engagement/EventProposalForm';
 import PointsBadge from '../components/ui/PointsBadge';
 import AccountPointsHint from '../components/ui/AccountPointsHint';
 import { submitSubmission } from '../services/submissionService';
@@ -67,6 +68,8 @@ export default function ParticipationPage() {
   const [activeOption, setActiveOption] = useState<string | null>(
     initialOption
   );
+  // Within "submit-idea": choose between a plain idea and a full event proposal.
+  const [ideaKind, setIdeaKind] = useState<'IDEA' | 'EVENT'>('IDEA');
   const [form, setForm] = useState<FormState>({
     ...emptyForm,
     type: initialOption ?? '',
@@ -252,7 +255,44 @@ export default function ParticipationPage() {
           </div>
 
           {activeOption === 'submit-idea' ? (
-            <IdeaSubmitForm onClose={() => setActiveOption(null)} />
+            <div>
+              {/* Idea vs. event-proposal toggle (J1 dropdown alternative). */}
+              <div
+                role="group"
+                aria-label={t('eventProposal.kindLabel')}
+                className="mb-6 inline-flex rounded-lg border border-gray-200 p-1 dark:border-gray-700"
+              >
+                <button
+                  type="button"
+                  onClick={() => setIdeaKind('IDEA')}
+                  aria-pressed={ideaKind === 'IDEA'}
+                  className={`rounded-md px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 ${
+                    ideaKind === 'IDEA'
+                      ? 'bg-green-600 text-white'
+                      : 'text-gray-600 dark:text-gray-300'
+                  }`}
+                >
+                  {t('eventProposal.kindIdea')}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIdeaKind('EVENT')}
+                  aria-pressed={ideaKind === 'EVENT'}
+                  className={`rounded-md px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 ${
+                    ideaKind === 'EVENT'
+                      ? 'bg-green-600 text-white'
+                      : 'text-gray-600 dark:text-gray-300'
+                  }`}
+                >
+                  {t('eventProposal.kindEvent')}
+                </button>
+              </div>
+              {ideaKind === 'IDEA' ? (
+                <IdeaSubmitForm onClose={() => setActiveOption(null)} />
+              ) : (
+                <EventProposalForm onClose={() => setActiveOption(null)} />
+              )}
+            </div>
           ) : submitted ? (
             <div className="py-8 text-center">
               <CheckCircle2

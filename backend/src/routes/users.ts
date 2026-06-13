@@ -1,6 +1,12 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { getMe, updateMe, getMyBadges } from '../controllers/userController';
+import {
+  getMe,
+  updateMe,
+  getMyBadges,
+  getLeaderboard,
+  searchUsers,
+} from '../controllers/userController';
 import { authenticate } from '../middleware/auth';
 
 const router = Router();
@@ -12,6 +18,12 @@ router.put(
   authenticate,
   [
     body('name').optional().trim().isLength({ min: 2 }),
+    body('username')
+      .optional()
+      .trim()
+      .toLowerCase()
+      .isLength({ min: 3, max: 20 })
+      .matches(/^[a-z0-9_]+$/),
     body('language').optional().isIn(['EN', 'EL', 'DE']),
     body('avatarUrl').optional().isURL(),
     body('profile').optional().isIn(['RESIDENT', 'VISITOR', 'STUDENT', 'VOLUNTEER']),
@@ -21,8 +33,11 @@ router.put(
 
 router.get('/me/badges', authenticate, getMyBadges);
 
-// NOTE: GET /leaderboard was removed for privacy: it exposed user names +
-// points without auth. The DSR rationale argues against individual citizen
-// rankings anyway (docs/design-rationale-matrix.md B3).
+// Leaderboard is logged-in only and shows pseudonymous usernames (never
+// names/emails) — see the controller note + docs/design-rationale-matrix.md B3.
+router.get('/leaderboard', authenticate, getLeaderboard);
+
+// Username autocomplete for @mentions (logged-in only).
+router.get('/search', authenticate, searchUsers);
 
 export default router;

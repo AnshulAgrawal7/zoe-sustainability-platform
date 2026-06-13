@@ -21,6 +21,7 @@ import RewardsPage from '../pages/RewardsPage';
 import GetInvolvedPage from '../pages/GetInvolvedPage';
 import IdeasPage from '../pages/IdeasPage';
 import IdeaDetailPage from '../pages/IdeaDetailPage';
+import LeaderboardPage from '../pages/LeaderboardPage';
 import LearnPage from '../pages/LearnPage';
 import LearnDetailPage from '../pages/LearnDetailPage';
 import NewsPage from '../pages/NewsPage';
@@ -55,6 +56,7 @@ import EditProjectPage from '../pages/admin/EditProjectPage';
 import ManageEventsPage from '../pages/admin/ManageEventsPage';
 import EventRegistrationsPage from '../pages/admin/EventRegistrationsPage';
 import NewEventPage from '../pages/admin/NewEventPage';
+import ManageEventProposalsPage from '../pages/admin/ManageEventProposalsPage';
 import EditEventPage from '../pages/admin/EditEventPage';
 import AccessibilityPage from '../pages/AccessibilityPage';
 import PrivacyPage from '../pages/PrivacyPage';
@@ -117,6 +119,15 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        // Leaderboard is logged-in only (pseudonymous usernames; see DSR B3).
+        path: 'leaderboard',
+        element: (
+          <ProtectedRoute>
+            <LeaderboardPage />
+          </ProtectedRoute>
+        ),
+      },
 
       // Admin
       {
@@ -156,6 +167,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageSubmissionsPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin/event-proposals',
+        element: (
+          <AdminRoute>
+            <ManageEventProposalsPage />
           </AdminRoute>
         ),
       },

@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 // (those live on /admin/ideas and /admin/submissions).
 const MAX_ITEMS = 30;
 
-type NotificationKind = 'IDEA' | 'REPORT' | 'FEEDBACK';
+type NotificationKind = 'IDEA' | 'REPORT' | 'FEEDBACK' | 'EVENT_PROPOSAL';
 
 interface NotificationItem {
   id: string;
@@ -25,7 +25,7 @@ interface NotificationItem {
 // title is returned — no full idea body / message — to keep the payload lean.
 export async function getAdminNotifications(_req: Request, res: Response) {
   try {
-    const [ideas, submissions] = await Promise.all([
+    const [ideas, submissions, proposals] = await Promise.all([
       prisma.idea.findMany({
         where: { status: 'NEW' },
         orderBy: { createdAt: 'desc' },
@@ -35,7 +35,7 @@ export async function getAdminNotifications(_req: Request, res: Response) {
           title: true,
           createdAt: true,
           submitterName: true,
-          user: { select: { name: true } },
+          user: { select: { username: true } },
         },
       }),
       prisma.submission.findMany({
@@ -47,7 +47,19 @@ export async function getAdminNotifications(_req: Request, res: Response) {
           message: true,
           createdAt: true,
           submitterName: true,
-          user: { select: { name: true } },
+          user: { select: { username: true } },
+        },
+      }),
+      prisma.eventProposal.findMany({
+        where: { status: 'NEW' },
+        orderBy: { createdAt: 'desc' },
+        take: MAX_ITEMS,
+        select: {
+          id: true,
+          title: true,
+          createdAt: true,
+          submitterName: true,
+          user: { select: { username: true } },
         },
       }),
     ]);
@@ -57,7 +69,7 @@ export async function getAdminNotifications(_req: Request, res: Response) {
         id: `idea:${i.id}`,
         kind: 'IDEA' as NotificationKind,
         title: i.title,
-        submitterName: i.user?.name ?? i.submitterName ?? null,
+        submitterName: i.user?.username ?? i.submitterName ?? null,
         createdAt: i.createdAt,
       })),
       ...submissions.map((s) => ({
@@ -65,8 +77,15 @@ export async function getAdminNotifications(_req: Request, res: Response) {
         kind: (s.type === 'REPORT' ? 'REPORT' : 'FEEDBACK') as NotificationKind,
         // A short excerpt — reports/feedback have no title of their own.
         title: s.message.length > 80 ? `${s.message.slice(0, 80)}…` : s.message,
-        submitterName: s.user?.name ?? s.submitterName ?? null,
+        submitterName: s.user?.username ?? s.submitterName ?? null,
         createdAt: s.createdAt,
+      })),
+      ...proposals.map((p) => ({
+        id: `proposal:${p.id}`,
+        kind: 'EVENT_PROPOSAL' as NotificationKind,
+        title: p.title,
+        submitterName: p.user?.username ?? p.submitterName ?? null,
+        createdAt: p.createdAt,
       })),
     ]
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())

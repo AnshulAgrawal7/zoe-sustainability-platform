@@ -30,6 +30,29 @@ export async function postComment(
   return res.data;
 }
 
+// Public: visible comments on an event (everyone can read). When logged in,
+// each carries `likedByMe` (the api layer attaches the token automatically).
+export async function getEventComments(
+  eventId: string
+): Promise<PublicComment[]> {
+  const res = await api.get<ApiResponse<{ comments: PublicComment[] }>>(
+    `/events/${eventId}/comments`
+  );
+  return res.data.comments;
+}
+
+// Logged-in: post a comment on an event.
+export async function postEventComment(
+  eventId: string,
+  body: string
+): Promise<PublicComment> {
+  const res = await api.post<ApiResponse<PublicComment>>(
+    `/events/${eventId}/comments`,
+    { body }
+  );
+  return res.data;
+}
+
 // Logged-in: toggle a like on a comment.
 export async function toggleCommentLike(
   commentId: string

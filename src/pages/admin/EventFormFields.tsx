@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import type { ApiProject } from '../../types';
 import { EVENT_CATEGORIES, type EventFormState } from './eventForm';
+import AddressPicker from '../../components/map/AddressPicker';
+import ImageUpload from '../../components/ui/ImageUpload';
 
 interface Props {
   form: EventFormState;
-  set: (field: string, value: string | number) => void;
+  set: (field: string, value: string | number | null) => void;
   projects: ApiProject[];
 }
 
@@ -152,56 +154,24 @@ export default function EventFormFields({ form, set, projects }: Props) {
             />
           </div>
           <div className="sm:col-span-2">
-            <label
-              htmlFor="event-location"
-              className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
-            >
-              {t('admin.formLocation')}
-            </label>
-            <input
+            <AddressPicker
               id="event-location"
-              type="text"
-              value={form.location}
-              onChange={(e) => set('location', e.target.value)}
-              placeholder={t('admin.locationPlaceholder')}
-              className={inputClass}
+              label={t('admin.formLocation')}
+              value={{ location: form.location, lat: form.lat, lng: form.lng }}
+              onChange={(v) => {
+                set('location', v.location);
+                set('lat', v.lat);
+                set('lng', v.lng);
+              }}
             />
           </div>
           <div className="sm:col-span-2">
-            <label
-              htmlFor="event-image-url"
-              className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400"
-            >
-              {t('admin.formImageUrl')}
-            </label>
-            <input
-              id="event-image-url"
-              type="url"
-              inputMode="url"
+            <ImageUpload
+              id="event-image"
+              label={t('admin.formImageUrl')}
               value={form.imageUrl}
-              onChange={(e) => set('imageUrl', e.target.value)}
-              placeholder="https://…/image.jpg"
-              className={inputClass}
+              onChange={(url) => set('imageUrl', url)}
             />
-            {form.imageUrl && (
-              <div className="mt-2">
-                <img
-                  src={form.imageUrl}
-                  alt=""
-                  className="h-28 w-full rounded-lg object-cover"
-                />
-                <button
-                  type="button"
-                  onClick={() => set('imageUrl', '')}
-                  className="mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-red-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 dark:text-red-400"
-                >
-                  {t('admin.formImageRemove')}
-                </button>
-              </div>
-            )}
-            <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
-              {t('admin.formImageUrlHint')}
-            </p>
           </div>
           <div className="sm:col-span-2">
             <label

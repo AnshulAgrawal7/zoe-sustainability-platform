@@ -14,6 +14,7 @@ export default function RegisterPage() {
   const setAuth = useAuthStore((s) => s.setAuth);
 
   const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [language, setLanguage] = useState<UserLanguage>('EN');
@@ -21,6 +22,7 @@ export default function RegisterPage() {
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{
     name?: string;
+    username?: string;
     email?: string;
     password?: string;
   }>({});
@@ -30,6 +32,8 @@ export default function RegisterPage() {
     e.preventDefault();
     const fe: typeof fieldErrors = {};
     if (!name.trim()) fe.name = t('validation.name');
+    if (!/^[a-z0-9_]{3,20}$/.test(username.trim().toLowerCase()))
+      fe.username = t('validation.username');
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
       fe.email = t('validation.email');
     if (!password) fe.password = t('validation.password');
@@ -41,6 +45,7 @@ export default function RegisterPage() {
     try {
       const { user, accessToken } = await register({
         name,
+        username: username.trim().toLowerCase(),
         email,
         password,
         language,
@@ -117,6 +122,42 @@ export default function RegisterPage() {
                   className="mt-1 text-xs text-rose-600 dark:text-rose-400"
                 >
                   {fieldErrors.name}
+                </p>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="reg-username"
+                className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                {t('auth.username')}
+              </label>
+              <input
+                id="reg-username"
+                type="text"
+                autoComplete="username"
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setFieldErrors((fe) => ({ ...fe, username: undefined }));
+                }}
+                aria-invalid={!!fieldErrors.username}
+                aria-describedby="reg-username-hint reg-username-err"
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              />
+              <p
+                id="reg-username-hint"
+                className="mt-1 text-xs text-gray-500 dark:text-gray-400"
+              >
+                {t('auth.usernameHint')}
+              </p>
+              {fieldErrors.username && (
+                <p
+                  id="reg-username-err"
+                  role="alert"
+                  className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+                >
+                  {fieldErrors.username}
                 </p>
               )}
             </div>

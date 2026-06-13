@@ -1,7 +1,11 @@
 import { api } from './api';
 import type { ApiResponse } from '../types';
 
-export type NotificationKind = 'IDEA' | 'REPORT' | 'FEEDBACK';
+export type NotificationKind =
+  | 'IDEA'
+  | 'REPORT'
+  | 'FEEDBACK'
+  | 'EVENT_PROPOSAL';
 
 export interface AdminNotification {
   id: string;

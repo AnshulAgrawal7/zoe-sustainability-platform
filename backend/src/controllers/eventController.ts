@@ -1,4 +1,4 @@
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
 import { validationResult } from 'express-validator';
 import { PrismaClient } from '@prisma/client';
 import type { AuthRequest } from '../middleware/auth';
@@ -24,6 +24,8 @@ interface EventBody {
   descriptionDe?: string;
   date?: string;
   location?: string;
+  lat?: number | null;
+  lng?: number | null;
   category?: string;
   rewardPoints?: number;
   capacity?: number;
@@ -125,6 +127,8 @@ export async function createEvent(req: AuthRequest, res: Response) {
         descriptionDe: body.descriptionDe ?? '',
         date: new Date(body.date as string),
         location: body.location ?? null,
+        lat: body.lat ?? null,
+        lng: body.lng ?? null,
         category: body.category as string,
         rewardPoints: body.rewardPoints ?? EVENT_POINTS,
         capacity: body.capacity ?? null,
@@ -163,6 +167,8 @@ export async function updateEvent(req: AuthRequest, res: Response) {
         ...(body.descriptionDe !== undefined ? { descriptionDe: body.descriptionDe } : {}),
         ...(body.date !== undefined ? { date: new Date(body.date) } : {}),
         ...(body.location !== undefined ? { location: body.location || null } : {}),
+        ...(body.lat !== undefined ? { lat: body.lat } : {}),
+        ...(body.lng !== undefined ? { lng: body.lng } : {}),
         ...(body.category !== undefined ? { category: body.category } : {}),
         ...(body.rewardPoints !== undefined ? { rewardPoints: body.rewardPoints } : {}),
         ...(body.capacity !== undefined ? { capacity: body.capacity } : {}),

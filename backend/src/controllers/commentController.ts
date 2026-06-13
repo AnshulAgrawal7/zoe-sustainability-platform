@@ -8,14 +8,14 @@ import {
 
 const prisma = new PrismaClient();
 
-// Public shape of a comment — author DISPLAY NAME only (the user posts knowingly
-// in public; never email/userId), aggregate like count, and whether the current
-// user liked it.
+// Public shape of a comment — author USERNAME only (pseudonymous; the user posts
+// knowingly in public; never real name/email/userId), aggregate like count, and
+// whether the current user liked it.
 interface CommentRow {
   id: string;
   body: string;
   createdAt: Date;
-  user: { name: string };
+  user: { username: string; avatarUrl: string | null };
   _count: { likes: number };
 }
 
@@ -23,7 +23,7 @@ const commentSelect = {
   id: true,
   body: true,
   createdAt: true,
-  user: { select: { name: true } },
+  user: { select: { username: true, avatarUrl: true } },
   _count: { select: { likes: true } },
 } as const;
 
@@ -32,10 +32,48 @@ function shapeComment(c: CommentRow, likedSet: Set<string>) {
     id: c.id,
     body: c.body,
     createdAt: c.createdAt,
-    authorName: c.user.name,
+    authorUsername: c.user.username,
+    authorAvatarUrl: c.user.avatarUrl,
     likeCount: c._count.likes,
     likedByMe: likedSet.has(c.id),
   };
+}
+
+// Extract @username mentions from a comment body and create one MENTION
+// notification per distinct, real user (never the author themselves). Best-effort:
+// a failure here must not fail the comment creation, so callers ignore errors.
+const MENTION_RE = /@([a-z0-9_]{3,20})/g;
+
+async function createMentionNotifications(opts: {
+  body: string;
+  actorId: string;
+  commentId: string;
+  eventId?: string;
+  ideaId?: string;
+}): Promise<void> {
+  const usernames = [
+    ...new Set(
+      [...opts.body.toLowerCase().matchAll(MENTION_RE)].map((m) => m[1])
+    ),
+  ];
+  if (usernames.length === 0) return;
+
+  const mentioned = await prisma.user.findMany({
+    where: { username: { in: usernames }, id: { not: opts.actorId } },
+    select: { id: true },
+  });
+  if (mentioned.length === 0) return;
+
+  await prisma.notification.createMany({
+    data: mentioned.map((u) => ({
+      userId: u.id,
+      type: 'MENTION',
+      actorId: opts.actorId,
+      commentId: opts.commentId,
+      ...(opts.eventId ? { eventId: opts.eventId } : {}),
+      ...(opts.ideaId ? { ideaId: opts.ideaId } : {}),
+    })),
+  });
 }
 
 // GET /api/ideas/public/:id — an approved idea + its VISIBLE comments.
@@ -105,8 +143,84 @@ export async function createComment(req: AuthRequest, res: Response) {
     }
     const comment = await prisma.comment.create({
       data: { ideaId, userId, body: body.trim() },
+      select: { ...commentSelect, id: true },
+    });
+    await createMentionNotifications({
+      body: body.trim(),
+      actorId: userId,
+      commentId: comment.id,
+      ideaId,
+    }).catch(() => null);
+    created(res, shapeComment(comment as CommentRow, new Set()));
+  } catch {
+    serverError(res);
+  }
+}
+
+// GET /api/events/:id/comments — public; VISIBLE comments on an event.
+// optionalAuth adds `likedByMe`. Everyone can read the discussion.
+export async function getEventComments(req: AuthRequest, res: Response) {
+  const eventId = req.params['id'] as string;
+  const userId = req.user?.userId;
+  try {
+    const event = await prisma.event.findUnique({
+      where: { id: eventId },
+      select: { id: true },
+    });
+    if (!event) {
+      notFound(res);
+      return;
+    }
+    const comments = await prisma.comment.findMany({
+      where: { eventId, status: 'VISIBLE' },
+      orderBy: { createdAt: 'asc' },
       select: commentSelect,
     });
+    let likedSet = new Set<string>();
+    if (userId && comments.length) {
+      const likes = await prisma.commentLike.findMany({
+        where: { userId, commentId: { in: comments.map((c) => c.id) } },
+        select: { commentId: true },
+      });
+      likedSet = new Set(likes.map((l) => l.commentId));
+    }
+    ok(res, {
+      comments: comments.map((c) => shapeComment(c as CommentRow, likedSet)),
+    });
+  } catch {
+    serverError(res);
+  }
+}
+
+// POST /api/events/:id/comments — logged-in only. The event must exist.
+export async function createEventComment(req: AuthRequest, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    badRequest(res, 'Validation failed', errors.array());
+    return;
+  }
+  const eventId = req.params['id'] as string;
+  const userId = req.user!.userId;
+  const { body } = req.body as { body: string };
+  try {
+    const event = await prisma.event.findUnique({
+      where: { id: eventId },
+      select: { id: true },
+    });
+    if (!event) {
+      notFound(res);
+      return;
+    }
+    const comment = await prisma.comment.create({
+      data: { eventId, userId, body: body.trim() },
+      select: { ...commentSelect, id: true },
+    });
+    await createMentionNotifications({
+      body: body.trim(),
+      actorId: userId,
+      commentId: comment.id,
+      eventId,
+    }).catch(() => null);
     created(res, shapeComment(comment as CommentRow, new Set()));
   } catch {
     serverError(res);
@@ -153,8 +267,9 @@ export async function getAllComments(_req: Request, res: Response) {
       orderBy: { createdAt: 'desc' },
       select: {
         id: true, body: true, status: true, createdAt: true,
-        user: { select: { name: true } },
+        user: { select: { username: true } },
         idea: { select: { id: true, title: true } },
+        event: { select: { id: true, titleEn: true } },
         _count: { select: { likes: true } },
       },
     });

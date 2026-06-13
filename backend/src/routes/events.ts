@@ -10,6 +10,7 @@ import {
   getMyEventRegistrations,
   getEventRegistrationCount,
 } from '../controllers/eventController';
+import { getEventComments, createEventComment } from '../controllers/commentController';
 import { authenticate } from '../middleware/auth';
 import { optionalAuth } from '../middleware/optionalAuth';
 import { PROJECT_CATEGORIES } from '../constants';
@@ -59,6 +60,22 @@ router.post(
     body('consent').optional().isBoolean(),
   ],
   registerForEvent
+);
+
+// --- Event discussion (everyone reads; logged-in users post) ---
+router.get('/:id/comments', optionalAuth, getEventComments);
+
+const eventCommentLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: process.env['NODE_ENV'] === 'production' ? 20 : 200,
+  message: { success: false, error: 'Too many requests, please try again later' },
+});
+router.post(
+  '/:id/comments',
+  eventCommentLimiter,
+  authenticate,
+  [body('body').trim().notEmpty().isLength({ min: 1, max: 2000 })],
+  createEventComment
 );
 
 // Keep the detail route last so it does not shadow the sub-paths above.

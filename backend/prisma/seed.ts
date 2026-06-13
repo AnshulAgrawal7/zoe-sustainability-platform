@@ -16,26 +16,26 @@ async function main() {
 
   const admin = await prisma.user.upsert({
     where: { email: 'admin@zoe-corfu.gr' },
-    update: { profile: 'VOLUNTEER' },
-    create: { email: 'admin@zoe-corfu.gr', password: adminHash, name: 'ZOE Admin', role: 'ADMIN', points: 0, language: 'EN', profile: 'VOLUNTEER' },
+    update: { profile: 'VOLUNTEER', username: 'zoe_admin' },
+    create: { email: 'admin@zoe-corfu.gr', password: adminHash, name: 'ZOE Admin', username: 'zoe_admin', role: 'ADMIN', points: 0, language: 'EN', profile: 'VOLUNTEER' },
   });
 
   const citizen1 = await prisma.user.upsert({
     where: { email: 'citizen1@example.com' },
-    update: { profile: 'RESIDENT' },
-    create: { email: 'citizen1@example.com', password: userHash, name: 'Maria Papadopoulou', role: 'USER', points: 320, language: 'EL', profile: 'RESIDENT' },
+    update: { profile: 'RESIDENT', username: 'maria_p' },
+    create: { email: 'citizen1@example.com', password: userHash, name: 'Maria Papadopoulou', username: 'maria_p', role: 'USER', points: 320, language: 'EL', profile: 'RESIDENT' },
   });
 
   const citizen2 = await prisma.user.upsert({
     where: { email: 'citizen2@example.com' },
-    update: { profile: 'STUDENT' },
-    create: { email: 'citizen2@example.com', password: userHash, name: 'Nikos Stavros', role: 'USER', points: 150, language: 'EL', profile: 'STUDENT' },
+    update: { profile: 'STUDENT', username: 'nikos_s' },
+    create: { email: 'citizen2@example.com', password: userHash, name: 'Nikos Stavros', username: 'nikos_s', role: 'USER', points: 150, language: 'EL', profile: 'STUDENT' },
   });
 
   const tourist = await prisma.user.upsert({
     where: { email: 'tourist@example.com' },
-    update: { profile: 'VISITOR' },
-    create: { email: 'tourist@example.com', password: userHash, name: 'Hans Mueller', role: 'USER', points: 50, language: 'DE', profile: 'VISITOR' },
+    update: { profile: 'VISITOR', username: 'hans_m' },
+    create: { email: 'tourist@example.com', password: userHash, name: 'Hans Mueller', username: 'hans_m', role: 'USER', points: 50, language: 'DE', profile: 'VISITOR' },
   });
 
   const badges = await Promise.all([
@@ -257,14 +257,15 @@ async function main() {
     descEn: string, descEl: string, descDe: string,
     date: string, location: string, category: string,
     projectId: string, rewardPoints = 20, capacity: number | null = null,
+    imageUrl: string | null = null,
   ) =>
     prisma.event.upsert({
       where: { id },
-      update: {},
+      update: imageUrl ? { imageUrl } : {},
       create: {
         id, titleEn, titleEl, titleDe,
         descriptionEn: descEn, descriptionEl: descEl, descriptionDe: descDe,
-        date: new Date(date), location, category, rewardPoints, capacity, projectId,
+        date: new Date(date), location, category, rewardPoints, capacity, projectId, imageUrl,
       },
     });
 
@@ -310,7 +311,8 @@ async function main() {
       'Plant native trees on a fire-affected slope near the Nymfes waterfalls. Tools and saplings provided.',
       'Φύτευση ιθαγενών δέντρων σε πληγείσα από πυρκαγιά πλαγιά κοντά στους καταρράκτες Νυμφών. Παρέχονται εργαλεία και δενδρύλλια.',
       'Pflanzung heimischer Bäume an einem brandgeschädigten Hang nahe den Nymfes-Wasserfällen. Werkzeug und Setzlinge gestellt.',
-      '2026-09-13T09:00:00.000Z', 'Nymfes, North Corfu', 'ENVIRONMENT', 'proj-natural-monuments', 25, 50),
+      '2026-09-13T09:00:00.000Z', 'Nymfes, North Corfu', 'ENVIRONMENT', 'proj-natural-monuments', 25, 50,
+      'https://rueqoxkrqggbdwztrsms.supabase.co/storage/v1/object/public/entity-images/events/reforestation-volunteer-day.jpg'),
     makeEvent('evt-youth-eco',
       'Youth Eco Workshop', 'Εργαστήριο Νέων για το Περιβάλλον', 'Jugend-Umweltworkshop',
       'Hands-on sustainability workshop for secondary students with the Ionian University. Project ideas pitched by youth teams.',

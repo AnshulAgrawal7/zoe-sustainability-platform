@@ -372,3 +372,30 @@ On native Linux or with `sudo`: `sudo npx playwright install-deps && npm run tes
 | `e2e/dark-mode-and-language.spec.ts` | Dark mode toggle, language switching (EN/EL/DE) |
 | `e2e/accessibility.spec.ts` | Keyboard nav, lang attribute, images alt, footer |
 | `e2e/projects.spec.ts` | Projects list, project detail, admin project management |
+
+---
+
+## Addendum (2026-06-13): usernames, leaderboard, geocoded events, comments & proposals
+
+**Schema (migration `20260613100000_usernames_events_proposals_notifications`):**
+
+- `User.username` — unique, public pseudonym (backfilled for existing rows, then `NOT NULL`).
+- `Event.lat` / `Event.lng` — optional WGS84 coordinates (geocoded from `location`).
+- `Comment` — `ideaId` now nullable; new nullable `eventId` (FK, cascade) so comments
+  attach to an idea **or** an event. New `Comment_eventId_idx`.
+- `EventProposal` (new) — citizen event suggestions (one source `lang`), status
+  `NEW|CONVERTED|DECLINED`, `createdEventId` links the resulting Event.
+- `Notification` (new) — citizen mention bell (`type=MENTION`, `read`, actor + target ids).
+
+**New backend routes:** `GET /users/leaderboard` (auth), `GET /users/search` (auth),
+`GET /geocode` (auth, Nominatim proxy), `POST /uploads/image` (auth, Supabase
+`entity-images`), `GET|POST /events/:id/comments`, `GET|POST /notifications` (+`/read`),
+`POST /event-proposals` (public), `GET|GET/:id|PATCH /admin/event-proposals`.
+Admin notification feed extended with `EVENT_PROPOSAL`.
+
+**New frontend routes:** `/leaderboard` (ProtectedRoute), `/admin/event-proposals` (AdminRoute).
+Event-form prefill via `/admin/events/new?fromProposal=<id>` (DeepL auto-translate).
+
+**Key new components:** `map/AddressPicker`, `map/LocationMap`, `ui/ImageUpload`,
+`comments/MentionTextarea`, `comments/CommentThread`, `layout/UserNotificationBell`,
+`engagement/EventProposalForm`.

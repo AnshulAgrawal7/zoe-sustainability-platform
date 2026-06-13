@@ -202,7 +202,8 @@ Get own profile with participations. **Auth required.**
 ### PUT /users/me
 Update own profile. **Auth required.**
 
-**Request body (all optional):** `{ "name": "...", "language": "EN|EL|DE", "avatarUrl": "..." }`
+**Request body (all optional):** `{ "name": "...", "username": "...", "language": "EN|EL|DE", "avatarUrl": "..." }`
+`username` must be 3–20 chars of `[a-z0-9_]` and unique (409 if taken).
 
 ---
 
@@ -216,10 +217,79 @@ Get own badges + all available badges. **Auth required.**
 
 ---
 
-> **Removed:** `GET /users/leaderboard` — the public individual leaderboard
-> exposed user names + points and was removed for privacy. The DSR rationale
-> argues against individual citizen rankings (design-rationale-matrix B3);
-> community milestones on /rewards serve the collective-goal function instead.
+### GET /users/leaderboard
+Top 20 members by points. **Auth required (logged-in only).** Returns ONLY
+pseudonymous usernames — never real names or emails — and is gated behind a
+login. This reintroduces an individual ranking after the privacy concern in
+design-rationale-matrix B3: pseudonymity + the auth gate mitigate the
+neighbour-friction risk while keeping the motivational benefit.
+
+**Response 200:**
+```json
+{ "success": true, "data": { "entries": [
+  { "rank": 1, "username": "maria_p", "points": 470, "avatarUrl": null, "participationCount": 4, "isMe": true }
+] } }
+```
+
+### GET /users/search?q=…
+Username autocomplete for @mentions in comments. **Auth required.** Up to 8
+matches by substring. Returns `{ users: [{ username, avatarUrl }] }`.
+
+---
+
+## Geocoding (`/api/geocode`)
+
+### GET /geocode?q=…
+Address → coordinate suggestions via OpenStreetMap Nominatim (proxied server-side
+with a compliant User-Agent, biased to Greece, cached). **Auth required.**
+Returns `{ results: [{ label, lat, lng }] }` (≤ 5). Drives the address picker on
+event/project forms.
+
+---
+
+## Uploads (`/api/uploads`)
+
+### POST /uploads/image
+Multipart upload (`image` field) of a cover image from the device. **Auth
+required** (admins + citizens). Stored in the Supabase `entity-images` bucket;
+returns `{ url, path }` — save `url` in the entity's `imageUrl`. Max 5 MB;
+JPEG/PNG/WebP/GIF. 503 if storage is not configured.
+
+---
+
+## Notifications (`/api/notifications`)
+
+Citizen-facing mention bell (distinct from the computed admin bell).
+
+### GET /notifications
+The user's notifications (newest first) + `unreadCount`. **Auth required.**
+Each: `{ id, type: "MENTION", read, createdAt, eventId, ideaId, commentId, actorUsername }`.
+
+### POST /notifications/read
+Mark all of the user's notifications as read. **Auth required.**
+
+---
+
+## Event proposals (`/api/event-proposals`)
+
+### POST /event-proposals
+Citizen event proposal (one language). Open to everyone (a token links the
+submitter). NOT shown on the public idea board — an admin converts it into a
+real Event. Body: `{ title, description, lang, category, date, location?, lat?, lng?, capacity?, imageUrl?, projectId?, submitterName?, submitterEmail? }`.
+
+Admin review lives under `/api/admin/event-proposals` (see Admin section).
+
+---
+
+## Event comments (`/api/events/:id/comments`)
+
+### GET /events/:id/comments
+Public — VISIBLE comments on an event (everyone reads). optionalAuth adds
+`likedByMe`. Each: `{ id, body, createdAt, authorUsername, authorAvatarUrl, likeCount, likedByMe }`.
+
+### POST /events/:id/comments
+Post a comment on an event. **Auth required.** `@username` mentions create
+MENTION notifications for the mentioned members.
 
 ---
 
@@ -311,9 +381,22 @@ Citizen reports & feedback from `/api/submissions` (read-only overview; newest
 first). Optional `?type=REPORT|FEEDBACK`. Includes the linked `user`
 (id/name/email) when the submitter was logged in. **ADMIN auth required.**
 
+### Admin event proposals
+- `GET /admin/event-proposals?status=NEW|CONVERTED|DECLINED` — list citizen
+  event proposals (includes the linked `user` with `username`).
+- `GET /admin/event-proposals/:id` — one proposal (pre-fills the event form).
+- `PATCH /admin/event-proposals/:id` — `{ status, createdEventId? }`: set
+  `DECLINED`, or `CONVERTED` with the id of the Event created from it.
+
+The review flow: open `/admin/events/new?fromProposal=<id>` → the form is
+pre-filled and the source language auto-translated (DeepL) into EN/EL/DE → on
+save, the Event is created and the proposal is marked `CONVERTED`.
+
 ### GET /admin/notifications
 Aggregated feed for the header notification bell: citizen ideas still awaiting
-review (`status = NEW`) plus reports/feedback, newest first, capped at 30. Each
+review (`status = NEW`), reports/feedback, and **new event proposals**
+(`kind = EVENT_PROPOSAL`), newest first, capped at 30. The submitter label is the
+member's `username` (or the anonymous name). Each
 item carries only a short `title` (idea title, or a message excerpt) — no full
 body. The unread count and "seen" state are derived client-side (a per-admin
 `lastSeen` marker in `localStorage`); the endpoint itself is stateless.

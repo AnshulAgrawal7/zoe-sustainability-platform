@@ -47,6 +47,8 @@ export default function EditEventPage() {
           descriptionDe: ev.descriptionDe,
           date: toLocalInput(ev.date),
           location: ev.location ?? '',
+          lat: ev.lat,
+          lng: ev.lng,
           category: ev.category,
           rewardPoints: ev.rewardPoints,
           capacity: ev.capacity ?? '',
@@ -57,7 +59,7 @@ export default function EditEventPage() {
       .catch(() => setNotFound(true));
   }, [id]);
 
-  function set(field: string, value: string | number) {
+  function set(field: string, value: string | number | null) {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
@@ -76,6 +78,8 @@ export default function EditEventPage() {
         descriptionDe: form.descriptionDe,
         date: new Date(form.date).toISOString(),
         location: form.location || undefined,
+        lat: form.lat,
+        lng: form.lng,
         category: form.category,
         rewardPoints: Number(form.rewardPoints),
         capacity: form.capacity ? Number(form.capacity) : null,

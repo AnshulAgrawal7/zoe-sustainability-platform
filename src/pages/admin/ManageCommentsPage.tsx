@@ -69,17 +69,29 @@ export default function ManageCommentsPage() {
             >
               <div className="mb-1 flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                 <span className="font-semibold text-gray-900 dark:text-white">
-                  {c.user.name}
+                  @{c.user.username}
                 </span>
-                <span>
-                  {t('adminComments.onIdea')}{' '}
-                  <Link
-                    to={`/ideas/${c.idea.id}`}
-                    className="text-green-700 underline dark:text-green-400"
-                  >
-                    {c.idea.title}
-                  </Link>
-                </span>
+                {c.idea ? (
+                  <span>
+                    {t('adminComments.onIdea')}{' '}
+                    <Link
+                      to={`/ideas/${c.idea.id}`}
+                      className="text-green-700 underline dark:text-green-400"
+                    >
+                      {c.idea.title}
+                    </Link>
+                  </span>
+                ) : c.event ? (
+                  <span>
+                    {t('adminComments.onEvent')}{' '}
+                    <Link
+                      to={`/events/${c.event.id}`}
+                      className="text-green-700 underline dark:text-green-400"
+                    >
+                      {c.event.titleEn}
+                    </Link>
+                  </span>
+                ) : null}
                 <span
                   className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
                     c.status === 'VISIBLE'

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Container from '../components/layout/Container';
-import { Calendar, MapPin, Users, Clock } from 'lucide-react';
+import { Calendar, MapPin, Users, Clock, CalendarPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getEvents } from '../services/eventService';
@@ -369,17 +369,21 @@ export default function EventsPage() {
         </>
       )}
 
-      {/* Note */}
-      <div className="mt-10 rounded-xl border border-gray-200 bg-gray-50 p-5 text-center dark:border-gray-700 dark:bg-gray-800/50">
-        <p className="text-sm text-gray-600 dark:text-gray-300">
-          {t('events.suggestText')}{' '}
-          <Link
-            to="/participate"
-            className="font-medium text-green-700 hover:underline dark:text-green-400"
-          >
-            {t('events.suggestLink')}
-          </Link>
+      {/* Contribute-your-own-event CTA → the event-proposal flow on /participate. */}
+      <div className="mt-10 rounded-xl border border-teal-200 bg-teal-50 p-6 text-center dark:border-teal-800 dark:bg-teal-900/20">
+        <h2 className="mb-2 font-semibold text-teal-900 dark:text-teal-200">
+          {t('events.suggestTitle')}
+        </h2>
+        <p className="mb-4 text-sm text-teal-700 dark:text-teal-300">
+          {t('events.suggestText')}
         </p>
+        <Link
+          to="/participate?action=submit-idea"
+          className="inline-flex items-center gap-2 rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-teal-700"
+        >
+          <CalendarPlus size={16} aria-hidden="true" />
+          {t('events.suggestLink')}
+        </Link>
       </div>
     </Container>
   );

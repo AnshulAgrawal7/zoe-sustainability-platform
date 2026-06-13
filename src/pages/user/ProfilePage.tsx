@@ -25,6 +25,8 @@ export default function ProfilePage() {
   const { setLanguage } = useLanguageStore();
 
   const [name, setName] = useState(user?.name ?? '');
+  const [username, setUsername] = useState(user?.username ?? '');
+  const [usernameError, setUsernameError] = useState('');
   const [lang, setLang] = useState<UserLanguage>(user?.language ?? 'EN');
   const [profile, setProfile] = useState<UserProfile>(
     user?.profile ?? 'RESIDENT'
@@ -36,15 +38,26 @@ export default function ProfilePage() {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     setError('');
+    setUsernameError('');
     setSuccess(false);
+    const normalized = username.trim().toLowerCase();
+    if (!/^[a-z0-9_]{3,20}$/.test(normalized)) {
+      setUsernameError(t('validation.username'));
+      return;
+    }
     setLoading(true);
     try {
-      const updated = await updateMe({ name, language: lang, profile });
+      const updated = await updateMe({
+        name,
+        username: normalized,
+        language: lang,
+        profile,
+      });
       updateUser(updated);
       setLanguage(LANGUAGE_RMAP[lang]);
       setSuccess(true);
-    } catch {
-      setError(t('common.error'));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t('common.error'));
     } finally {
       setLoading(false);
     }
@@ -87,6 +100,41 @@ export default function ProfilePage() {
               onChange={(e) => setName(e.target.value)}
               className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
+          </div>
+          <div>
+            <label
+              htmlFor="profile-username"
+              className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              {t('auth.username')}
+            </label>
+            <input
+              id="profile-username"
+              type="text"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                setUsernameError('');
+              }}
+              aria-invalid={!!usernameError}
+              aria-describedby="profile-username-hint profile-username-err"
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            />
+            <p
+              id="profile-username-hint"
+              className="mt-1 text-xs text-gray-500 dark:text-gray-400"
+            >
+              {t('auth.usernamePublicHint')}
+            </p>
+            {usernameError && (
+              <p
+                id="profile-username-err"
+                role="alert"
+                className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+              >
+                {usernameError}
+              </p>
+            )}
           </div>
           <div>
             <label

@@ -92,6 +92,8 @@ export interface ApiEvent {
   descriptionDe: string;
   date: string;
   location: string | null;
+  lat: number | null;
+  lng: number | null;
   category: ApiProjectCategory;
   status: ApiEventStatus;
   rewardPoints: number;
@@ -196,6 +198,7 @@ export type ApiProjectCategory =
 export interface AuthUser {
   id: string;
   email: string;
+  username: string;
   name: string;
   role: UserRole;
   points: number;
@@ -350,8 +353,83 @@ export interface RegisterPayload {
   email: string;
   password: string;
   name: string;
+  username: string;
   language?: UserLanguage;
   profile?: UserProfile;
+}
+
+// --- Leaderboard (logged-in only; pseudonymous usernames) ---
+
+export interface LeaderboardEntry {
+  rank: number;
+  username: string;
+  points: number;
+  avatarUrl: string | null;
+  participationCount: number;
+  isMe: boolean;
+}
+
+// --- Citizen event proposals (community → admin review → real Event) ---
+
+export type EventProposalStatus = 'NEW' | 'CONVERTED' | 'DECLINED';
+
+export interface EventProposalPayload {
+  title: string;
+  description: string;
+  lang: UserLanguage;
+  category: ApiProjectCategory;
+  date: string;
+  location?: string;
+  lat?: number | null;
+  lng?: number | null;
+  capacity?: number | null;
+  imageUrl?: string;
+  projectId?: string;
+  submitterName?: string;
+  submitterEmail?: string;
+}
+
+export interface AdminEventProposal {
+  id: string;
+  title: string;
+  description: string;
+  lang: UserLanguage;
+  category: ApiProjectCategory;
+  date: string;
+  location: string | null;
+  lat: number | null;
+  lng: number | null;
+  capacity: number | null;
+  rewardPoints: number | null;
+  imageUrl: string | null;
+  projectId: string | null;
+  status: EventProposalStatus;
+  submitterName: string | null;
+  submitterEmail: string | null;
+  createdEventId: string | null;
+  createdAt: string;
+  user: { id: string; username: string; name: string; email: string } | null;
+}
+
+// --- Citizen in-app notifications (mention bell) ---
+
+export interface UserNotification {
+  id: string;
+  type: 'MENTION';
+  read: boolean;
+  createdAt: string;
+  eventId: string | null;
+  ideaId: string | null;
+  commentId: string | null;
+  actorUsername: string | null;
+}
+
+// --- Geocoding (Nominatim, via backend proxy) ---
+
+export interface GeocodeResult {
+  label: string;
+  lat: number;
+  lng: number;
 }
 
 // --- News / blog posts ---
@@ -518,7 +596,8 @@ export interface PublicComment {
   id: string;
   body: string;
   createdAt: string;
-  authorName: string;
+  authorUsername: string;
+  authorAvatarUrl: string | null;
   likeCount: number;
   likedByMe: boolean;
 }
@@ -534,8 +613,9 @@ export interface AdminComment {
   body: string;
   status: CommentStatus;
   createdAt: string;
-  user: { name: string };
-  idea: { id: string; title: string };
+  user: { username: string };
+  idea: { id: string; title: string } | null;
+  event: { id: string; titleEn: string } | null;
   _count: { likes: number };
 }
 
