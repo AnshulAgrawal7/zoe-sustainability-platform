@@ -4,13 +4,8 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Filter, Users, ArrowRight } from 'lucide-react';
 import { getProjects } from '../services/projectService';
-import ProjectMap, { type MapPoint } from '../components/map/ProjectMap';
 import EntityImage from '../components/ui/EntityImage';
 import SdgIcon from '../components/ui/SdgIcon';
-import {
-  projectCategoryHex,
-  PROJECT_CATEGORY_KEYS,
-} from '../components/ui/categoryVisuals';
 import type { ApiProject } from '../types';
 
 const CATEGORIES = [
@@ -196,48 +191,7 @@ export default function ProjectsPage() {
         </p>
       ) : (
         <>
-          {/* I1: map persistently above the list (no toggle). I2: a legend maps
-              the marker colours to categories from the central categoryVisuals. */}
-          {(() => {
-            const mapPoints = projects
-              .filter((p) => p.lat != null && p.lng != null)
-              .map<MapPoint>((p) => ({
-                id: p.id,
-                title: getTitle(p),
-                category: p.category,
-                sdgs: parseSdgs(p.sdgIds),
-                lat: p.lat as number,
-                lng: p.lng as number,
-              }));
-            if (mapPoints.length === 0) return null;
-            return (
-              <div className="mb-8">
-                <ProjectMap points={mapPoints} className="mb-3" />
-                <ul
-                  aria-label={t('map.legendLabel')}
-                  className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-xs dark:border-gray-700 dark:bg-gray-800"
-                >
-                  <li className="font-medium text-gray-600 dark:text-gray-300">
-                    {t('map.legendLabel')}:
-                  </li>
-                  {PROJECT_CATEGORY_KEYS.map((cat) => (
-                    <li
-                      key={cat}
-                      className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300"
-                    >
-                      <span
-                        className="inline-block h-3 w-3 rounded-full ring-1 ring-black/10 dark:ring-white/20"
-                        style={{ backgroundColor: projectCategoryHex(cat) }}
-                        aria-hidden="true"
-                      />
-                      {t(`projects.category.${cat}`)}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })()}
-
+          {/* The map lives on /events now (events carry the coordinates). */}
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => {
               const sdgs = parseSdgs(project.sdgIds);

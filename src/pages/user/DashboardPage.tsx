@@ -11,6 +11,9 @@ import {
   X,
   Lightbulb,
   ThumbsUp,
+  CalendarPlus,
+  AlertTriangle,
+  MessageSquare,
 } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
 import { useToastStore } from '../../stores/toastStore';
@@ -20,18 +23,44 @@ import {
   cancelEventRegistration,
 } from '../../services/eventService';
 import { getMyIdeas } from '../../services/ideaService';
+import { getMyEventProposals } from '../../services/eventProposalService';
+import { getMySubmissions } from '../../services/submissionService';
 import { useRewardTiers, tierForPoints } from '../../hooks/useRewardTiers';
 import PointsBadge from '../../components/ui/PointsBadge';
-import type { MyEventRegistration, MyIdea, IdeaStatus } from '../../types';
+import type {
+  MyEventRegistration,
+  MyIdea,
+  MyEventProposal,
+  MySubmission,
+  IdeaStatus,
+  EventProposalStatus,
+  SubmissionStatus,
+} from '../../types';
+
+const BLUE = 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300';
+const AMBER =
+  'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300';
+const GREEN =
+  'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300';
+const GRAY = 'bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300';
 
 // Status pill styling for a citizen's own ideas (in review / approved / declined).
 const IDEA_STATUS_STYLE: Record<IdeaStatus, string> = {
-  NEW: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-  IN_REVIEW:
-    'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
-  ACCEPTED:
-    'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-  DECLINED: 'bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300',
+  NEW: BLUE,
+  IN_REVIEW: AMBER,
+  ACCEPTED: GREEN,
+  DECLINED: GRAY,
+};
+const PROPOSAL_STATUS_STYLE: Record<EventProposalStatus, string> = {
+  NEW: BLUE,
+  CONVERTED: GREEN,
+  DECLINED: GRAY,
+};
+const SUBMISSION_STATUS_STYLE: Record<SubmissionStatus, string> = {
+  NEW: BLUE,
+  IN_REVIEW: AMBER,
+  RESOLVED: GREEN,
+  DECLINED: GRAY,
 };
 
 const LOCALES: Record<string, string> = {
@@ -50,17 +79,27 @@ export default function DashboardPage() {
 
   const [registrations, setRegistrations] = useState<MyEventRegistration[]>([]);
   const [myIdeas, setMyIdeas] = useState<MyIdea[]>([]);
+  const [myProposals, setMyProposals] = useState<MyEventProposal[]>([]);
+  const [mySubmissions, setMySubmissions] = useState<MySubmission[]>([]);
   const [badgeCount, setBadgeCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [cancelling, setCancelling] = useState<string | null>(null);
 
   const loadData = useCallback(() => {
-    Promise.all([getMe(), getMyEventRegistrations(), getMyIdeas()])
-      .then(([me, regs, ideas]) => {
+    Promise.all([
+      getMe(),
+      getMyEventRegistrations(),
+      getMyIdeas(),
+      getMyEventProposals(),
+      getMySubmissions(),
+    ])
+      .then(([me, regs, ideas, proposals, submissions]) => {
         setBadgeCount(me._count.userBadges);
         updateUser({ points: me.points });
         setRegistrations(regs);
         setMyIdeas(ideas);
+        setMyProposals(proposals);
+        setMySubmissions(submissions);
       })
       .catch(() => null)
       .finally(() => setLoading(false));
@@ -322,51 +361,189 @@ export default function DashboardPage() {
             // Approved ideas are public → link to the discussion; others aren't.
             const inner = (
               <>
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-gray-800 dark:text-gray-200">
-                    {idea.title}
-                  </p>
-                  <p className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
-                    <span className="inline-flex items-center gap-1">
-                      <Calendar size={12} aria-hidden="true" />
-                      {new Date(idea.createdAt).toLocaleDateString(locale, {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric',
-                      })}
-                    </span>
-                    {idea.status === 'ACCEPTED' && (
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-medium text-gray-800 dark:text-gray-200">
+                      {idea.title}
+                    </p>
+                    <p className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
                       <span className="inline-flex items-center gap-1">
-                        <ThumbsUp size={12} aria-hidden="true" />
-                        {t('ideasBoard.votes', { count: idea.voteCount })}
+                        <Calendar size={12} aria-hidden="true" />
+                        {new Date(idea.createdAt).toLocaleDateString(locale, {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric',
+                        })}
                       </span>
-                    )}
-                  </p>
+                      {idea.status === 'ACCEPTED' && (
+                        <span className="inline-flex items-center gap-1">
+                          <ThumbsUp size={12} aria-hidden="true" />
+                          {t('ideasBoard.votes', { count: idea.voteCount })}
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                  <span
+                    className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${IDEA_STATUS_STYLE[idea.status]}`}
+                  >
+                    {t(`ideaStatus.${idea.status}`)}
+                  </span>
                 </div>
-                <span
-                  className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${IDEA_STATUS_STYLE[idea.status]}`}
-                >
-                  {t(`ideaStatus.${idea.status}`)}
-                </span>
+                {idea.adminNote && (
+                  <p className="mt-2 rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-600 dark:bg-gray-900/40 dark:text-gray-300">
+                    <span className="font-semibold">
+                      {t('dashboard.adminReply')}:
+                    </span>{' '}
+                    {idea.adminNote}
+                  </p>
+                )}
               </>
             );
             return idea.status === 'ACCEPTED' ? (
               <Link
                 key={idea.id}
                 to={`/ideas/${idea.id}`}
-                className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-green-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700"
+                className="block rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-green-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700"
               >
                 {inner}
               </Link>
             ) : (
               <div
                 key={idea.id}
-                className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                className="rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
               >
                 {inner}
               </div>
             );
           })}
+        </div>
+      )}
+
+      {/* My event proposals — status tracking (approved → published / declined). */}
+      <h2 className="mb-4 mt-10 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
+        <CalendarPlus size={18} aria-hidden="true" className="text-teal-500" />
+        {t('dashboard.yourProposals')}
+      </h2>
+      {loading ? (
+        <p className="text-gray-500 dark:text-gray-400">
+          {t('common.loading')}
+        </p>
+      ) : myProposals.length === 0 ? (
+        <p className="rounded-xl bg-gray-50 p-6 text-center text-sm text-gray-500 dark:bg-gray-800/50 dark:text-gray-400">
+          {t('dashboard.noProposals')}
+        </p>
+      ) : (
+        <div className="space-y-3">
+          {myProposals.map((p) => {
+            const body = (
+              <>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-medium text-gray-800 dark:text-gray-200">
+                      {p.title}
+                    </p>
+                    <p className="mt-0.5 inline-flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                      <Calendar size={12} aria-hidden="true" />
+                      {new Date(p.date).toLocaleDateString(locale, {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      })}
+                    </p>
+                  </div>
+                  <span
+                    className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${PROPOSAL_STATUS_STYLE[p.status]}`}
+                  >
+                    {t(`eventProposalStatus.${p.status}`)}
+                  </span>
+                </div>
+                {p.adminNote && (
+                  <p className="mt-2 rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-600 dark:bg-gray-900/40 dark:text-gray-300">
+                    <span className="font-semibold">
+                      {t('dashboard.adminReply')}:
+                    </span>{' '}
+                    {p.adminNote}
+                  </p>
+                )}
+              </>
+            );
+            return p.status === 'CONVERTED' && p.createdEventId ? (
+              <Link
+                key={p.id}
+                to={`/events/${p.createdEventId}`}
+                className="block rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-green-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700"
+              >
+                {body}
+              </Link>
+            ) : (
+              <div
+                key={p.id}
+                className="rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+              >
+                {body}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* My reports & feedback — status tracking + admin reply. */}
+      <h2 className="mb-4 mt-10 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
+        <AlertTriangle size={18} aria-hidden="true" className="text-rose-500" />
+        {t('dashboard.yourReports')}
+      </h2>
+      {loading ? (
+        <p className="text-gray-500 dark:text-gray-400">
+          {t('common.loading')}
+        </p>
+      ) : mySubmissions.length === 0 ? (
+        <p className="rounded-xl bg-gray-50 p-6 text-center text-sm text-gray-500 dark:bg-gray-800/50 dark:text-gray-400">
+          {t('dashboard.noReports')}
+        </p>
+      ) : (
+        <div className="space-y-3">
+          {mySubmissions.map((s) => (
+            <div
+              key={s.id}
+              className="rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-gray-400 dark:text-gray-500">
+                    {s.type === 'REPORT' ? (
+                      <AlertTriangle size={12} aria-hidden="true" />
+                    ) : (
+                      <MessageSquare size={12} aria-hidden="true" />
+                    )}
+                    {t(`adminSubmissions.type${s.type}`)}
+                  </p>
+                  <p className="mt-1 whitespace-pre-line text-sm text-gray-700 dark:text-gray-200">
+                    {s.message}
+                  </p>
+                  <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+                    {new Date(s.createdAt).toLocaleDateString(locale, {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                  </p>
+                </div>
+                <span
+                  className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${SUBMISSION_STATUS_STYLE[s.status]}`}
+                >
+                  {t(`submissionStatus.${s.status}`)}
+                </span>
+              </div>
+              {s.adminNote && (
+                <p className="mt-2 rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-600 dark:bg-gray-900/40 dark:text-gray-300">
+                  <span className="font-semibold">
+                    {t('dashboard.adminReply')}:
+                  </span>{' '}
+                  {s.adminNote}
+                </p>
+              )}
+            </div>
+          ))}
         </div>
       )}
     </Container>

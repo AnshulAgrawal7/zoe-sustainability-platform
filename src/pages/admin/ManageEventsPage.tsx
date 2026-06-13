@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   Loader2,
   Users,
+  ExternalLink,
 } from 'lucide-react';
 import { getEvents, completeEvent } from '../../services/eventService';
 import { useToastStore } from '../../stores/toastStore';
@@ -99,7 +100,13 @@ export default function ManageEventsPage() {
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
                   <p className="flex flex-wrap items-center gap-2 text-sm font-medium text-gray-900 dark:text-white">
-                    {title(e)}
+                    <Link
+                      to={`/events/${e.id}`}
+                      className="inline-flex items-center gap-1.5 hover:text-green-700 hover:underline dark:hover:text-green-400"
+                    >
+                      {title(e)}
+                      <ExternalLink size={13} aria-hidden="true" />
+                    </Link>
                     <span
                       className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
                         e.status === 'COMPLETED'

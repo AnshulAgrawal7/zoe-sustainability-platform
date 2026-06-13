@@ -11,7 +11,7 @@ import {
   completeEvent,
   getEventRegistrationsAdmin,
 } from '../controllers/eventController';
-import { getSubmissions } from '../controllers/submissionController';
+import { getSubmissions, updateSubmissionStatus } from '../controllers/submissionController';
 import { getAdminNotifications } from '../controllers/notificationController';
 import {
   getEventProposals,
@@ -41,6 +41,7 @@ import {
   COMMENT_STATUSES,
   PROJECT_CATEGORIES,
   EVENT_PROPOSAL_STATUSES,
+  SUBMISSION_STATUSES,
 } from '../constants';
 
 const router = Router();
@@ -71,7 +72,10 @@ router.get('/metrics', getAdminMetrics);
 router.get('/ideas', getIdeas);
 router.patch(
   '/ideas/:id',
-  [body('status').isIn([...IDEA_STATUSES])],
+  [
+    body('status').isIn([...IDEA_STATUSES]),
+    body('message').optional({ values: 'falsy' }).trim().isLength({ max: 2000 }),
+  ],
   updateIdeaStatus
 );
 
@@ -125,8 +129,16 @@ router.post('/events/:id/complete', completeEvent);
 // Attendance overview: members + guests registered for one event (read-only).
 router.get('/events/:id/registrations', getEventRegistrationsAdmin);
 
-// --- Citizen reports & feedback (read-only overview for now) ---
+// --- Citizen reports & feedback (status workflow + reply to the submitter) ---
 router.get('/submissions', getSubmissions);
+router.patch(
+  '/submissions/:id',
+  [
+    body('status').isIn([...SUBMISSION_STATUSES]),
+    body('message').optional({ values: 'falsy' }).trim().isLength({ max: 2000 }),
+  ],
+  updateSubmissionStatus
+);
 
 // --- Citizen event proposals (review → convert into a real Event) ---
 router.get('/event-proposals', getEventProposals);
@@ -136,6 +148,7 @@ router.patch(
   [
     body('status').isIn([...EVENT_PROPOSAL_STATUSES]),
     body('createdEventId').optional({ values: 'falsy' }).isString(),
+    body('message').optional({ values: 'falsy' }).trim().isLength({ max: 2000 }),
   ],
   updateEventProposal
 );

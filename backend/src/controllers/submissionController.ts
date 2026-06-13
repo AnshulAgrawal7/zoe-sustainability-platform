@@ -2,7 +2,8 @@ import type { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import { PrismaClient } from '@prisma/client';
 import type { AuthRequest } from '../middleware/auth';
-import { ok, created, badRequest, serverError } from '../utils/response';
+import { ok, created, badRequest, notFound, serverError } from '../utils/response';
+import { notifyStatusChange } from '../utils/notify';
 
 const prisma = new PrismaClient();
 
@@ -49,9 +50,66 @@ export async function getSubmissions(req: Request, res: Response) {
     const submissions = await prisma.submission.findMany({
       where: type ? { type } : {},
       orderBy: { createdAt: 'desc' },
-      include: { user: { select: { id: true, name: true, email: true } } },
+      include: { user: { select: { id: true, username: true, name: true, email: true } } },
     });
     ok(res, { submissions, total: submissions.length });
+  } catch {
+    serverError(res);
+  }
+}
+
+// PATCH /api/admin/submissions/:id — adminOnly. Update the handling status and an
+// optional reply; notifies the submitter (if a registered user).
+export async function updateSubmissionStatus(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    badRequest(res, 'Validation failed', errors.array());
+    return;
+  }
+  const id = req.params['id'] as string;
+  const { status, message } = req.body as { status: string; message?: string };
+  try {
+    const existing = await prisma.submission.findUnique({ where: { id } });
+    if (!existing) {
+      notFound(res);
+      return;
+    }
+    const note = message?.trim() || null;
+    const updated = await prisma.submission.update({
+      where: { id },
+      data: { status, ...(note !== null ? { adminNote: note } : {}) },
+    });
+    await notifyStatusChange(prisma, {
+      userId: existing.userId,
+      type: 'SUBMISSION_STATUS',
+      status,
+      message: note,
+      submissionId: id,
+    }).catch(() => null);
+    ok(res, updated);
+  } catch {
+    serverError(res);
+  }
+}
+
+// GET /api/submissions/mine — the logged-in user's own reports/feedback with
+// status + admin reply, for dashboard tracking.
+export async function getMySubmissions(req: AuthRequest, res: Response) {
+  const userId = req.user!.userId;
+  try {
+    const submissions = await prisma.submission.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        type: true,
+        message: true,
+        status: true,
+        adminNote: true,
+        createdAt: true,
+      },
+    });
+    ok(res, { submissions });
   } catch {
     serverError(res);
   }

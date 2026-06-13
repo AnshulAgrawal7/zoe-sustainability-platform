@@ -33,6 +33,16 @@ export const SUBMISSION_TYPES = ['REPORT', 'FEEDBACK'] as const;
 
 export type SubmissionType = (typeof SUBMISSION_TYPES)[number];
 
+// Handling workflow for a citizen report/feedback so the submitter gets feedback.
+export const SUBMISSION_STATUSES = [
+  'NEW',
+  'IN_REVIEW',
+  'RESOLVED',
+  'DECLINED',
+] as const;
+
+export type SubmissionStatus = (typeof SUBMISSION_STATUSES)[number];
+
 // Event lifecycle: points are awarded when an admin completes the event.
 export const EVENT_STATUSES = ['UPCOMING', 'COMPLETED'] as const;
 
@@ -62,6 +72,12 @@ export type AppLanguageValue = (typeof APP_LANGUAGES)[number];
 export const EVENT_PROPOSAL_STATUSES = ['NEW', 'CONVERTED', 'DECLINED'] as const;
 export type EventProposalStatus = (typeof EVENT_PROPOSAL_STATUSES)[number];
 
-// User-facing notification kinds (citizen bell). Only mentions for now.
-export const NOTIFICATION_TYPES = ['MENTION'] as const;
+// User-facing notification kinds (citizen bell): a comment mention, or an admin
+// status change on something the user submitted (idea / event proposal / report).
+export const NOTIFICATION_TYPES = [
+  'MENTION',
+  'IDEA_STATUS',
+  'PROPOSAL_STATUS',
+  'SUBMISSION_STATUS',
+] as const;
 export type NotificationType = (typeof NOTIFICATION_TYPES)[number];

@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 import { PrismaClient } from '@prisma/client';
 import type { AuthRequest } from '../middleware/auth';
 import { ok, created, badRequest, notFound, serverError } from '../utils/response';
+import { notifyStatusChange } from '../utils/notify';
 
 const prisma = new PrismaClient();
 
@@ -101,9 +102,10 @@ export async function updateEventProposal(req: Request, res: Response) {
     return;
   }
   const id = req.params['id'] as string;
-  const { status, createdEventId } = req.body as {
+  const { status, createdEventId, message } = req.body as {
     status: string;
     createdEventId?: string;
+    message?: string;
   };
   try {
     const existing = await prisma.eventProposal.findUnique({ where: { id } });
@@ -111,14 +113,49 @@ export async function updateEventProposal(req: Request, res: Response) {
       notFound(res);
       return;
     }
+    const note = message?.trim() || null;
     const updated = await prisma.eventProposal.update({
       where: { id },
       data: {
         status,
+        ...(note !== null ? { adminNote: note } : {}),
         ...(createdEventId !== undefined ? { createdEventId } : {}),
       },
     });
+    // Notify the submitter that their event idea was reviewed (approved →
+    // published as an event, or declined). Links to their dashboard.
+    await notifyStatusChange(prisma, {
+      userId: existing.userId,
+      type: 'PROPOSAL_STATUS',
+      status,
+      message: note,
+    }).catch(() => null);
     ok(res, updated);
+  } catch {
+    serverError(res);
+  }
+}
+
+// GET /api/event-proposals/mine — the logged-in user's own event proposals
+// (every status) for dashboard tracking.
+export async function getMyEventProposals(req: AuthRequest, res: Response) {
+  const userId = req.user!.userId;
+  try {
+    const proposals = await prisma.eventProposal.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        title: true,
+        category: true,
+        date: true,
+        status: true,
+        adminNote: true,
+        createdEventId: true,
+        createdAt: true,
+      },
+    });
+    ok(res, { proposals });
   } catch {
     serverError(res);
   }

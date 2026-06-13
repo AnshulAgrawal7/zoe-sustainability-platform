@@ -66,10 +66,12 @@ export async function getIdeas(status?: IdeaStatus): Promise<Idea[]> {
 // Admin: change an idea's status.
 export async function updateIdeaStatus(
   id: string,
-  status: IdeaStatus
+  status: IdeaStatus,
+  message?: string
 ): Promise<Idea> {
   const res = await api.patch<ApiResponse<Idea>>(`/admin/ideas/${id}`, {
     status,
+    ...(message !== undefined ? { message } : {}),
   });
   return res.data;
 }

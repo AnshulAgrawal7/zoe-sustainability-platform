@@ -8,6 +8,7 @@ import EventRegister from '../components/events/EventRegister';
 import EntityImage from '../components/ui/EntityImage';
 import PointsBadge from '../components/ui/PointsBadge';
 import AccountPointsHint from '../components/ui/AccountPointsHint';
+import EventsMapSection from '../components/map/EventsMapSection';
 import { useAuthStore } from '../stores/authStore';
 import { projectCategoryVisual } from '../components/ui/categoryVisuals';
 import type { ApiEvent, ApiProjectCategory } from '../types';
@@ -128,6 +129,9 @@ export default function EventsPage() {
 
       {/* Account hint — points/rewards for attending require an account. */}
       <AccountPointsHint className="mb-6" />
+
+      {/* Where the events happen across North Corfu (markers coloured by project). */}
+      <EventsMapSection className="mb-8" />
 
       {/* Category filter */}
       <div className="mb-4 flex flex-wrap items-center gap-3">

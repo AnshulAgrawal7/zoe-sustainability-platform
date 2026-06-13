@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 import { PrismaClient } from '@prisma/client';
 import type { AuthRequest } from '../middleware/auth';
 import { ok, created, badRequest, notFound, forbidden, serverError } from '../utils/response';
+import { notifyStatusChange } from '../utils/notify';
 
 const prisma = new PrismaClient();
 
@@ -107,6 +108,7 @@ export async function getMyIdeas(req: AuthRequest, res: Response) {
         description: true,
         category: true,
         status: true,
+        adminNote: true,
         createdAt: true,
         _count: { select: { votes: true } },
       },
@@ -118,6 +120,7 @@ export async function getMyIdeas(req: AuthRequest, res: Response) {
         description: i.description,
         category: i.category,
         status: i.status,
+        adminNote: i.adminNote,
         createdAt: i.createdAt,
         voteCount: i._count.votes,
       })),
@@ -172,7 +175,7 @@ export async function getIdeas(req: Request, res: Response) {
     const ideas = await prisma.idea.findMany({
       where: status ? { status } : {},
       orderBy: { createdAt: 'desc' },
-      include: { user: { select: { id: true, name: true, email: true } } },
+      include: { user: { select: { id: true, username: true, name: true, email: true } } },
     });
     ok(res, { ideas, total: ideas.length });
   } catch {
@@ -189,7 +192,7 @@ export async function updateIdeaStatus(req: Request, res: Response) {
   }
 
   const id = req.params['id'] as string;
-  const { status } = req.body as { status: string };
+  const { status, message } = req.body as { status: string; message?: string };
 
   try {
     const existing = await prisma.idea.findUnique({ where: { id } });
@@ -197,7 +200,19 @@ export async function updateIdeaStatus(req: Request, res: Response) {
       notFound(res);
       return;
     }
-    const idea = await prisma.idea.update({ where: { id }, data: { status } });
+    const note = message?.trim() || null;
+    const idea = await prisma.idea.update({
+      where: { id },
+      data: { status, adminNote: note },
+    });
+    // Tell the submitter (if a registered user) that their idea was reviewed.
+    await notifyStatusChange(prisma, {
+      userId: existing.userId,
+      type: 'IDEA_STATUS',
+      status,
+      message: note,
+      ideaId: id,
+    }).catch(() => null);
     ok(res, idea);
   } catch {
     serverError(res);

@@ -1,11 +1,18 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import rateLimit from 'express-rate-limit';
-import { createEventProposal } from '../controllers/eventProposalController';
+import {
+  createEventProposal,
+  getMyEventProposals,
+} from '../controllers/eventProposalController';
 import { optionalAuth } from '../middleware/optionalAuth';
+import { authenticate } from '../middleware/auth';
 import { PROJECT_CATEGORIES, APP_LANGUAGES } from '../constants';
 
 const router = Router();
+
+// The logged-in user's own event proposals (every status) — dashboard tracking.
+router.get('/mine', authenticate, getMyEventProposals);
 
 // Public, unauthenticated-friendly (like ideas/submissions) → rate-limited.
 const proposalLimiter = rateLimit({

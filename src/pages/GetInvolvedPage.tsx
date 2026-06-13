@@ -3,20 +3,7 @@ import Container from '../components/layout/Container';
 import { Link } from 'react-router-dom';
 import { Award, ArrowRight, CalendarDays, GraduationCap } from 'lucide-react';
 import TouristContribution from '../components/engagement/TouristContribution';
-import ProjectMap, { type MapPoint } from '../components/map/ProjectMap';
-import { projects } from '../data/projects';
-
-// Fallback-data points (this page uses the static catalogue, no backend call).
-const mapPoints: MapPoint[] = projects
-  .filter((p) => p.lat != null && p.lng != null)
-  .map((p) => ({
-    id: p.id,
-    title: p.title,
-    category: p.category,
-    sdgs: p.sdgs,
-    lat: p.lat as number,
-    lng: p.lng as number,
-  }));
+import EventsMapSection from '../components/map/EventsMapSection';
 
 // "Get Involved as a Visitor" (J2) — reframed around tourists. The general
 // initiative explorer (residents/overview) lives on the Projects/Initiatives
@@ -75,13 +62,13 @@ export default function GetInvolvedPage() {
         </div>
       </section>
 
-      {/* Compact map — where the initiatives happen across North Corfu.
-          The ProjectMap's role="region" already carries the accessible name. */}
+      {/* Where the events happen across North Corfu (markers coloured by project,
+          with a legend). EventsMapSection carries its own accessible region name. */}
       <section className="mt-12">
         <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-          {t('map.ariaLabel')}
+          {t('map.eventsHeading')}
         </h2>
-        <ProjectMap points={mapPoints} />
+        <EventsMapSection />
       </section>
 
       {/* Rewards is a CONSEQUENCE of participation, shown as a secondary link. */}

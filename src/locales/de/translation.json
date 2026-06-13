@@ -812,7 +812,12 @@
     "tierLine": "Stufe: {{tier}} ({{name}})",
     "pointsPending": "ausstehend",
     "yourIdeas": "Deine Ideen",
-    "noIdeas": "Du hast noch keine Ideen eingereicht."
+    "noIdeas": "Du hast noch keine Ideen eingereicht.",
+    "adminReply": "Antwort des Teams",
+    "yourProposals": "Deine Event-Ideen",
+    "noProposals": "Du hast noch keine Events vorgeschlagen.",
+    "yourReports": "Deine Meldungen & Feedback",
+    "noReports": "Du hast noch keine Meldungen oder Feedback gesendet."
   },
   "admin": {
     "title": "Admin-Dashboard",
@@ -1646,7 +1651,12 @@
     "changeStatus": "Status ändern",
     "empty": "Noch keine Ideen.",
     "replyByEmail": "Per E-Mail antworten an {{email}}",
-    "emailSubject": "Ihre Idee: {{title}}"
+    "emailSubject": "Ihre Idee: {{title}}",
+    "save": "Speichern",
+    "saved": "Idee aktualisiert",
+    "messageLabel": "Nachricht an Einreicher:in (optional)",
+    "messagePlaceholder": "z. B. Begründung für Annahme/Ablehnung…",
+    "currentNote": "Deine Notiz"
   },
   "adminNotifications": {
     "bell": "Benachrichtigungen",
@@ -1728,7 +1738,13 @@
     "typeREPORT": "Umweltmeldung",
     "typeFEEDBACK": "Feedback",
     "anonymous": "Anonym",
-    "empty": "Noch keine Einreichungen."
+    "empty": "Noch keine Einreichungen.",
+    "save": "Speichern",
+    "saved": "Meldung aktualisiert",
+    "statusLabel": "Status",
+    "replyLabel": "Antwort an Einreicher:in (optional)",
+    "replyPlaceholder": "Kurze Antwort…",
+    "currentReply": "Deine Antwort"
   },
   "adminEvents": {
     "title": "Termine verwalten",
@@ -1761,10 +1777,15 @@
     "noLocation": "Keine Standortdaten für diese Projekte.",
     "legendLabel": "Projektkategorien",
     "ariaLabel": "Karte der ZOE-Initiativen",
-    "locationOf": "Karte mit dem Ort von {{name}}"
+    "locationOf": "Karte mit dem Ort von {{name}}",
+    "eventsAriaLabel": "Karte der Events in Nordkorfu",
+    "eventsHeading": "Events auf der Karte",
+    "noSpecificProject": "Kein bestimmtes Projekt",
+    "legendByProject": "Projekte"
   },
   "popup": {
-    "viewProject": "Projekt ansehen →"
+    "viewProject": "Projekt ansehen →",
+    "viewEvent": "Event ansehen"
   },
   "ideasBoard": {
     "title": "Ideen-Board",
@@ -1939,7 +1960,10 @@
     "someone": "Jemand",
     "onEvent": "einem Event",
     "onIdea": "einer Idee",
-    "mentioned": "{{actor}} hat dich in einem Kommentar zu {{where}} erwähnt"
+    "mentioned": "{{actor}} hat dich in einem Kommentar zu {{where}} erwähnt",
+    "ideaStatusChanged": "Deine Idee wurde {{status}}",
+    "proposalStatusChanged": "Deine Event-Idee wurde {{status}}",
+    "submissionStatusChanged": "Deine Meldung wurde {{status}}"
   },
   "address": {
     "placeholder": "Adresse eingeben…",
@@ -2003,6 +2027,24 @@
     "viewEvent": "Veröffentlichtes Event ansehen",
     "reviewTitle": "Vorschlag prüfen & Event erstellen",
     "prefillNote": "Dieses Formular ist aus einem Bürgervorschlag vorausgefüllt und automatisch übersetzt. Bitte prüfe alle Felder vor dem Speichern.",
-    "loadError": "Der Vorschlag konnte nicht geladen werden."
+    "loadError": "Der Vorschlag konnte nicht geladen werden.",
+    "currentNote": "Deine Notiz",
+    "declineMessageLabel": "Begründung für Einreicher:in (optional)",
+    "declineMessagePlaceholder": "z. B. warum die Event-Idee abgelehnt wurde…",
+    "declineConfirm": "Ablehnen"
+  },
+  "notifications": {
+    "bell": "Benachrichtigungen",
+    "bellWithCount": "Benachrichtigungen, {{count}} ungelesen",
+    "title": "Benachrichtigungen",
+    "empty": "Noch keine Benachrichtigungen.",
+    "reviewQueue": "Prüf-Warteschlange",
+    "yours": "Deine Benachrichtigungen"
+  },
+  "submissionStatus": {
+    "NEW": "Neu",
+    "IN_REVIEW": "In Prüfung",
+    "RESOLVED": "Erledigt",
+    "DECLINED": "Abgelehnt"
   }
 }

@@ -1,5 +1,11 @@
 import { api } from './api';
-import type { ApiResponse, ApiSubmission, SubmissionType } from '../types';
+import type {
+  ApiResponse,
+  ApiSubmission,
+  MySubmission,
+  SubmissionType,
+  SubmissionStatus,
+} from '../types';
 
 export interface SubmissionPayload {
   type: SubmissionType;
@@ -17,7 +23,7 @@ export async function submitSubmission(
   await api.post<ApiResponse<{ id: string }>>('/submissions', payload);
 }
 
-// Admin: read-only overview of all submissions (newest first).
+// Admin: overview of all submissions (newest first).
 export async function getAdminSubmissions(
   type?: SubmissionType
 ): Promise<ApiSubmission[]> {
@@ -25,5 +31,26 @@ export async function getAdminSubmissions(
   const res = await api.get<
     ApiResponse<{ submissions: ApiSubmission[]; total: number }>
   >(`/admin/submissions${query}`);
+  return res.data.submissions;
+}
+
+// Admin: set the handling status + an optional reply shown to the submitter.
+export async function updateSubmissionStatus(
+  id: string,
+  status: SubmissionStatus,
+  message?: string
+): Promise<void> {
+  await api.patch<ApiResponse<unknown>>(`/admin/submissions/${id}`, {
+    status,
+    ...(message !== undefined ? { message } : {}),
+  });
+}
+
+// The logged-in user's own reports/feedback (with status + admin reply).
+export async function getMySubmissions(): Promise<MySubmission[]> {
+  const res =
+    await api.get<ApiResponse<{ submissions: MySubmission[] }>>(
+      '/submissions/mine'
+    );
   return res.data.submissions;
 }

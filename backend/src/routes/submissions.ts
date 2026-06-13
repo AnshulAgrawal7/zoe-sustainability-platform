@@ -1,11 +1,18 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import rateLimit from 'express-rate-limit';
-import { createSubmission } from '../controllers/submissionController';
+import {
+  createSubmission,
+  getMySubmissions,
+} from '../controllers/submissionController';
 import { optionalAuth } from '../middleware/optionalAuth';
+import { authenticate } from '../middleware/auth';
 import { SUBMISSION_TYPES } from '../constants';
 
 const router = Router();
+
+// The logged-in user's own reports/feedback (with status + admin reply).
+router.get('/mine', authenticate, getMySubmissions);
 
 // Public, unauthenticated-friendly endpoint → guard against abuse, like the
 // idea/event-registration routes (tighter in production).

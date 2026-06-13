@@ -30,6 +30,9 @@ export default function ManageEventProposalsPage() {
   const [proposals, setProposals] = useState<AdminEventProposal[]>([]);
   const [filter, setFilter] = useState<EventProposalStatus | 'ALL'>('NEW');
   const [loading, setLoading] = useState(true);
+  // Which proposal is in the "decline with a message" state, + the draft message.
+  const [decliningId, setDecliningId] = useState<string | null>(null);
+  const [declineMsg, setDeclineMsg] = useState('');
 
   useEffect(() => {
     let cancelled = false;
@@ -52,13 +55,20 @@ export default function ManageEventProposalsPage() {
     };
   }, [filter]);
 
-  async function decline(id: string) {
+  async function confirmDecline(id: string) {
+    const message = declineMsg.trim() || undefined;
+    setDecliningId(null);
+    setDeclineMsg('');
     setProposals((prev) =>
       filter === 'NEW'
         ? prev.filter((p) => p.id !== id)
-        : prev.map((p) => (p.id === id ? { ...p, status: 'DECLINED' } : p))
+        : prev.map((p) =>
+            p.id === id
+              ? { ...p, status: 'DECLINED', adminNote: message ?? p.adminNote }
+              : p
+          )
     );
-    await updateEventProposal(id, 'DECLINED').catch(() => null);
+    await updateEventProposal(id, 'DECLINED', { message }).catch(() => null);
   }
 
   function submitter(p: AdminEventProposal): string {
@@ -163,24 +173,75 @@ export default function ManageEventProposalsPage() {
                 )}
               </div>
 
-              {p.status === 'NEW' && (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <Link
-                    to={`/admin/events/new?fromProposal=${p.id}`}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-green-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
-                  >
-                    {t('adminEventProposals.reviewAndCreate')}
-                    <ArrowRight size={14} aria-hidden="true" />
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => void decline(p.id)}
-                    className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:border-rose-400 hover:text-rose-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 dark:border-gray-600 dark:text-gray-300"
-                  >
-                    {t('adminEventProposals.decline')}
-                  </button>
-                </div>
+              {p.adminNote && (
+                <p className="mt-2 rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-600 dark:bg-gray-900/40 dark:text-gray-300">
+                  <span className="font-semibold">
+                    {t('adminEventProposals.currentNote')}:
+                  </span>{' '}
+                  {p.adminNote}
+                </p>
               )}
+
+              {p.status === 'NEW' &&
+                (decliningId === p.id ? (
+                  <div className="mt-3 rounded-lg border border-rose-200 bg-rose-50 p-3 dark:border-rose-800 dark:bg-rose-900/20">
+                    <label
+                      htmlFor={`decline-${p.id}`}
+                      className="mb-1 block text-xs font-medium text-rose-800 dark:text-rose-200"
+                    >
+                      {t('adminEventProposals.declineMessageLabel')}
+                    </label>
+                    <textarea
+                      id={`decline-${p.id}`}
+                      rows={2}
+                      value={declineMsg}
+                      onChange={(e) => setDeclineMsg(e.target.value)}
+                      placeholder={t(
+                        'adminEventProposals.declineMessagePlaceholder'
+                      )}
+                      className="w-full resize-none rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                    />
+                    <div className="mt-2 flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => void confirmDecline(p.id)}
+                        className="rounded-lg bg-rose-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+                      >
+                        {t('adminEventProposals.declineConfirm')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setDecliningId(null);
+                          setDeclineMsg('');
+                        }}
+                        className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-600 transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+                      >
+                        {t('common.cancel')}
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <Link
+                      to={`/admin/events/new?fromProposal=${p.id}`}
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-green-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
+                    >
+                      {t('adminEventProposals.reviewAndCreate')}
+                      <ArrowRight size={14} aria-hidden="true" />
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDecliningId(p.id);
+                        setDeclineMsg('');
+                      }}
+                      className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:border-rose-400 hover:text-rose-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 dark:border-gray-600 dark:text-gray-300"
+                    >
+                      {t('adminEventProposals.decline')}
+                    </button>
+                  </div>
+                ))}
               {p.status === 'CONVERTED' && p.createdEventId && (
                 <Link
                   to={`/events/${p.createdEventId}`}

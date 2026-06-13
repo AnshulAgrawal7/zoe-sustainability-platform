@@ -3,6 +3,7 @@ import type {
   ApiResponse,
   EventProposalPayload,
   AdminEventProposal,
+  MyEventProposal,
   EventProposalStatus,
 } from '../types';
 
@@ -39,14 +40,26 @@ export async function getEventProposal(
   return res.data;
 }
 
-// Admin: mark a proposal CONVERTED (with the new event id) or DECLINED.
+// Admin: mark a proposal CONVERTED (with the new event id) or DECLINED, with an
+// optional message shown to the submitter.
 export async function updateEventProposal(
   id: string,
   status: EventProposalStatus,
-  createdEventId?: string
+  options?: { createdEventId?: string; message?: string }
 ): Promise<void> {
   await api.patch<ApiResponse<unknown>>(`/admin/event-proposals/${id}`, {
     status,
-    ...(createdEventId ? { createdEventId } : {}),
+    ...(options?.createdEventId
+      ? { createdEventId: options.createdEventId }
+      : {}),
+    ...(options?.message !== undefined ? { message: options.message } : {}),
   });
+}
+
+// The logged-in user's own event proposals (every status) — dashboard tracking.
+export async function getMyEventProposals(): Promise<MyEventProposal[]> {
+  const res = await api.get<ApiResponse<{ proposals: MyEventProposal[] }>>(
+    '/event-proposals/mine'
+  );
+  return res.data.proposals;
 }

@@ -333,14 +333,29 @@ export interface UiRewardTier {
 // Citizen report (environmental issue) or feedback from /participate.
 export type SubmissionType = 'REPORT' | 'FEEDBACK';
 
+// Handling workflow for a report/feedback so the submitter gets feedback.
+export type SubmissionStatus = 'NEW' | 'IN_REVIEW' | 'RESOLVED' | 'DECLINED';
+
 export interface ApiSubmission {
   id: string;
   type: SubmissionType;
   message: string;
+  status: SubmissionStatus;
+  adminNote: string | null;
   submitterName: string | null;
   submitterEmail: string | null;
   userId: string | null;
-  user?: { id: string; name: string; email: string } | null;
+  user?: { id: string; username: string; name: string; email: string } | null;
+  createdAt: string;
+}
+
+// A citizen's own report/feedback (with status + admin reply) — dashboard.
+export interface MySubmission {
+  id: string;
+  type: SubmissionType;
+  message: string;
+  status: SubmissionStatus;
+  adminNote: string | null;
   createdAt: string;
 }
 
@@ -404,6 +419,7 @@ export interface AdminEventProposal {
   imageUrl: string | null;
   projectId: string | null;
   status: EventProposalStatus;
+  adminNote: string | null;
   submitterName: string | null;
   submitterEmail: string | null;
   createdEventId: string | null;
@@ -413,14 +429,23 @@ export interface AdminEventProposal {
 
 // --- Citizen in-app notifications (mention bell) ---
 
+export type UserNotificationType =
+  | 'MENTION'
+  | 'IDEA_STATUS'
+  | 'PROPOSAL_STATUS'
+  | 'SUBMISSION_STATUS';
+
 export interface UserNotification {
   id: string;
-  type: 'MENTION';
+  type: UserNotificationType;
   read: boolean;
   createdAt: string;
   eventId: string | null;
   ideaId: string | null;
+  submissionId: string | null;
   commentId: string | null;
+  status: string | null;
+  message: string | null;
   actorUsername: string | null;
 }
 
@@ -474,7 +499,20 @@ export interface MyIdea {
   description: string;
   category: ApiProjectCategory;
   status: IdeaStatus;
+  adminNote: string | null;
   voteCount: number;
+  createdAt: string;
+}
+
+// A citizen's own event proposal (any status) — for dashboard tracking.
+export interface MyEventProposal {
+  id: string;
+  title: string;
+  category: ApiProjectCategory;
+  date: string;
+  status: EventProposalStatus;
+  adminNote: string | null;
+  createdEventId: string | null;
   createdAt: string;
 }
 
@@ -639,9 +677,10 @@ export interface Idea {
   description: string;
   category: ApiProjectCategory;
   status: IdeaStatus;
+  adminNote: string | null;
   submitterName: string | null;
   submitterEmail: string | null;
   userId: string | null;
-  user: { id: string; name: string; email: string } | null;
+  user: { id: string; username: string; name: string; email: string } | null;
   createdAt: string;
 }

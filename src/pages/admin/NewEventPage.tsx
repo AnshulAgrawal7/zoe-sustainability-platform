@@ -140,9 +140,9 @@ export default function NewEventPage() {
       });
       // Mark the source proposal as converted so it leaves the review queue.
       if (proposalId) {
-        await updateEventProposal(proposalId, 'CONVERTED', created.id).catch(
-          () => null
-        );
+        await updateEventProposal(proposalId, 'CONVERTED', {
+          createdEventId: created.id,
+        }).catch(() => null);
       }
       navigate('/admin/events');
     } catch (err) {

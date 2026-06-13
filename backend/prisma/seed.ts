@@ -327,6 +327,26 @@ async function main() {
       '2026-09-27T09:00:00.000Z', 'Kassiopi Community Hall', 'COMMUNITY', 'proj-zoe-programme', 30, 200),
   ]);
 
+  // Approximate WGS84 coordinates for the seeded events (North Corfu). DEMO data —
+  // illustrative spots so the events map has markers; future events are geocoded
+  // from their address at creation time.
+  const EVENT_COORDS: Record<string, { lat: number; lng: number }> = {
+    'evt-cleanup-jun25': { lat: 39.7905, lng: 19.923 },
+    'evt-cleanup-jul25': { lat: 39.7935, lng: 19.83 },
+    'evt-biodiversity-workshop': { lat: 39.787, lng: 19.931 },
+    'evt-recycling-hub': { lat: 39.79, lng: 19.81 },
+    'evt-composting-expansion': { lat: 39.7928, lng: 19.8175 },
+    'evt-water-monitoring': { lat: 39.794, lng: 19.819 },
+    'evt-reforestation-day': { lat: 39.747, lng: 19.829 },
+    'evt-youth-eco': { lat: 39.6243, lng: 19.918 },
+    'evt-sdg-forum': { lat: 39.7885, lng: 19.9205 },
+  };
+  await Promise.all(
+    Object.entries(EVENT_COORDS).map(([id, c]) =>
+      prisma.event.update({ where: { id }, data: { lat: c.lat, lng: c.lng } })
+    )
+  );
+
   // Participations
   const upsertParticipation = (userId: string, projectId: string, points: number) =>
     prisma.participation.upsert({

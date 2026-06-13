@@ -260,11 +260,17 @@ JPEG/PNG/WebP/GIF. 503 if storage is not configured.
 
 ## Notifications (`/api/notifications`)
 
-Citizen-facing mention bell (distinct from the computed admin bell).
+The logged-in user's notifications. The header shows **one bell** for everyone;
+for admins it also bundles the computed admin review queue (`GET
+/admin/notifications`) as a second section.
 
 ### GET /notifications
 The user's notifications (newest first) + `unreadCount`. **Auth required.**
-Each: `{ id, type: "MENTION", read, createdAt, eventId, ideaId, commentId, actorUsername }`.
+Each: `{ id, type, read, createdAt, eventId, ideaId, submissionId, commentId, status, message, actorUsername }`.
+`type` is `MENTION` (comment mention → links to the event/idea) or a status
+update — `IDEA_STATUS` / `PROPOSAL_STATUS` / `SUBMISSION_STATUS` — created when an
+admin changes the status of something the user submitted (`status` = the new
+status, `message` = the admin's optional note; links to the user's dashboard).
 
 ### POST /notifications/read
 Mark all of the user's notifications as read. **Auth required.**
@@ -277,6 +283,10 @@ Mark all of the user's notifications as read. **Auth required.**
 Citizen event proposal (one language). Open to everyone (a token links the
 submitter). NOT shown on the public idea board — an admin converts it into a
 real Event. Body: `{ title, description, lang, category, date, location?, lat?, lng?, capacity?, imageUrl?, projectId?, submitterName?, submitterEmail? }`.
+
+### GET /event-proposals/mine
+The logged-in user's own proposals (every status) for dashboard tracking, with
+`adminNote`. **Auth required.**
 
 Admin review lives under `/api/admin/event-proposals` (see Admin section).
 
@@ -313,7 +323,8 @@ One approved idea + its visible comments + `voteCount`/`votedByMe`. optionalAuth
 
 ### GET /ideas/mine
 The logged-in user's own ideas in **every** status (`NEW|IN_REVIEW|ACCEPTED|DECLINED`)
-for dashboard tracking. **Auth required.** Each carries `voteCount`.
+for dashboard tracking. **Auth required.** Each carries `voteCount` + `adminNote`
+(the reviewer's message).
 
 ### POST /ideas/:id/vote
 Toggle a support vote on an **ACCEPTED** idea (one per user). **Auth required.**
@@ -322,7 +333,12 @@ Returns `{ voted, voteCount }`. Voting on non-approved ideas → 403.
 ### POST /ideas/:id/comments
 Comment on an approved idea. **Auth required.** `@username` mentions notify members.
 
-Admin review: `GET /admin/ideas`, `PATCH /admin/ideas/:id { status }` (see Admin).
+Admin review: `GET /admin/ideas`, `PATCH /admin/ideas/:id { status, message? }`
+(see Admin). The optional `message` is stored as the idea's `adminNote` and sent
+to the submitter as an `IDEA_STATUS` notification.
+
+### GET /submissions/mine
+The logged-in user's own reports/feedback with `status` + `adminNote`. **Auth required.**
 
 ---
 
@@ -410,16 +426,27 @@ Idempotent — re-running never double-awards. **ADMIN auth required.**
 **Response 200:** `{ "success": true, "data": { "id": "…", "status": "COMPLETED", "awardedCount": 3, "pointsPerUser": 25 } }`
 
 ### GET /admin/submissions
-Citizen reports & feedback from `/api/submissions` (read-only overview; newest
-first). Optional `?type=REPORT|FEEDBACK`. Includes the linked `user`
-(id/name/email) when the submitter was logged in. **ADMIN auth required.**
+Citizen reports & feedback from `/api/submissions` (newest first). Optional
+`?type=REPORT|FEEDBACK`. Includes the linked `user` (username/name/email) when
+the submitter was logged in, plus `status` + `adminNote`. **ADMIN auth required.**
+
+### PATCH /admin/submissions/:id
+Set the handling `status` (`NEW|IN_REVIEW|RESOLVED|DECLINED`) and an optional
+`message` (stored as `adminNote`, sent to the submitter as a `SUBMISSION_STATUS`
+notification). **ADMIN auth required.**
+
+### PATCH /admin/ideas/:id
+`{ status, message? }` — change an idea's status; the optional message becomes
+the idea's `adminNote` and an `IDEA_STATUS` notification to the submitter.
 
 ### Admin event proposals
 - `GET /admin/event-proposals?status=NEW|CONVERTED|DECLINED` — list citizen
   event proposals (includes the linked `user` with `username`).
 - `GET /admin/event-proposals/:id` — one proposal (pre-fills the event form).
-- `PATCH /admin/event-proposals/:id` — `{ status, createdEventId? }`: set
-  `DECLINED`, or `CONVERTED` with the id of the Event created from it.
+- `PATCH /admin/event-proposals/:id` — `{ status, createdEventId?, message? }`:
+  set `DECLINED` (optionally with a `message`), or `CONVERTED` with the id of the
+  Event created from it. The message → `adminNote` + a `PROPOSAL_STATUS`
+  notification to the submitter.
 
 The review flow: open `/admin/events/new?fromProposal=<id>` → the form is
 pre-filled and the source language auto-translated (DeepL) into EN/EL/DE → on

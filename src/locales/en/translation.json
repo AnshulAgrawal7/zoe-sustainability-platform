@@ -812,7 +812,12 @@
     "tierLine": "Level: {{tier}} ({{name}})",
     "pointsPending": "pending",
     "yourIdeas": "Your ideas",
-    "noIdeas": "You haven't submitted any ideas yet."
+    "noIdeas": "You haven't submitted any ideas yet.",
+    "adminReply": "Team reply",
+    "yourProposals": "Your event ideas",
+    "noProposals": "You haven't proposed any events yet.",
+    "yourReports": "Your reports & feedback",
+    "noReports": "You haven't sent any reports or feedback yet."
   },
   "admin": {
     "title": "Admin Dashboard",
@@ -1646,7 +1651,12 @@
     "changeStatus": "Change status",
     "empty": "No ideas yet.",
     "replyByEmail": "Reply by email to {{email}}",
-    "emailSubject": "Your idea: {{title}}"
+    "emailSubject": "Your idea: {{title}}",
+    "save": "Save",
+    "saved": "Idea updated",
+    "messageLabel": "Message to submitter (optional)",
+    "messagePlaceholder": "e.g. why it was accepted or declined…",
+    "currentNote": "Your note"
   },
   "adminNotifications": {
     "bell": "Notifications",
@@ -1728,7 +1738,13 @@
     "typeREPORT": "Issue report",
     "typeFEEDBACK": "Feedback",
     "anonymous": "Anonymous",
-    "empty": "No submissions yet."
+    "empty": "No submissions yet.",
+    "save": "Save",
+    "saved": "Submission updated",
+    "statusLabel": "Status",
+    "replyLabel": "Reply to submitter (optional)",
+    "replyPlaceholder": "Short reply…",
+    "currentReply": "Your reply"
   },
   "adminEvents": {
     "title": "Manage Events",
@@ -1761,10 +1777,15 @@
     "noLocation": "No location data for these projects.",
     "legendLabel": "Project categories",
     "ariaLabel": "Map of ZOE initiatives",
-    "locationOf": "Map showing the location of {{name}}"
+    "locationOf": "Map showing the location of {{name}}",
+    "eventsAriaLabel": "Map of events across North Corfu",
+    "eventsHeading": "Events on the map",
+    "noSpecificProject": "No specific project",
+    "legendByProject": "Projects"
   },
   "popup": {
-    "viewProject": "View project →"
+    "viewProject": "View project →",
+    "viewEvent": "View event"
   },
   "ideasBoard": {
     "title": "Ideas board",
@@ -1939,7 +1960,10 @@
     "someone": "Someone",
     "onEvent": "an event",
     "onIdea": "an idea",
-    "mentioned": "{{actor}} mentioned you in a comment on {{where}}"
+    "mentioned": "{{actor}} mentioned you in a comment on {{where}}",
+    "ideaStatusChanged": "Your idea was {{status}}",
+    "proposalStatusChanged": "Your event idea was {{status}}",
+    "submissionStatusChanged": "Your report was {{status}}"
   },
   "address": {
     "placeholder": "Start typing an address…",
@@ -2003,6 +2027,24 @@
     "viewEvent": "View published event",
     "reviewTitle": "Review proposal & create event",
     "prefillNote": "This form is pre-filled from a citizen proposal and auto-translated. Please review every field before saving.",
-    "loadError": "The proposal could not be loaded."
+    "loadError": "The proposal could not be loaded.",
+    "currentNote": "Your note",
+    "declineMessageLabel": "Reason for the submitter (optional)",
+    "declineMessagePlaceholder": "e.g. why this event idea was declined…",
+    "declineConfirm": "Decline"
+  },
+  "notifications": {
+    "bell": "Notifications",
+    "bellWithCount": "Notifications, {{count}} unread",
+    "title": "Notifications",
+    "empty": "No notifications yet.",
+    "reviewQueue": "Review queue",
+    "yours": "Your notifications"
+  },
+  "submissionStatus": {
+    "NEW": "New",
+    "IN_REVIEW": "In review",
+    "RESOLVED": "Resolved",
+    "DECLINED": "Declined"
   }
 }

@@ -410,3 +410,28 @@ Event-form prefill via `/admin/events/new?fromProposal=<id>` (DeepL auto-transla
   `GET /ideas/public/:id` also returns `voteCount`/`votedByMe`.
 - Frontend: idea board + detail page get a 👍 support button; the dashboard gains
   a "Your ideas" section with status pills (in review / approved / declined).
+
+## Addendum (2026-06-13c): status feedback loop, one bell & the events map
+
+- **Schema** (migration `20260613160000_status_workflow_admin_notes`):
+  `Idea.adminNote`, `EventProposal.adminNote`, `Submission.status` (+ `adminNote`,
+  `updatedAt`), and `Notification.message` / `status` / `submissionId`.
+- **Status feedback loop:** `PATCH /admin/ideas/:id`, `PATCH
+  /admin/event-proposals/:id` and the new `PATCH /admin/submissions/:id` all take
+  an optional `message`; changing the status writes `adminNote` and creates a
+  `*_STATUS` notification for the submitter (`utils/notify.ts`). Citizens track
+  everything on `/dashboard` (own ideas / event proposals / reports, each with the
+  status and the admin's reply) and via the bell (status notifications link to
+  `/dashboard`). New reader endpoints: `GET /event-proposals/mine`,
+  `GET /submissions/mine`.
+- **One notification bell:** `layout/NotificationBell` replaces the separate
+  admin + user bells — admins get a "review queue" section plus their personal
+  notifications in a single dropdown; the badge sums both unread counts.
+- **Map moved to events:** the Leaflet map now lives on `/events` (and
+  `/get-involved`) instead of `/projects`. Markers are coloured **per project**
+  (`map/eventColors.ts` palette) with a matching legend; `map/EventsMap` +
+  `map/EventsMapSection` (self-contained: fetch located events → colours +
+  legend). Existing seed events were given North-Corfu coordinates; new events are
+  geocoded from their address at creation. `ProjectMap` is retired from the pages.
+- **Admin can open items:** admin idea/event lists link out to the public detail
+  pages (`/ideas/:id`, `/events/:id`).

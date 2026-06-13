@@ -235,6 +235,9 @@ model Idea {
   description    String
   category       String
   status         String   @default("NEW")
+  // Optional message the admin leaves on review (approve/decline) — shown ONLY to
+  // the submitter in their dashboard and delivered via an in-app notification.
+  adminNote      String?
   submitterName  String?
   submitterEmail String?
   user           User?    @relation(fields: [userId], references: [id])
@@ -270,13 +273,20 @@ model Submission {
   id             String   @id @default(cuid())
   type           String
   message        String
+  // Lightweight handling workflow so the submitter gets feedback.
+  // status: "NEW" | "IN_REVIEW" | "RESOLVED" | "DECLINED"
+  status         String   @default("NEW")
+  // Admin reply shown to the submitter in their dashboard + via notification.
+  adminNote      String?
   submitterName  String?
   submitterEmail String?
   user           User?    @relation(fields: [userId], references: [id])
   userId         String?
   createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt @default(now())
 
   @@index([type])
+  @@index([status])
 }
 
 // Citizen-submitted EVENT proposal (community). Unlike an Idea, this is NOT shown
@@ -300,6 +310,8 @@ model EventProposal {
   imageUrl       String?
   projectId      String? // suggested project (optional; admin confirms/assigns)
   status         String    @default("NEW")
+  // Admin message on review (approve/decline), shown to the submitter only.
+  adminNote      String?
   submitterName  String?
   submitterEmail String?
   user           User?     @relation(fields: [userId], references: [id])
@@ -310,23 +322,29 @@ model EventProposal {
   @@index([status])
 }
 
-// In-app notification for a USER (e.g. "X mentioned you in a comment"). Drives the
-// citizen-facing bell. `read` clears the unread count. `type`: "MENTION" (only kind
-// for now). `actor` is who triggered it; commentId/eventId/ideaId give the target
-// link. Distinct from the ADMIN bell, which is computed (no rows).
+// In-app notification for a USER. Drives the citizen-facing bell. `read` clears
+// the unread count. `type`: "MENTION" (comment mention) | "IDEA_STATUS" |
+// "PROPOSAL_STATUS" | "SUBMISSION_STATUS" (admin changed the status of something
+// the user submitted). `actor` is who triggered it; commentId/eventId/ideaId give
+// a deep-link target; `message` carries the admin's optional note for status
+// notifications. Distinct from the ADMIN bell, which is computed (no rows).
 model Notification {
-  id        String   @id @default(cuid())
-  user      User     @relation("Recipient", fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  type      String   @default("MENTION")
-  actor     User?    @relation("Actor", fields: [actorId], references: [id])
-  actorId   String?
-  comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
-  commentId String?
-  eventId   String?
-  ideaId    String?
-  read      Boolean  @default(false)
-  createdAt DateTime @default(now())
+  id           String   @id @default(cuid())
+  user         User     @relation("Recipient", fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  type         String   @default("MENTION")
+  actor        User?    @relation("Actor", fields: [actorId], references: [id])
+  actorId      String?
+  comment      Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId    String?
+  eventId      String?
+  ideaId       String?
+  submissionId String?
+  // The new status (for *_STATUS types) and/or the admin's note to show inline.
+  status       String?
+  message      String?
+  read         Boolean  @default(false)
+  createdAt    DateTime @default(now())
 
   @@index([userId, read])
 }
