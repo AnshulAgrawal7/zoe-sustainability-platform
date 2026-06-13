@@ -1,9 +1,10 @@
 import {
-  Leaf,
   Bike,
-  Users,
+  Recycle,
+  Waves,
+  Trees,
+  Zap,
   GraduationCap,
-  Palette,
   Megaphone,
   CalendarDays,
   FolderKanban,
@@ -33,14 +34,7 @@ export interface CategoryVisual {
 
 // Generic visual keys (the single source of truth).
 const VISUALS = {
-  environment: {
-    accent: 'bg-green-500',
-    dotHex: '#22c55e',
-    gradient: 'from-green-400 to-emerald-600',
-    badge:
-      'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300',
-    Icon: Leaf,
-  },
+  // --- the six project categories ---
   mobility: {
     accent: 'bg-blue-500',
     dotHex: '#3b82f6',
@@ -48,15 +42,38 @@ const VISUALS = {
     badge: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
     Icon: Bike,
   },
-  community: {
+  wasteCircular: {
     accent: 'bg-orange-500',
     dotHex: '#f97316',
     gradient: 'from-amber-400 to-orange-600',
     badge:
       'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300',
-    Icon: Users,
+    Icon: Recycle,
   },
-  education: {
+  marineProtection: {
+    accent: 'bg-cyan-500',
+    dotHex: '#0891b2',
+    gradient: 'from-cyan-400 to-blue-600',
+    badge: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/40 dark:text-cyan-300',
+    Icon: Waves,
+  },
+  naturalMonuments: {
+    accent: 'bg-green-500',
+    dotHex: '#16a34a',
+    gradient: 'from-green-400 to-emerald-600',
+    badge:
+      'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300',
+    Icon: Trees,
+  },
+  energy: {
+    accent: 'bg-yellow-500',
+    dotHex: '#eab308',
+    gradient: 'from-yellow-300 to-amber-500',
+    badge:
+      'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300',
+    Icon: Zap,
+  },
+  educationParticipation: {
     accent: 'bg-purple-500',
     dotHex: '#a855f7',
     gradient: 'from-violet-400 to-purple-600',
@@ -64,13 +81,7 @@ const VISUALS = {
       'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300',
     Icon: GraduationCap,
   },
-  culture: {
-    accent: 'bg-teal-500',
-    dotHex: '#14b8a6',
-    gradient: 'from-teal-400 to-cyan-600',
-    badge: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300',
-    Icon: Palette,
-  },
+  // --- the "What's New" feed categories ---
   announcement: {
     accent: 'bg-blue-500',
     dotHex: '#3b82f6',
@@ -114,11 +125,12 @@ type VisualKey = keyof typeof VISUALS;
 
 // Every real enum value is mapped explicitly — no silent gray default.
 const PROJECT_CATEGORY: Record<string, VisualKey> = {
-  ENVIRONMENT: 'environment',
   MOBILITY: 'mobility',
-  COMMUNITY: 'community',
-  EDUCATION: 'education',
-  CULTURE: 'culture',
+  WASTE_CIRCULAR: 'wasteCircular',
+  MARINE_PROTECTION: 'marineProtection',
+  NATURAL_MONUMENTS: 'naturalMonuments',
+  ENERGY: 'energy',
+  EDUCATION_PARTICIPATION: 'educationParticipation',
 };
 
 const FEED_CATEGORY: Record<string, VisualKey> = {
@@ -131,7 +143,7 @@ const FEED_CATEGORY: Record<string, VisualKey> = {
 
 /** Visual for a PROJECT_CATEGORIES value (projects, events, learn). */
 export function projectCategoryVisual(category: string): CategoryVisual {
-  return VISUALS[PROJECT_CATEGORY[category] ?? 'community'];
+  return VISUALS[PROJECT_CATEGORY[category] ?? 'naturalMonuments'];
 }
 
 /** Raw hex accent for a PROJECT_CATEGORIES value (Leaflet markers, legend). */
@@ -139,13 +151,14 @@ export function projectCategoryHex(category: string): string {
   return projectCategoryVisual(category).dotHex;
 }
 
-/** The five project categories, in their canonical order (legend, filters). */
+/** The six project categories, in their canonical order (legend, filters). */
 export const PROJECT_CATEGORY_KEYS = [
-  'ENVIRONMENT',
   'MOBILITY',
-  'COMMUNITY',
-  'EDUCATION',
-  'CULTURE',
+  'WASTE_CIRCULAR',
+  'MARINE_PROTECTION',
+  'NATURAL_MONUMENTS',
+  'ENERGY',
+  'EDUCATION_PARTICIPATION',
 ] as const;
 
 /** Visual for a PostCategory value (the merged feed). */

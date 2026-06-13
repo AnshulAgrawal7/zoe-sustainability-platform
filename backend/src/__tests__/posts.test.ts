@@ -83,7 +83,7 @@ describe('Auto-post hook on project lifecycle', () => {
       .send({
         titleEn: 'Auto Hook EN', titleEl: 'Auto Hook EL', titleDe: 'Auto Hook DE',
         descriptionEn: 'desc EN', descriptionEl: 'desc EL', descriptionDe: 'desc DE',
-        category: 'COMMUNITY', sdgIds: [11], status: 'OPEN',
+        category: 'EDUCATION_PARTICIPATION', sdgIds: [11], status: 'OPEN',
       });
     expect(res.status).toBe(201);
     autoProjectId = res.body.data.id as string;

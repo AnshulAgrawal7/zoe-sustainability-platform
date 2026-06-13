@@ -17,7 +17,7 @@ const eventPayload = {
   descriptionEn: 'A test event', descriptionEl: 'Δοκιμαστική εκδήλωση', descriptionDe: 'Eine Testveranstaltung',
   date: '2026-10-01T09:00:00.000Z',
   location: 'Test Beach',
-  category: 'ENVIRONMENT',
+  category: 'NATURAL_MONUMENTS',
   rewardPoints: 35,
   capacity: 50,
   projectId: LINKED_PROJECT,

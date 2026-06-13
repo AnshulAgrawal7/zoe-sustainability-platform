@@ -85,7 +85,7 @@ export async function createLearningResource(req: AuthRequest, res: Response) {
         bodyEn: body.bodyEn ?? '',
         bodyEl: body.bodyEl ?? '',
         bodyDe: body.bodyDe ?? '',
-        category: body.category ?? 'ENVIRONMENT',
+        category: body.category ?? 'NATURAL_MONUMENTS',
         sdgIds: JSON.stringify(body.sdgIds ?? []),
         imageUrl: body.imageUrl?.trim() || null,
         sourceNote: body.sourceNote?.trim() || null,

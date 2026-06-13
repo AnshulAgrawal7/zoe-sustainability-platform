@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { MapPin } from 'lucide-react';
 import type { Project, ApiProjectCategory } from '../../types';
 
-// Maps ZOE's 5 canonical project categories onto the thematic initiatives the
+// Maps ZOE's 6 canonical project categories onto the thematic initiatives the
 // municipality communicates (stakeholder request: "tabs for different
 // initiatives — marine protection, natural monuments, ...").
 type InitiativeId =
@@ -13,11 +13,12 @@ type InitiativeId =
   | 'educationTourism';
 
 const CATEGORY_TO_INITIATIVE: Record<ApiProjectCategory, InitiativeId> = {
-  ENVIRONMENT: 'natureBiodiversity',
+  MARINE_PROTECTION: 'natureBiodiversity',
+  NATURAL_MONUMENTS: 'natureBiodiversity',
+  WASTE_CIRCULAR: 'circularClimate',
   MOBILITY: 'circularClimate',
-  COMMUNITY: 'circularClimate',
-  EDUCATION: 'educationTourism',
-  CULTURE: 'educationTourism',
+  ENERGY: 'circularClimate',
+  EDUCATION_PARTICIPATION: 'educationTourism',
 };
 
 const INITIATIVE_ORDER: InitiativeId[] = [

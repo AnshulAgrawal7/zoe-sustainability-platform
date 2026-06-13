@@ -2,11 +2,12 @@
 // so fast refresh keeps working — see react-refresh/only-export-components).
 
 export const LEARN_CATEGORIES = [
-  'ENVIRONMENT',
   'MOBILITY',
-  'COMMUNITY',
-  'EDUCATION',
-  'CULTURE',
+  'WASTE_CIRCULAR',
+  'MARINE_PROTECTION',
+  'NATURAL_MONUMENTS',
+  'ENERGY',
+  'EDUCATION_PARTICIPATION',
 ] as const;
 
 export const ALL_SDGS = [
@@ -35,7 +36,7 @@ export const emptyLearnForm: LearnFormState = {
   bodyEn: '',
   bodyEl: '',
   bodyDe: '',
-  category: 'ENVIRONMENT',
+  category: 'MOBILITY',
   imageUrl: '',
   sourceNote: '',
   projectId: '',

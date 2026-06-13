@@ -12,30 +12,22 @@ import {
 } from 'lucide-react';
 import { getPublicIdeas, toggleIdeaVote } from '../services/ideaService';
 import { useAuthStore } from '../stores/authStore';
+import { projectCategoryVisual } from '../components/ui/categoryVisuals';
 import type { PublicIdea, ApiProjectCategory } from '../types';
 
 const CATEGORIES: ApiProjectCategory[] = [
-  'ENVIRONMENT',
   'MOBILITY',
-  'COMMUNITY',
-  'EDUCATION',
-  'CULTURE',
+  'WASTE_CIRCULAR',
+  'MARINE_PROTECTION',
+  'NATURAL_MONUMENTS',
+  'ENERGY',
+  'EDUCATION_PARTICIPATION',
 ];
 
 const LOCALES: Record<string, string> = {
   en: 'en-GB',
   el: 'el-GR',
   de: 'de-DE',
-};
-
-const categoryColors: Record<string, string> = {
-  ENVIRONMENT:
-    'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300',
-  MOBILITY: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
-  COMMUNITY:
-    'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300',
-  EDUCATION: 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300',
-  CULTURE: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300',
 };
 
 export default function IdeasPage() {
@@ -184,10 +176,7 @@ export default function IdeasPage() {
               >
                 <div className="mb-2 flex flex-wrap items-center gap-2">
                   <span
-                    className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                      categoryColors[idea.category] ??
-                      'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
-                    }`}
+                    className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${projectCategoryVisual(idea.category).badge}`}
                   >
                     {t(`projects.category.${idea.category}`)}
                   </span>

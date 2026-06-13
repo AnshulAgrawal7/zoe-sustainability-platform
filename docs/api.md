@@ -69,7 +69,7 @@ Invalidate refresh token. Requires auth.
 ### GET /projects
 List projects. Public endpoint.
 
-**Query params:** `page` (int), `limit` (1–50), `category` (ENVIRONMENT|MOBILITY|COMMUNITY|EDUCATION|CULTURE), `status` (default: OPEN)
+**Query params:** `page` (int), `limit` (1–50), `category` (MOBILITY|WASTE_CIRCULAR|MARINE_PROTECTION|NATURAL_MONUMENTS|ENERGY|EDUCATION_PARTICIPATION), `status` (default: OPEN)
 
 **Response 200:**
 ```json

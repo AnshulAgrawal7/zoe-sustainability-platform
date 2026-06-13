@@ -1,7 +1,7 @@
 // Core domain types for the ZOE platform prototype
 
 // Finer-grained categories retained for EVENTS only. Projects use the canonical
-// 5-value `ApiProjectCategory` (single source of truth across all project screens).
+// 6-value `ApiProjectCategory` (single source of truth across all project screens).
 export type ProjectCategory =
   | 'Biodiversity'
   | 'Circular Economy'
@@ -43,7 +43,7 @@ export interface SDG {
 export interface Project {
   id: string;
   title: string;
-  category: ApiProjectCategory; // canonical 5-value taxonomy (consistent with /projects API)
+  category: ApiProjectCategory; // canonical 6-value taxonomy (consistent with /projects API)
   status: ProjectStatus;
   location: string;
   lat?: number;
@@ -189,11 +189,12 @@ export type UserLanguage = 'EN' | 'EL' | 'DE';
 export type UserProfile = 'RESIDENT' | 'VISITOR' | 'STUDENT' | 'VOLUNTEER';
 export type ApiProjectStatus = 'DRAFT' | 'OPEN' | 'CLOSED' | 'COMPLETED';
 export type ApiProjectCategory =
-  | 'ENVIRONMENT'
   | 'MOBILITY'
-  | 'COMMUNITY'
-  | 'EDUCATION'
-  | 'CULTURE';
+  | 'WASTE_CIRCULAR'
+  | 'MARINE_PROTECTION'
+  | 'NATURAL_MONUMENTS'
+  | 'ENERGY'
+  | 'EDUCATION_PARTICIPATION';
 
 export interface AuthUser {
   id: string;

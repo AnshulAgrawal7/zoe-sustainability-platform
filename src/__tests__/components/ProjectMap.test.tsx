@@ -29,7 +29,7 @@ const points: MapPoint[] = [
   {
     id: 'proj-marine',
     title: 'Marine Protection',
-    category: 'ENVIRONMENT',
+    category: 'MARINE_PROTECTION',
     sdgs: [14, 15],
     lat: 39.8019,
     lng: 19.8697,

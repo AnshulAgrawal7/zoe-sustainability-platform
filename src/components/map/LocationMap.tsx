@@ -41,7 +41,7 @@ export default function LocationMap({
   lat,
   lng,
   label,
-  category = 'COMMUNITY',
+  category = 'NATURAL_MONUMENTS',
   zoom = 14,
   className,
   heightClass = 'h-64',

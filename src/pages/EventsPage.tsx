@@ -14,11 +14,12 @@ import { projectCategoryVisual } from '../components/ui/categoryVisuals';
 import type { ApiEvent, ApiProjectCategory } from '../types';
 
 const CATEGORIES: ApiProjectCategory[] = [
-  'ENVIRONMENT',
   'MOBILITY',
-  'COMMUNITY',
-  'EDUCATION',
-  'CULTURE',
+  'WASTE_CIRCULAR',
+  'MARINE_PROTECTION',
+  'NATURAL_MONUMENTS',
+  'ENERGY',
+  'EDUCATION_PARTICIPATION',
 ];
 
 const LOCALES: Record<string, string> = {

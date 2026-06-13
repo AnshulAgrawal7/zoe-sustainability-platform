@@ -704,11 +704,12 @@
       "COMPLETED": "Ολοκληρωμένο"
     },
     "category": {
-      "ENVIRONMENT": "Περιβάλλον",
       "MOBILITY": "Κινητικότητα",
-      "COMMUNITY": "Κοινότητα",
-      "EDUCATION": "Εκπαίδευση",
-      "CULTURE": "Πολιτισμός"
+      "WASTE_CIRCULAR": "Απόβλητα & Κυκλική Οικονομία",
+      "MARINE_PROTECTION": "Προστασία Θάλασσας",
+      "NATURAL_MONUMENTS": "Φυσικά Μνημεία",
+      "ENERGY": "Ενέργεια",
+      "EDUCATION_PARTICIPATION": "Εκπαίδευση & Συμμετοχή"
     },
     "noProjects": "Δεν βρέθηκαν έργα.",
     "loadMore": "Φόρτωση περισσότερων",

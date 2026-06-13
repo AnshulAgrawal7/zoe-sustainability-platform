@@ -7,11 +7,12 @@ import type { ApiProjectCategory } from '../../types';
 
 // Reuses the Project category values (labels via i18n `projects.category.*`).
 const CATEGORIES: ApiProjectCategory[] = [
-  'ENVIRONMENT',
   'MOBILITY',
-  'COMMUNITY',
-  'EDUCATION',
-  'CULTURE',
+  'WASTE_CIRCULAR',
+  'MARINE_PROTECTION',
+  'NATURAL_MONUMENTS',
+  'ENERGY',
+  'EDUCATION_PARTICIPATION',
 ];
 
 interface IdeaSubmitFormProps {

@@ -2,11 +2,12 @@
 // refresh keeps working — see react-refresh/only-export-components).
 
 export const EVENT_CATEGORIES = [
-  'ENVIRONMENT',
   'MOBILITY',
-  'COMMUNITY',
-  'EDUCATION',
-  'CULTURE',
+  'WASTE_CIRCULAR',
+  'MARINE_PROTECTION',
+  'NATURAL_MONUMENTS',
+  'ENERGY',
+  'EDUCATION_PARTICIPATION',
 ] as const;
 
 // `type` (not `interface`) so the form object stays assignable to the
@@ -41,7 +42,7 @@ export const emptyEventForm: EventFormState = {
   location: '',
   lat: null,
   lng: null,
-  category: 'ENVIRONMENT',
+  category: 'MOBILITY',
   rewardPoints: 20,
   capacity: '',
   imageUrl: '',

@@ -704,11 +704,12 @@
       "COMPLETED": "Abgeschlossen"
     },
     "category": {
-      "ENVIRONMENT": "Umwelt",
       "MOBILITY": "Mobilität",
-      "COMMUNITY": "Gemeinschaft",
-      "EDUCATION": "Bildung",
-      "CULTURE": "Kultur"
+      "WASTE_CIRCULAR": "Abfall & Kreislaufwirtschaft",
+      "MARINE_PROTECTION": "Meeresschutz",
+      "NATURAL_MONUMENTS": "Naturdenkmäler",
+      "ENERGY": "Energie",
+      "EDUCATION_PARTICIPATION": "Bildung & Teilhabe"
     },
     "noProjects": "Keine Projekte gefunden.",
     "loadMore": "Mehr laden",

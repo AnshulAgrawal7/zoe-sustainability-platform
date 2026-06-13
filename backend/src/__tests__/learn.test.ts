@@ -80,7 +80,7 @@ describe('Admin learn CRUD', () => {
         bodyEn: 'Body EN',
         bodyEl: 'Body EL',
         bodyDe: 'Body DE',
-        category: 'EDUCATION',
+        category: 'EDUCATION_PARTICIPATION',
         sdgIds: [4, 17],
         projectId: 'proj-education',
       });
@@ -112,7 +112,7 @@ describe('Admin learn CRUD', () => {
     const badProject = await request(app)
       .post('/api/admin/learn')
       .set('Authorization', `Bearer ${adminToken}`)
-      .send({ titleEn: 't', category: 'EDUCATION', projectId: 'ghost' });
+      .send({ titleEn: 't', category: 'EDUCATION_PARTICIPATION', projectId: 'ghost' });
     expect(badProject.status).toBe(400);
   });
 });

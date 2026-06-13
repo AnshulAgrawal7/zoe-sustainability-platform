@@ -137,7 +137,7 @@ export async function createProject(req: AuthRequest, res: Response) {
         descriptionEn: rest.descriptionEn ?? '',
         descriptionEl: rest.descriptionEl ?? '',
         descriptionDe: rest.descriptionDe ?? '',
-        category: rest.category ?? 'ENVIRONMENT',
+        category: rest.category ?? 'NATURAL_MONUMENTS',
         status: rest.status ?? 'OPEN',
         sdgIds: JSON.stringify(sdgIds ?? []),
         rewardPoints: rest.rewardPoints ?? 50,

@@ -54,7 +54,7 @@ export const projects: Project[] = [
     lat: 39.7433,
     lng: 19.9178,
     title: 'Circular Economy Network',
-    category: 'COMMUNITY',
+    category: 'WASTE_CIRCULAR',
     status: 'Active',
     location: 'Municipality-wide, North Corfu',
     description:
@@ -93,7 +93,7 @@ export const projects: Project[] = [
     lat: 39.8019,
     lng: 19.8697,
     title: 'Marine Protection & Sea Turtles',
-    category: 'ENVIRONMENT',
+    category: 'MARINE_PROTECTION',
     status: 'Active',
     location: 'North Corfu coast',
     description:
@@ -122,7 +122,7 @@ export const projects: Project[] = [
     lat: 39.7792,
     lng: 19.8534,
     title: 'Antinioti Lagoon — Natural Monument',
-    category: 'ENVIRONMENT',
+    category: 'NATURAL_MONUMENTS',
     status: 'Active',
     location: 'Antinioti Lagoon, NE Corfu (Natura 2000)',
     description:
@@ -150,7 +150,7 @@ export const projects: Project[] = [
     lat: 39.765,
     lng: 19.865,
     title: 'Natural Monuments & Reforestation',
-    category: 'ENVIRONMENT',
+    category: 'NATURAL_MONUMENTS',
     status: 'Active',
     location: 'Northern Corfu',
     description:
@@ -178,7 +178,7 @@ export const projects: Project[] = [
     lat: 39.748,
     lng: 19.93,
     title: 'LED Street Lighting Upgrade',
-    category: 'COMMUNITY',
+    category: 'ENERGY',
     status: 'Completed',
     location: 'Municipality-wide, North Corfu',
     description:
@@ -207,7 +207,7 @@ export const projects: Project[] = [
     lat: 39.7454,
     lng: 19.9188,
     title: 'Environmental Education & University Partnership',
-    category: 'EDUCATION',
+    category: 'EDUCATION_PARTICIPATION',
     status: 'Active',
     location: 'North Corfu / Ionian University',
     description:
@@ -234,7 +234,7 @@ export const projects: Project[] = [
     lat: 39.735,
     lng: 19.905,
     title: 'Drinking Water Quality Monitoring',
-    category: 'ENVIRONMENT',
+    category: 'NATURAL_MONUMENTS',
     status: 'Active',
     location: 'Northern Corfu',
     description:

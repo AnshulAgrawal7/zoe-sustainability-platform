@@ -24,7 +24,7 @@ beforeAll(async () => {
   const ideaRes = await request(app).post('/api/ideas').send({
     title: 'Unapproved idea for comment test',
     description: 'pending',
-    category: 'ENVIRONMENT',
+    category: 'NATURAL_MONUMENTS',
   });
   newIdeaId = ideaRes.body.data.id as string;
 });

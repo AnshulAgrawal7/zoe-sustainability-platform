@@ -35,7 +35,7 @@ describe('POST /api/ideas (public, no login required)', () => {
     const res = await request(app).post('/api/ideas').send({
       title: 'Test idea (anonymous)',
       description: 'More recycling bins at the harbour.',
-      category: 'ENVIRONMENT',
+      category: 'NATURAL_MONUMENTS',
     });
     expect(res.status).toBe(201);
     expect(res.body.data.status).toBe('NEW');
@@ -53,7 +53,7 @@ describe('POST /api/ideas (public, no login required)', () => {
       .send({
         title: 'Test idea (logged in)',
         description: 'Linked to my account.',
-        category: 'COMMUNITY',
+        category: 'EDUCATION_PARTICIPATION',
       });
     expect(res.status).toBe(201);
     const id = res.body.data.id as string;
@@ -66,7 +66,7 @@ describe('POST /api/ideas (public, no login required)', () => {
   it('rejects a submission missing required fields', async () => {
     const res = await request(app)
       .post('/api/ideas')
-      .send({ description: 'no title', category: 'ENVIRONMENT' });
+      .send({ description: 'no title', category: 'NATURAL_MONUMENTS' });
     expect(res.status).toBe(400);
   });
 
@@ -144,7 +144,7 @@ describe('GET /api/ideas/public (public board, no login)', () => {
     const newRes = await request(app).post('/api/ideas').send({
       title: 'Hidden until approved',
       description: 'Should not be public yet.',
-      category: 'ENVIRONMENT',
+      category: 'NATURAL_MONUMENTS',
       submitterName: 'Jane Doe',
       submitterEmail: 'jane@example.com',
     });

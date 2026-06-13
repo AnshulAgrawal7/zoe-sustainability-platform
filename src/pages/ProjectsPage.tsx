@@ -6,14 +6,16 @@ import { Filter, Users, ArrowRight } from 'lucide-react';
 import { getProjects } from '../services/projectService';
 import EntityImage from '../components/ui/EntityImage';
 import SdgIcon from '../components/ui/SdgIcon';
+import { projectCategoryVisual } from '../components/ui/categoryVisuals';
 import type { ApiProject } from '../types';
 
 const CATEGORIES = [
-  'ENVIRONMENT',
   'MOBILITY',
-  'COMMUNITY',
-  'EDUCATION',
-  'CULTURE',
+  'WASTE_CIRCULAR',
+  'MARINE_PROTECTION',
+  'NATURAL_MONUMENTS',
+  'ENERGY',
+  'EDUCATION_PARTICIPATION',
 ] as const;
 
 // Status filter: 'OPEN' (default), 'COMPLETED', or 'ALL' (every status).
@@ -209,19 +211,9 @@ export default function ProjectsPage() {
                     category={project.category}
                     className="h-32 w-full"
                   />
-                  {/* Color bar by category */}
+                  {/* Color bar by category (shared category visuals). */}
                   <div
-                    className={`h-1.5 ${
-                      project.category === 'ENVIRONMENT'
-                        ? 'bg-green-500'
-                        : project.category === 'MOBILITY'
-                          ? 'bg-blue-500'
-                          : project.category === 'COMMUNITY'
-                            ? 'bg-orange-500'
-                            : project.category === 'EDUCATION'
-                              ? 'bg-purple-500'
-                              : 'bg-teal-500'
-                    }`}
+                    className={`h-1.5 ${projectCategoryVisual(project.category).accent}`}
                     aria-hidden="true"
                   />
                   <div className="flex flex-1 flex-col p-5">

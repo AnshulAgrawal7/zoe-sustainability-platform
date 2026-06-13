@@ -38,7 +38,7 @@ Von hier aus navigieren Sie zu:
 |---|---|---|
 | Titel (EN/EL/DE) | Projekttitel in allen drei Sprachen | ✓ |
 | Beschreibung (EN/EL/DE) | Ausführliche Projektbeschreibung | ✓ |
-| Kategorie | ENVIRONMENT, MOBILITY, COMMUNITY, EDUCATION, CULTURE | ✓ |
+| Kategorie | MOBILITY, WASTE_CIRCULAR, MARINE_PROTECTION, NATURAL_MONUMENTS, ENERGY, EDUCATION_PARTICIPATION | ✓ |
 | SDG-IDs | JSON-Array der betroffenen SDGs, z.B. `[13, 14, 15]` | ✓ |
 | Belohnungspunkte | Punkte bei Teilnahme (Standard: 50) | — |
 | Standort | Geografische Bezeichnung | — |

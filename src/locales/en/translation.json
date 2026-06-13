@@ -704,11 +704,12 @@
       "COMPLETED": "Completed"
     },
     "category": {
-      "ENVIRONMENT": "Environment",
       "MOBILITY": "Mobility",
-      "COMMUNITY": "Community",
-      "EDUCATION": "Education",
-      "CULTURE": "Culture"
+      "WASTE_CIRCULAR": "Waste & Circular Economy",
+      "MARINE_PROTECTION": "Marine Protection",
+      "NATURAL_MONUMENTS": "Natural Monuments",
+      "ENERGY": "Energy",
+      "EDUCATION_PARTICIPATION": "Education & Participation"
     },
     "noProjects": "No projects found.",
     "loadMore": "Load more",

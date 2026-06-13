@@ -9,11 +9,12 @@ import ImageUpload from '../ui/ImageUpload';
 import type { ApiProjectCategory, ApiProject, UserLanguage } from '../../types';
 
 const CATEGORIES: ApiProjectCategory[] = [
-  'ENVIRONMENT',
   'MOBILITY',
-  'COMMUNITY',
-  'EDUCATION',
-  'CULTURE',
+  'WASTE_CIRCULAR',
+  'MARINE_PROTECTION',
+  'NATURAL_MONUMENTS',
+  'ENERGY',
+  'EDUCATION_PARTICIPATION',
 ];
 
 const inputClass =

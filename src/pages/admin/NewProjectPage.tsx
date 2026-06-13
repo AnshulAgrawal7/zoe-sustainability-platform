@@ -16,11 +16,12 @@ const TRANSLATABLE = [
 ];
 
 const CATEGORIES = [
-  'ENVIRONMENT',
   'MOBILITY',
-  'COMMUNITY',
-  'EDUCATION',
-  'CULTURE',
+  'WASTE_CIRCULAR',
+  'MARINE_PROTECTION',
+  'NATURAL_MONUMENTS',
+  'ENERGY',
+  'EDUCATION_PARTICIPATION',
 ] as const;
 const STATUSES = ['DRAFT', 'OPEN', 'CLOSED', 'COMPLETED'] as const;
 const ALL_SDGS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
@@ -45,7 +46,7 @@ export default function NewProjectPage() {
     outputResultsEn: '',
     outputResultsEl: '',
     outputResultsDe: '',
-    category: 'ENVIRONMENT' as (typeof CATEGORIES)[number],
+    category: 'MOBILITY' as (typeof CATEGORIES)[number],
     status: 'OPEN' as (typeof STATUSES)[number],
     rewardPoints: 50,
     location: '',

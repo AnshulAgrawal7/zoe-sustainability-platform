@@ -41,10 +41,10 @@ describe('GET /api/projects', () => {
   });
 
   it('filters by category', async () => {
-    const res = await request(app).get('/api/projects?category=ENVIRONMENT');
+    const res = await request(app).get('/api/projects?category=NATURAL_MONUMENTS');
     expect(res.status).toBe(200);
     res.body.data.projects.forEach((p: { category: string }) => {
-      expect(p.category).toBe('ENVIRONMENT');
+      expect(p.category).toBe('NATURAL_MONUMENTS');
     });
   });
 
@@ -76,7 +76,7 @@ describe('POST /api/projects (admin only)', () => {
       .send({
         titleEn: 'Test Project', titleEl: 'Δοκιμαστικό Έργο', titleDe: 'Testprojekt',
         descriptionEn: 'Test description', descriptionEl: 'Περιγραφή', descriptionDe: 'Beschreibung',
-        category: 'COMMUNITY', sdgIds: [11, 17], rewardPoints: 30, location: 'Test Location',
+        category: 'EDUCATION_PARTICIPATION', sdgIds: [11, 17], rewardPoints: 30, location: 'Test Location',
       });
 
     expect(res.status).toBe(201);
@@ -91,7 +91,7 @@ describe('POST /api/projects (admin only)', () => {
       .send({
         titleEn: 'Hack', titleEl: 'Hack', titleDe: 'Hack',
         descriptionEn: 'x', descriptionEl: 'x', descriptionDe: 'x',
-        category: 'COMMUNITY', sdgIds: [11],
+        category: 'EDUCATION_PARTICIPATION', sdgIds: [11],
       });
 
     expect(res.status).toBe(403);
@@ -100,7 +100,7 @@ describe('POST /api/projects (admin only)', () => {
   it('rejects unauthenticated project creation', async () => {
     const res = await request(app)
       .post('/api/projects')
-      .send({ titleEn: 'Hack', category: 'COMMUNITY', sdgIds: [] });
+      .send({ titleEn: 'Hack', category: 'EDUCATION_PARTICIPATION', sdgIds: [] });
 
     expect(res.status).toBe(401);
   });
