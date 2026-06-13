@@ -11,6 +11,7 @@ import { logout } from '../../services/authService';
 import LanguageSwitcher from './LanguageSwitcher';
 import UserMenu from './UserMenu';
 import NavDropdown from './NavDropdown';
+import AdminNotificationBell from './AdminNotificationBell';
 import PointsBadge from '../ui/PointsBadge';
 
 export default function Header() {
@@ -149,6 +150,9 @@ export default function Header() {
             {/* Auth area */}
             {isAuthenticated && user ? (
               <>
+                {/* Admin-only: notification bell with a count of new ideas /
+                    reports awaiting review. */}
+                {isAdmin && <AdminNotificationBell />}
                 {/* Points, shown top-right — clicking opens the rewards page. */}
                 <Link
                   to="/rewards"
@@ -284,6 +288,7 @@ export default function Header() {
             )}
             <div className="mt-2 flex items-center gap-2 border-t border-gray-100 pt-2 dark:border-gray-800">
               <LanguageSwitcher size="md" />
+              {isAuthenticated && isAdmin && <AdminNotificationBell />}
               <button
                 onClick={toggleTheme}
                 aria-label={

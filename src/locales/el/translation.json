@@ -1637,6 +1637,18 @@
     "replyByEmail": "Απάντηση μέσω email στο {{email}}",
     "emailSubject": "Η ιδέα σας: {{title}}"
   },
+  "adminNotifications": {
+    "bell": "Ειδοποιήσεις",
+    "bellWithCount": "Ειδοποιήσεις, {{count}} νέες",
+    "bellWithCount_one": "Ειδοποιήσεις, {{count}} νέα",
+    "bellWithCount_other": "Ειδοποιήσεις, {{count}} νέες",
+    "title": "Ειδοποιήσεις",
+    "empty": "Τίποτα νέο αυτή τη στιγμή.",
+    "someone": "Κάποιος/α",
+    "ideaSubmitted": "Ο/Η {{name}} υπέβαλε μια νέα ιδέα",
+    "reportSubmitted": "Ο/Η {{name}} ανέφερε ένα περιβαλλοντικό πρόβλημα",
+    "feedbackSubmitted": "Ο/Η {{name}} έστειλε νέα σχόλια"
+  },
   "ideaStatus": {
     "NEW": "Νέα",
     "IN_REVIEW": "Σε εξέταση",

@@ -1637,6 +1637,18 @@
     "replyByEmail": "Reply by email to {{email}}",
     "emailSubject": "Your idea: {{title}}"
   },
+  "adminNotifications": {
+    "bell": "Notifications",
+    "bellWithCount": "Notifications, {{count}} new",
+    "bellWithCount_one": "Notifications, {{count}} new",
+    "bellWithCount_other": "Notifications, {{count}} new",
+    "title": "Notifications",
+    "empty": "Nothing new right now.",
+    "someone": "Someone",
+    "ideaSubmitted": "{{name}} submitted a new idea",
+    "reportSubmitted": "{{name}} reported an environmental issue",
+    "feedbackSubmitted": "{{name}} sent new feedback"
+  },
   "ideaStatus": {
     "NEW": "New",
     "IN_REVIEW": "In review",

@@ -1637,6 +1637,18 @@
     "replyByEmail": "Per E-Mail antworten an {{email}}",
     "emailSubject": "Ihre Idee: {{title}}"
   },
+  "adminNotifications": {
+    "bell": "Benachrichtigungen",
+    "bellWithCount": "Benachrichtigungen, {{count}} neue",
+    "bellWithCount_one": "Benachrichtigungen, {{count}} neue",
+    "bellWithCount_other": "Benachrichtigungen, {{count}} neue",
+    "title": "Benachrichtigungen",
+    "empty": "Momentan nichts Neues.",
+    "someone": "Jemand",
+    "ideaSubmitted": "{{name}} hat eine neue Idee eingereicht",
+    "reportSubmitted": "{{name}} hat ein Umweltproblem gemeldet",
+    "feedbackSubmitted": "{{name}} hat neues Feedback gesendet"
+  },
   "ideaStatus": {
     "NEW": "Neu",
     "IN_REVIEW": "In Prüfung",

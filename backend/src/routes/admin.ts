@@ -12,6 +12,7 @@ import {
   getEventRegistrationsAdmin,
 } from '../controllers/eventController';
 import { getSubmissions } from '../controllers/submissionController';
+import { getAdminNotifications } from '../controllers/notificationController';
 import { updateRewardTier } from '../controllers/rewardController';
 import { getAdminMetrics } from '../controllers/metricsController';
 import {
@@ -48,6 +49,10 @@ router.put(
 );
 
 router.get('/stats', getStats);
+
+// Header notification bell: aggregated feed of items awaiting attention
+// (NEW ideas + citizen reports/feedback), newest first.
+router.get('/notifications', getAdminNotifications);
 
 // Monitoring: page-view/visit counters + activity series (?days=30, ≤365).
 router.get('/metrics', getAdminMetrics);

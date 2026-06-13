@@ -311,6 +311,30 @@ Citizen reports & feedback from `/api/submissions` (read-only overview; newest
 first). Optional `?type=REPORT|FEEDBACK`. Includes the linked `user`
 (id/name/email) when the submitter was logged in. **ADMIN auth required.**
 
+### GET /admin/notifications
+Aggregated feed for the header notification bell: citizen ideas still awaiting
+review (`status = NEW`) plus reports/feedback, newest first, capped at 30. Each
+item carries only a short `title` (idea title, or a message excerpt) — no full
+body. The unread count and "seen" state are derived client-side (a per-admin
+`lastSeen` marker in `localStorage`); the endpoint itself is stateless.
+**ADMIN auth required.**
+
+**Response 200:**
+```json
+{
+  "success": true,
+  "data": {
+    "notifications": [
+      { "id": "idea:clx…", "kind": "IDEA", "title": "Solar lights for the harbour", "submitterName": "Maria K.", "createdAt": "2026-06-13T09:12:00.000Z" },
+      { "id": "submission:clx…", "kind": "REPORT", "title": "Illegal dumping near the olive grove…", "submitterName": null, "createdAt": "2026-06-12T18:40:00.000Z" }
+    ],
+    "total": 2
+  }
+}
+```
+`kind` is `IDEA` (→ reviewed on `/admin/ideas`) or `REPORT` / `FEEDBACK`
+(→ `/admin/submissions`). `submitterName` is `null` for anonymous submissions.
+
 ### POST /admin/schools
 Create a school, optionally with a coordinator login (role `SCHOOL`).
 

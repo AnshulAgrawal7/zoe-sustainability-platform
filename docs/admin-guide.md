@@ -212,3 +212,29 @@ bearbeitbar — Änderungen sind sofort live auf `/rewards` und im Nutzer-Dashbo
 filterbar. Eingeloggte Einsender:innen sind mit Name/E-Mail verknüpft; Gäste
 erscheinen mit ihren optionalen Angaben oder als „Anonym". Vorerst reine
 Durchsicht (kein Workflow — Future Work).
+
+---
+
+## 14. Benachrichtigungsglocke
+
+Im Kopfbereich (Header) erscheint für Admins eine **Glocke** 🔔. Sie bündelt
+alles, was eine Durchsicht braucht:
+
+- **Neue Ideen** (Status `NEU`), die noch nicht bearbeitet wurden, sowie
+- **Umweltmeldungen** und **Feedback** von der Mitmach-Seite.
+
+An der Glocke zeigt ein **roter Zähler** die Anzahl neuer Einträge seit dem
+letzten Öffnen (z. B. „3"; ab 10 → „9+"). Ein Klick öffnet eine Liste mit
+Einträgen wie „**Maria K. hat eine neue Idee eingereicht**" bzw. „… hat ein
+**Umweltproblem gemeldet**". Anonyme Einsendungen erscheinen als „Jemand".
+
+Ein Klick auf einen Eintrag führt direkt zur passenden Verwaltungsseite, wo der
+Eintrag bearbeitet/freigegeben werden kann:
+
+- Ideen → **Bürger-Ideen** (`/admin/ideas`) — dort Status auf
+  `Angenommen`/`Abgelehnt` setzen.
+- Meldungen/Feedback → **Meldungen & Feedback** (`/admin/submissions`).
+
+Sobald die Glocke geöffnet wird, gilt alles als „gesehen" und der Zähler
+verschwindet — die Einträge bleiben aber in der Liste, bis sie bearbeitet sind.
+Der „gesehen"-Stand wird pro Gerät/Browser gespeichert.
