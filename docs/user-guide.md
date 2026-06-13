@@ -169,9 +169,10 @@ E-Mail. Du kannst ihn jederzeit unter `/profile` ändern (muss eindeutig sein).
 
 ## 10. Bestenliste
 
-Unter `/leaderboard` (nur für eingeloggte Mitglieder) siehst du die Mitglieder
-mit den meisten Punkten — ausschließlich mit **Username**, nie mit echtem Namen.
-Dein eigener Eintrag ist hervorgehoben.
+Die **Bestenliste** ist Teil der **Belohnungs-Seite** (`/rewards`, unten) und
+nur für eingeloggte Mitglieder sichtbar. Sie zeigt die Mitglieder mit den meisten
+Punkten — ausschließlich mit **Username**, nie mit echtem Namen. Dein eigener
+Eintrag ist hervorgehoben.
 
 ## 11. Mitdiskutieren: Event-Kommentare & Erwähnungen
 
@@ -193,7 +194,7 @@ als echtes Event veröffentlicht und erscheint unter `/events` (und auf der Kart
 | Seite | Beschreibung |
 |---|---|
 | `/` | Startseite — Überblick + Neuigkeiten |
-| `/leaderboard` | Bestenliste nach Punkten (Usernames, Login) |
+| `/rewards` | Belohnungen, Stufen + Bestenliste (Login) |
 | `/projects` | Alle offenen Projekte |
 | `/projects/:id` | Projektdetails + Teilnahme-Button |
 | `/sdg-dashboard` | SDG-Fortschritte im Überblick |

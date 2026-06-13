@@ -1954,7 +1954,8 @@
     "projects": "{{count}} projects",
     "projects_one": "{{count}} project",
     "projects_other": "{{count}} projects",
-    "privacyNote": "Only logged-in members can see this ranking, and only pseudonymous usernames are shown."
+    "privacyNote": "Only logged-in members can see this ranking, and only pseudonymous usernames are shown.",
+    "loginHint": "The leaderboard is visible to logged-in members only."
   },
   "eventProposal": {
     "kindLabel": "What would you like to submit?",

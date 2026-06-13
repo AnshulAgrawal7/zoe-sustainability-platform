@@ -48,8 +48,6 @@ export default function UserMenu() {
 
   if (!user) return null;
 
-  const firstName = user.name.trim().split(/\s+/)[0] || user.name;
-
   async function handleLogout() {
     setOpen(false);
     await logout();
@@ -79,10 +77,10 @@ export default function UserMenu() {
           className="flex h-7 w-7 items-center justify-center rounded-full bg-green-600 text-xs font-bold text-white"
           aria-hidden="true"
         >
-          {initials(user.name)}
+          {initials(user.username)}
         </span>
         <span className="max-w-[8rem] truncate font-medium text-gray-700 dark:text-gray-200">
-          {firstName}
+          @{user.username}
         </span>
         <ChevronDown size={14} aria-hidden="true" className="text-gray-400" />
       </button>

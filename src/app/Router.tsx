@@ -21,7 +21,6 @@ import RewardsPage from '../pages/RewardsPage';
 import GetInvolvedPage from '../pages/GetInvolvedPage';
 import IdeasPage from '../pages/IdeasPage';
 import IdeaDetailPage from '../pages/IdeaDetailPage';
-import LeaderboardPage from '../pages/LeaderboardPage';
 import LearnPage from '../pages/LearnPage';
 import LearnDetailPage from '../pages/LearnDetailPage';
 import NewsPage from '../pages/NewsPage';
@@ -116,15 +115,6 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <UserRewardsPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        // Leaderboard is logged-in only (pseudonymous usernames; see DSR B3).
-        path: 'leaderboard',
-        element: (
-          <ProtectedRoute>
-            <LeaderboardPage />
           </ProtectedRoute>
         ),
       },

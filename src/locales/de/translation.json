@@ -1954,7 +1954,8 @@
     "projects": "{{count}} Projekte",
     "projects_one": "{{count}} Projekt",
     "projects_other": "{{count}} Projekte",
-    "privacyNote": "Nur angemeldete Mitglieder sehen diese Liste, und es werden ausschließlich pseudonyme Benutzernamen angezeigt."
+    "privacyNote": "Nur angemeldete Mitglieder sehen diese Liste, und es werden ausschließlich pseudonyme Benutzernamen angezeigt.",
+    "loginHint": "Die Bestenliste ist nur für angemeldete Mitglieder sichtbar."
   },
   "eventProposal": {
     "kindLabel": "Was möchtest du einreichen?",

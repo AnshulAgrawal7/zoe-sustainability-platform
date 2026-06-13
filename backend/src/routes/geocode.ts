@@ -1,18 +1,18 @@
 import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { geocode } from '../controllers/geocodeController';
-import { authenticate } from '../middleware/auth';
 
 const router = Router();
 
-// Address autocomplete is only needed by logged-in users filling event/project
-// forms — gate it behind auth and rate-limit to respect Nominatim's policy.
+// Public address autocomplete (also used by guests submitting an event proposal).
+// Rate-limited to respect Nominatim's usage policy; it only proxies address
+// lookups (no personal data), so no auth is required.
 const geocodeLimiter = rateLimit({
   windowMs: 60 * 1000,
-  max: process.env['NODE_ENV'] === 'production' ? 30 : 300,
+  max: process.env['NODE_ENV'] === 'production' ? 60 : 600,
   message: { success: false, error: 'Too many requests, please try again later' },
 });
 
-router.get('/', geocodeLimiter, authenticate, geocode);
+router.get('/', geocodeLimiter, geocode);
 
 export default router;

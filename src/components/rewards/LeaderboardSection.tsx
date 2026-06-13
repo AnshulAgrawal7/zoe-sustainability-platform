@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import Container from '../components/layout/Container';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Trophy, Medal } from 'lucide-react';
-import { getLeaderboard } from '../services/userService';
-import PointsBadge from '../components/ui/PointsBadge';
-import type { LeaderboardEntry } from '../types';
+import { getLeaderboard } from '../../services/userService';
+import { useAuthStore } from '../../stores/authStore';
+import PointsBadge from '../ui/PointsBadge';
+import type { LeaderboardEntry } from '../../types';
 
 const RANK_COLOR: Record<number, string> = {
   1: 'text-amber-500',
@@ -12,39 +13,69 @@ const RANK_COLOR: Record<number, string> = {
   3: 'text-orange-400',
 };
 
-export default function LeaderboardPage() {
+// Leaderboard rendered as a section of the Rewards page. Logged-in only
+// (pseudonymous usernames; DSR B3) — guests see a short prompt to log in.
+export default function LeaderboardSection() {
   const { t } = useTranslation();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Only authenticated users fetch — start "loading" only then.
+  const [loading, setLoading] = useState(isAuthenticated);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    getLeaderboard()
-      .then(setEntries)
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
-  }, []);
+    if (!isAuthenticated) return;
+    let cancelled = false;
+    async function load() {
+      setLoading(true);
+      try {
+        const data = await getLeaderboard();
+        if (!cancelled) setEntries(data);
+      } catch {
+        if (!cancelled) setError(true);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, [isAuthenticated]);
 
   return (
-    <Container maxW="lg" className="py-8">
+    <section aria-labelledby="leaderboard-heading" className="mt-12">
       <div className="mb-1 flex items-center gap-2">
-        <Trophy size={22} className="text-amber-500" aria-hidden="true" />
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <Trophy size={20} className="text-amber-500" aria-hidden="true" />
+        <h2
+          id="leaderboard-heading"
+          className="text-xl font-bold text-gray-900 dark:text-white"
+        >
           {t('leaderboard.title')}
-        </h1>
+        </h2>
       </div>
-      <p className="mb-6 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
+      <p className="mb-4 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
         {t('leaderboard.subtitle')}
       </p>
 
-      {loading ? (
+      {!isAuthenticated ? (
+        <p className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-300">
+          {t('leaderboard.loginHint')}{' '}
+          <Link
+            to="/login"
+            className="font-medium text-green-700 underline dark:text-green-400"
+          >
+            {t('comments.login')}
+          </Link>
+        </p>
+      ) : loading ? (
         <p className="text-gray-500 dark:text-gray-400">
           {t('common.loading')}
         </p>
       ) : error ? (
         <p className="text-gray-500 dark:text-gray-400">{t('common.error')}</p>
       ) : entries.length === 0 ? (
-        <p className="py-12 text-center text-gray-500 dark:text-gray-400">
+        <p className="py-8 text-center text-gray-500 dark:text-gray-400">
           {t('leaderboard.empty')}
         </p>
       ) : (
@@ -89,9 +120,9 @@ export default function LeaderboardPage() {
         </ol>
       )}
 
-      <p className="mt-6 text-xs text-gray-400 dark:text-gray-500">
+      <p className="mt-4 text-xs text-gray-400 dark:text-gray-500">
         {t('leaderboard.privacyNote')}
       </p>
-    </Container>
+    </section>
   );
 }

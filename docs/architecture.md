@@ -388,7 +388,7 @@ On native Linux or with `sudo`: `sudo npx playwright install-deps && npm run tes
 - `Notification` (new) — citizen mention bell (`type=MENTION`, `read`, actor + target ids).
 
 **New backend routes:** `GET /users/leaderboard` (auth), `GET /users/search` (auth),
-`GET /geocode` (auth, Nominatim proxy), `POST /uploads/image` (auth, Supabase
+`GET /geocode` (public, Nominatim proxy), `POST /uploads/image` (auth, Supabase
 `entity-images`), `GET|POST /events/:id/comments`, `GET|POST /notifications` (+`/read`),
 `POST /event-proposals` (public), `GET|GET/:id|PATCH /admin/event-proposals`.
 Admin notification feed extended with `EVENT_PROPOSAL`.

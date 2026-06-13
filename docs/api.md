@@ -241,8 +241,9 @@ matches by substring. Returns `{ users: [{ username, avatarUrl }] }`.
 
 ### GET /geocode?q=…
 Address → coordinate suggestions via OpenStreetMap Nominatim (proxied server-side
-with a compliant User-Agent, biased to Greece, cached). **Auth required.**
-Returns `{ results: [{ label, lat, lng }] }` (≤ 5). Drives the address picker on
+with a compliant User-Agent, biased to Greece, cached). **Public** (rate-limited;
+also used by guests submitting an event proposal). Returns
+`{ results: [{ label, lat, lng }] }` (≤ 5). Drives the address picker on
 event/project forms.
 
 ---

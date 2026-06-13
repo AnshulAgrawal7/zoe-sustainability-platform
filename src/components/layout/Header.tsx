@@ -45,9 +45,6 @@ export default function Header() {
         { to: '/ideas', label: t('nav.ideas') },
         { to: '/get-involved', label: t('nav.getInvolvedOverview') },
         { to: '/rewards', label: t('nav.rewards') },
-        ...(isAuthenticated
-          ? [{ to: '/leaderboard', label: t('nav.leaderboard') }]
-          : []),
       ],
     },
     {
@@ -317,7 +314,7 @@ export default function Header() {
                 {user && (
                   <div className="flex items-center justify-between gap-2 px-3 pb-1">
                     <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
-                      {user.name}
+                      @{user.username}
                     </p>
                     <Link
                       to="/rewards"
