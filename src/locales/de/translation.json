@@ -810,7 +810,9 @@
     "yourEvents": "Meine Veranstaltungen",
     "noEvents": "Du bist noch zu keiner Veranstaltung angemeldet. Such dir eine aus und mach mit!",
     "tierLine": "Stufe: {{tier}} ({{name}})",
-    "pointsPending": "ausstehend"
+    "pointsPending": "ausstehend",
+    "yourIdeas": "Deine Ideen",
+    "noIdeas": "Du hast noch keine Ideen eingereicht."
   },
   "admin": {
     "title": "Admin-Dashboard",
@@ -1776,7 +1778,14 @@
     "empty": "Noch keine freigegebenen Ideen.",
     "emptyCta": "Reiche die erste Idee ein",
     "submitCta": "Idee einreichen",
-    "discuss": "Diskussion ansehen"
+    "discuss": "Diskussion ansehen",
+    "voteAria": "Diese Idee unterstützen ({{count}} Stimmen)",
+    "votes": "{{count}} Stimmen",
+    "votes_one": "{{count}} Stimme",
+    "votes_other": "{{count}} Stimmen",
+    "vote": "Unterstützen ({{count}})",
+    "voted": "Unterstützt ({{count}})",
+    "loginToVote": "Zum Abstimmen anmelden"
   },
   "ideaDetail": {
     "back": "Zurück zum Ideen-Board",

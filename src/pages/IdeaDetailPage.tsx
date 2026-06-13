@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import Container from '../components/layout/Container';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, AlertCircle } from 'lucide-react';
+import { ArrowLeft, AlertCircle, ThumbsUp } from 'lucide-react';
 import {
   getPublicIdeaDetail,
   postComment,
   toggleCommentLike,
 } from '../services/commentService';
+import { toggleIdeaVote } from '../services/ideaService';
 import { useAuthStore } from '../stores/authStore';
 import CommentThread from '../components/comments/CommentThread';
 import type { PublicIdea, PublicComment } from '../types';
@@ -56,6 +57,24 @@ export default function IdeaDetailPage() {
     if (!id) return;
     const comment = await postComment(id, body);
     setComments((prev) => [...prev, comment]);
+  }
+
+  async function handleVote() {
+    if (!idea) return;
+    const optimistic = {
+      ...idea,
+      votedByMe: !idea.votedByMe,
+      voteCount: idea.voteCount + (idea.votedByMe ? -1 : 1),
+    };
+    setIdea(optimistic);
+    try {
+      const { voted, voteCount } = await toggleIdeaVote(idea.id);
+      setIdea((prev) =>
+        prev ? { ...prev, votedByMe: voted, voteCount } : prev
+      );
+    } catch {
+      setIdea(idea); // revert
+    }
   }
 
   async function handleLike(commentId: string) {
@@ -133,12 +152,42 @@ export default function IdeaDetailPage() {
           <p className="mb-4 leading-relaxed text-gray-700 dark:text-gray-300">
             {idea.description}
           </p>
-          <time
-            dateTime={idea.createdAt}
-            className="text-xs text-gray-400 dark:text-gray-500"
-          >
-            {formatDate(idea.createdAt)}
-          </time>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <time
+              dateTime={idea.createdAt}
+              className="text-xs text-gray-400 dark:text-gray-500"
+            >
+              {formatDate(idea.createdAt)}
+            </time>
+            {/* Support vote (participatory prioritization). */}
+            {isAuthenticated ? (
+              <button
+                type="button"
+                onClick={() => void handleVote()}
+                aria-pressed={idea.votedByMe}
+                aria-label={t('ideasBoard.voteAria', { count: idea.voteCount })}
+                className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 ${
+                  idea.votedByMe
+                    ? 'border-green-500 bg-green-50 text-green-700 dark:border-green-600 dark:bg-green-900/30 dark:text-green-300'
+                    : 'border-gray-300 text-gray-600 hover:border-green-400 dark:border-gray-600 dark:text-gray-300'
+                }`}
+              >
+                <ThumbsUp
+                  size={15}
+                  aria-hidden="true"
+                  fill={idea.votedByMe ? 'currentColor' : 'none'}
+                />
+                {idea.votedByMe
+                  ? t('ideasBoard.voted', { count: idea.voteCount })
+                  : t('ideasBoard.vote', { count: idea.voteCount })}
+              </button>
+            ) : (
+              <span className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <ThumbsUp size={15} aria-hidden="true" />
+                {t('ideasBoard.votes', { count: idea.voteCount })}
+              </span>
+            )}
+          </div>
         </article>
 
         <CommentThread

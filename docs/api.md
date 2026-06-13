@@ -294,6 +294,38 @@ MENTION notifications for the mentioned members.
 
 ---
 
+## Citizen ideas (`/api/ideas`)
+
+Pre-moderated idea board (Decide-Madrid/Consul style): only admin-approved
+(`ACCEPTED`) ideas are public.
+
+### POST /ideas
+Submit an idea. Open to everyone (a token links it to the user). Body:
+`{ title, description, category, submitterName?, submitterEmail? }`.
+
+### GET /ideas/public
+Public board — ACCEPTED ideas only, **no personal data**. optionalAuth adds
+`votedByMe`. Sorted by **vote count** (participatory prioritization), then newest.
+Optional `?category=`. Each: `{ id, title, description, category, status, createdAt, voteCount, votedByMe }`.
+
+### GET /ideas/public/:id
+One approved idea + its visible comments + `voteCount`/`votedByMe`. optionalAuth.
+
+### GET /ideas/mine
+The logged-in user's own ideas in **every** status (`NEW|IN_REVIEW|ACCEPTED|DECLINED`)
+for dashboard tracking. **Auth required.** Each carries `voteCount`.
+
+### POST /ideas/:id/vote
+Toggle a support vote on an **ACCEPTED** idea (one per user). **Auth required.**
+Returns `{ voted, voteCount }`. Voting on non-approved ideas → 403.
+
+### POST /ideas/:id/comments
+Comment on an approved idea. **Auth required.** `@username` mentions notify members.
+
+Admin review: `GET /admin/ideas`, `PATCH /admin/ideas/:id { status }` (see Admin).
+
+---
+
 ## Admin (`/api/admin`)
 
 All admin endpoints require **ADMIN role**.

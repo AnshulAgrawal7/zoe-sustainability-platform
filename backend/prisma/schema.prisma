@@ -40,6 +40,7 @@ model User {
   createdProjects      Project[]           @relation("CreatedBy")
   comments             Comment[]
   commentLikes         CommentLike[]
+  ideaVotes            IdeaVote[]
   notifications        Notification[]      @relation("Recipient")
   actorNotifications   Notification[]      @relation("Actor")
 }
@@ -240,8 +241,23 @@ model Idea {
   userId         String?
   createdAt      DateTime @default(now())
   comments       Comment[]
+  votes          IdeaVote[]
 
   @@index([status])
+}
+
+// One supporting vote per user per idea (toggle) — citizen prioritization of the
+// approved idea board ("participatory budgeting" light). Composite PK enforces
+// uniqueness, mirroring CommentLike.
+model IdeaVote {
+  idea      Idea     @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  ideaId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+
+  @@id([ideaId, userId])
+  @@index([ideaId])
 }
 
 // Citizen report (environmental issue) or general feedback from /participate.

@@ -462,6 +462,19 @@ export interface PublicIdea {
   description: string;
   category: ApiProjectCategory;
   status: 'ACCEPTED';
+  voteCount: number;
+  votedByMe: boolean;
+  createdAt: string;
+}
+
+// A citizen's own idea (any status) — for dashboard tracking.
+export interface MyIdea {
+  id: string;
+  title: string;
+  description: string;
+  category: ApiProjectCategory;
+  status: IdeaStatus;
+  voteCount: number;
   createdAt: string;
 }
 

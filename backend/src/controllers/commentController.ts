@@ -87,12 +87,23 @@ export async function getPublicIdeaDetail(req: AuthRequest, res: Response) {
       select: {
         id: true, title: true, description: true,
         category: true, status: true, createdAt: true,
+        _count: { select: { votes: true } },
       },
     });
     if (!idea) {
       notFound(res);
       return;
     }
+
+    // Vote count + whether the current user has voted (participatory support).
+    const votedByMe = userId
+      ? Boolean(
+          await prisma.ideaVote.findUnique({
+            where: { ideaId_userId: { ideaId: id, userId } },
+            select: { ideaId: true },
+          })
+        )
+      : false;
 
     const comments = await prisma.comment.findMany({
       where: { ideaId: id, status: 'VISIBLE' },
@@ -109,8 +120,9 @@ export async function getPublicIdeaDetail(req: AuthRequest, res: Response) {
       likedSet = new Set(likes.map((l) => l.commentId));
     }
 
+    const { _count, ...ideaFields } = idea;
     ok(res, {
-      idea,
+      idea: { ...ideaFields, voteCount: _count.votes, votedByMe },
       comments: comments.map((c) => shapeComment(c as CommentRow, likedSet)),
     });
   } catch {

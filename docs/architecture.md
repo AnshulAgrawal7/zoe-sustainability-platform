@@ -399,3 +399,14 @@ Event-form prefill via `/admin/events/new?fromProposal=<id>` (DeepL auto-transla
 **Key new components:** `map/AddressPicker`, `map/LocationMap`, `ui/ImageUpload`,
 `comments/MentionTextarea`, `comments/CommentThread`, `layout/UserNotificationBell`,
 `engagement/EventProposalForm`.
+
+## Addendum (2026-06-13b): idea voting & citizen status tracking
+
+- Schema (migration `20260613140000_idea_votes`): new `IdeaVote` (composite PK
+  `ideaId`+`userId`, cascade) — one support vote per user per approved idea.
+- Backend: `GET /ideas/mine` (auth, own ideas + status + voteCount),
+  `POST /ideas/:id/vote` (auth, toggle, ACCEPTED-only). `GET /ideas/public` is now
+  `optionalAuth`, returns `voteCount`/`votedByMe`, sorted by votes then date.
+  `GET /ideas/public/:id` also returns `voteCount`/`votedByMe`.
+- Frontend: idea board + detail page get a 👍 support button; the dashboard gains
+  a "Your ideas" section with status pills (in review / approved / declined).

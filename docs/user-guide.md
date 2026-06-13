@@ -189,7 +189,20 @@ Zähler für Ungelesenes): „@du wurde in einem Kommentar erwähnt".
 Adresssuche, optional Bild). Ein Admin prüft den Vorschlag; nach Freigabe wird er
 als echtes Event veröffentlicht und erscheint unter `/events` (und auf der Karte).
 
-## 13. Plattform-Übersicht
+## 13. Ideen verfolgen & für Ideen abstimmen
+
+**Status deiner Ideen:** In deinem **Dashboard** (`/dashboard`) siehst du unter
+„Deine Ideen" alle von dir eingereichten Ideen mit ihrem Status:
+**Neu / In Prüfung** (das Team schaut sie an), **Angenommen** (freigegeben und
+öffentlich auf der Ideen-Pinnwand) oder **Abgelehnt**.
+
+**Abstimmen (Bürgerhaushalt-light):** Auf der Ideen-Pinnwand (`/ideas`) und der
+Detailseite kannst du **freigegebene Ideen unterstützen** (👍). Die Pinnwand
+sortiert nach Zustimmung — so sieht die Gemeinde, welche Ideen den Bürger:innen
+am wichtigsten sind, und kann danach priorisieren. Abstimmen erfordert ein Konto
+(eine Stimme pro Person und Idee, jederzeit zurücknehmbar).
+
+## 14. Plattform-Übersicht
 
 | Seite | Beschreibung |
 |---|---|

@@ -9,6 +9,8 @@ import {
   Calendar,
   Loader2,
   X,
+  Lightbulb,
+  ThumbsUp,
 } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
 import { useToastStore } from '../../stores/toastStore';
@@ -17,9 +19,20 @@ import {
   getMyEventRegistrations,
   cancelEventRegistration,
 } from '../../services/eventService';
+import { getMyIdeas } from '../../services/ideaService';
 import { useRewardTiers, tierForPoints } from '../../hooks/useRewardTiers';
 import PointsBadge from '../../components/ui/PointsBadge';
-import type { MyEventRegistration } from '../../types';
+import type { MyEventRegistration, MyIdea, IdeaStatus } from '../../types';
+
+// Status pill styling for a citizen's own ideas (in review / approved / declined).
+const IDEA_STATUS_STYLE: Record<IdeaStatus, string> = {
+  NEW: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
+  IN_REVIEW:
+    'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
+  ACCEPTED:
+    'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
+  DECLINED: 'bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300',
+};
 
 const LOCALES: Record<string, string> = {
   en: 'en-GB',
@@ -36,16 +49,18 @@ export default function DashboardPage() {
   const locale = LOCALES[lang] ?? 'en-GB';
 
   const [registrations, setRegistrations] = useState<MyEventRegistration[]>([]);
+  const [myIdeas, setMyIdeas] = useState<MyIdea[]>([]);
   const [badgeCount, setBadgeCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [cancelling, setCancelling] = useState<string | null>(null);
 
   const loadData = useCallback(() => {
-    Promise.all([getMe(), getMyEventRegistrations()])
-      .then(([me, regs]) => {
+    Promise.all([getMe(), getMyEventRegistrations(), getMyIdeas()])
+      .then(([me, regs, ideas]) => {
         setBadgeCount(me._count.userBadges);
         updateUser({ points: me.points });
         setRegistrations(regs);
+        setMyIdeas(ideas);
       })
       .catch(() => null)
       .finally(() => setLoading(false));
@@ -274,6 +289,81 @@ export default function DashboardPage() {
                     </button>
                   )}
                 </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* My ideas — status tracking ("in review / approved / declined"). */}
+      <h2 className="mb-4 mt-10 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
+        <Lightbulb size={18} aria-hidden="true" className="text-amber-500" />
+        {t('dashboard.yourIdeas')}
+      </h2>
+      {loading ? (
+        <p className="text-gray-500 dark:text-gray-400">
+          {t('common.loading')}
+        </p>
+      ) : myIdeas.length === 0 ? (
+        <div className="rounded-xl bg-gray-50 p-8 text-center dark:bg-gray-800/50">
+          <p className="mb-3 text-gray-500 dark:text-gray-400">
+            {t('dashboard.noIdeas')}
+          </p>
+          <Link
+            to="/participate?action=submit-idea"
+            className="text-sm font-medium text-green-600 hover:underline"
+          >
+            {t('ideasBoard.submitCta')} →
+          </Link>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {myIdeas.map((idea) => {
+            // Approved ideas are public → link to the discussion; others aren't.
+            const inner = (
+              <>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium text-gray-800 dark:text-gray-200">
+                    {idea.title}
+                  </p>
+                  <p className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
+                    <span className="inline-flex items-center gap-1">
+                      <Calendar size={12} aria-hidden="true" />
+                      {new Date(idea.createdAt).toLocaleDateString(locale, {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      })}
+                    </span>
+                    {idea.status === 'ACCEPTED' && (
+                      <span className="inline-flex items-center gap-1">
+                        <ThumbsUp size={12} aria-hidden="true" />
+                        {t('ideasBoard.votes', { count: idea.voteCount })}
+                      </span>
+                    )}
+                  </p>
+                </div>
+                <span
+                  className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${IDEA_STATUS_STYLE[idea.status]}`}
+                >
+                  {t(`ideaStatus.${idea.status}`)}
+                </span>
+              </>
+            );
+            return idea.status === 'ACCEPTED' ? (
+              <Link
+                key={idea.id}
+                to={`/ideas/${idea.id}`}
+                className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-green-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-700"
+              >
+                {inner}
+              </Link>
+            ) : (
+              <div
+                key={idea.id}
+                className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+              >
+                {inner}
               </div>
             );
           })}

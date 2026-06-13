@@ -4,6 +4,7 @@ import type {
   Idea,
   IdeaStatus,
   PublicIdea,
+  MyIdea,
   ApiProjectCategory,
 } from '../types';
 
@@ -34,6 +35,22 @@ export async function submitIdea(
   const res = await api.post<
     ApiResponse<{ id: string; status: IdeaStatus; createdAt: string }>
   >('/ideas', data);
+  return res.data;
+}
+
+// The logged-in user's own ideas (every status) for dashboard tracking.
+export async function getMyIdeas(): Promise<MyIdea[]> {
+  const res = await api.get<ApiResponse<{ ideas: MyIdea[] }>>('/ideas/mine');
+  return res.data.ideas;
+}
+
+// Toggle a support vote on an approved idea (logged-in).
+export async function toggleIdeaVote(
+  id: string
+): Promise<{ voted: boolean; voteCount: number }> {
+  const res = await api.post<
+    ApiResponse<{ voted: boolean; voteCount: number }>
+  >(`/ideas/${id}/vote`, {});
   return res.data;
 }
 

@@ -8,8 +8,10 @@ import {
   ArrowRight,
   Info,
   MessageSquare,
+  ThumbsUp,
 } from 'lucide-react';
-import { getPublicIdeas } from '../services/ideaService';
+import { getPublicIdeas, toggleIdeaVote } from '../services/ideaService';
+import { useAuthStore } from '../stores/authStore';
 import type { PublicIdea, ApiProjectCategory } from '../types';
 
 const CATEGORIES: ApiProjectCategory[] = [
@@ -41,6 +43,7 @@ export default function IdeasPage() {
   const lang = i18n.language.slice(0, 2);
   const locale = LOCALES[lang] ?? 'en-GB';
 
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const [ideas, setIdeas] = useState<PublicIdea[]>([]);
   const [loading, setLoading] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState('');
@@ -51,6 +54,32 @@ export default function IdeasPage() {
       .catch(() => setIdeas([]))
       .finally(() => setLoading(false));
   }, []);
+
+  async function handleVote(id: string) {
+    // Optimistic toggle; revert to server truth on failure.
+    setIdeas((prev) =>
+      prev.map((i) =>
+        i.id === id
+          ? {
+              ...i,
+              votedByMe: !i.votedByMe,
+              voteCount: i.voteCount + (i.votedByMe ? -1 : 1),
+            }
+          : i
+      )
+    );
+    try {
+      const { voted, voteCount } = await toggleIdeaVote(id);
+      setIdeas((prev) =>
+        prev.map((i) =>
+          i.id === id ? { ...i, votedByMe: voted, voteCount } : i
+        )
+      );
+    } catch {
+      const fresh = await getPublicIdeas().catch(() => null);
+      if (fresh) setIdeas(fresh);
+    }
+  }
 
   const visible = ideas.filter(
     (i) => !categoryFilter || i.category === categoryFilter
@@ -173,24 +202,58 @@ export default function IdeasPage() {
                 <p className="mb-3 flex-1 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                   {idea.description}
                 </p>
-                <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-3 dark:border-gray-700">
+                <div className="mt-auto flex items-center justify-between gap-2 border-t border-gray-100 pt-3 dark:border-gray-700">
+                  <div className="flex items-center gap-3">
+                    {/* Support vote — interactive when logged in, otherwise a
+                        static count with a hint to log in. */}
+                    {isAuthenticated ? (
+                      <button
+                        type="button"
+                        onClick={() => void handleVote(idea.id)}
+                        aria-pressed={idea.votedByMe}
+                        aria-label={t('ideasBoard.voteAria', {
+                          count: idea.voteCount,
+                        })}
+                        className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 ${
+                          idea.votedByMe
+                            ? 'border-green-500 bg-green-50 text-green-700 dark:border-green-600 dark:bg-green-900/30 dark:text-green-300'
+                            : 'border-gray-300 text-gray-600 hover:border-green-400 dark:border-gray-600 dark:text-gray-300'
+                        }`}
+                      >
+                        <ThumbsUp
+                          size={13}
+                          aria-hidden="true"
+                          fill={idea.votedByMe ? 'currentColor' : 'none'}
+                        />
+                        {idea.voteCount}
+                      </button>
+                    ) : (
+                      <span
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400"
+                        title={t('ideasBoard.loginToVote')}
+                      >
+                        <ThumbsUp size={13} aria-hidden="true" />
+                        {t('ideasBoard.votes', { count: idea.voteCount })}
+                      </span>
+                    )}
+                    <Link
+                      to={`/ideas/${idea.id}`}
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-green-700 hover:underline dark:text-green-400"
+                    >
+                      <MessageSquare size={13} aria-hidden="true" />
+                      {t('ideasBoard.discuss')}
+                    </Link>
+                  </div>
                   <time
                     dateTime={idea.createdAt}
-                    className="text-xs text-gray-400 dark:text-gray-500"
+                    className="shrink-0 text-xs text-gray-400 dark:text-gray-500"
                   >
                     {new Date(idea.createdAt).toLocaleDateString(locale, {
                       day: 'numeric',
-                      month: 'long',
+                      month: 'short',
                       year: 'numeric',
                     })}
                   </time>
-                  <Link
-                    to={`/ideas/${idea.id}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-green-700 hover:underline dark:text-green-400"
-                  >
-                    <MessageSquare size={13} aria-hidden="true" />
-                    {t('ideasBoard.discuss')}
-                  </Link>
                 </div>
               </li>
             ))}

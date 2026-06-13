@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import rateLimit from 'express-rate-limit';
-import { createIdea, getPublicIdeas } from '../controllers/ideaController';
+import {
+  createIdea,
+  getPublicIdeas,
+  getMyIdeas,
+  voteIdea,
+} from '../controllers/ideaController';
 import {
   getPublicIdeaDetail,
   createComment,
@@ -13,8 +18,15 @@ import { PROJECT_CATEGORIES } from '../constants';
 const router = Router();
 
 // Public, read-only idea board — server-side filtered to ACCEPTED ideas only,
-// with no personal data (pre-moderation, Decide-Madrid/Consul style).
-router.get('/public', getPublicIdeas);
+// with no personal data (pre-moderation, Decide-Madrid/Consul style). optionalAuth
+// adds `votedByMe` per idea for logged-in users.
+router.get('/public', optionalAuth, getPublicIdeas);
+
+// The logged-in user's own ideas (every status) — dashboard tracking.
+router.get('/mine', authenticate, getMyIdeas);
+
+// Toggle a support vote on an approved idea (logged-in; one per user).
+router.post('/:id/vote', authenticate, voteIdea);
 
 // Public detail of an approved idea + its visible comments (optionalAuth adds
 // `likedByMe`). Defined before `/:id`-style routes — there are none here.

@@ -810,7 +810,9 @@
     "yourEvents": "My events",
     "noEvents": "You haven't registered for any events yet. Find one and join in!",
     "tierLine": "Level: {{tier}} ({{name}})",
-    "pointsPending": "pending"
+    "pointsPending": "pending",
+    "yourIdeas": "Your ideas",
+    "noIdeas": "You haven't submitted any ideas yet."
   },
   "admin": {
     "title": "Admin Dashboard",
@@ -1776,7 +1778,14 @@
     "empty": "No approved ideas yet.",
     "emptyCta": "Submit the first idea",
     "submitCta": "Submit an idea",
-    "discuss": "View discussion"
+    "discuss": "View discussion",
+    "voteAria": "Support this idea ({{count}} votes)",
+    "votes": "{{count}} votes",
+    "votes_one": "{{count}} vote",
+    "votes_other": "{{count}} votes",
+    "vote": "Support ({{count}})",
+    "voted": "Supported ({{count}})",
+    "loginToVote": "Log in to vote"
   },
   "ideaDetail": {
     "back": "Back to ideas board",
