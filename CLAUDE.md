@@ -15,7 +15,7 @@ DSR-Mapping: `docs/dsr-methodology.md` | Architektur: `docs/architecture.md`
 | i18n | react-i18next — EN · EL · DE |
 | Validation | Zod |
 | Icons | lucide-react |
-| Backend | Node.js · Express · TypeScript · Prisma · SQLite (Dev) |
+| Backend | Node.js · Express · TypeScript · Prisma · PostgreSQL (Supabase) |
 | Auth | JWT (Access 15min + Refresh 7d, httpOnly Cookie) · bcryptjs |
 | Testing | Vitest · React Testing Library · Playwright |
 | Tooling | ESLint · Prettier · Husky · lint-staged |
@@ -188,7 +188,7 @@ Commit-Typen: `feat:` `fix:` `docs:` `refactor:` `style:` `data:` `test:` `chore
 | Phase 1: Architektur | ✅ ADR in `docs/analysis/existing-system-audit.md` §10 |
 | Phase 2: CLAUDE.md | ✅ diese Datei |
 | Phase 3: Sub-Agents | ✅ 8 Agents in `.claude/agents/` |
-| Phase 4: Backend | ✅ Node/Express/Prisma/SQLite/JWT |
+| Phase 4: Backend | ✅ Node/Express/Prisma/PostgreSQL (Supabase)/JWT |
 | Phase 5: Frontend-Upgrade | ✅ i18n, Zustand, Dark Mode, Auth, Admin |
 | Phase 6: Dokumentation | ✅ api.md, user-guide.md, admin-guide.md, architecture.md |
 | Phase 7: Env & Secrets | ✅ .env.example, Secrets in .env |

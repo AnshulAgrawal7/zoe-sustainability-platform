@@ -68,7 +68,7 @@ describe('POST /api/ideas/:id/comments', () => {
       .set('Authorization', `Bearer ${userToken}`)
       .send({ body: 'Great idea — count me in!' });
     expect(res.status).toBe(201);
-    expect(res.body.data.authorName).toBeTruthy();
+    expect(res.body.data.authorUsername).toBeTruthy();
     expect(res.body.data.likeCount).toBe(0);
     expect(res.body.data.likedByMe).toBe(false);
     expect(res.body.data).not.toHaveProperty('userId');

@@ -100,13 +100,15 @@ describe('POST /api/admin/events (admin only)', () => {
 });
 
 describe('POST /api/events/:id/join', () => {
-  it('lets a logged-in user join and awards the event reward points', async () => {
+  it('lets a logged-in user join with points pending (awarded on completion)', async () => {
     if (!createdEventId) return;
     const res = await request(app)
       .post(`/api/events/${createdEventId}/join`)
       .set('Authorization', `Bearer ${userToken}`);
     expect(res.status).toBe(201);
-    expect(res.body.data.pointsAwarded).toBe(35);
+    // Points are NOT granted on join anymore — they stay pending until an admin
+    // marks the event COMPLETED (see completeEvent).
+    expect(res.body.data.pointsAwarded).toBe(0);
   });
 
   it('rejects a duplicate join with 409', async () => {
@@ -128,6 +130,42 @@ describe('POST /api/events/:id/join', () => {
       .post('/api/events/does-not-exist/join')
       .set('Authorization', `Bearer ${userToken}`);
     expect(res.status).toBe(404);
+  });
+});
+
+describe('POST /api/admin/events/:id/complete', () => {
+  it('awards the reward points to the registered user on completion', async () => {
+    if (!createdEventId) return;
+    const res = await request(app)
+      .post(`/api/admin/events/${createdEventId}/complete`)
+      .set('Authorization', `Bearer ${adminToken}`);
+    expect(res.status).toBe(200);
+    expect(res.body.data.status).toBe('COMPLETED');
+    expect(res.body.data.pointsPerUser).toBe(35);
+    expect(res.body.data.awardedCount).toBeGreaterThanOrEqual(1);
+
+    // The pending registration is now settled at the event's reward value.
+    const reg = await prisma.eventRegistration.findFirst({
+      where: { eventId: createdEventId, userId: { not: null } },
+    });
+    expect(reg?.pointsAwarded).toBe(35);
+  });
+
+  it('is idempotent — re-completing awards nobody again', async () => {
+    if (!createdEventId) return;
+    const res = await request(app)
+      .post(`/api/admin/events/${createdEventId}/complete`)
+      .set('Authorization', `Bearer ${adminToken}`);
+    expect(res.status).toBe(200);
+    expect(res.body.data.awardedCount).toBe(0);
+  });
+
+  it('rejects completion from a non-admin', async () => {
+    if (!createdEventId) return;
+    const res = await request(app)
+      .post(`/api/admin/events/${createdEventId}/complete`)
+      .set('Authorization', `Bearer ${userToken}`);
+    expect(res.status).toBe(403);
   });
 });
 
