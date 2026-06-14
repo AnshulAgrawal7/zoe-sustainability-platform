@@ -1,0 +1,13 @@
+# Keep line endings correct across operating systems so the setup scripts work
+# whether the repo is cloned or downloaded as a ZIP on Windows, macOS or WSL2.
+
+# Shell scripts MUST stay LF — CRLF breaks them with
+# "/usr/bin/env bash^M: bad interpreter" on macOS/Linux/WSL.
+*.sh   text eol=lf
+
+# PowerShell handles LF fine; keep it consistent.
+*.ps1  text eol=lf
+
+# Windows batch files are stored byte-for-byte (with CRLF) and never normalized,
+# so the ZIP download keeps CRLF and cmd.exe runs them reliably.
+*.bat  -text

@@ -1,4 +1,4 @@
-# ZOE Sustainability Platform — Windows (PowerShell): install + start.
+# ZOE Sustainability Platform - Windows (PowerShell): install + start.
 #
 # Run ONE command from the project root in PowerShell:
 #     powershell -ExecutionPolicy Bypass -File setup\windows.ps1
@@ -6,10 +6,10 @@
 # (If you opened the folder in Windows Terminal / PowerShell, just run:
 #     .\setup\windows.ps1 )
 #
-# What it does (safe — read-only against the shared database, deletes nothing):
+# What it does (safe - read-only against the shared database, deletes nothing):
 #   1. Checks Node.js (installs Node 22 LTS via winget if missing)
 #   2. Creates the frontend .env from the template if missing
-#   3. Verifies backend\.env exists (the DB secrets — request them by email)
+#   3. Verifies backend\.env exists (the DB secrets - request them by email)
 #   4. Installs frontend + backend dependencies, generates the Prisma client
 #   5. Starts the backend (:3001) in a new window and the frontend (:5173) here
 

@@ -31,14 +31,22 @@ echo
 # ── 1. Node.js (via nvm if missing — user-space, no sudo) ────────────────────
 if ! command -v node >/dev/null 2>&1; then
   warn "Node.js not found — installing Node 22 LTS via nvm…"
+  if ! command -v curl >/dev/null 2>&1; then
+    err "curl is required to install nvm. Install it first, then re-run:"
+    echo "    sudo apt-get update && sudo apt-get install -y curl"
+    exit 1
+  fi
   export NVM_DIR="$HOME/.nvm"
   if [ ! -s "$NVM_DIR/nvm.sh" ]; then
     curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
   fi
+  # nvm.sh reads unset variables internally; relax `set -u` while loading/using it.
+  set +u
   # shellcheck disable=SC1091
   . "$NVM_DIR/nvm.sh"
   nvm install 22
   nvm use 22
+  set -u
 fi
 NODE_MAJOR="$(node -v | sed -E 's/^v([0-9]+).*/\1/')"
 if [ "$NODE_MAJOR" -lt 20 ]; then
