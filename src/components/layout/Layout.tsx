@@ -9,7 +9,7 @@ import { reportPageView } from '../../services/metricsService';
 import { useAuthStore } from '../../stores/authStore';
 
 export default function Layout() {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { pathname } = useLocation();
   const isAdmin = useAuthStore((s) => s.isAdmin);
 
@@ -26,9 +26,21 @@ export default function Layout() {
   return (
     <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-950">
       <ScrollRestoration />
+      {/* Skip link (WCAG 2.4.1) — first focusable element, visually hidden
+          until it receives keyboard focus, then jumps to <main>. */}
+      <a
+        href="#main-content"
+        className="sr-only rounded-lg bg-green-700 font-medium text-white shadow-lg focus:not-sr-only focus:!fixed focus:left-4 focus:top-4 focus:z-50 focus:!px-4 focus:!py-2 focus:outline-none focus:ring-2 focus:ring-white"
+      >
+        {t('nav.skipToContent')}
+      </a>
       <PrototypeBanner />
       <Header />
-      <main id="main-content" className="flex-1">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="flex-1 focus:outline-none"
+      >
         <Outlet />
       </main>
       <Footer />

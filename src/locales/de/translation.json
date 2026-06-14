@@ -659,7 +659,8 @@
     "ideas": "Ideen-Board",
     "learn": "Wissen",
     "mainNavAria": "Hauptnavigation",
-    "mobileNavAria": "Mobile Navigation"
+    "mobileNavAria": "Mobile Navigation",
+    "skipToContent": "Zum Hauptinhalt springen"
   },
   "auth": {
     "login": "Anmelden",

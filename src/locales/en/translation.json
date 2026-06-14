@@ -659,7 +659,8 @@
     "ideas": "Ideas board",
     "learn": "Learning",
     "mainNavAria": "Main navigation",
-    "mobileNavAria": "Mobile navigation"
+    "mobileNavAria": "Mobile navigation",
+    "skipToContent": "Skip to main content"
   },
   "auth": {
     "login": "Login",
