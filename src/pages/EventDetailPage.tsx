@@ -9,7 +9,6 @@ import {
   AlertCircle,
   Calendar,
   Clock,
-  ArrowRight,
 } from 'lucide-react';
 import { getEvent } from '../services/eventService';
 import {
@@ -233,7 +232,6 @@ export default function EventDetailPage() {
               to={`/projects/${event.projectId}`}
               className="inline-flex items-center gap-1.5 text-sm font-medium text-green-700 hover:underline dark:text-green-400"
             >
-              <ArrowRight size={14} aria-hidden="true" />
               {t('events.relatedProject', { project: projectTitle(event) })}
             </Link>
           )}
