@@ -47,22 +47,48 @@ Sustainable Development Goals (SDGs).
 ## Running the app locally
 
 The app talks to a **shared, hosted Supabase database** — you do **not** need to
-install or run a database yourself. You only need the secret `backend/.env` file
-(see [Environment files](#environment-files) below).
+install or run a database yourself. Just follow these three steps **in order**.
 
-There is **one script per operating system** that installs everything (Node if
-missing, all dependencies) and then starts both servers. Open a terminal,
-navigate into the project folder, and run the line for your system.
+### Step 1 — Add the secret `backend/.env` file (do this FIRST!)
 
-> First, `cd` into the project folder, e.g. `cd path/to/zoe-sustainability-platform`.
+The backend needs database credentials that are **not** included in this
+repository. You will receive a ready-to-use environment file from
+**anshul.agrawal@fau.de** (request it by email).
 
-### 🪟 Windows (native)
+Once you have that file, put it in place:
+
+1. The file you received already contains all the values (lines like
+   `DATABASE_URL="..."`). You do **not** need to fill in or change anything.
+2. Save it inside the project's **`backend`** folder, named **exactly** `.env`
+   — so the final path is **`backend/.env`**.
+3. **Do not** edit or rename `backend/.env.example`. That file is only an empty
+   template; the file you received from Anshul is the real, filled-in one.
+
+> **Windows:** make sure the file is really called `.env` and not `.env.txt`.
+> In File Explorer turn on *View → File name extensions* to check. If needed,
+> rename it in a terminal inside the `backend` folder: `ren env.txt .env`.
+
+> The frontend's own `.env` (in the project root) is **not** secret and is
+> created automatically by the setup script — you never have to touch it.
+
+If you skip this step the setup script stops with a clear message telling you
+`backend/.env` is missing.
+
+### Step 2 — Run the one setup script for your operating system
+
+Open a terminal and `cd` into the project folder first, e.g.
+`cd path/to/zoe-sustainability-platform`. Then run the line for your system. The
+script installs everything (Node if missing, all dependencies) and starts the
+app. It is **non-destructive** — it never migrates, seeds or resets the shared
+database.
+
+#### 🪟 Windows (native)
 
 **Easiest:** open the `setup` folder in Explorer and **double-click `windows.bat`**.
 That's it — it handles everything.
 
-**Or from a terminal** in the project folder, use this command (Windows blocks
-unsigned `.ps1` scripts by default, so run it via the launcher):
+**Or from a terminal** in the project folder (Windows blocks unsigned `.ps1`
+scripts by default, so run it via the launcher):
 
 ```powershell
 .\setup\windows.bat
@@ -79,7 +105,7 @@ unsigned `.ps1` scripts by default, so run it via the launcher):
 *(Node is installed via `winget`. If Node was just installed, close the window,
 open a new one, and run the launcher again.)*
 
-### 🍎 macOS
+#### 🍎 macOS
 
 ```bash
 bash setup/macos.sh
@@ -87,7 +113,7 @@ bash setup/macos.sh
 
 *(Node is installed via [Homebrew](https://brew.sh) if missing.)*
 
-### 🐧 WSL2 (Ubuntu on Windows)
+#### 🐧 WSL2 (Ubuntu on Windows)
 
 Open your **WSL2/Ubuntu** terminal (not PowerShell) and run:
 
@@ -98,20 +124,24 @@ bash setup/wsl.sh
 *(Node 22 LTS is installed via `nvm` — no `sudo` needed. Keep the project inside
 the Linux filesystem, e.g. `~/projects/…`, not under `/mnt/c/…`.)*
 
----
-
-When the script finishes it opens:
-
-- **Frontend** → http://localhost:5173
-- **Backend API** → http://localhost:3001
-
-Stop the servers with **Ctrl+C**. The scripts are non-destructive: they install
-dependencies and generate the Prisma client only — they never migrate, seed or
-reset the shared database.
-
 > **Requirements handled by the scripts:** Node.js 20.19+ (22 LTS recommended).
 > If automatic installation isn't possible, install Node 22 LTS from
 > <https://nodejs.org> and re-run the script.
+
+### Step 3 — Open the app in your browser
+
+The script starts **two** local servers and prints **two** addresses. They serve
+different purposes:
+
+| Address | What it is | Open it? |
+|---|---|---|
+| **http://localhost:5173** | The **ZOE website** (frontend) you actually use | 👉 **YES — open this one** |
+| http://localhost:3001 | The backend API the website talks to in the background | ❌ No (opening it only shows raw data) |
+
+So: **open <http://localhost:5173>** in your browser — that's the website.
+Leave **both** terminal windows/servers running while you use it; the site needs
+the backend in the background. Press **Ctrl+C** to stop the servers when you're
+done.
 
 ---
 
@@ -120,7 +150,7 @@ reset the shared database.
 | File | Contains | Secret? | How to get it |
 |---|---|---|---|
 | `.env` (project root) | Frontend config — local API URL, optional analytics | No | Created automatically from `.env.example` by the setup script |
-| `backend/.env` | **Database & Supabase credentials**, JWT secret, optional DeepL key | **Yes** | **Request from `anshul.agrawal@fau.de`** — it is not stored in git |
+| `backend/.env` | **Database & Supabase credentials**, JWT secret, optional DeepL key | **Yes** | **Request from `anshul.agrawal@fau.de`**, then save it as `backend/.env` (see [Step 1](#step-1--add-the-secret-backendenv-file-do-this-first)) — it is not stored in git |
 
 `backend/.env` is required to start the backend. The key variables it holds are
 `DATABASE_URL`, `DIRECT_URL` (Supabase Postgres), `JWT_SECRET`, `SUPABASE_URL`,

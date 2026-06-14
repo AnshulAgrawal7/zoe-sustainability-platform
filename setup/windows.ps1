@@ -54,8 +54,10 @@ if (-not (Test-Path ".env")) {
 # -- 3. Backend .env (SECRET - cannot be auto-created) ------------------------
 if (-not (Test-Path "backend\.env")) {
   Write-Err "backend\.env is MISSING - it holds the database & Supabase credentials."
-  Write-Host "       Request the file from:  anshul.agrawal@fau.de"
-  Write-Host "       Place it at:            $Root\backend\.env"
+  Write-Host "       1. Request the file from:  anshul.agrawal@fau.de"
+  Write-Host "       2. Save it as:             $Root\backend\.env"
+  Write-Host "          (Use the file you received as-is. Do NOT edit .env.example.)"
+  Write-Host "       See README -> 'Step 1' for details."
   exit 1
 }
 Write-Ok "backend\.env present"
@@ -76,9 +78,9 @@ Write-Ok "Backend dependencies + Prisma client ready"
 # -- 5. Start both servers ----------------------------------------------------
 Write-Host ""
 Write-Host "Starting..." -ForegroundColor Cyan
-Write-Host "  Backend  -> http://localhost:3001  (opens in a new window)"
-Write-Host "  Frontend -> http://localhost:5173  (this window)"
-Write-Host "  Close the backend window or press Ctrl+C in each to stop."
+Write-Host "  >> OPEN THIS IN YOUR BROWSER:  http://localhost:5173   (the ZOE website)" -ForegroundColor Green
+Write-Host "     Backend API (do not open):  http://localhost:3001   (runs in a separate window)"
+Write-Host "  Keep both windows open while using the site. Press Ctrl+C in each to stop."
 Write-Host ""
 
 # Backend in a separate window so both run at once.

@@ -57,8 +57,10 @@ fi
 # ── 3. Backend .env (SECRET — cannot be auto-created) ────────────────────────
 if [ ! -f "backend/.env" ]; then
   err "backend/.env is MISSING — it holds the database & Supabase credentials."
-  echo "    Request the file from:  anshul.agrawal@fau.de"
-  echo "    Place it at:            $ROOT/backend/.env"
+  echo "    1. Request the file from:  anshul.agrawal@fau.de"
+  echo "    2. Save it as:             $ROOT/backend/.env"
+  echo "       (Use the file you received as-is. Do NOT edit .env.example.)"
+  echo "    See README → 'Step 1' for details."
   exit 1
 fi
 ok "backend/.env present"
@@ -82,8 +84,8 @@ cleanup() { pkill -P "$BACKEND_PID" 2>/dev/null || true; kill "$BACKEND_PID" 2>/
 trap cleanup EXIT INT TERM
 
 bold "Starting…"
-echo "  Backend  → http://localhost:3001"
-echo "  Frontend → http://localhost:5173"
-echo "  Press Ctrl+C to stop both."
+echo "  👉 OPEN THIS IN YOUR BROWSER:  http://localhost:5173   (the ZOE website)"
+echo "     Backend API (do not open):  http://localhost:3001   (runs in background)"
+echo "  Keep this window open while using the site. Press Ctrl+C to stop both."
 echo
 npm run dev
