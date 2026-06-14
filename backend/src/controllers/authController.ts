@@ -22,8 +22,6 @@ const PUBLIC_USER_SELECT = {
   profile: true,
 } as const;
 
-const REFRESH_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
-
 /**
  * Cookie options for the refresh token.
  *
@@ -31,6 +29,13 @@ const REFRESH_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
  * live on *different* sites, so the cookie must be `SameSite=None; Secure` to
  * be sent on credentialed cross-site requests. In development (same-site
  * localhost over http) we use `lax` and drop `secure` so login works without TLS.
+ *
+ * No `maxAge`/`expires` → this is a SESSION cookie: the browser drops it when it
+ * is fully closed, so closing the browser ends the session (no auto re-login on
+ * restart). The DB-side refresh token still has its own 7-day expiry for
+ * server-side cleanup, but the client stops presenting it once the browser
+ * closes. (Note: browsers with "continue where you left off"/session-restore
+ * may preserve session cookies — that is the browser's choice, not the server's.)
  */
 function refreshCookieOptions() {
   const isProd = process.env.NODE_ENV === 'production';
@@ -39,7 +44,6 @@ function refreshCookieOptions() {
     secure: isProd, // SameSite=None requires Secure
     sameSite: isProd ? ('none' as const) : ('lax' as const),
     path: '/',
-    maxAge: REFRESH_MAX_AGE_MS,
   };
 }
 
