@@ -361,7 +361,8 @@ export interface MySubmission {
 }
 
 export interface LoginPayload {
-  email: string;
+  // Either a username or an email address.
+  identifier: string;
   password: string;
 }
 

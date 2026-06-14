@@ -12,11 +12,11 @@ export default function LoginPage() {
   const location = useLocation();
   const setAuth = useAuthStore((s) => s.setAuth);
 
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{
-    email?: string;
+    identifier?: string;
     password?: string;
   }>({});
   const [loading, setLoading] = useState(false);
@@ -27,15 +27,17 @@ export default function LoginPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const fe: typeof fieldErrors = {};
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
-      fe.email = t('validation.email');
+    if (!identifier.trim()) fe.identifier = t('validation.identifier');
     if (!password) fe.password = t('validation.password');
     setFieldErrors(fe);
     if (Object.keys(fe).length > 0) return;
     setError('');
     setLoading(true);
     try {
-      const { user, accessToken } = await login({ email, password });
+      const { user, accessToken } = await login({
+        identifier: identifier.trim(),
+        password,
+      });
       setAuth(user, accessToken);
       navigate(from, { replace: true });
     } catch {
@@ -82,31 +84,33 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} noValidate className="space-y-4">
             <div>
               <label
-                htmlFor="email"
+                htmlFor="identifier"
                 className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {t('auth.email')}
+                {t('auth.identifier')}
               </label>
               <input
-                id="email"
-                type="email"
-                autoComplete="email"
-                value={email}
+                id="identifier"
+                type="text"
+                autoComplete="username"
+                value={identifier}
                 onChange={(e) => {
-                  setEmail(e.target.value);
-                  setFieldErrors((fe) => ({ ...fe, email: undefined }));
+                  setIdentifier(e.target.value);
+                  setFieldErrors((fe) => ({ ...fe, identifier: undefined }));
                 }}
-                aria-invalid={!!fieldErrors.email}
-                aria-describedby={fieldErrors.email ? 'email-err' : undefined}
+                aria-invalid={!!fieldErrors.identifier}
+                aria-describedby={
+                  fieldErrors.identifier ? 'identifier-err' : undefined
+                }
                 className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
-              {fieldErrors.email && (
+              {fieldErrors.identifier && (
                 <p
-                  id="email-err"
+                  id="identifier-err"
                   role="alert"
                   className="mt-1 text-xs text-rose-600 dark:text-rose-400"
                 >
-                  {fieldErrors.email}
+                  {fieldErrors.identifier}
                 </p>
               )}
             </div>
@@ -145,7 +149,7 @@ export default function LoginPage() {
           </form>
 
           <p className="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
-            Demo: citizen1@example.com / Test1234!
+            Demo: citizen1@example.com or maria_p / Test1234!
           </p>
         </div>
       </div>

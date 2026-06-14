@@ -65,6 +65,28 @@ describe('POST /api/auth/register', () => {
 
     expect(res.status).toBe(400);
   });
+
+  it('rejects a weak password (no special character) with 400', async () => {
+    const res = await request(app)
+      .post('/api/auth/register')
+      .send({ email: 'weak@test.zoe', password: 'TestPass1', name: 'Weak Pass' });
+
+    expect(res.status).toBe(400);
+    expect(res.body.success).toBe(false);
+  });
+
+  it('rejects a duplicate username with 409', async () => {
+    await request(app)
+      .post('/api/auth/register')
+      .send({ email: 'uname1@test.zoe', password: 'TestPass1!', name: 'Name One', username: 'dupname1' });
+
+    const res = await request(app)
+      .post('/api/auth/register')
+      .send({ email: 'uname2@test.zoe', password: 'TestPass1!', name: 'Name Two', username: 'dupname1' });
+
+    expect(res.status).toBe(409);
+    expect(res.body.error).toBe('USERNAME_TAKEN');
+  });
 });
 
 describe('POST /api/auth/login', () => {
@@ -97,6 +119,20 @@ describe('POST /api/auth/login', () => {
       .send({ email: 'nobody@test.zoe', password: 'TestPass1!' });
 
     expect(res.status).toBe(401);
+  });
+
+  it('logs in with a username via identifier', async () => {
+    await request(app)
+      .post('/api/auth/register')
+      .send({ email: 'byuname@test.zoe', password: 'TestPass1!', name: 'By Username', username: 'byunametest' });
+
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ identifier: 'byunametest', password: 'TestPass1!' });
+
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.data.user.username).toBe('byunametest');
   });
 });
 

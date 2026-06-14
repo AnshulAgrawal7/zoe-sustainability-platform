@@ -77,7 +77,8 @@ export async function register(req: Request, res: Response) {
   try {
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
-      conflict(res, 'Email already registered');
+      // Code-based message so the client can show a localised, field-level error.
+      conflict(res, 'EMAIL_TAKEN');
       return;
     }
 
@@ -92,7 +93,7 @@ export async function register(req: Request, res: Response) {
       }
       const taken = await prisma.user.findUnique({ where: { username: finalUsername } });
       if (taken) {
-        conflict(res, 'Username already taken');
+        conflict(res, 'USERNAME_TAKEN');
         return;
       }
     } else {
@@ -133,10 +134,26 @@ export async function login(req: Request, res: Response) {
     return;
   }
 
-  const { email, password } = req.body as { email: string; password: string };
+  const { identifier, email, password } = req.body as {
+    identifier?: string;
+    email?: string;
+    password: string;
+  };
+
+  // Accept either a username or an email. Stored emails and usernames are both
+  // lowercased, so a trimmed lowercase comparison matches either column.
+  const loginId = String(identifier ?? email ?? '')
+    .trim()
+    .toLowerCase();
+  if (!loginId) {
+    unauthorized(res, 'Invalid credentials');
+    return;
+  }
 
   try {
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findFirst({
+      where: { OR: [{ email: loginId }, { username: loginId }] },
+    });
     if (!user) {
       unauthorized(res, 'Invalid credentials');
       return;

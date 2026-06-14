@@ -9,11 +9,13 @@ Auth: `Authorization: Bearer <accessToken>` for protected endpoints.
 ## Auth (`/api/auth`)
 
 ### POST /auth/register
-Register a new user.
+Register a new user. `username` is optional (auto-derived from the name if
+omitted). The password must satisfy the policy: **≥8 chars with at least one
+lowercase, one uppercase, one digit and one special character.**
 
 **Request body:**
 ```json
-{ "email": "user@example.com", "password": "Min8chars", "name": "Maria", "language": "EL" }
+{ "email": "user@example.com", "password": "Str0ng!pass", "name": "Maria", "username": "maria_p", "language": "EL" }
 ```
 
 **Response 201:**
@@ -22,15 +24,22 @@ Register a new user.
 ```
 Sets `refreshToken` httpOnly cookie.
 
+**Errors:** `409 { "error": "EMAIL_TAKEN" }` (email already registered) ·
+`409 { "error": "USERNAME_TAKEN" }` (username already in use) ·
+`400` (validation failed, incl. weak password). Error codes are stable so the
+client can show a localised, field-level message.
+
 ---
 
 ### POST /auth/login
-Login with email + password.
+Login with **email or username** + password.
 
 **Request body:**
 ```json
-{ "email": "user@example.com", "password": "Test1234!" }
+{ "identifier": "maria_p", "password": "Test1234!" }
 ```
+`identifier` accepts either the username or the email address. (`email` is also
+still accepted for backwards compatibility.)
 
 **Response 200:**
 ```json

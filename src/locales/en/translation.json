@@ -172,7 +172,11 @@
     "passwordMin": "Password must be at least 8 characters.",
     "consent": "Please give your consent to continue.",
     "username": "Username must be 3–20 characters: lowercase letters, digits or underscore.",
-    "date": "Please choose a date and time."
+    "date": "Please choose a date and time.",
+    "identifier": "Please enter your email or username.",
+    "passwordWeak": "Password doesn't meet all requirements.",
+    "confirmPassword": "Please confirm your password.",
+    "passwordMismatch": "Passwords don't match."
   },
   "rewardData": {
     "tiers": {
@@ -682,7 +686,18 @@
     "registerError": "Registration failed. Please try again.",
     "username": "Username",
     "usernameHint": "Shown publicly instead of your name. 3–20 chars: a–z, 0–9, underscore.",
-    "usernamePublicHint": "Your public handle — shown on comments and mentions (never your real name or email)."
+    "usernamePublicHint": "Your public handle — shown on comments and mentions (never your real name or email).",
+    "identifier": "Email or username",
+    "emailTaken": "An account with this email already exists. Try signing in instead.",
+    "usernameTaken": "This username is already taken. Please choose another.",
+    "passwordReqTitle": "Password requirements",
+    "passwordReq": {
+      "length": "At least 8 characters",
+      "uppercase": "One uppercase letter",
+      "lowercase": "One lowercase letter",
+      "number": "One number",
+      "special": "One special character"
+    }
   },
   "projects": {
     "title": "ZOE Projects",

@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, Check, X } from 'lucide-react';
 import PasswordInput from '../../components/ui/PasswordInput';
 import { register } from '../../services/authService';
 import { useAuthStore } from '../../stores/authStore';
 import type { UserLanguage, UserProfile } from '../../types';
 import { PROFILE_OPTIONS } from '../../data/profiles';
+import {
+  passwordChecks,
+  isStrongPassword,
+  PASSWORD_RULES,
+} from '../../utils/password';
 
 export default function RegisterPage() {
   const { t } = useTranslation();
@@ -17,6 +22,7 @@ export default function RegisterPage() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [language, setLanguage] = useState<UserLanguage>('EN');
   const [profile, setProfile] = useState<UserProfile>('RESIDENT');
   const [error, setError] = useState('');
@@ -25,8 +31,11 @@ export default function RegisterPage() {
     username?: string;
     email?: string;
     password?: string;
+    confirmPassword?: string;
   }>({});
   const [loading, setLoading] = useState(false);
+
+  const checks = passwordChecks(password);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,7 +46,11 @@ export default function RegisterPage() {
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
       fe.email = t('validation.email');
     if (!password) fe.password = t('validation.password');
-    else if (password.length < 8) fe.password = t('validation.passwordMin');
+    else if (!isStrongPassword(password))
+      fe.password = t('validation.passwordWeak');
+    if (!confirmPassword) fe.confirmPassword = t('validation.confirmPassword');
+    else if (password && confirmPassword !== password)
+      fe.confirmPassword = t('validation.passwordMismatch');
     setFieldErrors(fe);
     if (Object.keys(fe).length > 0) return;
     setError('');
@@ -54,7 +67,16 @@ export default function RegisterPage() {
       setAuth(user, accessToken);
       navigate('/dashboard', { replace: true });
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('auth.registerError'));
+      // Backend returns stable codes for the "already exists" cases so we can
+      // place a localised error on the right field.
+      const code = err instanceof Error ? err.message : '';
+      if (code === 'EMAIL_TAKEN') {
+        setFieldErrors((fe) => ({ ...fe, email: t('auth.emailTaken') }));
+      } else if (code === 'USERNAME_TAKEN') {
+        setFieldErrors((fe) => ({ ...fe, username: t('auth.usernameTaken') }));
+      } else {
+        setError(t('auth.registerError'));
+      }
     } finally {
       setLoading(false);
     }
@@ -210,12 +232,68 @@ export default function RegisterPage() {
                   setFieldErrors((fe) => ({ ...fe, password: undefined }));
                 }}
               />
+              {/* Live password-policy checklist (shown once the user types). */}
+              {password.length > 0 && (
+                <ul
+                  className="mt-2 space-y-1"
+                  aria-label={t('auth.passwordReqTitle')}
+                >
+                  {PASSWORD_RULES.map((rule) => {
+                    const met = checks[rule];
+                    return (
+                      <li
+                        key={rule}
+                        className={`flex items-center gap-1.5 text-xs ${
+                          met
+                            ? 'text-green-700 dark:text-green-400'
+                            : 'text-gray-500 dark:text-gray-400'
+                        }`}
+                      >
+                        {met ? (
+                          <Check size={14} aria-hidden="true" />
+                        ) : (
+                          <X size={14} aria-hidden="true" />
+                        )}
+                        <span>{t(`auth.passwordReq.${rule}`)}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
               {fieldErrors.password && (
                 <p
                   role="alert"
                   className="mt-1 text-xs text-rose-600 dark:text-rose-400"
                 >
                   {fieldErrors.password}
+                </p>
+              )}
+            </div>
+            <div>
+              <label
+                htmlFor="reg-confirm-password"
+                className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                {t('auth.confirmPassword')}
+              </label>
+              <PasswordInput
+                id="reg-confirm-password"
+                autoComplete="new-password"
+                value={confirmPassword}
+                onChange={(v) => {
+                  setConfirmPassword(v);
+                  setFieldErrors((fe) => ({
+                    ...fe,
+                    confirmPassword: undefined,
+                  }));
+                }}
+              />
+              {fieldErrors.confirmPassword && (
+                <p
+                  role="alert"
+                  className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+                >
+                  {fieldErrors.confirmPassword}
                 </p>
               )}
             </div>
