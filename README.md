@@ -56,20 +56,28 @@ navigate into the project folder, and run the line for your system.
 
 > First, `cd` into the project folder, e.g. `cd path/to/zoe-sustainability-platform`.
 
-### 🪟 Windows (native PowerShell)
+### 🪟 Windows (native)
+
+**Easiest:** open the `setup` folder in Explorer and **double-click `windows.bat`**.
+That's it — it handles everything.
+
+**Or from a terminal** in the project folder, use this command (Windows blocks
+unsigned `.ps1` scripts by default, so run it via the launcher):
 
 ```powershell
-.\setup\windows.ps1
+.\setup\windows.bat
 ```
 
-If PowerShell blocks the script, run it once like this instead:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File setup\windows.ps1
-```
+> If you really want to run the `.ps1` directly, you must bypass the execution
+> policy for that one run:
+> ```powershell
+> powershell -ExecutionPolicy Bypass -File .\setup\windows.ps1
+> ```
+> The error *"running scripts is disabled on this system"* means you ran
+> `.\setup\windows.ps1` directly — use `windows.bat` instead.
 
 *(Node is installed via `winget`. If Node was just installed, close the window,
-open a new PowerShell, and run the command again.)*
+open a new one, and run the launcher again.)*
 
 ### 🍎 macOS
 
