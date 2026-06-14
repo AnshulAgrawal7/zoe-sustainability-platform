@@ -76,19 +76,18 @@ If you skip this step the setup script stops with a clear message telling you
 
 ### Step 2 — Run the one setup script for your operating system
 
-Open a terminal and `cd` into the project folder first, e.g.
-`cd path/to/zoe-sustainability-platform`. Then run the line for your system. The
-script installs everything (Node if missing, all dependencies) and starts the
-app. It is **non-destructive** — it never migrates, seeds or resets the shared
-database.
+Follow the section for **your** operating system below. The script installs
+everything (Node if missing, all dependencies) and starts the app. It is
+**non-destructive** — it never migrates, seeds or resets the shared database.
 
 #### 🪟 Windows (native)
 
-**Easiest:** open the `setup` folder in Explorer and **double-click `windows.bat`**.
-That's it — it handles everything.
+**Easiest (no terminal needed):** open the `setup` folder in Explorer and
+**double-click `windows.bat`**. That's it — it handles everything.
 
-**Or from a terminal** in the project folder (Windows blocks unsigned `.ps1`
-scripts by default, so run it via the launcher):
+**Or from a terminal:** open **PowerShell**, `cd` into the project folder
+(e.g. `cd path\to\zoe-sustainability-platform`), then run the launcher (Windows
+blocks unsigned `.ps1` scripts by default, so use the `.bat`):
 
 ```powershell
 .\setup\windows.bat
@@ -107,6 +106,9 @@ open a new one, and run the launcher again.)*
 
 #### 🍎 macOS
 
+Open the **Terminal** app, `cd` into the project folder
+(e.g. `cd path/to/zoe-sustainability-platform`), then run:
+
 ```bash
 bash setup/macos.sh
 ```
@@ -115,7 +117,8 @@ bash setup/macos.sh
 
 #### 🐧 WSL2 (Ubuntu on Windows)
 
-Open your **WSL2/Ubuntu** terminal (not PowerShell) and run:
+Open your **WSL2/Ubuntu** terminal (not PowerShell), `cd` into the project folder
+(e.g. `cd ~/projects/zoe-sustainability-platform`), then run:
 
 ```bash
 bash setup/wsl.sh
@@ -164,14 +167,14 @@ format are in `.env.example` and `backend/.env.example`.
 
 ## Demo credentials
 
-| Role | Email | Password |
-|---|---|---|
-| Admin | `admin@zoe-corfu.gr` | `ZoeAdmin2026!` |
-| Citizen | `citizen1@example.com` | `Test1234!` |
-| Citizen | `citizen2@example.com` | `Test1234!` |
-| Tourist | `tourist@example.com` | `Test1234!` |
+| Role | Username | Email | Password |
+|---|---|---|---|
+| Admin | `zoe_admin` | `admin@zoe-corfu.gr` | `ZoeAdmin2026!` |
+| Citizen | `maria_p` | `citizen1@example.com` | `Test1234!` |
+| Citizen | `nikos_s` | `citizen2@example.com` | `Test1234!` |
+| Tourist | `hans_m` | `tourist@example.com` | `Test1234!` |
 
-You can also log in with the **username** instead of the email address.
+You can log in with **either the username or the email** (plus the password).
 
 ---
 
