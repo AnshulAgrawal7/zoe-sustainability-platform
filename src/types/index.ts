@@ -374,17 +374,6 @@ export interface RegisterPayload {
   profile?: UserProfile;
 }
 
-// --- Leaderboard (logged-in only; pseudonymous usernames) ---
-
-export interface LeaderboardEntry {
-  rank: number;
-  username: string;
-  points: number;
-  avatarUrl: string | null;
-  participationCount: number;
-  isMe: boolean;
-}
-
 // --- Citizen event proposals (community → admin review → real Event) ---
 
 export type EventProposalStatus = 'NEW' | 'CONVERTED' | 'DECLINED';

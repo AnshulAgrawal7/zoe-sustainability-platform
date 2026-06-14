@@ -5,7 +5,6 @@ import type {
   ApiUserBadge,
   ApiBadge,
   ApiParticipation,
-  LeaderboardEntry,
 } from '../types';
 
 interface MeResponse extends AuthUser {
@@ -39,16 +38,6 @@ export async function updateMe(data: {
 export async function getMyBadges(): Promise<BadgesResponse> {
   const res = await api.get<ApiResponse<BadgesResponse>>('/users/me/badges');
   return res.data;
-}
-
-// Leaderboard — logged-in only, pseudonymous usernames (never names/emails).
-// Reintroduced with privacy safeguards; see docs/design-rationale-matrix.md B3.
-export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
-  const res =
-    await api.get<ApiResponse<{ entries: LeaderboardEntry[] }>>(
-      '/users/leaderboard'
-    );
-  return res.data.entries;
 }
 
 // Username autocomplete for @mentions (logged-in only).

@@ -15,7 +15,6 @@ import { useTranslation } from 'react-i18next';
 import { rewardActivities, communityMilestones } from '../data/rewards';
 import { PROFILE_OPTIONS } from '../data/profiles';
 import PointsBadge from '../components/ui/PointsBadge';
-import LeaderboardSection from '../components/rewards/LeaderboardSection';
 import { useRewardTiers, tierForPoints } from '../hooks/useRewardTiers';
 import { useAuthStore } from '../stores/authStore';
 import type { UiRewardTier, UserProfile } from '../types';
@@ -479,9 +478,6 @@ export default function RewardsPage() {
             </span>{' '}
             {t('rewards.milestonesNote')}
           </div>
-
-          {/* Individual leaderboard (logged-in only, pseudonymous). */}
-          <LeaderboardSection />
         </Container>
       </section>
     </div>

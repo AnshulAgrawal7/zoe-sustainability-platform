@@ -375,7 +375,7 @@ On native Linux or with `sudo`: `sudo npx playwright install-deps && npm run tes
 
 ---
 
-## Addendum (2026-06-13): usernames, leaderboard, geocoded events, comments & proposals
+## Addendum (2026-06-13): usernames, geocoded events, comments & proposals
 
 **Schema (migration `20260613100000_usernames_events_proposals_notifications`):**
 
@@ -387,13 +387,13 @@ On native Linux or with `sudo`: `sudo npx playwright install-deps && npm run tes
   `NEW|CONVERTED|DECLINED`, `createdEventId` links the resulting Event.
 - `Notification` (new) — citizen mention bell (`type=MENTION`, `read`, actor + target ids).
 
-**New backend routes:** `GET /users/leaderboard` (auth), `GET /users/search` (auth),
+**New backend routes:** `GET /users/search` (auth),
 `GET /geocode` (public, Nominatim proxy), `POST /uploads/image` (auth, Supabase
 `entity-images`), `GET|POST /events/:id/comments`, `GET|POST /notifications` (+`/read`),
 `POST /event-proposals` (public), `GET|GET/:id|PATCH /admin/event-proposals`.
 Admin notification feed extended with `EVENT_PROPOSAL`.
 
-**New frontend routes:** `/leaderboard` (ProtectedRoute), `/admin/event-proposals` (AdminRoute).
+**New frontend routes:** `/admin/event-proposals` (AdminRoute).
 Event-form prefill via `/admin/events/new?fromProposal=<id>` (DeepL auto-translate).
 
 **Key new components:** `map/AddressPicker`, `map/LocationMap`, `ui/ImageUpload`,

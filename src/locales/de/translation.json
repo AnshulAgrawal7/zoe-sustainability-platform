@@ -659,8 +659,7 @@
     "ideas": "Ideen-Board",
     "learn": "Wissen",
     "mainNavAria": "Hauptnavigation",
-    "mobileNavAria": "Mobile Navigation",
-    "leaderboard": "Bestenliste"
+    "mobileNavAria": "Mobile Navigation"
   },
   "auth": {
     "login": "Anmelden",
@@ -682,7 +681,7 @@
     "registerError": "Registrierung fehlgeschlagen. Bitte erneut versuchen.",
     "username": "Benutzername",
     "usernameHint": "Wird öffentlich statt deines Namens angezeigt. 3–20 Zeichen: a–z, 0–9, Unterstrich.",
-    "usernamePublicHint": "Dein öffentlicher Name — sichtbar bei Kommentaren und in der Bestenliste (nie dein echter Name oder deine E-Mail)."
+    "usernamePublicHint": "Dein öffentlicher Name — sichtbar bei Kommentaren und Erwähnungen (nie dein echter Name oder deine E-Mail)."
   },
   "projects": {
     "title": "ZOE Projekte",
@@ -1979,18 +1978,6 @@
     "tooLarge": "Das Bild ist zu groß (max. 5 MB).",
     "failed": "Upload fehlgeschlagen. Bitte erneut versuchen.",
     "remove": "Bild entfernen"
-  },
-  "leaderboard": {
-    "title": "Bestenliste",
-    "subtitle": "Top-Mitwirkende nach Punkten. Nur Benutzernamen — keine echten Namen oder E-Mails.",
-    "empty": "Noch keine Einträge.",
-    "you": "Du",
-    "rank": "Platz {{rank}}",
-    "projects": "{{count}} Projekte",
-    "projects_one": "{{count}} Projekt",
-    "projects_other": "{{count}} Projekte",
-    "privacyNote": "Nur angemeldete Mitglieder sehen diese Liste, und es werden ausschließlich pseudonyme Benutzernamen angezeigt.",
-    "loginHint": "Die Bestenliste ist nur für angemeldete Mitglieder sichtbar."
   },
   "eventProposal": {
     "kindLabel": "Was möchtest du einreichen?",

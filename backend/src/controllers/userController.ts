@@ -87,38 +87,6 @@ export async function updateMe(req: AuthRequest, res: Response) {
   }
 }
 
-// GET /api/users/leaderboard — logged-in only (privacy: pseudonymous usernames,
-// never names/emails). Top users by points, with a 1-based rank. The DSR
-// rationale (design-rationale-matrix B3) is updated: pseudonymity + auth gate
-// mitigate the earlier concern about exposing individual citizen rankings.
-export async function getLeaderboard(req: AuthRequest, res: Response) {
-  try {
-    const top = await prisma.user.findMany({
-      where: { role: 'USER' },
-      orderBy: [{ points: 'desc' }, { createdAt: 'asc' }],
-      take: 20,
-      select: {
-        id: true,
-        username: true,
-        points: true,
-        avatarUrl: true,
-        _count: { select: { participations: true } },
-      },
-    });
-    const entries = top.map((u, i) => ({
-      rank: i + 1,
-      username: u.username,
-      points: u.points,
-      avatarUrl: u.avatarUrl,
-      participationCount: u._count.participations,
-      isMe: u.id === req.user!.userId,
-    }));
-    ok(res, { entries });
-  } catch {
-    serverError(res);
-  }
-}
-
 // GET /api/users/search?q=… — logged-in only. Username autocomplete for @mentions
 // in comments. Returns up to 8 matches by username prefix/substring.
 export async function searchUsers(req: AuthRequest, res: Response) {

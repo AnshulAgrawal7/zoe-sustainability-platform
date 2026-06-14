@@ -18,7 +18,7 @@ model User {
   id        String   @id @default(cuid())
   email     String   @unique
   // Public pseudonymous handle — shown in all community contexts (comments,
-  // leaderboard, @mentions) INSTEAD of the real name/email. Unique, lowercased.
+  // @mentions) INSTEAD of the real name/email. Unique, lowercased.
   username  String   @unique
   password  String
   name      String

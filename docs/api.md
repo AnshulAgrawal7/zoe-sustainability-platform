@@ -217,20 +217,6 @@ Get own badges + all available badges. **Auth required.**
 
 ---
 
-### GET /users/leaderboard
-Top 20 members by points. **Auth required (logged-in only).** Returns ONLY
-pseudonymous usernames — never real names or emails — and is gated behind a
-login. This reintroduces an individual ranking after the privacy concern in
-design-rationale-matrix B3: pseudonymity + the auth gate mitigate the
-neighbour-friction risk while keeping the motivational benefit.
-
-**Response 200:**
-```json
-{ "success": true, "data": { "entries": [
-  { "rank": 1, "username": "maria_p", "points": 470, "avatarUrl": null, "participationCount": 4, "isMe": true }
-] } }
-```
-
 ### GET /users/search?q=…
 Username autocomplete for @mentions in comments. **Auth required.** Up to 8
 matches by substring. Returns `{ users: [{ username, avatarUrl }] }`.

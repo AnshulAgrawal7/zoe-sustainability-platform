@@ -659,8 +659,7 @@
     "ideas": "Ideas board",
     "learn": "Learning",
     "mainNavAria": "Main navigation",
-    "mobileNavAria": "Mobile navigation",
-    "leaderboard": "Leaderboard"
+    "mobileNavAria": "Mobile navigation"
   },
   "auth": {
     "login": "Login",
@@ -682,7 +681,7 @@
     "registerError": "Registration failed. Please try again.",
     "username": "Username",
     "usernameHint": "Shown publicly instead of your name. 3–20 chars: a–z, 0–9, underscore.",
-    "usernamePublicHint": "Your public handle — shown on comments and the leaderboard (never your real name or email)."
+    "usernamePublicHint": "Your public handle — shown on comments and mentions (never your real name or email)."
   },
   "projects": {
     "title": "ZOE Projects",
@@ -1979,18 +1978,6 @@
     "tooLarge": "The image is too large (max 5 MB).",
     "failed": "Upload failed. Please try again.",
     "remove": "Remove image"
-  },
-  "leaderboard": {
-    "title": "Leaderboard",
-    "subtitle": "Top contributors by points. Usernames only — no real names or emails.",
-    "empty": "No entries yet.",
-    "you": "You",
-    "rank": "Rank {{rank}}",
-    "projects": "{{count}} projects",
-    "projects_one": "{{count}} project",
-    "projects_other": "{{count}} projects",
-    "privacyNote": "Only logged-in members can see this ranking, and only pseudonymous usernames are shown.",
-    "loginHint": "The leaderboard is visible to logged-in members only."
   },
   "eventProposal": {
     "kindLabel": "What would you like to submit?",

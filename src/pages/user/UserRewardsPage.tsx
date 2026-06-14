@@ -26,8 +26,8 @@ export default function UserRewardsPage() {
   const [badges, setBadges] = useState<BadgesData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // No leaderboard here by design: an individual citizen ranking would expose
-  // names + points and create social friction in a small island community
+  // No individual citizen ranking by design: it would expose names + points
+  // and create social friction in a small island community
   // (see docs/design-rationale-matrix.md B3) — community milestones on
   // /rewards fill that role instead.
   useEffect(() => {
