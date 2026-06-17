@@ -72,6 +72,11 @@ still accepted for backwards compatibility.)
 Sets `refreshToken` httpOnly cookie.
 
 **Error 401:** `{ "success": false, "error": "Invalid credentials" }`
+**Error 403:** `{ "success": false, "error": "ACCOUNT_DISABLED" }` (suspended account)
+**Error 429:** `{ "success": false, "error": "ACCOUNT_LOCKED" }` — after 5 consecutive
+failed logins the account is locked for 15 minutes (per-account brute-force
+throttle, in addition to the IP-wide auth rate limit). A successful login resets
+the counter.
 
 ---
 

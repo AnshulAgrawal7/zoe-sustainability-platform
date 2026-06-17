@@ -26,6 +26,11 @@ model User {
   // Soft account state. An inactive account is blocked at login (no token is
   // issued) without deleting any data — used by admins to suspend an account.
   active    Boolean  @default(true)
+  // Per-account brute-force throttle (Future_Work §2.4): consecutive failed
+  // logins; once a threshold is hit the account is locked until `lockedUntil`.
+  // Reset to 0 on a successful login.
+  failedLoginAttempts Int       @default(0)
+  lockedUntil         DateTime?
   points    Int      @default(0)
   avatarUrl String?
   language  String   @default("EN")

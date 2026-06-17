@@ -9,6 +9,12 @@ import { generateUniqueUsername, isValidUsername, normalizeUsername } from '../u
 
 const prisma = new PrismaClient();
 
+// Per-account brute-force throttle (Future_Work §2.4): after this many
+// consecutive failed logins the account is locked for the window below. This is
+// in addition to the IP-wide auth rate limiter in app.ts.
+const MAX_FAILED_ATTEMPTS = 5;
+const LOCK_WINDOW_MS = 15 * 60 * 1000;
+
 // Fields of the User that are safe to return to the client (never password).
 const PUBLIC_USER_SELECT = {
   id: true,
@@ -168,8 +174,32 @@ export async function login(req: Request, res: Response) {
       return;
     }
 
+    // Per-account brute-force lock (Future_Work §2.4): while locked, reject
+    // before even checking the password (no token issued).
+    if (user.lockedUntil && user.lockedUntil > new Date()) {
+      res.status(429).json({ success: false, error: 'ACCOUNT_LOCKED' });
+      return;
+    }
+
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
+      // Count the failure; lock the account once the threshold is reached.
+      const attempts = user.failedLoginAttempts + 1;
+      if (attempts >= MAX_FAILED_ATTEMPTS) {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            failedLoginAttempts: 0,
+            lockedUntil: new Date(Date.now() + LOCK_WINDOW_MS),
+          },
+        });
+        res.status(429).json({ success: false, error: 'ACCOUNT_LOCKED' });
+        return;
+      }
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { failedLoginAttempts: attempts },
+      });
       unauthorized(res, 'Invalid credentials');
       return;
     }
@@ -179,6 +209,14 @@ export async function login(req: Request, res: Response) {
     if (!user.active) {
       forbidden(res, 'ACCOUNT_DISABLED');
       return;
+    }
+
+    // Successful login → clear any accumulated failure state.
+    if (user.failedLoginAttempts !== 0 || user.lockedUntil) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { failedLoginAttempts: 0, lockedUntil: null },
+      });
     }
 
     const accessToken = signAccessToken({ userId: user.id, role: user.role });
