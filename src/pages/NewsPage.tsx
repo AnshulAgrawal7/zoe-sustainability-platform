@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Newspaper, CheckCircle2 } from 'lucide-react';
 import { getFeed } from '../services/feedService';
 import FeedCard from '../components/news/FeedCard';
+import LoadError from '../components/ui/LoadError';
 import type { FeedItem, FeedCategory } from '../types';
 
 const CATEGORIES: FeedCategory[] = [
@@ -20,6 +21,9 @@ export default function NewsPage() {
 
   const [items, setItems] = useState<FeedItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
+  // Bumped by the retry button to re-run the load effect.
+  const [reloadKey, setReloadKey] = useState(0);
   const [category, setCategory] = useState<FeedCategory | ''>('');
   const [completedOnly, setCompletedOnly] = useState(false);
 
@@ -28,11 +32,12 @@ export default function NewsPage() {
     let cancelled = false;
     async function load() {
       setLoading(true);
+      setFailed(false);
       try {
         const data = await getFeed(lang);
         if (!cancelled) setItems(data);
       } catch {
-        if (!cancelled) setItems([]);
+        if (!cancelled) setFailed(true);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -41,7 +46,7 @@ export default function NewsPage() {
     return () => {
       cancelled = true;
     };
-  }, [lang]);
+  }, [lang, reloadKey]);
 
   const visible = completedOnly
     ? items.filter(
@@ -123,6 +128,8 @@ export default function NewsPage() {
         <p className="text-gray-500 dark:text-gray-400">
           {t('common.loading')}
         </p>
+      ) : failed ? (
+        <LoadError onRetry={() => setReloadKey((k) => k + 1)} />
       ) : visible.length === 0 ? (
         <p className="rounded-xl border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
           {t('news.empty')}

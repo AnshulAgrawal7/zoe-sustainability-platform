@@ -9,6 +9,7 @@ import EntityImage from '../components/ui/EntityImage';
 import PointsBadge from '../components/ui/PointsBadge';
 import AccountPointsHint from '../components/ui/AccountPointsHint';
 import EventsMapSection from '../components/map/EventsMapSection';
+import LoadError from '../components/ui/LoadError';
 import { useAuthStore } from '../stores/authStore';
 import { projectCategoryVisual } from '../components/ui/categoryVisuals';
 import type { ApiEvent, ApiProjectCategory } from '../types';
@@ -52,6 +53,7 @@ export default function EventsPage() {
 
   const [events, setEvents] = useState<ApiEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState('');
   // Period filter (F3): inclusive ISO date strings (yyyy-mm-dd); '' = open end.
   const [fromDate, setFromDate] = useState('');
@@ -59,9 +61,14 @@ export default function EventsPage() {
 
   // Reloadable so register/cancel can refresh counts + registeredByMe flags.
   const loadEvents = () => {
+    setLoading(true);
+    setFailed(false);
     getEvents()
-      .then(setEvents)
-      .catch(() => setEvents([]))
+      .then((data) => {
+        setEvents(data);
+        setFailed(false);
+      })
+      .catch(() => setFailed(true))
       .finally(() => setLoading(false));
   };
   useEffect(loadEvents, []);
@@ -218,6 +225,8 @@ export default function EventsPage() {
         <p className="py-16 text-center text-gray-500 dark:text-gray-400">
           {t('common.loading')}
         </p>
+      ) : failed ? (
+        <LoadError onRetry={loadEvents} />
       ) : (
         <>
           <p className="mb-5 text-sm text-gray-500 dark:text-gray-400">
