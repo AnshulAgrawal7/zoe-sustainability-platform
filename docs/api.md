@@ -6,6 +6,19 @@ Auth: `Authorization: Bearer <accessToken>` for protected endpoints.
 
 ---
 
+## Health & readiness
+
+### GET /health
+Liveness probe — process is up. Never touches the database.
+`200 → { success: true, data: { status: 'ok', version } }`
+
+### GET /ready
+Readiness probe — pings the database (`SELECT 1`). Use before routing traffic.
+`200 → { success: true, data: { status: 'ready', database: 'up' } }`
+`503 → { success: false, error: 'Database unavailable' }` when the DB is unreachable.
+
+---
+
 ## Auth (`/api/auth`)
 
 ### POST /auth/register

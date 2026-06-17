@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
+import { PrismaClient } from '@prisma/client';
 
 import authRouter from './routes/auth';
 import projectsRouter from './routes/projects';
@@ -88,8 +89,24 @@ app.use('/api/geocode', geocodeRouter);
 app.use('/api/uploads', uploadsRouter);
 app.use('/api/notifications', notificationsRouter);
 
+// Liveness: the process is up and serving HTTP. Cheap, no I/O — safe for the
+// host's frequent liveness probe.
 app.get('/api/health', (_req, res) => {
   res.json({ success: true, data: { status: 'ok', version: '0.1.0' } });
+});
+
+// Readiness: the process can actually serve traffic, i.e. the database is
+// reachable. Hosts/orchestrators should poll this before routing requests.
+// Returns 503 (not 500) so a load balancer treats it as "not ready" rather than
+// a crash, and never leaks DB internals.
+const readinessPrisma = new PrismaClient();
+app.get('/api/ready', async (_req, res) => {
+  try {
+    await readinessPrisma.$queryRaw`SELECT 1`;
+    res.json({ success: true, data: { status: 'ready', database: 'up' } });
+  } catch {
+    res.status(503).json({ success: false, error: 'Database unavailable' });
+  }
 });
 
 // Unknown route → uniform JSON 404 (must come after all routers).
