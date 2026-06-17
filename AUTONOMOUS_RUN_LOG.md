@@ -165,3 +165,12 @@ E-Mail-Verifizierung, Mails an anonyme Einreicher, Newsletter-Versand/Double-Opt
 - **`index.html`:** Open-Graph- + Twitter-Card-Meta (og:url/Prod-Bild = Betreiber).
 - **Test:** Build + FE-Suite grün (29/29); Logik trivial, kein neuer Unit-Test.
 - **Commit:** `feat(seo): per-route titles, robots.txt, social meta tags`
+
+### 9 — Karten-Barrierefreiheit (Future_Work 10.2)
+- **ProjectMap + EventsMap:** `sr-only`, tastatur-fokussierbare Marker-Liste als
+  Textäquivalent der Leaflet-Pins (WCAG 1.1.1) — je ein Link zur Detailseite
+  (Projekt: Titel + Kategorie; Event: Titel). Leaflet-Pins sind für AT
+  unsichtbar; diese Liste schließt die Lücke. i18n-Key `map.markerListLabel` × 3.
+- **Test:** `ProjectMap.test.tsx` erweitert (+1: beschriftete Liste mit Link je
+  Punkt). FE **30/30**, Build grün.
+- **Commit:** `feat(a11y): accessible text alternative for map markers`

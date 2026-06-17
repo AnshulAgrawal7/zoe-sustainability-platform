@@ -107,6 +107,16 @@ export default function EventsMap({ points, colors, className }: Props) {
           </Marker>
         ))}
       </MapContainer>
+
+      {/* Accessible, keyboard-focusable text equivalent of the markers (WCAG
+          1.1.1) — Leaflet pins are not exposed to assistive technology. */}
+      <ul className="sr-only" aria-label={t('map.markerListLabel')}>
+        {located.map((p) => (
+          <li key={p.id}>
+            <Link to={`/events/${p.id}`}>{p.title}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

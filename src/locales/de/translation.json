@@ -1810,7 +1810,8 @@
     "eventsAriaLabel": "Karte der Events in Nordkorfu",
     "eventsHeading": "Events auf der Karte",
     "noSpecificProject": "Kein bestimmtes Projekt",
-    "legendByProject": "Projekte"
+    "legendByProject": "Projekte",
+    "markerListLabel": "Liste der auf der Karte gezeigten Orte"
   },
   "popup": {
     "viewProject": "Projekt ansehen →",

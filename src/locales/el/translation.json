@@ -1810,7 +1810,8 @@
     "eventsAriaLabel": "Χάρτης εκδηλώσεων στη Βόρεια Κέρκυρα",
     "eventsHeading": "Εκδηλώσεις στον χάρτη",
     "noSpecificProject": "Χωρίς συγκεκριμένο έργο",
-    "legendByProject": "Έργα"
+    "legendByProject": "Έργα",
+    "markerListLabel": "Λίστα τοποθεσιών που εμφανίζονται στον χάρτη"
   },
   "popup": {
     "viewProject": "Προβολή έργου →",

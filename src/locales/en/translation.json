@@ -1810,7 +1810,8 @@
     "eventsAriaLabel": "Map of events across North Corfu",
     "eventsHeading": "Events on the map",
     "noSpecificProject": "No specific project",
-    "legendByProject": "Projects"
+    "legendByProject": "Projects",
+    "markerListLabel": "List of locations shown on the map"
   },
   "popup": {
     "viewProject": "View project →",

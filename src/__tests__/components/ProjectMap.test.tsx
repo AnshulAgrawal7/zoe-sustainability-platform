@@ -60,6 +60,21 @@ test('renders a labelled region with one marker per located point', () => {
   expect(links[0]).toHaveAttribute('href', '/projects/proj-marine');
 });
 
+test('exposes an accessible, keyboard-focusable list of map locations', () => {
+  render(
+    <TestWrapper>
+      <ProjectMap points={points} />
+    </TestWrapper>
+  );
+  // The sr-only list is labelled and contains a link per point to its detail page.
+  const list = screen.getByRole('list', {
+    name: /locations shown on the map|orte|τοποθεσιών/i,
+  });
+  const items = list.querySelectorAll('a[href^="/projects/"]');
+  expect(items).toHaveLength(2);
+  expect(items[0]).toHaveAttribute('href', '/projects/proj-marine');
+});
+
 test('skips points without coordinates and shows a message when none remain', () => {
   render(
     <TestWrapper>

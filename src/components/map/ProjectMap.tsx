@@ -134,6 +134,19 @@ export default function ProjectMap({ points, className }: ProjectMapProps) {
           </Marker>
         ))}
       </MapContainer>
+
+      {/* Accessible, keyboard-focusable text equivalent of the markers (WCAG
+          1.1.1): screen-reader and keyboard users get the same destinations as
+          the visual pins, which Leaflet does not expose. */}
+      <ul className="sr-only" aria-label={t('map.markerListLabel')}>
+        {located.map((p) => (
+          <li key={p.id}>
+            <Link to={`/projects/${p.id}`}>
+              {p.title} — {t(`projects.category.${p.category}`)}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
