@@ -43,7 +43,31 @@ new *access* token. To shrink the replay window, rotate the refresh token on
 each use (issue a new one, delete the old) and detect reuse of a retired token
 as theft. Acceptable for the prototype; recommended before high-stakes use.
 
-## 3. Seed vs. production data separation (Future_Work 5.5)
+## 3. Content-Security-Policy (Future_Work 3.4)
+
+A CSP `<meta>` tag is injected into the **production** `index.html` by a Vite
+plugin (`vite.config.ts`); the dev server is deliberately untouched so HMR keeps
+working. Verified against the production build (`vite preview` + headless
+Chromium): **0 CSP violations**, all map tiles load, fonts render.
+
+Policy (and why each allowance exists):
+```
+default-src 'self';
+script-src 'self';                                   (no inline scripts in the build)
+style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;  (Leaflet inline styles + Google Fonts CSS)
+img-src 'self' data: blob: https:;                   (OSM/CARTO tiles, Supabase images, data/blob previews)
+font-src 'self' https://fonts.gstatic.com data:;     (Google Font files)
+connect-src 'self' https:;                            (the API on its production https domain)
+base-uri 'self'; object-src 'none';
+```
+
+**Set at the host (HTTP header), not the meta tag:**
+- `frame-ancestors 'none'` (or `X-Frame-Options: DENY`) — ignored inside `<meta>`.
+- Tighten `connect-src`/`img-src` to the exact API + Supabase domains once the
+  production hostnames are fixed (replace the broad `https:`).
+- `Strict-Transport-Security`, `Referrer-Policy`, etc. as host headers.
+
+## 4. Seed vs. production data separation (Future_Work 5.5)
 
 `backend/prisma/seed.ts` and `npm run db:reset` are **destructive** (reset +
 re-seed with demo content). To avoid ever wiping real citizen data:
