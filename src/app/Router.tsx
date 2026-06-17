@@ -60,11 +60,15 @@ import EditEventPage from '../pages/admin/EditEventPage';
 import AccessibilityPage from '../pages/AccessibilityPage';
 import PrivacyPage from '../pages/PrivacyPage';
 import ImprintPage from '../pages/ImprintPage';
+import NotFoundPage from '../pages/NotFoundPage';
+import RouteErrorPage from '../pages/RouteErrorPage';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
+    errorElement: <RouteErrorPage />,
     children: [
       // Public
       { index: true, element: <LandingPage /> },
@@ -288,6 +292,10 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+
+      // Catch-all — any unknown URL renders the translated 404 page inside the
+      // normal layout (header/footer preserved).
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ]);
@@ -330,5 +338,9 @@ export default function AppRouter() {
     );
   }
 
-  return <RouterProvider router={router} />;
+  return (
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
+  );
 }

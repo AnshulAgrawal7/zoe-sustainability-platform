@@ -29,3 +29,19 @@ E-Mail-Verifizierung, Mails an anonyme Einreicher, Newsletter-Versand/Double-Opt
 
 ## Changelog
 <!-- je Feature ein Eintrag: Was / Dateien / Test / Commit -->
+
+### 1 — 404-Seite, Route-Error-Element & globale Error-Boundary (Future_Work 6.1, 6.2)
+- **Neu:** `src/pages/NotFoundPage.tsx` (übersetzte 404, in Layout, ein `<h1>`,
+  Link zur Startseite), `src/pages/RouteErrorPage.tsx` (Root-`errorElement`:
+  geworfene 404 → NotFoundPage, sonstige Fehler → übersetzter Fallback mit
+  Reload/Home), `src/components/ErrorBoundary.tsx` (Klassen-Boundary um den
+  RouterProvider als letztes Netz gegen White-Screen).
+- **Geändert:** `src/app/Router.tsx` (root `errorElement`, Catch-all
+  `path: '*'`, ErrorBoundary-Wrapper); i18n-Keys `notFound`/`errorBoundary` in
+  `en|de|el/translation.json`.
+- **Mail-UI-Sicherheit (FW 2.1):** geprüft — der `auth.forgotPassword`-Key wird
+  **nirgends gerendert** (existiert nur in den JSON-Dateien). Es gibt also keinen
+  sichtbaren toten Link; kein UI-Eingriff nötig. Voller Reset-Flow bleibt A→B.
+- **Test:** neuer `NotFoundPage.test.tsx` (Render + jest-axe). Frontend
+  **24/24 grün**, Typecheck clean.
+- **Commit:** `feat(routing): 404 page, route error element, global error boundary`

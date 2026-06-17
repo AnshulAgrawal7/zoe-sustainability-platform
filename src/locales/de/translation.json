@@ -2050,5 +2050,16 @@
     "IN_REVIEW": "In Prüfung",
     "RESOLVED": "Erledigt",
     "DECLINED": "Abgelehnt"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "text": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "home": "Zur Startseite"
+  },
+  "errorBoundary": {
+    "title": "Etwas ist schiefgelaufen",
+    "text": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
+    "home": "Zur Startseite",
+    "retry": "Seite neu laden"
   }
 }

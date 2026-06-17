@@ -2050,5 +2050,16 @@
     "IN_REVIEW": "In review",
     "RESOLVED": "Resolved",
     "DECLINED": "Declined"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The page you are looking for does not exist or has moved.",
+    "home": "Back to home"
+  },
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "text": "An unexpected error occurred. Please try again.",
+    "home": "Back to home",
+    "retry": "Reload page"
   }
 }
