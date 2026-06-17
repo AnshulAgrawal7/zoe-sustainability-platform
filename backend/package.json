@@ -12,6 +12,7 @@
     "db:seed": "ts-node prisma/seed.ts",
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset --force && ts-node prisma/seed.ts",
+    "create:admin": "ts-node scripts/create-admin.ts",
     "lint": "eslint src --ext .ts",
     "type-check": "tsc --noEmit"
   },

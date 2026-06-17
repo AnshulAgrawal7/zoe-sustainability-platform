@@ -311,3 +311,31 @@ Liste aller gespeicherten Newsletter-Opt-ins (E-Mail, Sprache, Anmeldedatum).
 > **Prototyp:** Es gibt **keinen** Versand, kein Double-Opt-in und keinen
 > Unsubscribe-Link. Vor Echtbetrieb (Szenario B) muss der Newsletter entweder
 > voll ausgebaut **oder** deaktiviert werden (siehe `Future_Work.md` §7.4).
+
+---
+
+## 17. Ersten echten Admin anlegen (Produktion)
+
+Für den Echtbetrieb (Szenario B) wird **kein** Seed-Admin verwendet. Lege einen
+echten Admin sicher über das CLI-Skript an (Passwort **nie** ins Repo / in die
+Shell-History dauerhaft übernehmen):
+
+```bash
+cd backend
+# Neues Admin-Konto anlegen …
+npm run create:admin -- --email vbm@nord-korfu.gr --password 'StarkesP@ss1' --name "Vorname Nachname"
+# … oder ein bestehendes Konto zum Admin befördern:
+npm run create:admin -- --email vorhandene@nutzerin.gr
+```
+
+- Passwort-Policy wie bei der Registrierung (≥8 Zeichen, Groß-/Kleinbuchstabe,
+  Ziffer, Sonderzeichen); zu schwache Passwörter werden abgelehnt.
+- Existiert die E-Mail bereits → Beförderung zu `ADMIN` (Passwort nur dann
+  zurückgesetzt, wenn `--password` mitgegeben wird).
+- Alternativ als Umgebungsvariablen: `ADMIN_EMAIL`, `ADMIN_PASSWORD`,
+  `ADMIN_NAME`, optional `ADMIN_USERNAME`.
+
+**Demo-Admin entfernen:** Nach dem Anlegen des echten Admins das Seed-Konto
+`admin@zoe-corfu.gr` über die Nutzerverwaltung (`/admin/users` → Löschen) oder
+direkt in der DB entfernen. Der Lockout-Schutz verhindert, dass der **letzte**
+Admin gelöscht/herabgestuft wird — lege also zuerst den echten Admin an.
