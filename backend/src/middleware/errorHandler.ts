@@ -1,5 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { MulterError } from 'multer';
+import { logger } from '../utils/logger';
+import type { RequestWithId } from './requestId';
 
 /**
  * 404 handler for unknown API routes. Mounted AFTER all routers so anything that
@@ -19,8 +21,10 @@ export function notFoundHandler(req: Request, res: Response): void {
  */
 export function errorHandler(
   err: unknown,
-  _req: Request,
+  req: Request,
   res: Response,
+  // Required so Express recognises this 4-arg function as an error handler.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ): void {
   // Multer (file upload) errors → 400 with a stable, client-localisable code.
@@ -37,8 +41,13 @@ export function errorHandler(
   }
 
   // Surfaced to error-tracking in production (see Future_Work §8.4). Logged here
-  // so it is never silently swallowed; the response body stays generic.
-  // eslint-disable-next-line no-console
-  console.error('Unhandled API error:', err);
+  // (with the request id for correlation) so it is never silently swallowed; the
+  // response body stays generic.
+  logger.error('api.unhandled_error', {
+    id: (req as RequestWithId).id,
+    method: req.method,
+    path: req.path,
+    error: err instanceof Error ? err.message : String(err),
+  });
   res.status(500).json({ success: false, error: 'Internal server error' });
 }

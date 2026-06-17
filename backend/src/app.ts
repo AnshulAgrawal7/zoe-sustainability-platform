@@ -24,6 +24,7 @@ import geocodeRouter from './routes/geocode';
 import uploadsRouter from './routes/uploads';
 import notificationsRouter from './routes/notifications';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler';
+import { requestId } from './middleware/requestId';
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+app.use(requestId);
 
 const isTestEnv = process.env['NODE_ENV'] === 'test';
 

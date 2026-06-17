@@ -1,4 +1,5 @@
 import type { PrismaClient } from '@prisma/client';
+import { logger } from './logger';
 
 export type AuditAction =
   | 'ROLE_CHANGE'
@@ -36,7 +37,8 @@ export async function writeAudit(prisma: PrismaClient, input: AuditInput): Promi
       },
     });
   } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error('Failed to write audit log:', err);
+    logger.error('audit.write_failed', {
+      error: err instanceof Error ? err.message : String(err),
+    });
   }
 }

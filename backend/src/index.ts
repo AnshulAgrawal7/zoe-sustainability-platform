@@ -1,7 +1,8 @@
 import app from './app';
+import { logger } from './utils/logger';
 
 const PORT = process.env['PORT'] || 3001;
 
 app.listen(PORT, () => {
-  console.log(`ZOE Backend running on http://localhost:${PORT}`);
+  logger.info('server.start', { port: Number(PORT) });
 });
