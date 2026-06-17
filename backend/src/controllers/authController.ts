@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
 import { signAccessToken, signRefreshToken, verifyToken, getRefreshExpiresAt } from '../utils/jwt';
-import { ok, created, badRequest, unauthorized, conflict, serverError } from '../utils/response';
+import { ok, created, badRequest, unauthorized, forbidden, conflict, serverError } from '../utils/response';
 import type { AuthRequest } from '../middleware/auth';
 import { generateUniqueUsername, isValidUsername, normalizeUsername } from '../utils/username';
 
@@ -171,6 +171,13 @@ export async function login(req: Request, res: Response) {
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
       unauthorized(res, 'Invalid credentials');
+      return;
+    }
+
+    // Suspended accounts are blocked here: credentials may be correct but no
+    // token is issued (admin soft-suspend, see adminController.updateUserActive).
+    if (!user.active) {
+      forbidden(res, 'ACCOUNT_DISABLED');
       return;
     }
 

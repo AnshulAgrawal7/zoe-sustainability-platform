@@ -1,6 +1,13 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { getAllUsers, updateUserRole, getStats } from '../controllers/adminController';
+import {
+  getAllUsers,
+  updateUserRole,
+  updateUserActive,
+  updateUserPoints,
+  getAuditLog,
+  getStats,
+} from '../controllers/adminController';
 import { translateProjectFields } from '../controllers/translationController';
 import { getIdeas, updateIdeaStatus } from '../controllers/ideaController';
 import { getAllComments, setCommentStatus } from '../controllers/commentController';
@@ -58,6 +65,23 @@ router.put(
   [body('role').isIn(['USER', 'ADMIN'])],
   updateUserRole
 );
+
+// Suspend / reactivate an account (soft state; data is preserved).
+router.patch(
+  '/users/:id/active',
+  [body('active').isBoolean()],
+  updateUserActive
+);
+
+// Manual points correction (absolute value, ≥ 0).
+router.patch(
+  '/users/:id/points',
+  [body('points').isInt({ min: 0 })],
+  updateUserPoints
+);
+
+// Read-only admin audit trail (newest first, ?limit=100, ≤ 500).
+router.get('/audit', getAuditLog);
 
 router.get('/stats', getStats);
 

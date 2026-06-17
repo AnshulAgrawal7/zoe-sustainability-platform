@@ -903,7 +903,19 @@
     "valueChainInput": "Input — resources, volunteers, funding",
     "valueChainActivity": "Activity — what is done",
     "valueChainOutput": "Output / result — benefit for citizens",
-    "locationPlaceholder": "e.g. Kassiopi, Northern Corfu"
+    "locationPlaceholder": "e.g. Kassiopi, Northern Corfu",
+    "status": "Status",
+    "active": "Active",
+    "suspended": "Suspended",
+    "suspend": "Suspend",
+    "reactivate": "Reactivate",
+    "adjustPoints": "Adjust points",
+    "savePoints": "Save",
+    "actions": "Actions",
+    "actionForbidden": "That action is not allowed (e.g. you cannot change your own role or remove the last admin).",
+    "userUpdated": "User updated",
+    "auditLog": "Audit log",
+    "auditEmpty": "No admin actions recorded yet."
   },
   "participate": {
     "title": "Citizen Participation",

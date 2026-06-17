@@ -903,7 +903,19 @@
     "valueChainInput": "Input — Ressourcen, Freiwillige, Mittel",
     "valueChainActivity": "Aktivität — was getan wird",
     "valueChainOutput": "Output / Ergebnis — Nutzen für Bürger:innen",
-    "locationPlaceholder": "z. B. Kassiopi, Nordkorfu"
+    "locationPlaceholder": "z. B. Kassiopi, Nordkorfu",
+    "status": "Status",
+    "active": "Aktiv",
+    "suspended": "Gesperrt",
+    "suspend": "Sperren",
+    "reactivate": "Entsperren",
+    "adjustPoints": "Punkte anpassen",
+    "savePoints": "Speichern",
+    "actions": "Aktionen",
+    "actionForbidden": "Diese Aktion ist nicht erlaubt (z. B. eigene Rolle ändern oder den letzten Admin entfernen).",
+    "userUpdated": "Nutzer aktualisiert",
+    "auditLog": "Audit-Log",
+    "auditEmpty": "Noch keine Admin-Aktionen erfasst."
   },
   "participate": {
     "title": "Bürgerbeteiligung",

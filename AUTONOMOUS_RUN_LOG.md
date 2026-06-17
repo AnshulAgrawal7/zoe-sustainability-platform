@@ -84,3 +84,31 @@ E-Mail-Verifizierung, Mails an anonyme Einreicher, Newsletter-Versand/Double-Opt
 - **Test:** neuer `rateLimit.test.ts` (GET nie gedrosselt · 3. POST → 429 JSON).
   **Backend 116/116 grün**, Typecheck clean.
 - **Commit:** `feat(api): rate-limit public write endpoints (anti-spam)`
+
+### 5 — Admin-Nutzerverwaltung härten + Audit-Log (Future_Work 4.1, 4.2)
+- **Schema:** `User.active Boolean @default(true)` + neues Modell `AdminAuditLog`
+  (append-only Protokoll privilegierter Aktionen). Migration
+  `20260617130000_user_active_audit_log`, gegen Schatten-DB validiert (leerer Diff).
+- **Backend (`adminController`):**
+  - `updateUserRole` **abgesichert**: keine Änderung der **eigenen** Rolle
+    (`CANNOT_CHANGE_OWN_ROLE`), keine Degradierung des **letzten Admins**
+    (`LAST_ADMIN`) → kein Lockout mehr. Schreibt Audit.
+  - `updateUserActive` (neu, `PATCH /admin/users/:id/active`): Sperren/Entsperren;
+    Selbstsperre & letzter aktiver Admin verhindert; beim Sperren werden
+    Refresh-Tokens gelöscht (Sofort-Wirkung). Audit.
+  - `updateUserPoints` (neu, `PATCH /admin/users/:id/points`): manuelle
+    Punktekorrektur (≥0). Audit.
+  - `getAuditLog` (neu, `GET /admin/audit`, admin-only, ≤500, neueste zuerst).
+  - `getAllUsers` liefert jetzt `active`.
+  - Helper `utils/audit.ts` (best-effort, bricht die Aktion nie ab).
+- **Backend (`authController.login`):** gesperrte Konten werden am Login geblockt
+  (`403 ACCOUNT_DISABLED`) — korrekte Credentials, aber kein Token.
+- **Frontend:** `ManageUsersPage` neu — Spalten Status + Aktionen, Sperren/
+  Entsperren, Inline-Punkte-Edit mit Speichern, Fehler-Codes → eine lokalisierte
+  Toast (`admin.actionForbidden`); 9 neue i18n-Keys × 3 Sprachen.
+- **Tests:** neuer `adminUsers.test.ts` (+5: Eigene-Rolle-Block · Promote+Audit ·
+  Punkte+Audit · Sperren→Login 403→Entsperren→Login 200 · Audit nur Admin).
+  **BE 121/121 · FE 27/27 · beide Typechecks clean.**
+- **Offen (klein):** Audit-Log-Frontend-Ansicht (Endpoint + Tests vorhanden);
+  Konto-**Löschung** folgt in Feature 6 (gemeinsamer Anonymisierungs-Service).
+- **Commit:** `feat(admin): user management guards, suspend, points, audit log`

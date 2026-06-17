@@ -23,6 +23,9 @@ model User {
   password  String
   name      String
   role      String   @default("USER")
+  // Soft account state. An inactive account is blocked at login (no token is
+  // issued) without deleting any data — used by admins to suspend an account.
+  active    Boolean  @default(true)
   points    Int      @default(0)
   avatarUrl String?
   language  String   @default("EN")
@@ -454,6 +457,26 @@ model RefreshToken {
   userId    String
   expiresAt DateTime
   createdAt DateTime @default(now())
+}
+
+// Append-only audit trail of privileged admin actions (role change, account
+// suspend/reactivate, points adjustment, account deletion). Accountability /
+// compliance (Future_Work §4.2). `actorId` is the admin who acted; the target
+// is kept as a type+id+label rather than a hard FK so the row survives even
+// after the target (e.g. a deleted user) is gone. `detail` carries a short,
+// human-readable description (e.g. "role USER → ADMIN"). Never exposed publicly.
+model AdminAuditLog {
+  id         String   @id @default(cuid())
+  actorId    String
+  actorEmail String
+  action     String // ROLE_CHANGE | ACCOUNT_SUSPEND | ACCOUNT_REACTIVATE | POINTS_ADJUST | ACCOUNT_DELETE
+  targetType String // "USER"
+  targetId   String?
+  targetLabel String? // e.g. the target user's email/name at action time
+  detail     String?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
 }
 
 // --- "What's New" feed (imported VBM Kokkali Facebook posts). Kept SEPARATE
