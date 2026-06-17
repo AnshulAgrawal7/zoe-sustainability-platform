@@ -2074,5 +2074,18 @@
     "text": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
     "home": "Zur Startseite",
     "retry": "Seite neu laden"
+  },
+  "profile": {
+    "data": {
+      "title": "Deine Daten",
+      "subtitle": "Nimm deine Datenschutzrechte für dieses Konto wahr.",
+      "export": "Meine Daten herunterladen (JSON)",
+      "deleteTitle": "Konto löschen",
+      "deleteWarning": "Dies löscht dein Konto dauerhaft. Deine Beiträge auf öffentlichen Boards (Ideen, Meldungen) bleiben anonymisiert erhalten; alles Übrige wird entfernt. Das lässt sich nicht rückgängig machen.",
+      "deleteButton": "Mein Konto löschen",
+      "deleteConfirm": "Mir ist bewusst, dass dies dauerhaft ist und nicht rückgängig gemacht werden kann.",
+      "deleteFinal": "Endgültig löschen",
+      "deleted": "Dein Konto wurde gelöscht."
+    }
   }
 }

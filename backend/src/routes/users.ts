@@ -5,12 +5,18 @@ import {
   updateMe,
   getMyBadges,
   searchUsers,
+  exportMe,
+  deleteMe,
 } from '../controllers/userController';
 import { authenticate } from '../middleware/auth';
 
 const router = Router();
 
 router.get('/me', authenticate, getMe);
+
+// GDPR self-service: data export (Art. 15/20) and account deletion (Art. 17).
+router.get('/me/export', authenticate, exportMe);
+router.delete('/me', authenticate, deleteMe);
 
 router.put(
   '/me',

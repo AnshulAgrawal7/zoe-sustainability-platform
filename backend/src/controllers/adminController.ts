@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import type { AuthRequest } from '../middleware/auth';
 import { ok, badRequest, forbidden, notFound, serverError } from '../utils/response';
 import { writeAudit } from '../utils/audit';
+import { deleteUserCompletely } from '../services/userDeletion';
 
 const prisma = new PrismaClient();
 
@@ -154,6 +155,44 @@ export async function updateUserPoints(req: AuthRequest, res: Response) {
 
     ok(res, updated);
   } catch {
+    serverError(res);
+  }
+}
+
+export async function deleteUser(req: AuthRequest, res: Response) {
+  const id = req.params['id'] as string;
+  const actorId = req.user?.userId ?? '';
+
+  try {
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) { notFound(res); return; }
+
+    // An admin cannot delete their own account here (use self-service), and the
+    // last admin can never be removed.
+    if (id === actorId) { forbidden(res, 'CANNOT_DELETE_SELF'); return; }
+    if (user.role === 'ADMIN') {
+      const adminCount = await prisma.user.count({ where: { role: 'ADMIN' } });
+      if (adminCount <= 1) { forbidden(res, 'LAST_ADMIN'); return; }
+    }
+
+    await deleteUserCompletely(prisma, id);
+
+    const actor = await prisma.user.findUnique({ where: { id: actorId } });
+    await writeAudit(prisma, {
+      actorId,
+      actorEmail: actor?.email ?? 'unknown',
+      action: 'ACCOUNT_DELETE',
+      targetType: 'USER',
+      targetId: id,
+      targetLabel: user.email,
+    });
+
+    ok(res, { deleted: true });
+  } catch (err) {
+    if (err instanceof Error && err.name === 'UserDeletionBlockedError') {
+      badRequest(res, err.message);
+      return;
+    }
     serverError(res);
   }
 }

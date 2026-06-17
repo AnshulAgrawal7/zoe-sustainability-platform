@@ -1,9 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Container from '../../components/layout/Container';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../stores/authStore';
 import { useLanguageStore } from '../../stores/languageStore';
-import { updateMe } from '../../services/userService';
+import { useToastStore } from '../../stores/toastStore';
+import {
+  updateMe,
+  downloadMyData,
+  deleteMyAccount,
+} from '../../services/userService';
+import { logout } from '../../services/authService';
 import type { Language } from '../../stores/languageStore';
 import type { UserLanguage, UserProfile } from '../../types';
 import { PROFILE_OPTIONS, PROFILE_EMOJI } from '../../data/profiles';
@@ -21,8 +28,42 @@ const LANGUAGE_RMAP: Record<UserLanguage, Language> = {
 
 export default function ProfilePage() {
   const { t } = useTranslation();
-  const { user, updateUser } = useAuthStore();
+  const navigate = useNavigate();
+  const { user, updateUser, clearAuth } = useAuthStore();
   const { setLanguage } = useLanguageStore();
+  const showToast = useToastStore((s) => s.showToast);
+
+  const [exporting, setExporting] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteAck, setDeleteAck] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  async function handleExport() {
+    setExporting(true);
+    try {
+      await downloadMyData();
+    } catch {
+      showToast(t('common.error'), { variant: 'error' });
+    } finally {
+      setExporting(false);
+    }
+  }
+
+  async function handleDeleteAccount() {
+    if (!deleteAck) return;
+    setDeleting(true);
+    try {
+      await deleteMyAccount();
+      // Best-effort server logout, then drop local session and leave.
+      await logout().catch(() => undefined);
+      clearAuth();
+      showToast(t('profile.data.deleted'), { variant: 'success' });
+      navigate('/', { replace: true });
+    } catch {
+      showToast(t('common.error'), { variant: 'error' });
+      setDeleting(false);
+    }
+  }
 
   const [name, setName] = useState(user?.name ?? '');
   const [username, setUsername] = useState(user?.username ?? '');
@@ -225,6 +266,87 @@ export default function ProfilePage() {
           </span>
         </p>
       </div>
+
+      {/* GDPR self-service: data export (Art. 15/20) + account deletion (Art. 17) */}
+      <section
+        aria-labelledby="data-rights-heading"
+        className="mt-8 rounded-xl border border-gray-200 p-5 dark:border-gray-700"
+      >
+        <h2
+          id="data-rights-heading"
+          className="text-lg font-semibold text-gray-900 dark:text-white"
+        >
+          {t('profile.data.title')}
+        </h2>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          {t('profile.data.subtitle')}
+        </p>
+
+        <div className="mt-4">
+          <button
+            type="button"
+            onClick={() => void handleExport()}
+            disabled={exporting}
+            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 disabled:opacity-60 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
+          >
+            {exporting ? t('common.loading') : t('profile.data.export')}
+          </button>
+        </div>
+
+        <div className="mt-6 border-t border-gray-200 pt-5 dark:border-gray-700">
+          <h3 className="text-sm font-semibold text-rose-700 dark:text-rose-400">
+            {t('profile.data.deleteTitle')}
+          </h3>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            {t('profile.data.deleteWarning')}
+          </p>
+
+          {!confirmDelete ? (
+            <button
+              type="button"
+              onClick={() => setConfirmDelete(true)}
+              className="mt-3 rounded-lg border border-rose-300 px-4 py-2 text-sm font-medium text-rose-700 transition-colors hover:bg-rose-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 dark:border-rose-800 dark:text-rose-400 dark:hover:bg-rose-900/20"
+            >
+              {t('profile.data.deleteButton')}
+            </button>
+          ) : (
+            <div className="mt-3 space-y-3 rounded-lg border border-rose-300 bg-rose-50 p-4 dark:border-rose-800 dark:bg-rose-900/20">
+              <label className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-200">
+                <input
+                  type="checkbox"
+                  checked={deleteAck}
+                  onChange={(e) => setDeleteAck(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 text-rose-600 focus:ring-2 focus:ring-rose-500 dark:border-gray-600 dark:bg-gray-700"
+                />
+                <span>{t('profile.data.deleteConfirm')}</span>
+              </label>
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => void handleDeleteAccount()}
+                  disabled={!deleteAck || deleting}
+                  className="rounded-lg bg-rose-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2 disabled:opacity-50 dark:focus-visible:ring-offset-gray-900"
+                >
+                  {deleting
+                    ? t('common.loading')
+                    : t('profile.data.deleteFinal')}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setConfirmDelete(false);
+                    setDeleteAck(false);
+                  }}
+                  disabled={deleting}
+                  className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 disabled:opacity-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
+                >
+                  {t('common.cancel')}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
     </Container>
   );
 }

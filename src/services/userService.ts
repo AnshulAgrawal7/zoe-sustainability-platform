@@ -1,4 +1,4 @@
-import { api } from './api';
+import { api, getAccessToken } from './api';
 import type {
   ApiResponse,
   AuthUser,
@@ -6,6 +6,9 @@ import type {
   ApiBadge,
   ApiParticipation,
 } from '../types';
+
+const BASE_URL =
+  import.meta.env['VITE_API_BASE_URL'] || 'http://localhost:3001/api';
 
 interface MeResponse extends AuthUser {
   participations: ApiParticipation[];
@@ -38,6 +41,31 @@ export async function updateMe(data: {
 export async function getMyBadges(): Promise<BadgesResponse> {
   const res = await api.get<ApiResponse<BadgesResponse>>('/users/me/badges');
   return res.data;
+}
+
+// GDPR Art. 15/20 — download all personal data as a JSON file. Uses a raw fetch
+// (not the JSON `api` helper) so the response can be handled as a Blob and saved
+// via a temporary object URL.
+export async function downloadMyData(): Promise<void> {
+  const res = await fetch(`${BASE_URL}/users/me/export`, {
+    headers: { Authorization: `Bearer ${getAccessToken() ?? ''}` },
+    credentials: 'include',
+  });
+  if (!res.ok) throw new Error('EXPORT_FAILED');
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'zoe-my-data.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+// GDPR Art. 17 — permanently delete the signed-in user's account.
+export async function deleteMyAccount(): Promise<void> {
+  await api.delete<ApiResponse<{ deleted: boolean }>>('/users/me');
 }
 
 // Username autocomplete for @mentions (logged-in only).

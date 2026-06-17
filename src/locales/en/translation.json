@@ -2074,5 +2074,18 @@
     "text": "An unexpected error occurred. Please try again.",
     "home": "Back to home",
     "retry": "Reload page"
+  },
+  "profile": {
+    "data": {
+      "title": "Your data",
+      "subtitle": "Exercise your data-protection rights for this account.",
+      "export": "Download my data (JSON)",
+      "deleteTitle": "Delete account",
+      "deleteWarning": "This permanently deletes your account. Your contributions to public boards (ideas, reports) are kept but anonymised; everything else is removed. This cannot be undone.",
+      "deleteButton": "Delete my account",
+      "deleteConfirm": "I understand this is permanent and cannot be undone.",
+      "deleteFinal": "Permanently delete",
+      "deleted": "Your account has been deleted."
+    }
   }
 }

@@ -5,6 +5,7 @@ import {
   updateUserRole,
   updateUserActive,
   updateUserPoints,
+  deleteUser,
   getAuditLog,
   getStats,
 } from '../controllers/adminController';
@@ -79,6 +80,9 @@ router.patch(
   [body('points').isInt({ min: 0 })],
   updateUserPoints
 );
+
+// Delete a user (GDPR erasure; community content is anonymised).
+router.delete('/users/:id', deleteUser);
 
 // Read-only admin audit trail (newest first, ?limit=100, ≤ 500).
 router.get('/audit', getAuditLog);
