@@ -27,6 +27,28 @@ E-Mail-Verifizierung, Mails an anonyme Einreicher, Newsletter-Versand/Double-Opt
 
 ---
 
+## Abschluss (Stand 2026-06-17)
+
+**Endzustand Tests/Build (alle grün):**
+- Backend: **125 Tests** (Start 110 → +15: errorHandler, rateLimit, adminUsers, gdpr, consent).
+- Frontend: **30 Tests** (Start 22 → +8: NotFound, RegisterConsent, ProfileDataRights, ProjectMap-Liste).
+- **Prod-Build `npm run build` grün** (war vorbestehend kaputt → jetzt deploybar).
+- Beide Typechecks clean.
+
+**11 Commits** auf `feature/szenario-a-hardening` (nicht gepusht), je Feature einer.
+
+**Bewusst NICHT gebaut (kein externer Account / A→B):** voller Passwort-Reset- &
+E-Mail-Verifizierungs-Versand, Mails an anonyme Einreicher, Newsletter-Versand/
+Double-Opt-in — alle benötigen einen Mailprovider (👤). Kleinere offene 🤖-Reste
+siehe Future_Work-Statusblock (Audit-UI, Newsletter-Admin-Ansicht, Honeypot,
+Logging/Pagination, Code-Splitting).
+
+**Lokale Test-DB:** Container `zoe-postgres-test` (Docker, :5433) läuft weiter,
+damit `cd backend && npm test` sofort funktioniert (zusätzlich existiert eine
+Wegwerf-DB `zoe_shadow` nur für Migrations-Validierung, ignorierbar).
+
+---
+
 ## Changelog
 <!-- je Feature ein Eintrag: Was / Dateien / Test / Commit -->
 
