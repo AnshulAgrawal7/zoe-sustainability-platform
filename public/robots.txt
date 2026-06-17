@@ -1,0 +1,13 @@
+# ZOE Sustainability Platform — crawler directives.
+# Public pages may be indexed; private/admin areas must not be.
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /my-rewards
+Disallow: /login
+Disallow: /register
+
+# Operator: once the production domain is known, add a sitemap, e.g.
+# Sitemap: https://your-domain.example/sitemap.xml

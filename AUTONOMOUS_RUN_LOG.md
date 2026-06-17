@@ -153,3 +153,15 @@ E-Mail-Verifizierung, Mails an anonyme Einreicher, Newsletter-Versand/Double-Opt
   Bundle > 500 kB → Code-Splitting = Future_Work 6.6 (kein Fehler).
 - **Tests:** FE 29/29 · BE 125/125 unverändert grün.
 - **Commit:** `fix(build): repair broken production build (tsc -b)`
+
+### 8 — SEO-Basics (Future_Work 6.4)
+- **Per-Route-`<title>`:** `Layout` setzt `document.title` aus einer
+  Segment→`nav.*`-Map (übersetzt, reagiert auf Sprachwechsel); Detail-/unbekannte
+  Routen fallen auf den Site-Titel zurück. `document.documentElement.lang` war
+  bereits vorhanden.
+- **`public/robots.txt`:** Public erlaubt, private/Admin-Bereiche (`/admin`,
+  `/dashboard`, `/profile`, `/my-rewards`, `/login`, `/register`) disallowed;
+  Sitemap-Zeile als Betreiber-TODO (Domain unbekannt).
+- **`index.html`:** Open-Graph- + Twitter-Card-Meta (og:url/Prod-Bild = Betreiber).
+- **Test:** Build + FE-Suite grün (29/29); Logik trivial, kein neuer Unit-Test.
+- **Commit:** `feat(seo): per-route titles, robots.txt, social meta tags`

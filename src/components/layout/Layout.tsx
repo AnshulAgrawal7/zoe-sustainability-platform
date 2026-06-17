@@ -8,6 +8,31 @@ import Toaster from '../ui/Toaster';
 import { reportPageView } from '../../services/metricsService';
 import { useAuthStore } from '../../stores/authStore';
 
+// First path segment → an existing nav translation key, so each route gets a
+// descriptive, translated <title> (SEO + a11y, Future_Work §6.4). Unmapped or
+// dynamic routes (e.g. detail pages) fall back to the site title.
+const TITLE_BY_SEGMENT: Record<string, string> = {
+  about: 'nav.about',
+  projects: 'nav.projects',
+  events: 'nav.events',
+  news: 'nav.news',
+  learn: 'nav.learn',
+  ideas: 'nav.ideas',
+  transparency: 'nav.transparency',
+  rewards: 'nav.rewards',
+  participate: 'nav.participate',
+  'get-involved': 'nav.getInvolved',
+  'sdg-dashboard': 'nav.sdgs',
+  login: 'nav.login',
+  register: 'nav.register',
+  dashboard: 'nav.dashboard',
+  profile: 'nav.profile',
+  'my-rewards': 'nav.myRewards',
+  admin: 'nav.admin',
+  imprint: 'nav.imprint',
+};
+const SITE_TITLE = 'ZOE — Municipality of Northern Corfu';
+
 export default function Layout() {
   const { t, i18n } = useTranslation();
   const { pathname } = useLocation();
@@ -16,6 +41,13 @@ export default function Layout() {
   useEffect(() => {
     document.documentElement.lang = i18n.language;
   }, [i18n.language]);
+
+  // Keep the document title in sync with the route and the active language.
+  useEffect(() => {
+    const segment = pathname.split('/')[1] ?? '';
+    const key = TITLE_BY_SEGMENT[segment];
+    document.title = key ? `${t(key)} — ZOE` : SITE_TITLE;
+  }, [pathname, t, i18n.language]);
 
   // Anonymous aggregate page-view counter (admin monitoring). Admin browsing
   // is excluded so testing/management doesn't skew the statistics.
