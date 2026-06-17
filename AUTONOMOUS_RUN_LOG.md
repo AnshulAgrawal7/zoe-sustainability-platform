@@ -56,3 +56,21 @@ E-Mail-Verifizierung, Mails an anonyme Einreicher, Newsletter-Versand/Double-Opt
 - **Test:** neuer `errorHandler.test.ts` (404 + Malformed-JSON). Backend
   **112/112 grün**, Typecheck clean.
 - **Commit:** `feat(api): uniform JSON error handler and 404 middleware`
+
+### 3 — Einwilligung bei der Registrierung + Consent-Nachweis (Future_Work 2.3, 9.6)
+- **Schema:** `User.acceptedTermsAt DateTime?` (Zeitpunkt der Zustimmung =
+  Nachweispflicht). Migration `20260617120000_add_user_consent` erzeugt und gegen
+  Schatten-DB validiert (Migrations reproduzieren Schema exakt → leerer Diff).
+- **Backend:** `auth.ts`-Validator erzwingt `consent === true`
+  (`CONSENT_REQUIRED`); `authController.register` setzt `acceptedTermsAt = now()`.
+- **Frontend:** `RegisterPage` — Pflicht-Checkbox mit `<Trans>`-Link zur
+  Datenschutzseite (`/privacy`), Client-Validierung (`validation.consent`),
+  `consent` im Payload; `RegisterPayload`-Typ um `consent: boolean` erweitert.
+- **i18n:** `auth.consent` (mit `<privacy>`-Komponente) in en|de|el.
+- **Tests:** Backend +2 (Consent-Zeitstempel gesetzt · fehlender Consent → 400,
+  kein User angelegt); 11 bestehende Register-Calls um `consent:true` ergänzt.
+  Frontend neuer `RegisterConsent.test.tsx` (+3: Checkbox/Link · Gate blockiert
+  ohne Consent · sendet `consent:true`). **BE 114/114 · FE 27/27 · Typecheck clean.**
+- **Offen (Doku):** `docs/api.md` Register-Endpoint um `consent` ergänzen (Sammel-
+  Doku-Commit am Ende).
+- **Commit:** `feat(auth): require and record privacy-policy consent at registration`

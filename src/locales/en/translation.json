@@ -697,7 +697,8 @@
       "lowercase": "One lowercase letter",
       "number": "One number",
       "special": "One special character"
-    }
+    },
+    "consent": "I have read and accept the <privacy>privacy policy</privacy>."
   },
   "projects": {
     "title": "ZOE Projects",

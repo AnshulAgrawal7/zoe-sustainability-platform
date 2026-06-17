@@ -32,6 +32,11 @@ router.post(
       .withMessage('Username may only contain letters, digits and underscore'),
     body('language').optional().isIn(['EN', 'EL', 'DE']),
     body('profile').optional().isIn(['RESIDENT', 'VISITOR', 'STUDENT', 'VOLUNTEER']),
+    // GDPR: the privacy policy must be actively accepted (boolean `true`). The
+    // moment of acceptance is recorded server-side (User.acceptedTermsAt).
+    body('consent')
+      .custom((value) => value === true)
+      .withMessage('CONSENT_REQUIRED'),
   ],
   register
 );

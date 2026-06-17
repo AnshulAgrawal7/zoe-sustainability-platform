@@ -373,6 +373,9 @@ export interface RegisterPayload {
   username: string;
   language?: UserLanguage;
   profile?: UserProfile;
+  // GDPR: the user actively accepted the privacy policy. Required by the API;
+  // the acceptance timestamp is recorded server-side.
+  consent: boolean;
 }
 
 // --- Citizen event proposals (community → admin review → real Event) ---

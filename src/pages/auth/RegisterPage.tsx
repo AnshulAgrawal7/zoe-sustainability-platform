@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { UserPlus, Check, X } from 'lucide-react';
 import PasswordInput from '../../components/ui/PasswordInput';
 import { register } from '../../services/authService';
@@ -25,6 +25,7 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [language, setLanguage] = useState<UserLanguage>('EN');
   const [profile, setProfile] = useState<UserProfile>('RESIDENT');
+  const [consent, setConsent] = useState(false);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{
     name?: string;
@@ -32,6 +33,7 @@ export default function RegisterPage() {
     email?: string;
     password?: string;
     confirmPassword?: string;
+    consent?: string;
   }>({});
   const [loading, setLoading] = useState(false);
 
@@ -51,6 +53,7 @@ export default function RegisterPage() {
     if (!confirmPassword) fe.confirmPassword = t('validation.confirmPassword');
     else if (password && confirmPassword !== password)
       fe.confirmPassword = t('validation.passwordMismatch');
+    if (!consent) fe.consent = t('validation.consent');
     setFieldErrors(fe);
     if (Object.keys(fe).length > 0) return;
     setError('');
@@ -63,6 +66,7 @@ export default function RegisterPage() {
         password,
         language,
         profile,
+        consent,
       });
       setAuth(user, accessToken);
       navigate('/dashboard', { replace: true });
@@ -337,6 +341,45 @@ export default function RegisterPage() {
               <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                 {t('profiles.hint')}
               </p>
+            </div>
+            <div>
+              <label className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                <input
+                  type="checkbox"
+                  checked={consent}
+                  onChange={(e) => {
+                    setConsent(e.target.checked);
+                    setFieldErrors((fe) => ({ ...fe, consent: undefined }));
+                  }}
+                  aria-invalid={!!fieldErrors.consent}
+                  aria-describedby={
+                    fieldErrors.consent ? 'reg-consent-err' : undefined
+                  }
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 text-green-600 focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700"
+                />
+                <span>
+                  <Trans
+                    i18nKey="auth.consent"
+                    components={{
+                      privacy: (
+                        <Link
+                          to="/privacy"
+                          className="font-medium text-green-600 hover:underline dark:text-green-400"
+                        />
+                      ),
+                    }}
+                  />
+                </span>
+              </label>
+              {fieldErrors.consent && (
+                <p
+                  id="reg-consent-err"
+                  role="alert"
+                  className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+                >
+                  {fieldErrors.consent}
+                </p>
+              )}
             </div>
             <button
               type="submit"

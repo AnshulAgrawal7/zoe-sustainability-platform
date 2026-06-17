@@ -26,7 +26,7 @@ describe('POST /api/auth/register', () => {
   it('creates a new user and returns accessToken', async () => {
     const res = await request(app)
       .post('/api/auth/register')
-      .send({ email: 'new@test.zoe', password: 'TestPass1!', name: 'Test User', language: 'EN' });
+      .send({ email: 'new@test.zoe', password: 'TestPass1!', name: 'Test User', language: 'EN', consent: true });
 
     expect(res.status).toBe(201);
     expect(res.body.success).toBe(true);
@@ -36,14 +36,34 @@ describe('POST /api/auth/register', () => {
     expect(res.body.data.user.password).toBeUndefined(); // never expose hash
   });
 
+  it('records the consent timestamp on registration', async () => {
+    await request(app)
+      .post('/api/auth/register')
+      .send({ email: 'consent@test.zoe', password: 'TestPass1!', name: 'Consent User', consent: true });
+
+    const created = await prisma.user.findUnique({ where: { email: 'consent@test.zoe' } });
+    expect(created?.acceptedTermsAt).toBeInstanceOf(Date);
+  });
+
+  it('rejects registration without consent with 400', async () => {
+    const res = await request(app)
+      .post('/api/auth/register')
+      .send({ email: 'noconsent@test.zoe', password: 'TestPass1!', name: 'No Consent' });
+
+    expect(res.status).toBe(400);
+    expect(res.body.success).toBe(false);
+    const created = await prisma.user.findUnique({ where: { email: 'noconsent@test.zoe' } });
+    expect(created).toBeNull();
+  });
+
   it('rejects duplicate email with 409', async () => {
     await request(app)
       .post('/api/auth/register')
-      .send({ email: 'dup@test.zoe', password: 'TestPass1!', name: 'Dup User' });
+      .send({ email: 'dup@test.zoe', password: 'TestPass1!', name: 'Dup User', consent: true });
 
     const res = await request(app)
       .post('/api/auth/register')
-      .send({ email: 'dup@test.zoe', password: 'TestPass1!', name: 'Dup User' });
+      .send({ email: 'dup@test.zoe', password: 'TestPass1!', name: 'Dup User', consent: true });
 
     expect(res.status).toBe(409);
     expect(res.body.success).toBe(false);
@@ -52,7 +72,7 @@ describe('POST /api/auth/register', () => {
   it('rejects short password with 400', async () => {
     const res = await request(app)
       .post('/api/auth/register')
-      .send({ email: 'short@test.zoe', password: '123', name: 'Short' });
+      .send({ email: 'short@test.zoe', password: '123', name: 'Short', consent: true });
 
     expect(res.status).toBe(400);
     expect(res.body.success).toBe(false);
@@ -61,7 +81,7 @@ describe('POST /api/auth/register', () => {
   it('rejects invalid email with 400', async () => {
     const res = await request(app)
       .post('/api/auth/register')
-      .send({ email: 'not-an-email', password: 'TestPass1!', name: 'Bad Email' });
+      .send({ email: 'not-an-email', password: 'TestPass1!', name: 'Bad Email', consent: true });
 
     expect(res.status).toBe(400);
   });
@@ -69,7 +89,7 @@ describe('POST /api/auth/register', () => {
   it('rejects a weak password (no special character) with 400', async () => {
     const res = await request(app)
       .post('/api/auth/register')
-      .send({ email: 'weak@test.zoe', password: 'TestPass1', name: 'Weak Pass' });
+      .send({ email: 'weak@test.zoe', password: 'TestPass1', name: 'Weak Pass', consent: true });
 
     expect(res.status).toBe(400);
     expect(res.body.success).toBe(false);
@@ -78,11 +98,11 @@ describe('POST /api/auth/register', () => {
   it('rejects a duplicate username with 409', async () => {
     await request(app)
       .post('/api/auth/register')
-      .send({ email: 'uname1@test.zoe', password: 'TestPass1!', name: 'Name One', username: 'dupname1' });
+      .send({ email: 'uname1@test.zoe', password: 'TestPass1!', name: 'Name One', username: 'dupname1', consent: true });
 
     const res = await request(app)
       .post('/api/auth/register')
-      .send({ email: 'uname2@test.zoe', password: 'TestPass1!', name: 'Name Two', username: 'dupname1' });
+      .send({ email: 'uname2@test.zoe', password: 'TestPass1!', name: 'Name Two', username: 'dupname1', consent: true });
 
     expect(res.status).toBe(409);
     expect(res.body.error).toBe('USERNAME_TAKEN');
@@ -93,7 +113,7 @@ describe('POST /api/auth/login', () => {
   it('returns accessToken for valid credentials', async () => {
     await request(app)
       .post('/api/auth/register')
-      .send({ email: 'login@test.zoe', password: 'TestPass1!', name: 'Login User' });
+      .send({ email: 'login@test.zoe', password: 'TestPass1!', name: 'Login User', consent: true });
 
     const res = await request(app)
       .post('/api/auth/login')
@@ -124,7 +144,7 @@ describe('POST /api/auth/login', () => {
   it('logs in with a username via identifier', async () => {
     await request(app)
       .post('/api/auth/register')
-      .send({ email: 'byuname@test.zoe', password: 'TestPass1!', name: 'By Username', username: 'byunametest' });
+      .send({ email: 'byuname@test.zoe', password: 'TestPass1!', name: 'By Username', username: 'byunametest', consent: true });
 
     const res = await request(app)
       .post('/api/auth/login')

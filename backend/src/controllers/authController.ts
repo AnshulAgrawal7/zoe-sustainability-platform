@@ -102,7 +102,16 @@ export async function register(req: Request, res: Response) {
 
     const hashed = await bcrypt.hash(password, 12);
     const user = await prisma.user.create({
-      data: { email, password: hashed, name, username: finalUsername, language, profile },
+      data: {
+        email,
+        password: hashed,
+        name,
+        username: finalUsername,
+        language,
+        profile,
+        // Proof of consent: validated as `true` by the route, recorded here.
+        acceptedTermsAt: new Date(),
+      },
       select: PUBLIC_USER_SELECT,
     });
 

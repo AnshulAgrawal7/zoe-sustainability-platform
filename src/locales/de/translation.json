@@ -697,7 +697,8 @@
       "lowercase": "Ein Kleinbuchstabe",
       "number": "Eine Ziffer",
       "special": "Ein Sonderzeichen"
-    }
+    },
+    "consent": "Ich habe die <privacy>Datenschutzerklärung</privacy> gelesen und akzeptiere sie."
   },
   "projects": {
     "title": "ZOE Projekte",
