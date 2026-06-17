@@ -67,7 +67,22 @@ base-uri 'self'; object-src 'none';
   production hostnames are fixed (replace the broad `https:`).
 - `Strict-Transport-Security`, `Referrer-Policy`, etc. as host headers.
 
-## 4. Seed vs. production data separation (Future_Work 5.5)
+## 4. Dependency audit (Future_Work 11.3)
+
+`npm audit fix` (non-breaking) was applied to both workspaces:
+- **Frontend (root): 0 vulnerabilities** — `@babel/core` patched, `vite` → 8.0.16.
+- **Backend: `form-data` (high, CRLF injection) patched.**
+
+**Residual (backend, deliberately not fixed):** the `vitest → vite → esbuild`
+chain (1 critical, 1 high, 3 moderate). These are **dev/test-only** dev
+dependencies and **not part of the deployed backend** (which ships as compiled
+JS via `tsc`, with no vite/vitest at runtime). The fixes require a **breaking**
+`vitest@4` major upgrade (`npm audit fix --force`); the advisories
+(esbuild/Vite dev-server, Vitest UI server) only apply when those dev servers
+are exposed, which they never are in CI/production. Revisit with a planned Vitest
+4 migration. Re-run `npm audit` (root + `backend/`) before each release.
+
+## 5. Seed vs. production data separation (Future_Work 5.5)
 
 `backend/prisma/seed.ts` and `npm run db:reset` are **destructive** (reset +
 re-seed with demo content). To avoid ever wiping real citizen data:
