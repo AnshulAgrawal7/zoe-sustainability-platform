@@ -45,3 +45,14 @@ E-Mail-Verifizierung, Mails an anonyme Einreicher, Newsletter-Versand/Double-Opt
 - **Test:** neuer `NotFoundPage.test.tsx` (Render + jest-axe). Frontend
   **24/24 grün**, Typecheck clean.
 - **Commit:** `feat(routing): 404 page, route error element, global error boundary`
+
+### 2 — Backend: globaler Error-Handler + 404-Middleware (Future_Work 3.1)
+- **Neu:** `backend/src/middleware/errorHandler.ts` — `notFoundHandler`
+  (unbekannte Route → JSON-404 statt Express-HTML) und `errorHandler`
+  (Multer-Fehler → 400 `FILE_TOO_LARGE`/`UPLOAD_ERROR`, ungültiges JSON → 400,
+  sonst generischer 500 ohne Leak von Internas).
+- **Geändert:** `backend/src/app.ts` — beide nach allen Routern bzw. als letzte
+  Middleware gemountet.
+- **Test:** neuer `errorHandler.test.ts` (404 + Malformed-JSON). Backend
+  **112/112 grün**, Typecheck clean.
+- **Commit:** `feat(api): uniform JSON error handler and 404 middleware`

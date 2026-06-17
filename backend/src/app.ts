@@ -22,6 +22,7 @@ import metricsRouter from './routes/metrics';
 import geocodeRouter from './routes/geocode';
 import uploadsRouter from './routes/uploads';
 import notificationsRouter from './routes/notifications';
+import { notFoundHandler, errorHandler } from './middleware/errorHandler';
 
 const app = express();
 
@@ -76,5 +77,10 @@ app.use('/api/notifications', notificationsRouter);
 app.get('/api/health', (_req, res) => {
   res.json({ success: true, data: { status: 'ok', version: '0.1.0' } });
 });
+
+// Unknown route → uniform JSON 404 (must come after all routers).
+app.use(notFoundHandler);
+// Central error handler → uniform JSON 500/400 (must be the LAST middleware).
+app.use(errorHandler);
 
 export default app;
