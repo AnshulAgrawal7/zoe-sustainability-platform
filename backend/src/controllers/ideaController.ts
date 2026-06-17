@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import type { AuthRequest } from '../middleware/auth';
 import { ok, created, badRequest, notFound, forbidden, serverError } from '../utils/response';
 import { notifyStatusChange } from '../utils/notify';
+import { parsePageParams } from '../utils/pagination';
 
 const prisma = new PrismaClient();
 
@@ -51,11 +52,16 @@ export async function createIdea(req: AuthRequest, res: Response) {
 export async function getPublicIdeas(req: AuthRequest, res: Response) {
   const category = req.query['category'] as string | undefined;
   const userId = req.user?.userId;
+  // Opt-in pagination (Future_Work §3.7) — without ?page/?limit the full list is
+  // returned (unchanged behaviour for the current SPA board).
+  const { paginated, page, limit, skip } = parsePageParams(req);
   try {
+    const where = { status: 'ACCEPTED', ...(category ? { category } : {}) };
     // Most-supported first (participatory prioritization), then newest.
     const ideas = await prisma.idea.findMany({
-      where: { status: 'ACCEPTED', ...(category ? { category } : {}) },
+      where,
       orderBy: [{ votes: { _count: 'desc' } }, { createdAt: 'desc' }],
+      ...(paginated ? { skip, take: limit } : {}),
       select: {
         id: true,
         title: true,
@@ -66,6 +72,9 @@ export async function getPublicIdeas(req: AuthRequest, res: Response) {
         _count: { select: { votes: true } },
       },
     });
+    const total = paginated
+      ? await prisma.idea.count({ where })
+      : ideas.length;
 
     let votedSet = new Set<string>();
     if (userId && ideas.length) {
@@ -87,7 +96,8 @@ export async function getPublicIdeas(req: AuthRequest, res: Response) {
         voteCount: i._count.votes,
         votedByMe: votedSet.has(i.id),
       })),
-      total: ideas.length,
+      total,
+      ...(paginated ? { page, limit, pages: Math.ceil(total / limit) } : {}),
     });
   } catch {
     serverError(res);

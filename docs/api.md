@@ -360,6 +360,11 @@ Public board — ACCEPTED ideas only, **no personal data**. optionalAuth adds
 `votedByMe`. Sorted by **vote count** (participatory prioritization), then newest.
 Optional `?category=`. Each: `{ id, title, description, category, status, createdAt, voteCount, votedByMe }`.
 
+> **Opt-in pagination** (also on `GET /feed`): add `?page=` / `?limit=` (1–100,
+> default 20) to bound the result. Without either param the **full list** is
+> returned (backward compatible). When paginated, the response adds
+> `page`, `limit`, `pages` alongside `total`.
+
 ### GET /ideas/public/:id
 One approved idea + its visible comments + `voteCount`/`votedByMe`. optionalAuth.
 

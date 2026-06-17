@@ -4,6 +4,7 @@ import { PrismaClient, Prisma } from '@prisma/client';
 import type { Post } from '@prisma/client';
 import { ok, badRequest, notFound, serverError } from '../utils/response';
 import { deleteImages } from '../services/storage';
+import { parsePageParams } from '../utils/pagination';
 
 const prisma = new PrismaClient();
 
@@ -185,7 +186,18 @@ export async function getFeed(req: Request, res: Response) {
     // Newest first (ISO strings sort chronologically).
     items.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 
-    ok(res, { items, total: items.length });
+    // Opt-in pagination (Future_Work §3.7): the feed merges two sources and
+    // sorts in memory, so we slice after sorting. Without ?page/?limit the full
+    // list is returned (unchanged behaviour for the current SPA).
+    const total = items.length;
+    const { paginated, page, limit, skip } = parsePageParams(req);
+    if (paginated) {
+      const pageItems = items.slice(skip, skip + limit);
+      ok(res, { items: pageItems, total, page, limit, pages: Math.ceil(total / limit) });
+      return;
+    }
+
+    ok(res, { items, total });
   } catch {
     serverError(res);
   }
