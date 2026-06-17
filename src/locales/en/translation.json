@@ -972,7 +972,8 @@
     "showLess": "Show less",
     "language": "Language",
     "darkMode": "Dark mode",
-    "lightMode": "Light mode"
+    "lightMode": "Light mode",
+    "loadError": "Could not load data. Please try again."
   },
   "footer": {
     "newsletter": {
@@ -2087,6 +2088,24 @@
       "deleteConfirm": "I understand this is permanent and cannot be undone.",
       "deleteFinal": "Permanently delete",
       "deleted": "Your account has been deleted."
+    }
+  },
+  "adminAudit": {
+    "title": "Audit log",
+    "subtitle": "Privileged admin actions, newest first.",
+    "empty": "No admin actions have been logged yet.",
+    "navLabel": "Review admin actions",
+    "colWhen": "When",
+    "colActor": "Admin",
+    "colAction": "Action",
+    "colTarget": "Target",
+    "colDetail": "Detail",
+    "action": {
+      "ROLE_CHANGE": "Role change",
+      "ACCOUNT_SUSPEND": "Account suspended",
+      "ACCOUNT_REACTIVATE": "Account reactivated",
+      "POINTS_ADJUST": "Points adjusted",
+      "ACCOUNT_DELETE": "Account deleted"
     }
   }
 }

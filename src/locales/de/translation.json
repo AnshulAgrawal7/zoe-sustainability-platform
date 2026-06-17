@@ -972,7 +972,8 @@
     "showLess": "Weniger anzeigen",
     "language": "Sprache",
     "darkMode": "Dunkelmodus",
-    "lightMode": "Hellmodus"
+    "lightMode": "Hellmodus",
+    "loadError": "Daten konnten nicht geladen werden. Bitte erneut versuchen."
   },
   "footer": {
     "newsletter": {
@@ -2087,6 +2088,24 @@
       "deleteConfirm": "Mir ist bewusst, dass dies dauerhaft ist und nicht rückgängig gemacht werden kann.",
       "deleteFinal": "Endgültig löschen",
       "deleted": "Dein Konto wurde gelöscht."
+    }
+  },
+  "adminAudit": {
+    "title": "Audit-Protokoll",
+    "subtitle": "Privilegierte Admin-Aktionen, neueste zuerst.",
+    "empty": "Es wurden noch keine Admin-Aktionen protokolliert.",
+    "navLabel": "Admin-Aktionen einsehen",
+    "colWhen": "Wann",
+    "colActor": "Admin",
+    "colAction": "Aktion",
+    "colTarget": "Ziel",
+    "colDetail": "Detail",
+    "action": {
+      "ROLE_CHANGE": "Rollenänderung",
+      "ACCOUNT_SUSPEND": "Konto gesperrt",
+      "ACCOUNT_REACTIVATE": "Konto entsperrt",
+      "POINTS_ADJUST": "Punkte angepasst",
+      "ACCOUNT_DELETE": "Konto gelöscht"
     }
   }
 }

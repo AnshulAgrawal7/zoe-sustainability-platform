@@ -87,6 +87,13 @@ und Aktionen.
 > Alle diese Aktionen werden im **Audit-Log** protokolliert
 > (`GET /admin/audit`).
 
+### Audit-Log ansehen (`/admin/audit`)
+- Karte „Audit-Protokoll" im Dashboard oder direkt `/admin/audit`.
+- Read-only Tabelle aller privilegierten Admin-Aktionen (neueste zuerst):
+  Zeitpunkt, ausführender Admin, Aktion, Ziel, Detail.
+- Aktionen: Rollenänderung, Konto sperren/entsperren, Punkte anpassen,
+  Konto löschen.
+
 ---
 
 ## 6. API-Zugriff (für Entwickler)
