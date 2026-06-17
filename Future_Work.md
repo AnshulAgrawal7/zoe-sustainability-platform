@@ -42,6 +42,32 @@ Code-Splitting (6.6). **Alles E-Mail-Abhängige** (2.1/2.2/7.x) bleibt bewusst
 A→B (kein Mailprovider im autonomen Lauf). Die einzelnen Abschnitte unten
 behalten den **vollen** Soll-Zustand als Referenz.
 
+### ✅ Zweiter autonomer Lauf (2026-06-17, Branch `feature/szenario-a-hardening-2`)
+
+Alle oben als „noch offen" markierten 🤖-Reste **plus** weitere Tier-2/3-Punkte
+umgesetzt, getestet und (CSP) per Screenshot verifiziert — Details in
+[`AUTONOMOUS_RUN_LOG.md`](AUTONOMOUS_RUN_LOG.md):
+
+- **3.8 ✅** DB-Readiness-Endpoint (`/api/ready`, 503 wenn DB down)
+- **3.5 ✅** Honeypot auf allen anonymen Formularen (Ideen/Submissions/Vorschläge/Newsletter)
+- **4.2 ✅** Audit-Log-Frontend (`/admin/audit`)
+- **4.4 ✅** Newsletter-Admin: Liste, CSV-Export, Löschen
+- **6.7 ✅** Konsistenter „Backend nicht erreichbar"-Zustand mit Retry (Events/News)
+- **4.3 ✅** `create-admin`-Bootstrap-Skript + Produktions-Onboarding-Doku
+- **6.6 ✅** Code-Splitting (React.lazy je Route) + Vendor-Chunking (Entry 1.3 MB → 433 kB)
+- **2.4 ✅** Pro-Konto-Login-Lockout (5 Fehlversuche → 15 min Sperre)
+- **4.5 ✅** Such-/Rollen-/Status-Filter in der Admin-Nutzerliste
+- **3.7 ✅** Opt-in-Pagination (Feed + Ideen-Board, rückwärtskompatibel)
+- **3.6 ✅** Strukturiertes JSON-Logging + Request-IDs (`X-Request-Id`)
+- **3.4 ✅** Production-CSP (Vite-Plugin, Dev unberührt) — **0 Verstöße, Karte/Fonts intakt** (Screenshot-verifiziert)
+- **11.3 ✅** `npm audit fix` — Frontend 0 Vulns; Backend `form-data` gepatcht (Rest = Dev-only Vitest-Kette)
+- **Docs:** Security-Notes (CSRF 3.3 · Refresh-Token 2.6 · Seed/Prod 5.5 · CSP · Audit) · Datenschutz-Textgerüst (9.2) · formale Barrierefreiheitserklärung (9.7/10.3)
+
+**Bewusst weiterhin offen (👤/extern):** Alles E-Mail-Abhängige (2.1/2.2/7.x,
+Mailprovider) · Error-Tracking/Sentry (8.4) · CI/CD (8.5) · Lighthouse/E2E in CI
+(11.2/11.4) · Captcha/Profanity-Filter (3.5, externer Dienst) · echte
+Inhalte/Kontaktwege/Bildrechte (5.1/6.5/9.9).
+
 ---
 
 ## 0. Zwei Zielbilder — was heißt „übergabebereit"?

@@ -208,3 +208,58 @@ Wegwerf-DB `zoe_shadow` nur für Migrations-Validierung, ignorierbar).
 - **Test:** `ProjectMap.test.tsx` erweitert (+1: beschriftete Liste mit Link je
   Punkt). FE **30/30**, Build grün.
 - **Commit:** `feat(a11y): accessible text alternative for map markers`
+
+---
+
+# Lauf 2 — Szenario-A-Härtung (Fortsetzung), 2026-06-17
+
+> Branch `feature/szenario-a-hardening-2` (von `main` nach Merge von Lauf 1).
+> Auftrag: alle ohne externe Accounts umsetzbaren Future_Work-Reste (Tier 1–3)
+> implementieren, je Feature ein Commit mit Tests/Build/Typecheck als Gate; die
+> Production-CSP zusätzlich per Headless-Browser-Screenshot verifizieren.
+> **Auto-Merge auf `main` + Push** am Ende, sofern alle Gates grün.
+
+## Abschluss (Stand 2026-06-17)
+
+**Endzustand (alle Gates grün):**
+- Backend: **140 Tests** (Start 127 → +13: readiness, honeypot, newsletterAdmin,
+  loginLockout, pagination, requestId).
+- Frontend: **48 Tests** (Start 33 → +15: Honeypot, AuditLogPage, ManageNewsletter,
+  LoadError, ManageUsersFilter).
+- **Prod-Build grün**, Bundle-Warnung beseitigt: Entry-Chunk **1.308 kB → 433 kB**
+  (gzip 358 → 134 kB) durch Route-Code-Splitting + Vendor-Chunking.
+- Beide Typechecks clean, Backend-Lint clean.
+- **CSP per Screenshot verifiziert** (Prod-Build, Headless-Chromium): 0 Verstöße,
+  12/12 Map-Tiles geladen, Fonts/Styles intakt.
+
+**14 Commits** (je Feature einer). Auto-Merge auf `main` + Push am Ende.
+
+## Changelog
+
+1. `feat(api): database readiness probe (/api/ready)` — 3.8. Pingt die DB
+   (`SELECT 1`), 503 wenn down; `/api/health` bleibt reine Liveness. +2 BE-Tests.
+2. `feat(security): honeypot anti-spam on public forms` — 3.5. Versteckte
+   `website`-Falle auf Ideen/Submissions/Vorschlägen/Newsletter; Bot-Posts werden
+   still (200, kein DB-Row) verworfen. Reusable `HoneypotField`. +3 BE, +2 FE.
+3. `feat(admin): audit-log view for privileged actions` — 4.2. Frontend
+   (`/admin/audit`) für den bestehenden Endpoint; i18n ×3, jest-axe. +3 FE.
+4. `feat(admin): newsletter signup management` — 4.4. BE: Liste/CSV-Export/Löschen;
+   FE-Seite mit zweistufigem Löschen. +2 BE, +4 FE.
+5. `feat(ux): consistent load-error state with retry` — 6.7. Reusable `LoadError`
+   (Retry) statt stillem Leeren bei Backend-down (Events/News). +4 FE.
+6. `feat(admin): create-admin bootstrap script + onboarding doc` — 4.3. CLI
+   `npm run create:admin` (anlegen/befördern, Passwort-Policy); gegen Test-DB
+   verifiziert. Admin-Guide §17.
+7. `docs: security notes + privacy & a11y statement templates` — 5.5/3.3/2.6/9.2/9.7.
+8. `perf(build): code-split routes (React.lazy) + vendor chunking` — 6.6.
+9. `feat(auth): per-account login lockout` — 2.4. 5 Fehlversuche → 15 min Sperre
+   (429 `ACCOUNT_LOCKED`), Reset bei Erfolg. Migration. +2 BE.
+10. `feat(admin): search and role/status filters on the user list` — 4.5. +2 FE.
+11. `feat(api): opt-in pagination on the feed and public idea board` — 3.7.
+    `?page/?limit` (1–100); ohne Params unverändert (rückwärtskompatibel). +4 BE.
+12. `feat(api): structured JSON logging + request-id correlation` — 3.6. Minimaler
+    JSON-Logger (kein Dep), `X-Request-Id`; alle `console.*` ersetzt. +2 BE.
+13. `feat(security): production Content-Security-Policy` — 3.4. Vite-Plugin
+    injiziert CSP-Meta nur im Prod-Build (Dev/HMR unberührt). Headless-verifiziert.
+14. `chore(deps): npm audit fix` — 11.3. Frontend 0 Vulns (vite 8.0.16); Backend
+    `form-data` gepatcht. Rest = Dev-only Vitest-Kette (dokumentiert, kein `--force`).
