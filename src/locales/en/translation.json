@@ -915,7 +915,14 @@
     "actionForbidden": "That action is not allowed (e.g. you cannot change your own role or remove the last admin).",
     "userUpdated": "User updated",
     "auditLog": "Audit log",
-    "auditEmpty": "No admin actions recorded yet."
+    "auditEmpty": "No admin actions recorded yet.",
+    "searchUsers": "Search name, email or username…",
+    "allRoles": "All roles",
+    "allStatuses": "All statuses",
+    "roleUser": "User",
+    "roleAdmin": "Admin",
+    "noMatches": "No users match your filters.",
+    "showingOf": "Showing {{shown}} of {{total}}"
   },
   "participate": {
     "title": "Citizen Participation",

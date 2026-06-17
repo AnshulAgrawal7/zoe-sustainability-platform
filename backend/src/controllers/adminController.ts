@@ -17,8 +17,8 @@ export async function getAllUsers(_req: AuthRequest, res: Response) {
     const users = await prisma.user.findMany({
       orderBy: { createdAt: 'desc' },
       select: {
-        id: true, email: true, name: true, role: true, active: true,
-        points: true, language: true, createdAt: true,
+        id: true, email: true, username: true, name: true, role: true,
+        active: true, points: true, language: true, createdAt: true,
         _count: { select: { participations: true, userBadges: true } },
       },
     });

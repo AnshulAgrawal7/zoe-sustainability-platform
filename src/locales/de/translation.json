@@ -915,7 +915,14 @@
     "actionForbidden": "Diese Aktion ist nicht erlaubt (z. B. eigene Rolle ändern oder den letzten Admin entfernen).",
     "userUpdated": "Nutzer aktualisiert",
     "auditLog": "Audit-Log",
-    "auditEmpty": "Noch keine Admin-Aktionen erfasst."
+    "auditEmpty": "Noch keine Admin-Aktionen erfasst.",
+    "searchUsers": "Name, E-Mail oder Username suchen…",
+    "allRoles": "Alle Rollen",
+    "allStatuses": "Alle Status",
+    "roleUser": "Nutzer",
+    "roleAdmin": "Admin",
+    "noMatches": "Keine Nutzer passen zu den Filtern.",
+    "showingOf": "{{shown}} von {{total}} angezeigt"
   },
   "participate": {
     "title": "Bürgerbeteiligung",
