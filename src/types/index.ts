@@ -396,6 +396,8 @@ export interface EventProposalPayload {
   projectId?: string;
   submitterName?: string;
   submitterEmail?: string;
+  /** Anti-spam honeypot — real users leave this empty. */
+  website?: string;
 }
 
 export interface AdminEventProposal {

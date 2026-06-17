@@ -25,6 +25,8 @@ export interface IdeaSubmission {
   category: ApiProjectCategory;
   submitterName?: string;
   submitterEmail?: string;
+  /** Anti-spam honeypot — real users leave this empty. */
+  website?: string;
 }
 
 // Submit a citizen idea. Works WITHOUT an account; the api layer attaches the

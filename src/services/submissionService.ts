@@ -12,6 +12,8 @@ export interface SubmissionPayload {
   message: string;
   submitterName?: string;
   submitterEmail?: string;
+  /** Anti-spam honeypot — real users leave this empty. */
+  website?: string;
 }
 
 // Environmental issue report / general feedback from /participate. Works

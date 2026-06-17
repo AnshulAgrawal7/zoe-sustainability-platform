@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { CheckCircle2 } from 'lucide-react';
 import { submitIdea } from '../../services/ideaService';
 import { useAuthStore } from '../../stores/authStore';
+import HoneypotField, { useHoneypot } from '../ui/HoneypotField';
 import type { ApiProjectCategory } from '../../types';
 
 // Reuses the Project category values (labels via i18n `projects.category.*`).
@@ -40,6 +41,7 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
   const [description, setDescription] = useState('');
   const [name, setName] = useState(user?.name ?? '');
   const [email, setEmail] = useState(user?.email ?? '');
+  const honeypot = useHoneypot();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{
@@ -73,6 +75,7 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
         category,
         submitterName: name.trim() || undefined,
         submitterEmail: email.trim() || undefined,
+        website: honeypot.value,
       });
       setDone(true);
     } catch (err) {
@@ -111,6 +114,7 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      <HoneypotField {...honeypot.fieldProps} />
       <div>
         <label htmlFor="idea-title" className={labelClass}>
           {t('participate.ideaTitleLabel')}

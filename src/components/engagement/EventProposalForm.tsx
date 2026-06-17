@@ -6,6 +6,7 @@ import { getProjects } from '../../services/projectService';
 import { useAuthStore } from '../../stores/authStore';
 import AddressPicker, { type AddressValue } from '../map/AddressPicker';
 import ImageUpload from '../ui/ImageUpload';
+import HoneypotField, { useHoneypot } from '../ui/HoneypotField';
 import type { ApiProjectCategory, ApiProject, UserLanguage } from '../../types';
 
 const CATEGORIES: ApiProjectCategory[] = [
@@ -52,6 +53,7 @@ export default function EventProposalForm({ onClose }: Props) {
   const [projectId, setProjectId] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const honeypot = useHoneypot();
   const [projects, setProjects] = useState<ApiProject[]>([]);
 
   const [submitting, setSubmitting] = useState(false);
@@ -105,6 +107,7 @@ export default function EventProposalForm({ onClose }: Props) {
           isAuthenticated && user ? undefined : name.trim() || undefined,
         submitterEmail:
           isAuthenticated && user ? undefined : email.trim() || undefined,
+        website: honeypot.value,
       });
       setSubmitted(true);
     } catch (err) {
@@ -142,6 +145,7 @@ export default function EventProposalForm({ onClose }: Props) {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
+      <HoneypotField {...honeypot.fieldProps} />
       <p className="rounded-lg border border-teal-200 bg-teal-50 p-3 text-sm text-teal-800 dark:border-teal-800 dark:bg-teal-900/20 dark:text-teal-200">
         {t('eventProposal.intro')}
       </p>

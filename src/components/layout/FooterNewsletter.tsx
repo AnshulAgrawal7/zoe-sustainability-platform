@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { Mail } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { subscribeNewsletter } from '../../services/newsletterService';
+import HoneypotField, { useHoneypot } from '../ui/HoneypotField';
 import { useToastStore } from '../../stores/toastStore';
 
 const emailSchema = z.string().email();
@@ -15,6 +16,7 @@ export default function FooterNewsletter() {
   const fieldId = useId();
   const showToast = useToastStore((s) => s.showToast);
   const [email, setEmail] = useState('');
+  const honeypot = useHoneypot();
   const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -27,7 +29,7 @@ export default function FooterNewsletter() {
     setError(null);
     const locale = i18n.language.slice(0, 2);
     try {
-      await subscribeNewsletter(value, locale);
+      await subscribeNewsletter(value, locale, honeypot.value);
     } catch {
       // Prototype touchpoint — confirm regardless (no real mailing pipeline).
     }
@@ -45,6 +47,7 @@ export default function FooterNewsletter() {
         noValidate
         className="flex flex-col gap-2 sm:flex-row"
       >
+        <HoneypotField {...honeypot.fieldProps} />
         <label htmlFor={`${fieldId}-email`} className="sr-only">
           {t('footer.newsletter.emailLabel')}
         </label>

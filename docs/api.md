@@ -17,6 +17,12 @@ Readiness probe — pings the database (`SELECT 1`). Use before routing traffic.
 `200 → { success: true, data: { status: 'ready', database: 'up' } }`
 `503 → { success: false, error: 'Database unavailable' }` when the DB is unreachable.
 
+### Anti-spam honeypot
+Public, unauthenticated POST forms (`/ideas`, `/submissions`, `/event-proposals`,
+`/newsletter`) accept an optional hidden `website` field. Real clients leave it
+empty; if it carries a value the request is treated as bot spam, silently
+accepted with `200 { success: true, data: null }` and **not** persisted.
+
 ---
 
 ## Auth (`/api/auth`)

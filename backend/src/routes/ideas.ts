@@ -13,6 +13,7 @@ import {
 } from '../controllers/commentController';
 import { optionalAuth } from '../middleware/optionalAuth';
 import { authenticate } from '../middleware/auth';
+import { honeypot } from '../middleware/honeypot';
 import { PROJECT_CATEGORIES } from '../constants';
 
 const router = Router();
@@ -57,6 +58,7 @@ const ideaLimiter = rateLimit({
 router.post(
   '/',
   ideaLimiter,
+  honeypot,
   optionalAuth,
   [
     body('title').trim().notEmpty().isLength({ max: 160 }),

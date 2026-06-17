@@ -18,6 +18,7 @@ import IdeaSubmitForm from '../components/engagement/IdeaSubmitForm';
 import EventProposalForm from '../components/engagement/EventProposalForm';
 import PointsBadge from '../components/ui/PointsBadge';
 import AccountPointsHint from '../components/ui/AccountPointsHint';
+import HoneypotField, { useHoneypot } from '../components/ui/HoneypotField';
 import { submitSubmission } from '../services/submissionService';
 import { useAuthStore } from '../stores/authStore';
 
@@ -77,6 +78,7 @@ export default function ParticipationPage() {
     ...emptyForm,
     type: initialOption ?? '',
   });
+  const honeypot = useHoneypot();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -130,6 +132,7 @@ export default function ParticipationPage() {
           isAuthenticated && user ? undefined : form.name.trim() || undefined,
         submitterEmail:
           isAuthenticated && user ? undefined : form.email.trim() || undefined,
+        website: honeypot.value,
       });
       setSubmitted(true);
       // Conversion event — only the selected option type, never the message/PII.
@@ -321,6 +324,7 @@ export default function ParticipationPage() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} noValidate className="space-y-5">
+              <HoneypotField {...honeypot.fieldProps} />
               {isAuthenticated && user ? (
                 // Logged-in: contact details are taken from the profile, fixed.
                 <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-300">

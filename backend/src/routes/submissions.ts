@@ -7,6 +7,7 @@ import {
 } from '../controllers/submissionController';
 import { optionalAuth } from '../middleware/optionalAuth';
 import { authenticate } from '../middleware/auth';
+import { honeypot } from '../middleware/honeypot';
 import { SUBMISSION_TYPES } from '../constants';
 
 const router = Router();
@@ -25,6 +26,7 @@ const submissionLimiter = rateLimit({
 router.post(
   '/',
   submissionLimiter,
+  honeypot,
   optionalAuth,
   [
     body('type').isIn([...SUBMISSION_TYPES]),

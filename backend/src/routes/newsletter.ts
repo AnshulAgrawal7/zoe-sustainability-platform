@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { subscribe } from '../controllers/newsletterController';
+import { honeypot } from '../middleware/honeypot';
 
 const router = Router();
 
@@ -13,6 +14,6 @@ const newsletterLimiter = rateLimit({
 });
 
 // Public prototype newsletter opt-in — records email + locale, no mailing.
-router.post('/', newsletterLimiter, subscribe);
+router.post('/', newsletterLimiter, honeypot, subscribe);
 
 export default router;
