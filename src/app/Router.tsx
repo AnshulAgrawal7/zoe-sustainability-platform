@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
@@ -6,62 +6,85 @@ import AdminRoute from '../components/auth/AdminRoute';
 import { initAuth } from '../services/authService';
 import { useAuthStore } from '../stores/authStore';
 
+// Page components are code-split via React.lazy so each route ships its own
+// chunk instead of one ~1.3 MB bundle (Future_Work §6.6). The Suspense boundary
+// lives in Layout, around <Outlet>. The shell — Layout, route guards, the error
+// element and the 404 page — stays eager so navigation and error handling never
+// wait on a chunk.
 // Public pages
-import LandingPage from '../pages/LandingPage';
-import AboutPage from '../pages/AboutPage';
-import ProjectsPage from '../pages/ProjectsPage';
-import ProjectDetailPage from '../pages/ProjectDetailPage';
-import SDGDashboardPage from '../pages/SDGDashboardPage';
-import ParticipationPage from '../pages/ParticipationPage';
-import EventsPage from '../pages/EventsPage';
-import EventDetailPage from '../pages/EventDetailPage';
-import TransparencyPage from '../pages/TransparencyPage';
-import AudiencesPage from '../pages/AudiencesPage';
-import RewardsPage from '../pages/RewardsPage';
-import GetInvolvedPage from '../pages/GetInvolvedPage';
-import IdeasPage from '../pages/IdeasPage';
-import IdeaDetailPage from '../pages/IdeaDetailPage';
-import LearnPage from '../pages/LearnPage';
-import LearnDetailPage from '../pages/LearnDetailPage';
-import NewsPage from '../pages/NewsPage';
-import NewsDetailPage from '../pages/NewsDetailPage';
+const LandingPage = lazy(() => import('../pages/LandingPage'));
+const AboutPage = lazy(() => import('../pages/AboutPage'));
+const ProjectsPage = lazy(() => import('../pages/ProjectsPage'));
+const ProjectDetailPage = lazy(() => import('../pages/ProjectDetailPage'));
+const SDGDashboardPage = lazy(() => import('../pages/SDGDashboardPage'));
+const ParticipationPage = lazy(() => import('../pages/ParticipationPage'));
+const EventsPage = lazy(() => import('../pages/EventsPage'));
+const EventDetailPage = lazy(() => import('../pages/EventDetailPage'));
+const TransparencyPage = lazy(() => import('../pages/TransparencyPage'));
+const AudiencesPage = lazy(() => import('../pages/AudiencesPage'));
+const RewardsPage = lazy(() => import('../pages/RewardsPage'));
+const GetInvolvedPage = lazy(() => import('../pages/GetInvolvedPage'));
+const IdeasPage = lazy(() => import('../pages/IdeasPage'));
+const IdeaDetailPage = lazy(() => import('../pages/IdeaDetailPage'));
+const LearnPage = lazy(() => import('../pages/LearnPage'));
+const LearnDetailPage = lazy(() => import('../pages/LearnDetailPage'));
+const NewsPage = lazy(() => import('../pages/NewsPage'));
+const NewsDetailPage = lazy(() => import('../pages/NewsDetailPage'));
 
 // Auth pages
-import LoginPage from '../pages/auth/LoginPage';
-import RegisterPage from '../pages/auth/RegisterPage';
+const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
+const RegisterPage = lazy(() => import('../pages/auth/RegisterPage'));
 
 // User pages (protected)
-import DashboardPage from '../pages/user/DashboardPage';
-import ProfilePage from '../pages/user/ProfilePage';
-import UserRewardsPage from '../pages/user/UserRewardsPage';
+const DashboardPage = lazy(() => import('../pages/user/DashboardPage'));
+const ProfilePage = lazy(() => import('../pages/user/ProfilePage'));
+const UserRewardsPage = lazy(() => import('../pages/user/UserRewardsPage'));
 
 // Admin pages (admin-only)
-import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
-import ManageProjectsPage from '../pages/admin/ManageProjectsPage';
-import ManageUsersPage from '../pages/admin/ManageUsersPage';
-import AuditLogPage from '../pages/admin/AuditLogPage';
-import ManageNewsletterPage from '../pages/admin/ManageNewsletterPage';
-import ManageIdeasPage from '../pages/admin/ManageIdeasPage';
-import ManageSubmissionsPage from '../pages/admin/ManageSubmissionsPage';
-import ManageRewardsPage from '../pages/admin/ManageRewardsPage';
-import MonitoringPage from '../pages/admin/MonitoringPage';
-import ManageCommentsPage from '../pages/admin/ManageCommentsPage';
-import ManageLearnPage from '../pages/admin/ManageLearnPage';
-import NewLearnPage from '../pages/admin/NewLearnPage';
-import EditLearnPage from '../pages/admin/EditLearnPage';
-import ManageFeedPage from '../pages/admin/ManageFeedPage';
-import EditFeedPage from '../pages/admin/EditFeedPage';
-import ManagePostsPage from '../pages/admin/ManagePostsPage';
-import NewProjectPage from '../pages/admin/NewProjectPage';
-import EditProjectPage from '../pages/admin/EditProjectPage';
-import ManageEventsPage from '../pages/admin/ManageEventsPage';
-import EventRegistrationsPage from '../pages/admin/EventRegistrationsPage';
-import NewEventPage from '../pages/admin/NewEventPage';
-import ManageEventProposalsPage from '../pages/admin/ManageEventProposalsPage';
-import EditEventPage from '../pages/admin/EditEventPage';
-import AccessibilityPage from '../pages/AccessibilityPage';
-import PrivacyPage from '../pages/PrivacyPage';
-import ImprintPage from '../pages/ImprintPage';
+const AdminDashboardPage = lazy(
+  () => import('../pages/admin/AdminDashboardPage')
+);
+const ManageProjectsPage = lazy(
+  () => import('../pages/admin/ManageProjectsPage')
+);
+const ManageUsersPage = lazy(() => import('../pages/admin/ManageUsersPage'));
+const AuditLogPage = lazy(() => import('../pages/admin/AuditLogPage'));
+const ManageNewsletterPage = lazy(
+  () => import('../pages/admin/ManageNewsletterPage')
+);
+const ManageIdeasPage = lazy(() => import('../pages/admin/ManageIdeasPage'));
+const ManageSubmissionsPage = lazy(
+  () => import('../pages/admin/ManageSubmissionsPage')
+);
+const ManageRewardsPage = lazy(
+  () => import('../pages/admin/ManageRewardsPage')
+);
+const MonitoringPage = lazy(() => import('../pages/admin/MonitoringPage'));
+const ManageCommentsPage = lazy(
+  () => import('../pages/admin/ManageCommentsPage')
+);
+const ManageLearnPage = lazy(() => import('../pages/admin/ManageLearnPage'));
+const NewLearnPage = lazy(() => import('../pages/admin/NewLearnPage'));
+const EditLearnPage = lazy(() => import('../pages/admin/EditLearnPage'));
+const ManageFeedPage = lazy(() => import('../pages/admin/ManageFeedPage'));
+const EditFeedPage = lazy(() => import('../pages/admin/EditFeedPage'));
+const ManagePostsPage = lazy(() => import('../pages/admin/ManagePostsPage'));
+const NewProjectPage = lazy(() => import('../pages/admin/NewProjectPage'));
+const EditProjectPage = lazy(() => import('../pages/admin/EditProjectPage'));
+const ManageEventsPage = lazy(() => import('../pages/admin/ManageEventsPage'));
+const EventRegistrationsPage = lazy(
+  () => import('../pages/admin/EventRegistrationsPage')
+);
+const NewEventPage = lazy(() => import('../pages/admin/NewEventPage'));
+const ManageEventProposalsPage = lazy(
+  () => import('../pages/admin/ManageEventProposalsPage')
+);
+const EditEventPage = lazy(() => import('../pages/admin/EditEventPage'));
+const AccessibilityPage = lazy(() => import('../pages/AccessibilityPage'));
+const PrivacyPage = lazy(() => import('../pages/PrivacyPage'));
+const ImprintPage = lazy(() => import('../pages/ImprintPage'));
+
+// Eager: shell + error/404 handling must not wait on a lazy chunk.
 import NotFoundPage from '../pages/NotFoundPage';
 import RouteErrorPage from '../pages/RouteErrorPage';
 import ErrorBoundary from '../components/ErrorBoundary';

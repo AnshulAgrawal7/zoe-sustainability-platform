@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Header from './Header';
@@ -73,7 +73,20 @@ export default function Layout() {
         tabIndex={-1}
         className="flex-1 focus:outline-none"
       >
-        <Outlet />
+        {/* Routes are code-split (React.lazy); this boundary shows a light
+            placeholder while a route chunk loads (Future_Work §6.6). */}
+        <Suspense
+          fallback={
+            <p
+              className="py-24 text-center text-gray-500 dark:text-gray-400"
+              role="status"
+            >
+              {t('common.loading')}
+            </p>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
       <Toaster />
