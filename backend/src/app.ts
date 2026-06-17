@@ -48,10 +48,24 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+const isTestEnv = process.env['NODE_ENV'] === 'test';
+
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   // Higher limit in dev/test to allow E2E test suites; tighten for production
   max: process.env['NODE_ENV'] === 'production' ? 20 : 200,
+  message: { success: false, error: 'Too many requests, please try again later' },
+});
+
+// Anti-spam limiter for public, write-heavy endpoints (citizen submissions,
+// comments, newsletter). Only counts mutating requests so reading the public
+// idea board / feed is never throttled. Disabled under NODE_ENV=test so the
+// integration suites (which fire many writes) are not flagged; tuned tighter in
+// production than in local dev.
+const writeLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: process.env['NODE_ENV'] === 'production' ? 30 : 500,
+  skip: (req) => isTestEnv || req.method === 'GET' || req.method === 'HEAD',
   message: { success: false, error: 'Too many requests, please try again later' },
 });
 
@@ -60,14 +74,14 @@ app.use('/api/projects', projectsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/events', eventsRouter);
-app.use('/api/ideas', ideasRouter);
-app.use('/api/comments', commentsRouter);
+app.use('/api/ideas', writeLimiter, ideasRouter);
+app.use('/api/comments', writeLimiter, commentsRouter);
 app.use('/api/learn', learnRouter);
 app.use('/api/feed', feedRouter);
 app.use('/api/posts', postsRouter);
-app.use('/api/newsletter', newsletterRouter);
-app.use('/api/submissions', submissionsRouter);
-app.use('/api/event-proposals', eventProposalsRouter);
+app.use('/api/newsletter', writeLimiter, newsletterRouter);
+app.use('/api/submissions', writeLimiter, submissionsRouter);
+app.use('/api/event-proposals', writeLimiter, eventProposalsRouter);
 app.use('/api/rewards', rewardsRouter);
 app.use('/api/metrics', metricsRouter);
 app.use('/api/geocode', geocodeRouter);

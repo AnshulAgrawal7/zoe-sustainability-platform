@@ -74,3 +74,13 @@ E-Mail-Verifizierung, Mails an anonyme Einreicher, Newsletter-Versand/Double-Opt
 - **Offen (Doku):** `docs/api.md` Register-Endpoint um `consent` ergänzen (Sammel-
   Doku-Commit am Ende).
 - **Commit:** `feat(auth): require and record privacy-policy consent at registration`
+
+### 4 — Rate-Limiting auf anonymen/Schreib-Endpunkten (Future_Work 3.2)
+- **Backend:** neuer `writeLimiter` in `app.ts` auf `/api/ideas`,
+  `/api/comments`, `/api/newsletter`, `/api/submissions`, `/api/event-proposals`.
+  Zählt nur mutierende Requests (`skip` für GET/HEAD → öffentliche Listen/Feed nie
+  gedrosselt), prod 30 / dev 500 pro 15 min, im Test-Env deaktiviert (E2E-Suites).
+  Antwort im einheitlichen JSON-429-Format.
+- **Test:** neuer `rateLimit.test.ts` (GET nie gedrosselt · 3. POST → 429 JSON).
+  **Backend 116/116 grün**, Typecheck clean.
+- **Commit:** `feat(api): rate-limit public write endpoints (anti-spam)`
