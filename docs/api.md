@@ -11,11 +11,13 @@ Auth: `Authorization: Bearer <accessToken>` for protected endpoints.
 ### POST /auth/register
 Register a new user. `username` is optional (auto-derived from the name if
 omitted). The password must satisfy the policy: **≥8 chars with at least one
-lowercase, one uppercase, one digit and one special character.**
+lowercase, one uppercase, one digit and one special character.** `consent` is
+**required** and must be `true` (GDPR: the privacy policy must be actively
+accepted; the acceptance time is recorded as `User.acceptedTermsAt`).
 
 **Request body:**
 ```json
-{ "email": "user@example.com", "password": "Str0ng!pass", "name": "Maria", "username": "maria_p", "language": "EL" }
+{ "email": "user@example.com", "password": "Str0ng!pass", "name": "Maria", "username": "maria_p", "language": "EL", "consent": true }
 ```
 
 **Response 201:**
@@ -26,8 +28,11 @@ Sets `refreshToken` httpOnly cookie.
 
 **Errors:** `409 { "error": "EMAIL_TAKEN" }` (email already registered) ·
 `409 { "error": "USERNAME_TAKEN" }` (username already in use) ·
-`400` (validation failed, incl. weak password). Error codes are stable so the
-client can show a localised, field-level message.
+`400` (validation failed, incl. weak password or missing `consent`). Error codes
+are stable so the client can show a localised, field-level message.
+
+> **Login note:** a suspended account (admin soft-suspend) returns
+> `403 { "error": "ACCOUNT_DISABLED" }` even with correct credentials.
 
 ---
 
@@ -232,6 +237,24 @@ matches by substring. Returns `{ users: [{ username, avatarUrl }] }`.
 
 ---
 
+### GET /users/me/export
+**Auth required.** GDPR data export (Art. 15/20). Returns a JSON **attachment**
+(`Content-Disposition: attachment; filename="zoe-my-data.json"`) with all
+personal data held for the account: profile, participations, event
+registrations, ideas, submissions, event proposals, comments and badges.
+
+---
+
+### DELETE /users/me
+**Auth required.** GDPR account deletion (Art. 17). Community content
+(ideas/submissions/event proposals) is **anonymised** (the user link and any
+submitter name/email are cleared); everything strictly personal (participations,
+RSVPs, badges, tokens, the user's own comments and notifications) is removed.
+Clears the `refreshToken` cookie. Returns `{ deleted: true }`. Blocked with
+`400 { "error": "USER_HAS_PROJECTS" }` if the account still owns projects.
+
+---
+
 ## Geocoding (`/api/geocode`)
 
 ### GET /geocode?q=…
@@ -342,12 +365,31 @@ The logged-in user's own reports/feedback with `status` + `adminNote`. **Auth re
 All admin endpoints require **ADMIN role**.
 
 ### GET /admin/users
-List all users with participation/badge counts.
+List all users with participation/badge counts (includes `active`).
 
 ### PUT /admin/users/:id/role
-Change user role.
+Change user role. **Request body:** `{ "role": "USER" | "ADMIN" }`
 
-**Request body:** `{ "role": "USER" | "ADMIN" | "SCHOOL" }`
+Guards: `403 CANNOT_CHANGE_OWN_ROLE` (an admin may not change their own role),
+`403 LAST_ADMIN` (the last admin may not be demoted). Writes an audit entry.
+
+### PATCH /admin/users/:id/active
+Suspend or reactivate an account (soft state; data preserved). **Request body:**
+`{ "active": false }`. Suspending also revokes the user's refresh tokens.
+Guards: `403 CANNOT_SUSPEND_SELF`, `403 LAST_ADMIN`. Writes an audit entry.
+
+### PATCH /admin/users/:id/points
+Manual points correction. **Request body:** `{ "points": 250 }` (integer ≥ 0).
+Writes an audit entry.
+
+### DELETE /admin/users/:id
+Delete a user (GDPR erasure; community content is anonymised — see
+`DELETE /users/me`). Guards: `403 CANNOT_DELETE_SELF`, `403 LAST_ADMIN`,
+`400 USER_HAS_PROJECTS`. Writes an audit entry.
+
+### GET /admin/audit?limit=100
+Append-only audit trail of privileged admin actions (role change, suspend/
+reactivate, points adjust, account deletion), newest first (`limit` ≤ 500).
 
 ### GET /admin/stats
 Dashboard statistics.

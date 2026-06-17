@@ -16,6 +16,34 @@
 
 ---
 
+## ✅ Umsetzungsstatus (autonomer Lauf, 2026-06-17)
+
+Ein autonomer Arbeitslauf hat die **ohne externe Accounts** umsetzbaren 🤖-Punkte
+bereits implementiert und getestet (Branch `feature/szenario-a-hardening`,
+Details + Tests in [`AUTONOMOUS_RUN_LOG.md`](AUTONOMOUS_RUN_LOG.md)):
+
+- **6.1/6.2 ✅** 404-Seite, Route-Error-Element, globale Error-Boundary
+- **3.1 ✅** Backend: einheitlicher JSON-Error-Handler + 404-Middleware
+- **2.3/9.6 ✅** Einwilligung bei Registrierung (Pflicht) + Consent-Zeitstempel
+- **3.2 ✅** Rate-Limiting auf anonymen Schreib-Endpunkten
+- **4.1 ✅** Admin-Nutzerverwaltung: Rolle (mit Lockout-Schutz), Sperren/
+  Entsperren (+ Login-Block), Punktekorrektur
+- **4.2 ✅** Admin-Audit-Log (Backend + Endpoint)
+- **9.5 ✅** DSGVO Self-Service: Datenexport (Art. 15/20) + Konto-Löschung
+  (Art. 17, mit Anonymisierung); Admin-Löschung
+- **Build-Blocker ✅** Prod-Build (`tsc -b`) repariert (war vorbestehend kaputt →
+  Deployment war unmöglich)
+- **6.4 ✅** SEO-Basics: Per-Route-Titel, `robots.txt`, OG/Twitter-Meta
+- **10.2 ✅** Karten-Barrierefreiheit: SR-/tastaturtaugliche Marker-Liste
+
+**Noch offen (🤖, kleiner):** Audit-Log-Frontend-Ansicht · Newsletter-Admin-Ansicht
+(4.4) · Honeypot auf anonymen Formularen · Logging/Pagination (3.6/3.7) ·
+Code-Splitting (6.6). **Alles E-Mail-Abhängige** (2.1/2.2/7.x) bleibt bewusst
+A→B (kein Mailprovider im autonomen Lauf). Die einzelnen Abschnitte unten
+behalten den **vollen** Soll-Zustand als Referenz.
+
+---
+
 ## 0. Zwei Zielbilder — was heißt „übergabebereit"?
 
 Der Reifegrad hängt davon ab, **wie** die Gemeinde die Plattform betreiben will.

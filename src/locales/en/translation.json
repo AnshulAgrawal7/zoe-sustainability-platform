@@ -1115,7 +1115,7 @@
     "cookiesTitle": "Cookies & Local Storage",
     "cookiesText": "The platform uses localStorage to persist language preference and authentication state within the browser. No tracking cookies are set. No third-party analytics are used.",
     "rightsTitle": "Your Rights (GDPR)",
-    "rightsText": "Under GDPR, you have the right to access, rectify, and erase your data. As this is a prototype with fictional data, these rights are exercised by contacting the research team.",
+    "rightsText": "Under GDPR you have the right to access, rectify and erase your data. Logged-in users can exercise these directly: download all account data or delete the account under Profile → Your data. For anything else, contact the operator below.",
     "contactTitle": "Contact",
     "contactText": "For privacy-related questions, contact:",
     "lastUpdate": "Last updated",

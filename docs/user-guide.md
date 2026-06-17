@@ -108,6 +108,14 @@ Badges werden automatisch freigeschaltet, wenn Sie die Punkteschwelle erreichen:
 - Klicken Sie auf das Mond/Sonne-Symbol in der Navigation
 - Die Einstellung wird im Browser gespeichert
 
+### Deine Daten (DSGVO)
+Unter **Profil → Deine Daten** können Sie Ihre Datenschutzrechte selbst wahrnehmen:
+- **Daten herunterladen:** lädt alle zu Ihrem Konto gespeicherten Daten als
+  JSON-Datei herunter (Auskunft/Datenübertragbarkeit).
+- **Konto löschen:** löscht Ihr Konto dauerhaft. Beiträge auf öffentlichen Boards
+  (Ideen, Meldungen) bleiben **anonymisiert** erhalten; alles Übrige wird
+  entfernt. Erfordert eine ausdrückliche Bestätigung und ist endgültig.
+
 ---
 
 ## 6. Schule beitreten & Schulranking

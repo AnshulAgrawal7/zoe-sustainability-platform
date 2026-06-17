@@ -62,12 +62,30 @@ Von hier aus navigieren Sie zu:
 
 ## 5. Nutzer verwalten (`/admin/users`)
 
-Die Nutzerliste zeigt: Name, E-Mail, Rolle, Punkte, Sprache.
+Die Nutzerliste zeigt: Name, E-Mail, Rolle, **Status (Aktiv/Gesperrt)**, Punkte
+und Aktionen.
 
 ### Rolle ändern
-- Klicken Sie in der Spalte "Rolle ändern" auf **→ ADMIN** oder **→ USER**
+- Klicken Sie in der Spalte "Aktionen" auf **→ ADMIN** oder **→ USER**
 - Die Änderung wird sofort gespeichert
 - Admin-Nutzer haben Zugriff auf alle `/admin/...`-Seiten
+- **Schutz:** Sie können Ihre **eigene** Rolle nicht ändern und den **letzten**
+  Admin nicht degradieren (verhindert Aussperren).
+
+### Konto sperren / entsperren
+- **Sperren** blockiert die Anmeldung sofort (bestehende Sitzungen werden
+  beendet), löscht aber **keine** Daten; **Entsperren** macht es rückgängig.
+- Eigenes Konto und der letzte aktive Admin können nicht gesperrt werden.
+
+### Punkte korrigieren
+- Punktewert im Feld anpassen und **Speichern** klicken.
+
+### Konto löschen (DSGVO)
+- Über die API `DELETE /admin/users/:id`: Beiträge auf öffentlichen Boards
+  (Ideen/Meldungen) werden **anonymisiert**, alles Persönliche entfernt.
+
+> Alle diese Aktionen werden im **Audit-Log** protokolliert
+> (`GET /admin/audit`).
 
 ---
 
