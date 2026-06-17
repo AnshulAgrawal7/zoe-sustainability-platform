@@ -19,6 +19,10 @@ interface IdeaSubmitFormProps {
   onClose: () => void;
 }
 
+// Same lightweight email shape as the other public forms (RSVP, report/feedback,
+// event proposal). The address is optional here, so it is only checked when filled.
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const inputClass =
   'w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white';
 const labelClass =
@@ -42,6 +46,7 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
     title?: string;
     category?: string;
     description?: string;
+    email?: string;
   }>({});
   const [done, setDone] = useState(false);
 
@@ -51,6 +56,9 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
     if (!title.trim()) fe.title = t('validation.title');
     if (!category) fe.category = t('validation.category');
     if (!description.trim()) fe.description = t('validation.description');
+    // Email is optional; validate the format only when something was entered.
+    if (email.trim() && !EMAIL_RE.test(email.trim()))
+      fe.email = t('validation.email');
     setFieldErrors(fe);
     // The `|| !category` narrows `category` from `'' | ApiProjectCategory` to
     // `ApiProjectCategory` for the submit payload below (the empty default is
@@ -237,10 +245,26 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
               type="email"
               autoComplete="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setFieldErrors((fe) => ({ ...fe, email: undefined }));
+              }}
               placeholder={t('participate.emailPlaceholder')}
+              aria-invalid={!!fieldErrors.email}
+              aria-describedby={
+                fieldErrors.email ? 'idea-email-err' : undefined
+              }
               className={inputClass}
             />
+            {fieldErrors.email && (
+              <p
+                id="idea-email-err"
+                role="alert"
+                className="mt-1 text-xs text-rose-600 dark:text-rose-400"
+              >
+                {fieldErrors.email}
+              </p>
+            )}
           </div>
         </div>
       )}

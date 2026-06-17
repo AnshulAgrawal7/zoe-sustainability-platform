@@ -52,6 +52,18 @@ Wegwerf-DB `zoe_shadow` nur für Migrations-Validierung, ignorierbar).
 ## Changelog
 <!-- je Feature ein Eintrag: Was / Dateien / Test / Commit -->
 
+### 11 — E-Mail-Format-Prüfung im Ideen-Formular (Konsistenz)
+- **Befund:** Alle öffentlichen Formulare prüfen das E-Mail-Format client- UND
+  serverseitig — **außer** `IdeaSubmitForm`, das die (optionale) E-Mail im JS
+  nicht prüfte (`noValidate` + nur Pflichtfelder). Backend lehnte ungültige
+  Adressen zwar ab (`isEmail`), aber die UX zeigte nur einen generischen Fehler.
+- **Fix:** `EMAIL_RE`-Prüfung nur bei ausgefülltem Feld + Feld-Fehler
+  `validation.email` (Key existiert ×3), ARIA (`aria-invalid`/`describedby`),
+  Fehler-Reset bei Eingabe — analog zu RSVP/Report/Event-Vorschlag.
+- **Test:** `IdeaSubmitEmail.test.tsx` (+3: ungültig blockiert · leer erlaubt ·
+  gültig sendet). **FE 33/33**, Build grün.
+- **Commit:** `fix(ideas): validate optional email format in the idea form`
+
 ### 1 — 404-Seite, Route-Error-Element & globale Error-Boundary (Future_Work 6.1, 6.2)
 - **Neu:** `src/pages/NotFoundPage.tsx` (übersetzte 404, in Layout, ein `<h1>`,
   Link zur Startseite), `src/pages/RouteErrorPage.tsx` (Root-`errorElement`:
