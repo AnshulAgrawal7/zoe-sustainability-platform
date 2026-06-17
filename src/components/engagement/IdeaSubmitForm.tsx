@@ -52,7 +52,10 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
     if (!category) fe.category = t('validation.category');
     if (!description.trim()) fe.description = t('validation.description');
     setFieldErrors(fe);
-    if (Object.keys(fe).length > 0) return;
+    // The `|| !category` narrows `category` from `'' | ApiProjectCategory` to
+    // `ApiProjectCategory` for the submit payload below (the empty default is
+    // already reported as a field error above).
+    if (Object.keys(fe).length > 0 || !category) return;
     setError('');
     setLoading(true);
     try {

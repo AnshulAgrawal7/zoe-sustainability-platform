@@ -112,3 +112,44 @@ E-Mail-Verifizierung, Mails an anonyme Einreicher, Newsletter-Versand/Double-Opt
 - **Offen (klein):** Audit-Log-Frontend-Ansicht (Endpoint + Tests vorhanden);
   Konto-**Löschung** folgt in Feature 6 (gemeinsamer Anonymisierungs-Service).
 - **Commit:** `feat(admin): user management guards, suspend, points, audit log`
+
+### 6 — DSGVO Self-Service: Datenexport + Konto-Löschung (Future_Work 9.5, 4.1)
+- **Service:** `services/userDeletion.ts` — `buildUserExport` (Art. 15/20: alle
+  personenbezogenen Daten als JSON) und `deleteUserCompletely` (Art. 17:
+  Transaktion — Community-Inhalte **anonymisieren** [Ideen/Submissions/Proposals:
+  userId + submitterName/Email → null], alles Persönliche **löschen**
+  [Teilnahmen, RSVPs, Badges, Tokens, eigene Kommentare + Likes, empfangene
+  Notifications/Votes via Cascade]; Actor-Notifications entkoppeln; Löschung
+  blockiert, falls der User Projekte besitzt → `USER_HAS_PROJECTS`).
+- **Backend:** `GET /users/me/export` (JSON-Download), `DELETE /users/me`
+  (Self-Service, löscht Refresh-Cookie); `DELETE /admin/users/:id` (Admin,
+  Guards: nicht sich selbst `CANNOT_DELETE_SELF`, nicht letzter Admin `LAST_ADMIN`,
+  + Audit `ACCOUNT_DELETE`).
+- **Frontend:** `ProfilePage` → Sektion „Deine Daten": Export-Download-Button +
+  Konto-Löschung mit Pflicht-Bestätigungs-Checkbox (zweistufig); nach Löschung
+  Logout + Redirect. Service-Funktionen `downloadMyData`/`deleteMyAccount`;
+  9 i18n-Keys × 3 Sprachen.
+- **Tests:** `gdpr.test.ts` (+4: Export · Löschung anonymisiert Idee/entfernt
+  Kommentar/Login schlägt fehl · Admin-Self-Delete 403 · Admin-Delete + Audit);
+  `ProfileDataRights.test.tsx` (+2: Export-Trigger · Löschung erst nach
+  Bestätigung). **BE 125/125 · FE 29/29.**
+- **Commit:** `feat(gdpr): self-service data export and account deletion`
+
+### 7 — Prod-Build reparieren (BLOCKER, vorbestehend — Future_Work 3.x/Deploy)
+- **Befund:** `npm run build` (`tsc -b` + `vite build`) war **bereits im
+  Basis-Commit c049c0b kaputt** — Deployment (Szenario A) damit unmöglich. Das
+  `type-check`-Skript (`tsc --noEmit`) ist faktisch ein No-op (Root-`tsconfig.json`
+  hat `files: []` + nur References), daher fielen die Fehler nie auf. Verifiziert
+  durch Build gegen den Basis-Commit.
+- **3 Fixes (verhaltenserhaltend bzw. korrigierend):**
+  1. `utils/i18n.ts` — i18next v26 entfernte `interpolation.format` aus den Typen;
+     Laufzeit unverändert, Formatter jetzt präzise typisiert angehängt (kein `any`).
+  2. `pages/ProjectDetailPage.tsx` — veraltete Kategorie-Farb-Map (Alt-Taxonomie
+     ENVIRONMENT/…); seit dem 6-Kategorien-Refactor **toter Code → immer grau**.
+     Jetzt Single-Source `projectCategoryVisual(...).accent` (Farben wieder korrekt).
+  3. `components/engagement/IdeaSubmitForm.tsx` — `category`-Narrowing
+     (`'' | ApiProjectCategory` → `ApiProjectCategory`) im Submit-Guard.
+- **Ergebnis:** **`npm run build` grün** (dist gebaut). Verbleibende Warnung:
+  Bundle > 500 kB → Code-Splitting = Future_Work 6.6 (kein Fehler).
+- **Tests:** FE 29/29 · BE 125/125 unverändert grün.
+- **Commit:** `fix(build): repair broken production build (tsc -b)`

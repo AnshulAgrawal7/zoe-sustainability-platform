@@ -1,4 +1,4 @@
-import i18n from 'i18next';
+import i18n, { type InitOptions } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from '../locales/en/translation.json';
 import el from '../locales/el/translation.json';
@@ -6,7 +6,7 @@ import de from '../locales/de/translation.json';
 
 const savedLanguage = localStorage.getItem('zoe-language') || 'en';
 
-i18n.use(initReactI18next).init({
+const options: InitOptions = {
   resources: {
     en: { translation: en },
     el: { translation: el },
@@ -16,14 +16,27 @@ i18n.use(initReactI18next).init({
   fallbackLng: 'en',
   interpolation: {
     escapeValue: false,
-    // Locale-aware number style for every interpolated number (counts, points,
-    // …) so separators/decimals follow the active language: EN "1,234.5" vs
-    // DE/EL "1.234,5". Non-numbers pass through unchanged.
-    format: (value, _format, lng) =>
-      typeof value === 'number' && Number.isFinite(value)
-        ? new Intl.NumberFormat(lng).format(value)
-        : (value as string),
   },
-});
+};
+
+// Locale-aware number style for every interpolated number (counts, points, …)
+// so separators/decimals follow the active language: EN "1,234.5" vs DE/EL
+// "1.234,5". Non-numbers pass through unchanged. `interpolation.format` is still
+// honoured at runtime but was dropped from the i18next v26 type definitions, so
+// it is attached here through a precisely-typed reference rather than inline.
+(
+  options.interpolation as {
+    format?: (
+      value: unknown,
+      format: string | undefined,
+      lng: string | undefined
+    ) => string;
+  }
+).format = (value, _format, lng) =>
+  typeof value === 'number' && Number.isFinite(value)
+    ? new Intl.NumberFormat(lng).format(value)
+    : (value as string);
+
+i18n.use(initReactI18next).init(options);
 
 export default i18n;

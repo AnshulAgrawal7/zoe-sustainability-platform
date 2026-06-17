@@ -16,6 +16,7 @@ import {
   ArrowRight,
   BarChart3,
 } from 'lucide-react';
+import { projectCategoryVisual } from '../components/ui/categoryVisuals';
 import { getProject } from '../services/projectService';
 import { getEvents } from '../services/eventService';
 import { getLearningResources } from '../services/learnService';
@@ -171,14 +172,9 @@ export default function ProjectDetailPage() {
       text: valueChain('outputResults'),
     },
   ].filter((s) => s.text);
-  const categoryColor =
-    {
-      ENVIRONMENT: 'bg-green-500',
-      MOBILITY: 'bg-blue-500',
-      COMMUNITY: 'bg-orange-500',
-      EDUCATION: 'bg-purple-500',
-      CULTURE: 'bg-teal-500',
-    }[project.category] ?? 'bg-gray-400';
+  // Single source of category visuals (the local map predated the 6-category
+  // refactor and silently fell back to grey for every current category).
+  const categoryColor = projectCategoryVisual(project.category).accent;
 
   return (
     <Container className="py-10">
