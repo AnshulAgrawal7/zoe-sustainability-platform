@@ -2107,5 +2107,21 @@
       "POINTS_ADJUST": "Punkte angepasst",
       "ACCOUNT_DELETE": "Konto gelöscht"
     }
+  },
+  "adminNewsletter": {
+    "title": "Newsletter-Anmeldungen",
+    "subtitle": "Gespeicherte Opt-in-Adressen. Prototyp — es wird nichts versendet.",
+    "empty": "Noch keine Newsletter-Anmeldungen.",
+    "navLabel": "Anmeldungen verwalten",
+    "count": "{{count}} Anmeldung",
+    "count_other": "{{count}} Anmeldungen",
+    "export": "CSV exportieren",
+    "colEmail": "E-Mail",
+    "colLocale": "Sprache",
+    "colWhen": "Angemeldet",
+    "colActions": "Aktionen",
+    "confirmDelete": "Bestätigen?",
+    "deleteAria": "Anmeldung {{email}} löschen",
+    "deleted": "Anmeldung entfernt."
   }
 }

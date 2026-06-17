@@ -29,6 +29,11 @@ import {
 import { updateRewardTier } from '../controllers/rewardController';
 import { getAdminMetrics } from '../controllers/metricsController';
 import {
+  listSignups,
+  deleteSignup,
+  exportSignups,
+} from '../controllers/newsletterController';
+import {
   createLearningResource,
   updateLearningResource,
   deleteLearningResource,
@@ -86,6 +91,11 @@ router.delete('/users/:id', deleteUser);
 
 // Read-only admin audit trail (newest first, ?limit=100, ≤ 500).
 router.get('/audit', getAuditLog);
+
+// --- Newsletter signups (admin) ---
+router.get('/newsletter', listSignups);
+router.get('/newsletter/export', exportSignups);
+router.delete('/newsletter/:id', deleteSignup);
 
 router.get('/stats', getStats);
 

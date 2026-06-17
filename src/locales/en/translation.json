@@ -2107,5 +2107,21 @@
       "POINTS_ADJUST": "Points adjusted",
       "ACCOUNT_DELETE": "Account deleted"
     }
+  },
+  "adminNewsletter": {
+    "title": "Newsletter signups",
+    "subtitle": "Stored opt-in addresses. Prototype — no mailing is sent.",
+    "empty": "No newsletter signups yet.",
+    "navLabel": "Manage signups",
+    "count": "{{count}} signup",
+    "count_other": "{{count}} signups",
+    "export": "Export CSV",
+    "colEmail": "Email",
+    "colLocale": "Language",
+    "colWhen": "Signed up",
+    "colActions": "Actions",
+    "confirmDelete": "Confirm?",
+    "deleteAria": "Delete signup {{email}}",
+    "deleted": "Signup removed."
   }
 }

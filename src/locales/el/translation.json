@@ -2107,5 +2107,21 @@
       "POINTS_ADJUST": "Προσαρμογή πόντων",
       "ACCOUNT_DELETE": "Διαγραφή λογαριασμού"
     }
+  },
+  "adminNewsletter": {
+    "title": "Εγγραφές ενημερωτικού δελτίου",
+    "subtitle": "Αποθηκευμένες διευθύνσεις opt-in. Πρωτότυπο — δεν αποστέλλεται τίποτα.",
+    "empty": "Δεν υπάρχουν ακόμη εγγραφές.",
+    "navLabel": "Διαχείριση εγγραφών",
+    "count": "{{count}} εγγραφή",
+    "count_other": "{{count}} εγγραφές",
+    "export": "Εξαγωγή CSV",
+    "colEmail": "Email",
+    "colLocale": "Γλώσσα",
+    "colWhen": "Εγγραφή",
+    "colActions": "Ενέργειες",
+    "confirmDelete": "Επιβεβαίωση;",
+    "deleteAria": "Διαγραφή εγγραφής {{email}}",
+    "deleted": "Η εγγραφή αφαιρέθηκε."
   }
 }

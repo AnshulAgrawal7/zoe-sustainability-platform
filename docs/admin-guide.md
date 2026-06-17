@@ -296,3 +296,18 @@ Koordinaten, die das Event auf der Karte anzeigen.
 **Usernames:** In allen Community-Ansichten (Kommentare, Bestenliste,
 Erwähnungen, Vorschlags-Einsender) wird der **pseudonyme Username** angezeigt,
 nie echter Name oder E-Mail.
+
+---
+
+## 16. Newsletter-Anmeldungen (`/admin/newsletter`)
+
+Liste aller gespeicherten Newsletter-Opt-ins (E-Mail, Sprache, Anmeldedatum).
+
+- **CSV exportieren** lädt alle Adressen als `newsletter-signups.csv` herunter
+  (z. B. für ein externes Mailing-Tool oder als Nachweis).
+- **Löschen** entfernt eine Adresse (zweistufig: erster Klick „Bestätigen?",
+  zweiter Klick löscht) — Listenpflege bzw. Recht auf Löschung.
+
+> **Prototyp:** Es gibt **keinen** Versand, kein Double-Opt-in und keinen
+> Unsubscribe-Link. Vor Echtbetrieb (Szenario B) muss der Newsletter entweder
+> voll ausgebaut **oder** deaktiviert werden (siehe `Future_Work.md` §7.4).

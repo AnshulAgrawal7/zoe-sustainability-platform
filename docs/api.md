@@ -410,6 +410,17 @@ Delete a user (GDPR erasure; community content is anonymised — see
 Append-only audit trail of privileged admin actions (role change, suspend/
 reactivate, points adjust, account deletion), newest first (`limit` ≤ 500).
 
+### GET /admin/newsletter
+List all newsletter signups, newest first.
+`200 → { success: true, data: { signups: NewsletterSignup[], total } }`
+
+### GET /admin/newsletter/export
+CSV download of all signups (`email,locale,createdAt`).
+`200 → text/csv` (`Content-Disposition: attachment`).
+
+### DELETE /admin/newsletter/:id
+Remove a single signup. `404` when the id is unknown.
+
 ### GET /admin/stats
 Dashboard statistics.
 
