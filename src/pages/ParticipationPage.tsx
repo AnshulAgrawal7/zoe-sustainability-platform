@@ -142,8 +142,11 @@ export default function ParticipationPage() {
       setForm(emptyForm);
       setFieldErrors({});
     } catch (err) {
+      const code = err instanceof Error ? err.message : '';
       setSubmitError(
-        err instanceof Error ? err.message : t('participate.submitError')
+        code === 'PROFANITY'
+          ? t('validation.profanity')
+          : code || t('participate.submitError')
       );
     } finally {
       setSubmitting(false);

@@ -8,6 +8,7 @@ import {
 import { optionalAuth } from '../middleware/optionalAuth';
 import { authenticate } from '../middleware/auth';
 import { honeypot } from '../middleware/honeypot';
+import { rejectProfanity } from '../middleware/profanity';
 import { SUBMISSION_TYPES } from '../constants';
 
 const router = Router();
@@ -27,6 +28,7 @@ router.post(
   '/',
   submissionLimiter,
   honeypot,
+  rejectProfanity(['message', 'submitterName']),
   optionalAuth,
   [
     body('type').isIn([...SUBMISSION_TYPES]),

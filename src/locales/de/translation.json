@@ -176,7 +176,8 @@
     "identifier": "Bitte gib deine E-Mail oder deinen Benutzernamen ein.",
     "passwordWeak": "Das Passwort erfüllt nicht alle Anforderungen.",
     "confirmPassword": "Bitte bestätige dein Passwort.",
-    "passwordMismatch": "Die Passwörter stimmen nicht überein."
+    "passwordMismatch": "Die Passwörter stimmen nicht überein.",
+    "profanity": "Bitte bleib respektvoll – deine Nachricht enthält offenbar beleidigende Sprache."
   },
   "rewardData": {
     "tiers": {

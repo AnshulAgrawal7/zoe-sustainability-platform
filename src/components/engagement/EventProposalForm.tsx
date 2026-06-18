@@ -111,8 +111,11 @@ export default function EventProposalForm({ onClose }: Props) {
       });
       setSubmitted(true);
     } catch (err) {
+      const code = err instanceof Error ? err.message : '';
       setError(
-        err instanceof Error ? err.message : t('participate.submitError')
+        code === 'PROFANITY'
+          ? t('validation.profanity')
+          : code || t('participate.submitError')
       );
     } finally {
       setSubmitting(false);

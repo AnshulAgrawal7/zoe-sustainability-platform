@@ -8,6 +8,7 @@ import {
 import { optionalAuth } from '../middleware/optionalAuth';
 import { authenticate } from '../middleware/auth';
 import { honeypot } from '../middleware/honeypot';
+import { rejectProfanity } from '../middleware/profanity';
 import { PROJECT_CATEGORIES, APP_LANGUAGES } from '../constants';
 
 const router = Router();
@@ -26,6 +27,7 @@ router.post(
   '/',
   proposalLimiter,
   honeypot,
+  rejectProfanity(['title', 'description', 'location', 'submitterName']),
   optionalAuth,
   [
     body('title').trim().notEmpty().isLength({ max: 160 }),

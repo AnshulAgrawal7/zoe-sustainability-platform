@@ -79,8 +79,11 @@ export default function IdeaSubmitForm({ onClose }: IdeaSubmitFormProps) {
       });
       setDone(true);
     } catch (err) {
+      const code = err instanceof Error ? err.message : '';
       setError(
-        err instanceof Error ? err.message : t('participate.submitError')
+        code === 'PROFANITY'
+          ? t('validation.profanity')
+          : code || t('participate.submitError')
       );
     } finally {
       setLoading(false);

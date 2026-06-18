@@ -176,7 +176,8 @@
     "identifier": "Please enter your email or username.",
     "passwordWeak": "Password doesn't meet all requirements.",
     "confirmPassword": "Please confirm your password.",
-    "passwordMismatch": "Passwords don't match."
+    "passwordMismatch": "Passwords don't match.",
+    "profanity": "Please keep it respectful — your message looks like it contains offensive language."
   },
   "rewardData": {
     "tiers": {
