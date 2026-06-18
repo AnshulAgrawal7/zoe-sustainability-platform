@@ -5,8 +5,26 @@ import type { AuthRequest } from '../middleware/auth';
 import {
   ok, created, badRequest, notFound, conflict, forbidden, serverError,
 } from '../utils/response';
+import { sendRsvpConfirmationEmail } from '../services/mailService';
 
 const prisma = new PrismaClient();
+
+// Send an RSVP confirmation (Future_Work §7.3). Best-effort: a mail hiccup must
+// never fail the registration itself. Skips when no address is available.
+async function sendRsvpConfirmation(
+  event: { titleEn: string; date: Date; location: string | null } | null,
+  to: string | null | undefined,
+  name: string | null | undefined,
+): Promise<void> {
+  if (!event || !to) return;
+  await sendRsvpConfirmationEmail({
+    to,
+    name,
+    eventTitle: event.titleEn,
+    eventDate: event.date,
+    location: event.location,
+  }).catch(() => null);
+}
 
 // Default reward when an event does not override it. NOTE: points are NOT
 // granted on registration anymore — they are awarded to registered logged-in
@@ -225,6 +243,13 @@ export async function joinEvent(req: AuthRequest, res: Response) {
       data: { eventId, userId, pointsAwarded: 0 },
     });
 
+    // Confirm the RSVP by e-mail (§7.3) to the member's address.
+    const member = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { email: true, name: true },
+    });
+    await sendRsvpConfirmation(event, member?.email, member?.name);
+
     created(res, {
       id: registration.id,
       pointsAwarded: 0,
@@ -423,6 +448,11 @@ export async function registerForEvent(req: AuthRequest, res: Response) {
       const registration = await prisma.eventRegistration.create({
         data: { eventId, userId, pointsAwarded: 0 },
       });
+      const member = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { email: true, name: true },
+      });
+      await sendRsvpConfirmation(event, member?.email, member?.name);
       created(res, {
         id: registration.id,
         pointsAwarded: 0,
@@ -452,6 +482,7 @@ export async function registerForEvent(req: AuthRequest, res: Response) {
     const registration = await prisma.eventRegistration.create({
       data: { eventId, guestName, guestEmail },
     });
+    await sendRsvpConfirmation(event, guestEmail, guestName);
     created(res, { id: registration.id, pointsAwarded: 0, guest: true });
   } catch {
     serverError(res);
