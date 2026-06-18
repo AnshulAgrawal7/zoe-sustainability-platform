@@ -46,3 +46,4 @@ coverage/
 .claude/worktrees/
 .claude/settings.local.json
 .claude/*.local.json
+.lighthouseci/
