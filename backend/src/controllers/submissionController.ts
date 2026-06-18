@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 import { PrismaClient } from '@prisma/client';
 import type { AuthRequest } from '../middleware/auth';
 import { ok, created, badRequest, notFound, serverError } from '../utils/response';
-import { notifyStatusChange } from '../utils/notify';
+import { notifyStatusChange, emailAnonymousSubmitter } from '../utils/notify';
 
 const prisma = new PrismaClient();
 
@@ -85,6 +85,16 @@ export async function updateSubmissionStatus(req: Request, res: Response) {
       status,
       message: note,
       submissionId: id,
+    }).catch(() => null);
+    // Anonymous submitter with an e-mail → notify by mail instead (§7.2). The
+    // report/feedback has no title, so use the type label + a short message snippet.
+    await emailAnonymousSubmitter({
+      submitterEmail: existing.submitterEmail,
+      userId: existing.userId,
+      kindLabel: existing.type === 'REPORT' ? 'report' : 'feedback',
+      title: existing.message.slice(0, 60),
+      status,
+      note,
     }).catch(() => null);
     ok(res, updated);
   } catch {

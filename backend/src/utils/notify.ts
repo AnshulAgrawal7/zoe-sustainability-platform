@@ -1,4 +1,5 @@
 import type { PrismaClient } from '@prisma/client';
+import { sendSubmissionStatusEmail } from '../services/mailService';
 
 export type StatusNotificationType =
   | 'IDEA_STATUS'
@@ -35,5 +36,31 @@ export async function notifyStatusChange(
       submissionId: input.submissionId ?? null,
       read: false,
     },
+  });
+}
+
+interface AnonSubmitterMailInput {
+  submitterEmail?: string | null;
+  userId?: string | null;
+  /** Human label of what was reviewed, e.g. "idea", "report", "event proposal". */
+  kindLabel: string;
+  title: string;
+  status: string;
+  note?: string | null;
+}
+
+// E-mail the ANONYMOUS submitter (no account → no in-app bell) when an admin
+// changes the status of their idea / report / event proposal (Future_Work §7.2).
+// Deliberately a NO-OP for logged-in submitters (they already get the bell via
+// notifyStatusChange) and when no e-mail address was provided. Best-effort:
+// callers wrap in `.catch` so a mail failure never blocks the status update.
+export async function emailAnonymousSubmitter(input: AnonSubmitterMailInput): Promise<void> {
+  if (input.userId || !input.submitterEmail) return;
+  await sendSubmissionStatusEmail({
+    to: input.submitterEmail,
+    kindLabel: input.kindLabel,
+    title: input.title,
+    status: input.status,
+    note: input.note,
   });
 }
