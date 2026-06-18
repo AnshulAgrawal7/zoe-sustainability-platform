@@ -158,7 +158,7 @@ export default function LoginPage() {
           </p>
 
           <p className="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
-            Demo: citizen1@example.com or maria_p / Test1234!
+            {t('auth.demoHint')}
           </p>
         </div>
       </div>

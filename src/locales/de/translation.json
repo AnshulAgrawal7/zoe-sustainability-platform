@@ -717,7 +717,8 @@
     "verifyError": "Dieser Bestätigungslink ist ungültig oder abgelaufen. Fordere in deinem Dashboard einen neuen an.",
     "verifyBanner": "Bitte bestätige deine E-Mail-Adresse, um dein Konto abzusichern.",
     "verifyResend": "Link erneut senden",
-    "verifyResent": "Ein neuer Bestätigungslink ist unterwegs – prüfe dein Postfach."
+    "verifyResent": "Ein neuer Bestätigungslink ist unterwegs – prüfe dein Postfach.",
+    "demoHint": "Demo: citizen1@example.com oder maria_p / Test1234!"
   },
   "projects": {
     "title": "ZOE Projekte",

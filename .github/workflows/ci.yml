@@ -32,6 +32,8 @@ jobs:
       - run: npm ci
       - name: Lint
         run: npm run lint
+      - name: i18n key parity (en/el/de)
+        run: npm run i18n:check
       # `npm run build` runs `tsc -b` (the real type-check) + the Vite build,
       # so it covers type-checking and the production bundle in one step.
       - name: Type-check + build

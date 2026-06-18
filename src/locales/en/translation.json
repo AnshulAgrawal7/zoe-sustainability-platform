@@ -717,7 +717,8 @@
     "verifyError": "This confirmation link is invalid or has expired. Request a new one from your dashboard.",
     "verifyBanner": "Please confirm your e-mail address to secure your account.",
     "verifyResend": "Resend link",
-    "verifyResent": "A new confirmation link is on its way — check your inbox."
+    "verifyResent": "A new confirmation link is on its way — check your inbox.",
+    "demoHint": "Demo: citizen1@example.com or maria_p / Test1234!"
   },
   "projects": {
     "title": "ZOE Projects",
