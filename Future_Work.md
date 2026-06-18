@@ -68,6 +68,31 @@ Mailprovider) · Error-Tracking/Sentry (8.4) · CI/CD (8.5) · Lighthouse/E2E in
 (11.2/11.4) · Captcha/Profanity-Filter (3.5, externer Dienst) · echte
 Inhalte/Kontaktwege/Bildrechte (5.1/6.5/9.9).
 
+### ✅ Dritter autonomer Lauf (2026-06-18, Branch `feature/autonomous-run-3` → `main`)
+
+Batches A–F aus `handoff.md` komplett umgesetzt (Details + Tests in
+[`AUTONOMOUS_RUN_LOG.md`](AUTONOMOUS_RUN_LOG.md), 16 Commits; BE 177 / FE 77 grün):
+
+- **2.1 ✅** Passwort-Reset-Flow (Token + `/auth/forgot|reset-password`, Seiten).
+- **2.2 ✅** E-Mail-Verifizierung (`/auth/verify-email` + Resend, Banner).
+- **2.5 ✅** TOTP-2FA für Konten (QR-Setup + Backup-Codes, Login-Challenge).
+- **7.1/7.2/7.3 ✅** `mailService`-Abstraktion (Stub-Transport) + Mails an anonyme
+  Einreicher + RSVP-Bestätigung. **Produktiv fehlt nur der Provider-Transport (👤).**
+- **8.5 ✅ / 11.2 ✅ / 11.4 ✅** CI-Pipeline (Lint/Typecheck/Test/Build + `migrate
+  deploy`) · E2E-in-CI (PR) · Lighthouse-Budget (PR, informativ).
+- **11.1 ✅** Test-Härtung: Auth-Refresh/Logout, anonymer Submission-Flow,
+  jest-axe auf **allen** öffentlichen Seiten (+ 2 echte WCAG-Bugs gefixt),
+  Backend-Coverage-Setup.
+- **6.3 ✅ (Tooling)** i18n-Vollständigkeits-Skript (Key-Parität, CI + Test).
+- **3.5 ✅ (Rest)** Profanity-Filter (EN/DE/EL) auf anonymen Inhalten.
+- **5.6 ✅** Wartungs-Job (Token-Prune + Login-Lock-Freigabe).
+- **6.6 ✅ (Rest, teilw.)** Bild-Perf (`decoding=async`, LCP-`fetchPriority`);
+  responsive `srcset` zurückgestellt (braucht Bild-Transform-Pipeline).
+
+**👤 noch nötig:** die 4 neuen Migrationen auf die Supabase-DB ausrollen
+(`npx prisma migrate deploy`); Mailprovider-Account + DKIM/SPF; Lighthouse-
+Schwellen nach erstem CI-Baseline auf `error` ziehen.
+
 ---
 
 ## 0. Zwei Zielbilder — was heißt „übergabebereit"?

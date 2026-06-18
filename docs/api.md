@@ -23,6 +23,13 @@ Public, unauthenticated POST forms (`/ideas`, `/submissions`, `/event-proposals`
 empty; if it carries a value the request is treated as bot spam, silently
 accepted with `200 { success: true, data: null }` and **not** persisted.
 
+### Profanity filter
+The anonymous-content POST forms (`/ideas`, `/submissions`, `/event-proposals`)
+reject obviously offensive text in their content fields with
+**400 `{ "success": false, "error": "PROFANITY" }`** (conservative EN/DE/EL
+word-boundary list). Clients map the code to a localized "keep it respectful"
+message.
+
 ---
 
 ## Auth (`/api/auth`)
@@ -60,18 +67,23 @@ Login with **email or username** + password.
 
 **Request body:**
 ```json
-{ "identifier": "maria_p", "password": "Test1234!" }
+{ "identifier": "maria_p", "password": "Test1234!", "totp": "123456" }
 ```
 `identifier` accepts either the username or the email address. (`email` is also
-still accepted for backwards compatibility.)
+still accepted for backwards compatibility.) `totp` is only required when the
+account has two-factor auth enabled (a 6-digit TOTP code **or** a backup code).
 
 **Response 200:**
 ```json
 { "success": true, "data": { "user": { ... }, "accessToken": "eyJ..." } }
 ```
-Sets `refreshToken` httpOnly cookie.
+Sets `refreshToken` httpOnly cookie. The `user` object includes `emailVerified`
+(boolean) and `twoFactorEnabled` (boolean).
 
 **Error 401:** `{ "success": false, "error": "Invalid credentials" }`
+**Error 401:** `{ "success": false, "error": "TWO_FACTOR_REQUIRED" }` — password OK,
+but a 2FA code is needed (prompt for it and re-submit with `totp`).
+**Error 401:** `{ "success": false, "error": "INVALID_2FA" }` — wrong/expired code.
 **Error 403:** `{ "success": false, "error": "ACCOUNT_DISABLED" }` (suspended account)
 **Error 429:** `{ "success": false, "error": "ACCOUNT_LOCKED" }` — after 5 consecutive
 failed logins the account is locked for 15 minutes (per-account brute-force
@@ -99,6 +111,66 @@ Invalidate refresh token. Requires auth.
 ```json
 { "success": true, "data": null, "message": "Logged out" }
 ```
+
+---
+
+### POST /auth/forgot-password
+Start a password reset. **Always responds 200** with the same body whether or
+not the address exists (no account enumeration). When it exists, a single-use,
+60-minute reset token is e-mailed (mail goes through the stub transport until a
+provider is configured — see `backend/src/services/mailService.ts`).
+
+**Request body:** `{ "email": "user@example.com" }`
+**Response 200:** `{ "success": true, "data": null, "message": "If that account exists, a reset link has been sent." }`
+
+---
+
+### POST /auth/reset-password
+Complete a password reset. Validates the token (single use, not expired), sets
+the new password (same strong-password policy as registration) and revokes all
+refresh tokens for that user.
+
+**Request body:** `{ "token": "<from the e-mail link>", "password": "BrandNew9!" }`
+**Response 200:** `{ "success": true, "data": null, "message": "Password updated" }`
+**Error 400:** `{ "success": false, "error": "INVALID_OR_EXPIRED_TOKEN" }`
+
+---
+
+### POST /auth/verify-email
+Confirm an e-mail address with a mailed token (sent automatically at
+registration). Single use, 24-hour validity.
+
+**Request body:** `{ "token": "<from the e-mail link>" }`
+**Response 200:** `{ "success": true, "data": null, "message": "E-mail verified" }`
+**Error 400:** `{ "success": false, "error": "INVALID_OR_EXPIRED_TOKEN" }`
+
+### POST /auth/resend-verification
+Re-issue a verification link for the logged-in user. **Auth required.** No-op
+(still 200) if already verified.
+
+---
+
+### POST /auth/2fa/setup
+Begin TOTP two-factor enrolment. **Auth required.** Returns a base32 secret and
+the `otpauth://` URI (render as a QR client-side). Does **not** enable 2FA yet.
+
+**Response 200:** `{ "success": true, "data": { "secret": "JBSW…", "otpauthUrl": "otpauth://totp/…" } }`
+**Error 409:** `{ "success": false, "error": "TWO_FACTOR_ALREADY_ENABLED" }`
+
+### POST /auth/2fa/enable
+Confirm enrolment with a live code; switches 2FA on and returns 10 one-time
+backup codes (**shown once** — only bcrypt hashes are stored). **Auth required.**
+
+**Request body:** `{ "token": "123456" }`
+**Response 200:** `{ "success": true, "data": { "backupCodes": ["a1b2-c3d4", …] } }`
+**Error 400:** `{ "success": false, "error": "INVALID_2FA" }`
+
+### POST /auth/2fa/disable
+Turn 2FA off given a valid TOTP or backup code. **Auth required.**
+
+**Request body:** `{ "code": "123456" }`
+**Response 200:** `{ "success": true, "data": null, "message": "Two-factor authentication disabled" }`
+**Error 400:** `{ "success": false, "error": "INVALID_2FA" }`
 
 ---
 

@@ -339,3 +339,43 @@ npm run create:admin -- --email vorhandene@nutzerin.gr
 `admin@zoe-corfu.gr` über die Nutzerverwaltung (`/admin/users` → Löschen) oder
 direkt in der DB entfernen. Der Lockout-Schutz verhindert, dass der **letzte**
 Admin gelöscht/herabgestuft wird — lege also zuerst den echten Admin an.
+
+## 18. Zwei-Faktor-Authentifizierung (2FA)
+
+Jedes Konto — **für Admins dringend empfohlen** — kann TOTP-2FA aktivieren
+(Authenticator-App, kein externer Dienst). Unter **Profil → Zwei-Faktor-
+Authentifizierung**:
+
+1. „Einrichten" → QR-Code mit der App scannen (oder den Schlüssel manuell
+   eingeben), dann den 6-stelligen Code zur Bestätigung eintippen.
+2. Die **10 Backup-Codes** sicher speichern — jeder funktioniert **einmal**,
+   falls die App verloren geht.
+3. Ab dann verlangt die Anmeldung nach Passwort zusätzlich einen Code (TOTP
+   **oder** ein Backup-Code).
+
+Deaktivieren erfordert einen gültigen Code. Verliert ein Admin App **und**
+Backup-Codes, kann ein anderer Admin nicht direkt zurücksetzen — in dem Fall das
+2FA-Feld der Zeile in der DB leeren (`twoFactorEnabled=false`, `twoFactorSecret`/
+`twoFactorBackupCodes=NULL`).
+
+## 19. Wartungs-/Cleanup-Job
+
+Daten-Hygiene (abgelaufene Refresh-Tokens, verbrauchte/abgelaufene Mail-Tokens,
+abgelaufene Login-Sperren freigeben). Idempotent, gefahrlos wiederholbar — z. B.
+als nächtlicher Cron auf dem Host:
+
+```bash
+cd backend && npm run cleanup:maintenance     # 0 3 * * *
+```
+
+## 20. CI/CD (GitHub Actions)
+
+- **CI** (`.github/workflows/ci.yml`, bei Push auf `main`/`develop` + PRs):
+  Frontend (Lint → Build/Typecheck → Tests) und Backend (Lint, Type-Check,
+  `prisma migrate deploy` + Drift-Check, Tests gegen einen Postgres-Service).
+- **E2E** (`e2e.yml`, **nur PRs**): Playwright gegen eine frisch geseedete DB.
+- **Lighthouse** (`lighthouse.yml`, **nur PRs**, informativ): Budget auf der
+  Landing-Page; Schwellen sind Warnungen (blockieren nicht).
+
+Migrationen werden im Echtbetrieb über `npx prisma migrate deploy` ausgerollt
+(dieselbe Validierung läuft in CI).

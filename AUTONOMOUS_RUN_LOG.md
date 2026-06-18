@@ -263,3 +263,87 @@ Wegwerf-DB `zoe_shadow` nur für Migrations-Validierung, ignorierbar).
     injiziert CSP-Meta nur im Prod-Build (Dev/HMR unberührt). Headless-verifiziert.
 14. `chore(deps): npm audit fix` — 11.3. Frontend 0 Vulns (vite 8.0.16); Backend
     `form-data` gepatcht. Rest = Dev-only Vitest-Kette (dokumentiert, kein `--force`).
+
+---
+
+# Lauf 3 — Batches A–F, 2026-06-18
+
+> Branch `feature/autonomous-run-3` (von `main` @ `a48467d`). Auftrag: **alle**
+> autonomen Batches A–F aus `handoff.md` in einem Lauf umsetzen — je Feature ein
+> Commit, Quality Gates pro Commit (FE `npm run build` + `vitest run`, Backend
+> `npm test` + `type-check` + `lint`). Repo wurde vorab auf **public** gestellt,
+> daher CI/CD live. **FF-Merge auf `main` + Push** am Ende.
+
+## Abschluss (Stand 2026-06-18)
+
+**Endzustand (alle Gates grün):**
+- Backend: **177 Tests** (Start 140 → +37: mailService, passwordReset,
+  emailVerification, submitterEmail, rsvpEmail, refreshLogout, submissions,
+  profanity, maintenance, twoFactor).
+- Frontend: **77 Tests** (Start 48 → +29: PasswordResetPages, EmailVerification,
+  PublicPages-a11y ×14, i18n-parity, TwoFactor).
+- **Prod-Build grün**, beide Typechecks clean, **`eslint .` clean** (Root-Lint
+  zog vorbestehende Artefakt-/Source-Fehler — bereinigt, s. u.), Backend-Lint clean.
+- **16 Commits**, je Feature einer. Auto-Merge auf `main` + Push am Ende.
+
+## Changelog
+
+### A — E-Mail-Flows mit Stub-Transport (5 Commits)
+1. `feat(email): mail service abstraction…` — §7.1. Transport-Seam (console/noop/
+   memory); `MAIL_TRANSPORT`/`APP_BASE_URL` dokumentiert. +5 BE.
+2. `feat(auth): password reset flow…` — §2.1. `UserToken` (SHA-256, single-use),
+   `/auth/forgot-password` (immer 200, keine Enumeration) + `/reset-password`
+   (revoke Refresh-Tokens). Forgot/Reset-Seiten, toter Link entschärft. +4 BE/+4 FE.
+3. `feat(auth): email verification flow` — §2.2. `emailVerifiedAt`, Token bei
+   Registrierung, `/verify-email` + `/resend-verification`; Banner + Verify-Seite. +4/+4.
+4. `feat(email): notify anonymous submitters…` — §7.2. Mail an anonyme Einreicher
+   bei Statuswechsel (Idee/Report/Vorschlag). +2 BE.
+5. `feat(email): RSVP confirmation email` — §7.3. Bestätigung für Mitglieder + Gäste. +2 BE.
+
+### B — CI/CD + E2E (3 Commits)
+6. `ci: lint, type-check, test, build and migration pipeline` — §8.5. Frontend- +
+   Backend-Job (Postgres-Service, `migrate deploy` + Drift-Check).
+7. `ci: run Playwright end-to-end tests on pull requests` — §11.2. PR-only, geseedete DB.
+8. `ci: informational Lighthouse budget on PRs` — §11.4. PR-only, Warn-Schwellen.
+
+### C — Test-Härtung & Coverage (2 Commits)
+9. `test(a11y): jest-axe across all public pages…` — §11.1. 14 Seiten; **2 echte
+   WCAG-Bugs gefixt** (PointsBadge role=img, Progressbar aria-label).
+10. `test(backend): cover auth refresh/logout + submission flow; add coverage` —
+    §11.1. Refresh→Logout-Zyklus + anonymer Submission-Flow; `@vitest/coverage-v8`
+    + `test:coverage`.
+
+### D — i18n-Vollständigkeit (1 Commit)
+11. `feat(i18n): completeness tooling…` — §6.3. `scripts/check-i18n.mjs`
+    (Key-Parität, CI-hart + Vitest-Test; advisory Hardcoded-Scan). 1 echte Lücke
+    geschlossen (Login-Demo-Hinweis → `t('auth.demoHint')`).
+
+### E — Moderation & Betrieb (3 Commits)
+12. `feat(moderation): profanity filter on anonymous content` — §3.5. EN/DE/EL,
+    Wortgrenzen (kein Scunthorpe), 400 `PROFANITY`. +6 BE.
+13. `feat(ops): scheduled maintenance job…` — §5.6. `runMaintenance()` +
+    `npm run cleanup:maintenance`. +1 BE.
+14. `perf(images): async decoding everywhere + high-priority hero crest` — §6.6.
+    `decoding=async`, LCP-Crest `fetchPriority=high`. (responsive `srcset` = offen,
+    braucht Bild-Transform-Pipeline).
+
+### F — 2FA für Admin-Konten (2 Commits)
+15. `feat(auth): TOTP two-factor authentication with backup codes` — §2.5.
+    Dependency-freies RFC-6238-TOTP + 10 single-use Backup-Codes (bcrypt).
+    `/auth/2fa/setup|enable|disable`; Login-Challenge (`TWO_FACTOR_REQUIRED`/
+    `INVALID_2FA`). Frontend: QR-Setup im Profil + 2FA-Schritt im Login. +6/+3.
+16. `ci(lint): ignore build/coverage artifacts + fix pre-existing lint errors` —
+    Root-`eslint .` grün: Artefakte (`**/dist`, `**/coverage`, `backend/**`)
+    ignoriert; EventsPage-Effekt + TwoFactorSettings ohne synchrones setState;
+    Honeypot-Ausnahme dokumentiert.
+
+## Offene Caveats / 👤
+- **Migrationen auf Prod/Dev-DB anwenden:** Die 4 neuen Migrationen (UserToken,
+  emailVerifiedAt, twoFactor) sind in CI gegen frisches Postgres validiert, aber
+  noch **nicht** auf der Supabase-Dev/Prod-DB ausgerollt (`npx prisma migrate deploy`).
+- **Mailprovider** (👤): produktiver Versand braucht nur einen Provider-Transport
+  in `mailService.ts` + Account/DKIM/SPF. Bis dahin loggt der Stub die Links.
+- **Lighthouse-Schwellen** sind bewusst Warnungen → nach erstem CI-Baseline auf
+  `error` ziehen. **responsive `srcset`** (§6.6-Rest) braucht eine Bild-Transform-
+  Pipeline (Supabase render / CDN) — bewusst zurückgestellt.
+- Backend-Dev-Vulns (Vitest/coverage-v8-Kette) unverändert bewusst offen.
