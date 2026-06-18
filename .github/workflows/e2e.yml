@@ -1,0 +1,72 @@
+name: E2E
+
+# Playwright end-to-end tests (Future_Work §11.2). PR-only by design: E2E is the
+# slowest part of the pipeline, so on the Free plan (or if the repo goes private)
+# it does not burn minutes on every push to a branch — only when a PR is opened
+# or updated. Runs against a throwaway Postgres service container, seeded with
+# the same demo data the specs assume (admin + citizen accounts, projects, events).
+
+on:
+  pull_request:
+
+concurrency:
+  group: e2e-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    name: Playwright (chromium)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: zoe
+          POSTGRES_PASSWORD: zoe
+          POSTGRES_DB: zoe_e2e
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U zoe -d zoe_e2e"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://zoe:zoe@localhost:5432/zoe_e2e
+      DIRECT_URL: postgresql://zoe:zoe@localhost:5432/zoe_e2e
+      JWT_SECRET: ci-e2e-secret-min-32-chars-aaaaaaaaaa
+      # NODE_ENV is intentionally left unset → dev-style cookies (lax, not Secure)
+      # so the auth flow works over plain http on localhost in the runner.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install root (frontend) deps
+        run: npm ci
+      - name: Install backend deps
+        run: npm ci
+        working-directory: backend
+      - name: Generate Prisma client + seed the database
+        working-directory: backend
+        run: |
+          npx prisma generate
+          npx prisma migrate deploy
+          npx ts-node prisma/seed.ts
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+      # Playwright's webServer config boots the backend (npm run dev) and the
+      # Vite frontend itself (CI=true → it never reuses an existing server).
+      - name: Run E2E tests
+        run: npx playwright test
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

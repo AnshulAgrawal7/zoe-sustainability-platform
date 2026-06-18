@@ -38,13 +38,17 @@ export default defineConfig({
       command: 'cd backend && npm run dev',
       url: 'http://localhost:3001/api/projects',
       reuseExistingServer: !process.env.CI,
-      timeout: 30 * 1000,
+      // Generous on a cold CI runner (ts-node-dev / first Vite build); locally
+      // this is just a max wait, so it never slows a warm server down.
+      timeout: 120 * 1000,
     },
     {
       command: 'npm run dev',
       url: 'http://localhost:5173',
       reuseExistingServer: !process.env.CI,
-      timeout: 30 * 1000,
+      // Generous on a cold CI runner (ts-node-dev / first Vite build); locally
+      // this is just a max wait, so it never slows a warm server down.
+      timeout: 120 * 1000,
     },
   ],
 });
