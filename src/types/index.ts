@@ -209,6 +209,8 @@ export interface AuthUser {
   // Whether the e-mail address has been confirmed (Future_Work §2.2). Optional
   // so older cached payloads / tests without the field stay valid.
   emailVerified?: boolean;
+  // Whether TOTP two-factor auth is active on the account (Future_Work §2.5).
+  twoFactorEnabled?: boolean;
 }
 
 export interface ApiProject {
@@ -367,6 +369,8 @@ export interface LoginPayload {
   // Either a username or an email address.
   identifier: string;
   password: string;
+  // Optional second factor (TOTP or backup code) when 2FA is enabled (§2.5).
+  totp?: string;
 }
 
 export interface RegisterPayload {

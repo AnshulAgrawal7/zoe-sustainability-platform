@@ -43,6 +43,13 @@ model User {
   // via a mailed link. Null = unverified (the account still works in the
   // prototype, but the UI nudges the user to confirm). Seed/legacy rows = null.
   emailVerifiedAt DateTime?
+  // Two-factor auth (TOTP, Future_Work §2.5). `twoFactorSecret` is the base32
+  // secret (set at setup; activated once a code is confirmed). `twoFactorEnabled`
+  // gates the login challenge. `twoFactorBackupCodes` is a JSON array of bcrypt
+  // hashes — single-use recovery codes consumed one at a time.
+  twoFactorEnabled     Boolean @default(false)
+  twoFactorSecret      String?
+  twoFactorBackupCodes String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

@@ -60,6 +60,31 @@ export async function resendVerification(): Promise<void> {
   await api.post<ApiResponse<null>>('/auth/resend-verification', {});
 }
 
+// Two-factor auth (TOTP, Future_Work §2.5). `setup` returns the secret + the
+// otpauth URI to render as a QR; `enable` confirms a code and returns one-time
+// backup codes; `disable` turns 2FA off given a valid code.
+export interface TwoFactorSetup {
+  secret: string;
+  otpauthUrl: string;
+}
+
+export async function setupTwoFactor(): Promise<TwoFactorSetup> {
+  const res = await api.post<ApiResponse<TwoFactorSetup>>('/auth/2fa/setup', {});
+  return res.data;
+}
+
+export async function enableTwoFactor(token: string): Promise<string[]> {
+  const res = await api.post<ApiResponse<{ backupCodes: string[] }>>(
+    '/auth/2fa/enable',
+    { token }
+  );
+  return res.data.backupCodes;
+}
+
+export async function disableTwoFactor(code: string): Promise<void> {
+  await api.post<ApiResponse<null>>('/auth/2fa/disable', { code });
+}
+
 // Session bootstrap on app start: the refresh token lives in an httpOnly cookie,
 // so a page reload can silently restore the full session (user + fresh access
 // token) in one round-trip. Returns null for guests / expired sessions.

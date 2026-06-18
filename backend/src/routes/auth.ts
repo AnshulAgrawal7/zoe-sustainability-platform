@@ -10,6 +10,11 @@ import {
   verifyEmail,
   resendVerification,
 } from '../controllers/authController';
+import {
+  setupTwoFactor,
+  enableTwoFactor,
+  disableTwoFactor,
+} from '../controllers/twoFactorController';
 import { authenticate } from '../middleware/auth';
 
 // Shared strong-password policy (mirrors registration + the client checklist).
@@ -67,6 +72,8 @@ router.post(
     body('identifier').optional().trim(),
     body('email').optional().isEmail().normalizeEmail(),
     body('password').notEmpty(),
+    // Optional second factor (TOTP code or a backup code) — see §2.5.
+    body('totp').optional({ values: 'falsy' }).trim(),
   ],
   login
 );
@@ -96,5 +103,20 @@ router.post(
 // `resend` re-issues a link for the authenticated user.
 router.post('/verify-email', [body('token').isString().notEmpty()], verifyEmail);
 router.post('/resend-verification', authenticate, resendVerification);
+
+// Two-factor auth (TOTP, Future_Work §2.5). All authenticated self-service.
+router.post('/2fa/setup', authenticate, setupTwoFactor);
+router.post(
+  '/2fa/enable',
+  authenticate,
+  [body('token').isString().trim().notEmpty()],
+  enableTwoFactor
+);
+router.post(
+  '/2fa/disable',
+  authenticate,
+  [body('code').isString().trim().notEmpty()],
+  disableTwoFactor
+);
 
 export default router;

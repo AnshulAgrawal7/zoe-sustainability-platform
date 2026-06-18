@@ -14,6 +14,9 @@ export default function LoginPage() {
 
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
+  const [totp, setTotp] = useState('');
+  // Set once the backend reports the account has 2FA: reveals the code field.
+  const [twoFactorRequired, setTwoFactorRequired] = useState(false);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{
     identifier?: string;
@@ -37,11 +40,21 @@ export default function LoginPage() {
       const { user, accessToken } = await login({
         identifier: identifier.trim(),
         password,
+        ...(twoFactorRequired && totp.trim() ? { totp: totp.trim() } : {}),
       });
       setAuth(user, accessToken);
       navigate(from, { replace: true });
-    } catch {
-      setError(t('auth.loginError'));
+    } catch (err) {
+      const code = err instanceof Error ? err.message : '';
+      if (code === 'TWO_FACTOR_REQUIRED') {
+        // Password was correct — reveal the 2FA field and prompt for a code.
+        setTwoFactorRequired(true);
+        setError('');
+      } else if (code === 'INVALID_2FA') {
+        setError(t('auth.twoFactorInvalid'));
+      } else {
+        setError(t('auth.loginError'));
+      }
     } finally {
       setLoading(false);
     }
@@ -139,12 +152,43 @@ export default function LoginPage() {
                 </p>
               )}
             </div>
+            {twoFactorRequired && (
+              <div>
+                <label
+                  htmlFor="totp"
+                  className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
+                  {t('auth.twoFactorCodeLabel')}
+                </label>
+                <input
+                  id="totp"
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  autoFocus
+                  value={totp}
+                  onChange={(e) => setTotp(e.target.value)}
+                  aria-describedby="totp-hint"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm tracking-widest text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                />
+                <p
+                  id="totp-hint"
+                  className="mt-1 text-xs text-gray-500 dark:text-gray-400"
+                >
+                  {t('auth.twoFactorCodeHint')}
+                </p>
+              </div>
+            )}
             <button
               type="submit"
               disabled={loading}
               className="w-full rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-60"
             >
-              {loading ? t('common.loading') : t('auth.loginButton')}
+              {loading
+                ? t('common.loading')
+                : twoFactorRequired
+                  ? t('auth.twoFactorVerify')
+                  : t('auth.loginButton')}
             </button>
           </form>
 

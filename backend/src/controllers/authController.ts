@@ -14,6 +14,7 @@ import {
   hashToken,
 } from '../utils/tokens';
 import { sendPasswordResetEmail, sendVerificationEmail } from '../services/mailService';
+import { verifyTwoFactorCode } from '../utils/twoFactor';
 
 const prisma = new PrismaClient();
 
@@ -35,6 +36,7 @@ const PUBLIC_USER_SELECT = {
   language: true,
   profile: true,
   emailVerifiedAt: true,
+  twoFactorEnabled: true,
 } as const;
 
 // Source fields the public-user mapper reads. Accepts the full Prisma User too
@@ -51,6 +53,7 @@ interface SelectedUser {
   language: string;
   profile: string;
   emailVerifiedAt: Date | null;
+  twoFactorEnabled: boolean;
 }
 
 // Map a DB user to the API user shape. Exposes `emailVerified` (boolean) instead
@@ -67,6 +70,7 @@ function toAuthUser(u: SelectedUser) {
     language: u.language,
     profile: u.profile,
     emailVerified: u.emailVerifiedAt != null,
+    twoFactorEnabled: u.twoFactorEnabled,
   };
 }
 
@@ -210,10 +214,11 @@ export async function login(req: Request, res: Response) {
     return;
   }
 
-  const { identifier, email, password } = req.body as {
+  const { identifier, email, password, totp } = req.body as {
     identifier?: string;
     email?: string;
     password: string;
+    totp?: string;
   };
 
   // Accept either a username or an email. Stored emails and usernames are both
@@ -270,6 +275,29 @@ export async function login(req: Request, res: Response) {
     if (!user.active) {
       forbidden(res, 'ACCOUNT_DISABLED');
       return;
+    }
+
+    // Two-factor challenge (Future_Work §2.5). The password is correct, but if
+    // 2FA is on we require a valid TOTP code (or a single-use backup code)
+    // BEFORE issuing any token. A missing code returns a distinct status so the
+    // client can prompt for it; a wrong code is rejected.
+    if (user.twoFactorEnabled) {
+      if (!totp) {
+        res.status(401).json({ success: false, error: 'TWO_FACTOR_REQUIRED' });
+        return;
+      }
+      const check = await verifyTwoFactorCode(user, totp);
+      if (!check.ok) {
+        res.status(401).json({ success: false, error: 'INVALID_2FA' });
+        return;
+      }
+      // Consume a backup code if that is what was used.
+      if (check.updatedBackupCodes !== undefined) {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { twoFactorBackupCodes: check.updatedBackupCodes },
+        });
+      }
     }
 
     // Successful login → clear any accumulated failure state.

@@ -14,6 +14,7 @@ import { logout } from '../../services/authService';
 import type { Language } from '../../stores/languageStore';
 import type { UserLanguage, UserProfile } from '../../types';
 import { PROFILE_OPTIONS, PROFILE_EMOJI } from '../../data/profiles';
+import TwoFactorSettings from '../../components/auth/TwoFactorSettings';
 
 const LANGUAGE_LABELS: Record<UserLanguage, string> = {
   EN: 'English',
@@ -265,6 +266,11 @@ export default function ProfilePage() {
             {user?.role}
           </span>
         </p>
+      </div>
+
+      {/* Two-factor authentication (TOTP) — security section (§2.5) */}
+      <div className="mt-8">
+        <TwoFactorSettings />
       </div>
 
       {/* GDPR self-service: data export (Art. 15/20) + account deletion (Art. 17) */}
