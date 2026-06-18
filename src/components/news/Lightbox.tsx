@@ -100,6 +100,7 @@ export default function Lightbox({
         <img
           src={img.url}
           alt={img.alt ?? ''}
+          decoding="async"
           className="max-h-[80vh] w-auto max-w-full rounded object-contain"
         />
         {multiple && (

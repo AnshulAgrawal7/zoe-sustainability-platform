@@ -51,6 +51,7 @@ export default function CardGallery({
         src={img.url}
         alt={img.alt ?? ''}
         loading="lazy"
+        decoding="async"
         width={img.width ?? undefined}
         height={img.height ?? undefined}
         className="h-48 w-full object-cover"
@@ -69,6 +70,7 @@ export default function CardGallery({
         src={img.url}
         alt={img.alt ?? ''}
         loading="lazy"
+        decoding="async"
         width={img.width ?? undefined}
         height={img.height ?? undefined}
         className="h-48 w-full object-cover"

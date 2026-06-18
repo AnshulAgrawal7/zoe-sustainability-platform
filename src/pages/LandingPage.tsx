@@ -192,6 +192,10 @@ export default function LandingPage() {
               <img
                 src={logoGemeinde}
                 alt={t('landing.hero.badge')}
+                // Above-the-fold crest (LCP candidate): load eagerly with high
+                // priority instead of lazily (Future_Work §6.6).
+                fetchPriority="high"
+                decoding="async"
                 className="h-14 w-auto sm:h-20 lg:h-28"
               />
             </div>

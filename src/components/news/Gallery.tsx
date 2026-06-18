@@ -36,6 +36,7 @@ export default function Gallery({ images }: { images: FeedImage[] }) {
                 src={img.url}
                 alt=""
                 loading="lazy"
+                decoding="async"
                 width={img.width ?? undefined}
                 height={img.height ?? undefined}
                 className="h-32 w-full object-cover transition-transform group-hover:scale-105 sm:h-40"

@@ -50,6 +50,7 @@ export default function PostCard({
           aria-hidden="true"
           className="h-40 w-full object-cover"
           loading="lazy"
+          decoding="async"
         />
       )}
       <div className="flex flex-1 flex-col p-5">
