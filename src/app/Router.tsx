@@ -34,6 +34,10 @@ const NewsDetailPage = lazy(() => import('../pages/NewsDetailPage'));
 // Auth pages
 const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('../pages/auth/RegisterPage'));
+const ForgotPasswordPage = lazy(
+  () => import('../pages/auth/ForgotPasswordPage')
+);
+const ResetPasswordPage = lazy(() => import('../pages/auth/ResetPasswordPage'));
 
 // User pages (protected)
 const DashboardPage = lazy(() => import('../pages/user/DashboardPage'));
@@ -121,6 +125,8 @@ const router = createBrowserRouter([
       // Auth
       { path: 'login', element: <LoginPage /> },
       { path: 'register', element: <RegisterPage /> },
+      { path: 'forgot-password', element: <ForgotPasswordPage /> },
+      { path: 'reset-password', element: <ResetPasswordPage /> },
 
       // Protected (user)
       {

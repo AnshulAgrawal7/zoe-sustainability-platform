@@ -1,7 +1,23 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { register, login, refresh, logout } from '../controllers/authController';
+import {
+  register,
+  login,
+  refresh,
+  logout,
+  forgotPassword,
+  resetPassword,
+} from '../controllers/authController';
 import { authenticate } from '../middleware/auth';
+
+// Shared strong-password policy (mirrors registration + the client checklist).
+const strongPassword = {
+  minLength: 8,
+  minLowercase: 1,
+  minUppercase: 1,
+  minNumbers: 1,
+  minSymbols: 1,
+};
 
 const router = Router();
 
@@ -56,5 +72,22 @@ router.post(
 router.post('/refresh', refresh);
 
 router.post('/logout', authenticate, logout);
+
+// Password reset (Future_Work §2.1). `forgot` always 200s (no enumeration);
+// `reset` enforces the same strong-password policy as registration.
+router.post(
+  '/forgot-password',
+  [body('email').isEmail().normalizeEmail()],
+  forgotPassword
+);
+
+router.post(
+  '/reset-password',
+  [
+    body('token').isString().notEmpty(),
+    body('password').isStrongPassword(strongPassword).withMessage('WEAK_PASSWORD'),
+  ],
+  resetPassword
+);
 
 export default router;

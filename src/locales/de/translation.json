@@ -698,7 +698,19 @@
       "number": "Eine Ziffer",
       "special": "Ein Sonderzeichen"
     },
-    "consent": "Ich habe die <privacy>Datenschutzerklärung</privacy> gelesen und akzeptiere sie."
+    "consent": "Ich habe die <privacy>Datenschutzerklärung</privacy> gelesen und akzeptiere sie.",
+    "forgotTitle": "Passwort zurücksetzen",
+    "forgotIntro": "Gib die mit deinem Konto verknüpfte E-Mail-Adresse ein – wir senden dir einen Link zum Zurücksetzen.",
+    "forgotSent": "Falls ein Konto mit dieser Adresse existiert, haben wir einen Link zum Zurücksetzen gesendet. Bitte prüfe dein Postfach.",
+    "forgotSubmit": "Link senden",
+    "backToLogin": "Zurück zur Anmeldung",
+    "resetTitle": "Neues Passwort wählen",
+    "resetIntro": "Gib ein neues Passwort für dein Konto ein.",
+    "resetSubmit": "Passwort aktualisieren",
+    "resetInvalid": "Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen an.",
+    "resetError": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "resetNoToken": "Diese Seite benötigt einen gültigen Link. Bitte fordere einen neuen an.",
+    "newPassword": "Neues Passwort"
   },
   "projects": {
     "title": "ZOE Projekte",

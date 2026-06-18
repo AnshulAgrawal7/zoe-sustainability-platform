@@ -55,6 +55,25 @@ model User {
   ideaVotes            IdeaVote[]
   notifications        Notification[]      @relation("Recipient")
   actorNotifications   Notification[]      @relation("Actor")
+  tokens               UserToken[]
+}
+
+// Single-use, short-lived tokens for mail-driven account flows (Future_Work
+// §2.1 password reset, §2.2 e-mail verification). The raw token is e-mailed to
+// the user; only its SHA-256 hash is stored (a DB leak cannot be replayed).
+// `usedAt` marks consumption (single use); expired/used rows are pruned by the
+// maintenance cleanup job. `type`: "PASSWORD_RESET" | "EMAIL_VERIFY".
+model UserToken {
+  id        String    @id @default(cuid())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  type      String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId, type])
 }
 
 // category: "ENVIRONMENT" | "MOBILITY" | "COMMUNITY" | "EDUCATION" | "CULTURE"

@@ -6,6 +6,13 @@ import { signAccessToken, signRefreshToken, verifyToken, getRefreshExpiresAt } f
 import { ok, created, badRequest, unauthorized, forbidden, conflict, serverError } from '../utils/response';
 import type { AuthRequest } from '../middleware/auth';
 import { generateUniqueUsername, isValidUsername, normalizeUsername } from '../utils/username';
+import {
+  TOKEN_TYPE,
+  PASSWORD_RESET_TTL_MS,
+  generateRawToken,
+  hashToken,
+} from '../utils/tokens';
+import { sendPasswordResetEmail } from '../services/mailService';
 
 const prisma = new PrismaClient();
 
@@ -288,4 +295,80 @@ export async function logout(req: AuthRequest, res: Response) {
   }
   res.clearCookie('refreshToken', clearRefreshCookieOptions());
   ok(res, null, 'Logged out');
+}
+
+// POST /auth/forgot-password — start a password reset (Future_Work §2.1).
+// ALWAYS responds 200 with the same body whether or not the address exists, to
+// avoid leaking which e-mails are registered (account enumeration). When the
+// address does exist, a single-use reset token is created and e-mailed (stub
+// transport logs the link while no provider is wired — see mailService).
+export async function forgotPassword(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    badRequest(res, 'Validation failed', errors.array());
+    return;
+  }
+  const { email } = req.body as { email: string };
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (user) {
+      const raw = generateRawToken();
+      await prisma.userToken.create({
+        data: {
+          userId: user.id,
+          type: TOKEN_TYPE.PASSWORD_RESET,
+          tokenHash: hashToken(raw),
+          expiresAt: new Date(Date.now() + PASSWORD_RESET_TTL_MS),
+        },
+      });
+      await sendPasswordResetEmail(user.email, raw).catch(() => null);
+    }
+    // Uniform response regardless of existence.
+    ok(res, null, 'If that account exists, a reset link has been sent.');
+  } catch {
+    serverError(res);
+  }
+}
+
+// POST /auth/reset-password — complete a password reset (Future_Work §2.1).
+// Validates the token (hash match, not expired, not used), sets the new password,
+// marks the token used, and revokes all refresh tokens so other sessions are
+// logged out (a reset is also a "lock out anyone with the old password" action).
+export async function resetPassword(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    badRequest(res, 'Validation failed', errors.array());
+    return;
+  }
+  const { token, password } = req.body as { token: string; password: string };
+  try {
+    const record = await prisma.userToken.findUnique({
+      where: { tokenHash: hashToken(token) },
+    });
+    if (
+      !record ||
+      record.type !== TOKEN_TYPE.PASSWORD_RESET ||
+      record.usedAt ||
+      record.expiresAt < new Date()
+    ) {
+      badRequest(res, 'INVALID_OR_EXPIRED_TOKEN');
+      return;
+    }
+    const hashed = await bcrypt.hash(password, 12);
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id: record.userId },
+        // A successful reset also clears any brute-force lock state.
+        data: { password: hashed, failedLoginAttempts: 0, lockedUntil: null },
+      }),
+      prisma.userToken.update({
+        where: { id: record.id },
+        data: { usedAt: new Date() },
+      }),
+      prisma.refreshToken.deleteMany({ where: { userId: record.userId } }),
+    ]);
+    ok(res, null, 'Password updated');
+  } catch {
+    serverError(res);
+  }
 }

@@ -698,7 +698,19 @@
       "number": "One number",
       "special": "One special character"
     },
-    "consent": "I have read and accept the <privacy>privacy policy</privacy>."
+    "consent": "I have read and accept the <privacy>privacy policy</privacy>.",
+    "forgotTitle": "Reset your password",
+    "forgotIntro": "Enter the e-mail address linked to your account and we'll send you a reset link.",
+    "forgotSent": "If an account exists for that address, we've sent a password reset link. Please check your inbox.",
+    "forgotSubmit": "Send reset link",
+    "backToLogin": "Back to sign in",
+    "resetTitle": "Choose a new password",
+    "resetIntro": "Enter a new password for your account.",
+    "resetSubmit": "Update password",
+    "resetInvalid": "This reset link is invalid or has expired. Please request a new one.",
+    "resetError": "Something went wrong. Please try again.",
+    "resetNoToken": "This page needs a valid reset link. Please request a new one.",
+    "newPassword": "New password"
   },
   "projects": {
     "title": "ZOE Projects",

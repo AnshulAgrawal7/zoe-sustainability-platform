@@ -148,6 +148,15 @@ export default function LoginPage() {
             </button>
           </form>
 
+          <p className="mt-4 text-center text-sm">
+            <Link
+              to="/forgot-password"
+              className="font-medium text-green-600 hover:underline"
+            >
+              {t('auth.forgotPassword')}
+            </Link>
+          </p>
+
           <p className="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
             Demo: citizen1@example.com or maria_p / Test1234!
           </p>
