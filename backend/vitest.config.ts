@@ -1,6 +1,11 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  // Backend tests run in a Node env and never import CSS. Provide an inline
+  // (empty) PostCSS config so Vite does NOT walk up the tree and load the repo
+  // root's postcss.config.js — that requires `tailwindcss`, which is not
+  // installed in the isolated backend CI job (Cannot find module 'tailwindcss').
+  css: { postcss: { plugins: [] } },
   test: {
     globals: true,
     environment: 'node',
