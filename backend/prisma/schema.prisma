@@ -39,6 +39,10 @@ model User {
   // user accepted the privacy policy at registration. Nullable for legacy/seed
   // rows created before consent capture existed.
   acceptedTermsAt DateTime?
+  // E-mail verification (Future_Work §2.2): the moment the address was confirmed
+  // via a mailed link. Null = unverified (the account still works in the
+  // prototype, but the UI nudges the user to confirm). Seed/legacy rows = null.
+  emailVerifiedAt DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

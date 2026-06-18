@@ -27,6 +27,7 @@ import { getMyEventProposals } from '../../services/eventProposalService';
 import { getMySubmissions } from '../../services/submissionService';
 import { useRewardTiers, tierForPoints } from '../../hooks/useRewardTiers';
 import PointsBadge from '../../components/ui/PointsBadge';
+import EmailVerificationBanner from '../../components/auth/EmailVerificationBanner';
 import type {
   MyEventRegistration,
   MyIdea,
@@ -144,6 +145,9 @@ export default function DashboardPage() {
           {t('dashboard.welcome', { name: user.name })}
         </p>
       )}
+
+      {/* Nudge to confirm the e-mail address (Future_Work §2.2) */}
+      <EmailVerificationBanner />
 
       {/* Stats */}
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">

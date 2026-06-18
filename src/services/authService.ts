@@ -50,6 +50,16 @@ export async function resetPassword(
   });
 }
 
+// E-mail verification (Future_Work §2.2). `verifyEmail` confirms a mailed token;
+// `resendVerification` re-issues a link for the logged-in user.
+export async function verifyEmail(token: string): Promise<void> {
+  await api.post<ApiResponse<null>>('/auth/verify-email', { token });
+}
+
+export async function resendVerification(): Promise<void> {
+  await api.post<ApiResponse<null>>('/auth/resend-verification', {});
+}
+
 // Session bootstrap on app start: the refresh token lives in an httpOnly cookie,
 // so a page reload can silently restore the full session (user + fresh access
 // token) in one round-trip. Returns null for guests / expired sessions.

@@ -206,6 +206,9 @@ export interface AuthUser {
   avatarUrl: string | null;
   language: UserLanguage;
   profile: UserProfile;
+  // Whether the e-mail address has been confirmed (Future_Work §2.2). Optional
+  // so older cached payloads / tests without the field stay valid.
+  emailVerified?: boolean;
 }
 
 export interface ApiProject {

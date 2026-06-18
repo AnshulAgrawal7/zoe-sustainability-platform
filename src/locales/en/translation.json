@@ -710,7 +710,14 @@
     "resetInvalid": "This reset link is invalid or has expired. Please request a new one.",
     "resetError": "Something went wrong. Please try again.",
     "resetNoToken": "This page needs a valid reset link. Please request a new one.",
-    "newPassword": "New password"
+    "newPassword": "New password",
+    "verifyTitle": "Verify your e-mail",
+    "verifyPending": "Confirming your e-mail address…",
+    "verifySuccess": "Your e-mail address is confirmed. Thank you!",
+    "verifyError": "This confirmation link is invalid or has expired. Request a new one from your dashboard.",
+    "verifyBanner": "Please confirm your e-mail address to secure your account.",
+    "verifyResend": "Resend link",
+    "verifyResent": "A new confirmation link is on its way — check your inbox."
   },
   "projects": {
     "title": "ZOE Projects",

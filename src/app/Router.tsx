@@ -38,6 +38,7 @@ const ForgotPasswordPage = lazy(
   () => import('../pages/auth/ForgotPasswordPage')
 );
 const ResetPasswordPage = lazy(() => import('../pages/auth/ResetPasswordPage'));
+const VerifyEmailPage = lazy(() => import('../pages/auth/VerifyEmailPage'));
 
 // User pages (protected)
 const DashboardPage = lazy(() => import('../pages/user/DashboardPage'));
@@ -127,6 +128,7 @@ const router = createBrowserRouter([
       { path: 'register', element: <RegisterPage /> },
       { path: 'forgot-password', element: <ForgotPasswordPage /> },
       { path: 'reset-password', element: <ResetPasswordPage /> },
+      { path: 'verify-email', element: <VerifyEmailPage /> },
 
       // Protected (user)
       {

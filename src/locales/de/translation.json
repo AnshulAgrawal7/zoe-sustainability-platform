@@ -710,7 +710,14 @@
     "resetInvalid": "Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen an.",
     "resetError": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
     "resetNoToken": "Diese Seite benötigt einen gültigen Link. Bitte fordere einen neuen an.",
-    "newPassword": "Neues Passwort"
+    "newPassword": "Neues Passwort",
+    "verifyTitle": "E-Mail bestätigen",
+    "verifyPending": "E-Mail-Adresse wird bestätigt…",
+    "verifySuccess": "Deine E-Mail-Adresse ist bestätigt. Danke!",
+    "verifyError": "Dieser Bestätigungslink ist ungültig oder abgelaufen. Fordere in deinem Dashboard einen neuen an.",
+    "verifyBanner": "Bitte bestätige deine E-Mail-Adresse, um dein Konto abzusichern.",
+    "verifyResend": "Link erneut senden",
+    "verifyResent": "Ein neuer Bestätigungslink ist unterwegs – prüfe dein Postfach."
   },
   "projects": {
     "title": "ZOE Projekte",

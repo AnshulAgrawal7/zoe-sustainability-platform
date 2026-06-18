@@ -7,6 +7,8 @@ import {
   logout,
   forgotPassword,
   resetPassword,
+  verifyEmail,
+  resendVerification,
 } from '../controllers/authController';
 import { authenticate } from '../middleware/auth';
 
@@ -89,5 +91,10 @@ router.post(
   ],
   resetPassword
 );
+
+// E-mail verification (Future_Work §2.2). `verify` is public + token-based;
+// `resend` re-issues a link for the authenticated user.
+router.post('/verify-email', [body('token').isString().notEmpty()], verifyEmail);
+router.post('/resend-verification', authenticate, resendVerification);
 
 export default router;

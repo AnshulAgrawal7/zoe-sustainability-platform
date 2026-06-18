@@ -9,10 +9,11 @@ import { generateUniqueUsername, isValidUsername, normalizeUsername } from '../u
 import {
   TOKEN_TYPE,
   PASSWORD_RESET_TTL_MS,
+  EMAIL_VERIFY_TTL_MS,
   generateRawToken,
   hashToken,
 } from '../utils/tokens';
-import { sendPasswordResetEmail } from '../services/mailService';
+import { sendPasswordResetEmail, sendVerificationEmail } from '../services/mailService';
 
 const prisma = new PrismaClient();
 
@@ -33,7 +34,56 @@ const PUBLIC_USER_SELECT = {
   avatarUrl: true,
   language: true,
   profile: true,
+  emailVerifiedAt: true,
 } as const;
+
+// Source fields the public-user mapper reads. Accepts the full Prisma User too
+// (structural typing), but `toAuthUser` only ever copies these — so passing a
+// full row (e.g. from login) can never leak the password hash.
+interface SelectedUser {
+  id: string;
+  email: string;
+  username: string;
+  name: string;
+  role: string;
+  points: number;
+  avatarUrl: string | null;
+  language: string;
+  profile: string;
+  emailVerifiedAt: Date | null;
+}
+
+// Map a DB user to the API user shape. Exposes `emailVerified` (boolean) instead
+// of the raw timestamp, so the client never has to interpret a date.
+function toAuthUser(u: SelectedUser) {
+  return {
+    id: u.id,
+    email: u.email,
+    username: u.username,
+    name: u.name,
+    role: u.role,
+    points: u.points,
+    avatarUrl: u.avatarUrl,
+    language: u.language,
+    profile: u.profile,
+    emailVerified: u.emailVerifiedAt != null,
+  };
+}
+
+// Issue + e-mail a fresh verification token (Future_Work §2.2). Best-effort: a
+// mail hiccup must never fail the surrounding request (registration/resend).
+async function issueVerificationEmail(userId: string, email: string): Promise<void> {
+  const raw = generateRawToken();
+  await prisma.userToken.create({
+    data: {
+      userId,
+      type: TOKEN_TYPE.EMAIL_VERIFY,
+      tokenHash: hashToken(raw),
+      expiresAt: new Date(Date.now() + EMAIL_VERIFY_TTL_MS),
+    },
+  });
+  await sendVerificationEmail(email, raw).catch(() => null);
+}
 
 /**
  * Cookie options for the refresh token.
@@ -134,6 +184,10 @@ export async function register(req: Request, res: Response) {
       await prisma.userBadge.create({ data: { userId: user.id, badgeId: newcomerBadge.id } });
     }
 
+    // Send a verification link (Future_Work §2.2). The account is usable
+    // immediately (prototype); the UI nudges the user to confirm.
+    await issueVerificationEmail(user.id, user.email).catch(() => null);
+
     const accessToken = signAccessToken({ userId: user.id, role: user.role });
     const refreshToken = signRefreshToken({ userId: user.id, role: user.role });
 
@@ -143,7 +197,7 @@ export async function register(req: Request, res: Response) {
 
     res.cookie('refreshToken', refreshToken, refreshCookieOptions());
 
-    created(res, { user, accessToken });
+    created(res, { user: toAuthUser(user), accessToken });
   } catch {
     serverError(res);
   }
@@ -235,20 +289,7 @@ export async function login(req: Request, res: Response) {
 
     res.cookie('refreshToken', refreshToken, refreshCookieOptions());
 
-    ok(res, {
-      user: {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        name: user.name,
-        role: user.role,
-        points: user.points,
-        avatarUrl: user.avatarUrl,
-        language: user.language,
-        profile: user.profile,
-      },
-      accessToken,
-    });
+    ok(res, { user: toAuthUser(user), accessToken });
   } catch {
     serverError(res);
   }
@@ -282,7 +323,7 @@ export async function refresh(req: Request, res: Response) {
     }
 
     const accessToken = signAccessToken({ userId: user.id, role: user.role });
-    ok(res, { accessToken, user });
+    ok(res, { accessToken, user: toAuthUser(user) });
   } catch {
     unauthorized(res, 'Invalid refresh token');
   }
@@ -368,6 +409,65 @@ export async function resetPassword(req: Request, res: Response) {
       prisma.refreshToken.deleteMany({ where: { userId: record.userId } }),
     ]);
     ok(res, null, 'Password updated');
+  } catch {
+    serverError(res);
+  }
+}
+
+// POST /auth/verify-email — confirm an e-mail address (Future_Work §2.2).
+// Public + token-based: validates the hash, type, expiry and single use, then
+// stamps User.emailVerifiedAt and consumes the token. Idempotent-ish: a used
+// token returns the same 400 as an invalid one.
+export async function verifyEmail(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    badRequest(res, 'Validation failed', errors.array());
+    return;
+  }
+  const { token } = req.body as { token: string };
+  try {
+    const record = await prisma.userToken.findUnique({
+      where: { tokenHash: hashToken(token) },
+    });
+    if (
+      !record ||
+      record.type !== TOKEN_TYPE.EMAIL_VERIFY ||
+      record.usedAt ||
+      record.expiresAt < new Date()
+    ) {
+      badRequest(res, 'INVALID_OR_EXPIRED_TOKEN');
+      return;
+    }
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id: record.userId },
+        data: { emailVerifiedAt: new Date() },
+      }),
+      prisma.userToken.update({
+        where: { id: record.id },
+        data: { usedAt: new Date() },
+      }),
+    ]);
+    ok(res, null, 'E-mail verified');
+  } catch {
+    serverError(res);
+  }
+}
+
+// POST /auth/resend-verification — authenticated. Re-issues a verification link
+// for the logged-in user. No-op (still 200) if the address is already verified,
+// so the client never learns more than "ok".
+export async function resendVerification(req: AuthRequest, res: Response) {
+  const userId = req.user!.userId;
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, email: true, emailVerifiedAt: true },
+    });
+    if (user && !user.emailVerifiedAt) {
+      await issueVerificationEmail(user.id, user.email).catch(() => null);
+    }
+    ok(res, null, 'If your address is unverified, a new link has been sent.');
   } catch {
     serverError(res);
   }
