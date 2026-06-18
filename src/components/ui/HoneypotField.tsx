@@ -1,3 +1,7 @@
+/* eslint-disable react-refresh/only-export-components --
+   The honeypot constant + tiny `useHoneypot` hook are intentionally colocated
+   with the field component; splitting them into a separate file purely for
+   Fast-Refresh purity is not worth it for this anti-spam helper. */
 import { useState } from 'react';
 
 // Must match the backend honeypot middleware field name

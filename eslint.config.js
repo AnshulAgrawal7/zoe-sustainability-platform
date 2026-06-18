@@ -6,7 +6,16 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // Generated artifacts are never linted; the backend has its own ESLint config
+  // + lint script (`cd backend && npm run lint`, run as its own CI job), so the
+  // root (frontend, browser-globals) lint deliberately excludes backend/**.
+  globalIgnores([
+    '**/dist',
+    '**/dist/**',
+    '**/coverage',
+    '**/coverage/**',
+    'backend/**',
+  ]),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode';
 import { ShieldCheck, ShieldOff, ShieldAlert } from 'lucide-react';
@@ -31,23 +31,19 @@ export default function TwoFactorSettings() {
 
   const enabled = user?.twoFactorEnabled === true;
 
-  // Render the QR locally whenever a new setup secret arrives.
-  useEffect(() => {
-    if (!setup?.otpauthUrl) {
-      setQrDataUrl('');
-      return;
-    }
-    QRCode.toDataURL(setup.otpauthUrl, { margin: 1, width: 192 })
-      .then(setQrDataUrl)
-      .catch(() => setQrDataUrl(''));
-  }, [setup]);
-
   async function startSetup() {
     setError('');
     setLoading(true);
     try {
       const data = await setupTwoFactor();
+      // Render the QR locally from the otpauth URI (the secret never leaves the
+      // setup round-trip). Done here, not in an effect, to avoid cascading renders.
+      const qr = await QRCode.toDataURL(data.otpauthUrl, {
+        margin: 1,
+        width: 192,
+      }).catch(() => '');
       setSetup(data);
+      setQrDataUrl(qr);
       setPhase('setup');
     } catch {
       setError(t('auth.twoFactorError'));
@@ -67,7 +63,11 @@ export default function TwoFactorSettings() {
       updateUser({ twoFactorEnabled: true });
     } catch (err) {
       const c = err instanceof Error ? err.message : '';
-      setError(c === 'INVALID_2FA' ? t('auth.twoFactorInvalid') : t('auth.twoFactorError'));
+      setError(
+        c === 'INVALID_2FA'
+          ? t('auth.twoFactorInvalid')
+          : t('auth.twoFactorError')
+      );
     } finally {
       setLoading(false);
     }
@@ -84,7 +84,11 @@ export default function TwoFactorSettings() {
       setSetup(null);
     } catch (err) {
       const c = err instanceof Error ? err.message : '';
-      setError(c === 'INVALID_2FA' ? t('auth.twoFactorInvalid') : t('auth.twoFactorError'));
+      setError(
+        c === 'INVALID_2FA'
+          ? t('auth.twoFactorInvalid')
+          : t('auth.twoFactorError')
+      );
     } finally {
       setLoading(false);
     }
@@ -94,7 +98,10 @@ export default function TwoFactorSettings() {
     <section className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
       <h2 className="mb-1 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
         {enabled ? (
-          <ShieldCheck className="h-5 w-5 text-green-600 dark:text-green-400" aria-hidden="true" />
+          <ShieldCheck
+            className="h-5 w-5 text-green-600 dark:text-green-400"
+            aria-hidden="true"
+          />
         ) : (
           <ShieldAlert className="h-5 w-5 text-amber-500" aria-hidden="true" />
         )}
@@ -234,7 +241,9 @@ export default function TwoFactorSettings() {
                   disabled={loading || !code.trim()}
                   className="rounded-lg bg-rose-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2 disabled:opacity-60"
                 >
-                  {loading ? t('common.loading') : t('auth.twoFactorDisableConfirm')}
+                  {loading
+                    ? t('common.loading')
+                    : t('auth.twoFactorDisableConfirm')}
                 </button>
                 <button
                   type="button"

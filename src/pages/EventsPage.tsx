@@ -71,7 +71,28 @@ export default function EventsPage() {
       .catch(() => setFailed(true))
       .finally(() => setLoading(false));
   };
-  useEffect(loadEvents, []);
+  // Initial load on mount. State is mutated only inside async callbacks (not
+  // synchronously) so it never triggers a cascading render; `loading`/`failed`
+  // already start in their loading state via useState. `loadEvents` above is for
+  // handler-triggered reloads (register/cancel).
+  useEffect(() => {
+    let active = true;
+    getEvents()
+      .then((data) => {
+        if (!active) return;
+        setEvents(data);
+        setFailed(false);
+      })
+      .catch(() => {
+        if (active) setFailed(true);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   function title(e: ApiEvent): string {
     if (lang === 'el') return e.titleEl;
