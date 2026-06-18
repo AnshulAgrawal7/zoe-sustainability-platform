@@ -834,7 +834,8 @@
         "title": "Encourages long-term participation",
         "desc": "Monthly stewardship points and co-design access at the top tier give residents ongoing reasons to stay engaged — not just one-off event attendance."
       }
-    ]
+    ],
+    "progressAria": "Progress towards your next ZOE level"
   },
   "dashboard": {
     "title": "My Dashboard",

@@ -129,6 +129,7 @@ export default function UserRewardsPage() {
                       className="h-2 rounded-full bg-amber-400 transition-all"
                       style={{ width: `${Math.min(progressInTier, 100)}%` }}
                       role="progressbar"
+                      aria-label={t('rewards.progressAria')}
                       aria-valuenow={points}
                       aria-valuemin={currentTier.pointsMin}
                       aria-valuemax={currentTier.pointsMax ?? points}

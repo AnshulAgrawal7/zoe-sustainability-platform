@@ -196,6 +196,7 @@ export default function RewardsPage() {
                   className="h-3 rounded-full bg-green-600 transition-all"
                   style={{ width: `${Math.min(progressInTier, 100)}%` }}
                   role="progressbar"
+                  aria-label={t('rewards.progressAria')}
                   aria-valuenow={points}
                   aria-valuemin={currentTier.pointsMin}
                   aria-valuemax={currentTier.pointsMax ?? points}
@@ -463,6 +464,7 @@ export default function RewardsPage() {
                       }`}
                       style={{ width: `${pct}%` }}
                       role="progressbar"
+                      aria-label={t('rewards.progressAria')}
                       aria-valuenow={milestone.current}
                       aria-valuemin={0}
                       aria-valuemax={milestone.target}

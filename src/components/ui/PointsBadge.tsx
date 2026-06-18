@@ -27,6 +27,10 @@ export default function PointsBadge({
   const label = t('rewards.pointsAria', { points });
   return (
     <span
+      // role="img" makes the value+star a single labelled graphic, which is
+      // what permits aria-label on this otherwise-generic span (WCAG / ARIA:
+      // aria-label is prohibited on a span with no valid role).
+      role="img"
       className={`inline-flex items-center gap-1 ${className}`}
       aria-label={label}
       title={label}

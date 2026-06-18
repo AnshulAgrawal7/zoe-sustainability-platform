@@ -834,7 +834,8 @@
         "title": "Fördert langfristige Beteiligung",
         "desc": "Monatliche Stewardship-Punkte und Co-Design-Zugang in der höchsten Stufe geben den Einwohner:innen fortlaufende Gründe, engagiert zu bleiben — nicht nur einmalige Teilnahme."
       }
-    ]
+    ],
+    "progressAria": "Fortschritt zu deinem nächsten ZOE-Level"
   },
   "dashboard": {
     "title": "Mein Dashboard",
