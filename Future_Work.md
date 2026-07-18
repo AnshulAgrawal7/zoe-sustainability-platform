@@ -19,8 +19,7 @@
 ## ✅ Umsetzungsstatus (autonomer Lauf, 2026-06-17)
 
 Ein autonomer Arbeitslauf hat die **ohne externe Accounts** umsetzbaren 🤖-Punkte
-bereits implementiert und getestet (Branch `feature/szenario-a-hardening`,
-Details + Tests in [`AUTONOMOUS_RUN_LOG.md`](AUTONOMOUS_RUN_LOG.md)):
+bereits implementiert und getestet (Branch `feature/szenario-a-hardening`):
 
 - **6.1/6.2 ✅** 404-Seite, Route-Error-Element, globale Error-Boundary
 - **3.1 ✅** Backend: einheitlicher JSON-Error-Handler + 404-Middleware
@@ -45,8 +44,7 @@ behalten den **vollen** Soll-Zustand als Referenz.
 ### ✅ Zweiter autonomer Lauf (2026-06-17, Branch `feature/szenario-a-hardening-2`)
 
 Alle oben als „noch offen" markierten 🤖-Reste **plus** weitere Tier-2/3-Punkte
-umgesetzt, getestet und (CSP) per Screenshot verifiziert — Details in
-[`AUTONOMOUS_RUN_LOG.md`](AUTONOMOUS_RUN_LOG.md):
+umgesetzt, getestet und (CSP) per Screenshot verifiziert:
 
 - **3.8 ✅** DB-Readiness-Endpoint (`/api/ready`, 503 wenn DB down)
 - **3.5 ✅** Honeypot auf allen anonymen Formularen (Ideen/Submissions/Vorschläge/Newsletter)
@@ -70,8 +68,7 @@ Inhalte/Kontaktwege/Bildrechte (5.1/6.5/9.9).
 
 ### ✅ Dritter autonomer Lauf (2026-06-18, Branch `feature/autonomous-run-3` → `main`)
 
-Batches A–F aus `handoff.md` komplett umgesetzt (Details + Tests in
-[`AUTONOMOUS_RUN_LOG.md`](AUTONOMOUS_RUN_LOG.md), 16 Commits; BE 177 / FE 77 grün):
+Batches A–F komplett umgesetzt (16 Commits; BE 177 / FE 77 grün):
 
 - **2.1 ✅** Passwort-Reset-Flow (Token + `/auth/forgot|reset-password`, Seiten).
 - **2.2 ✅** E-Mail-Verifizierung (`/auth/verify-email` + Resend, Banner).

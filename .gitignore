@@ -47,3 +47,8 @@ coverage/
 .claude/settings.local.json
 .claude/*.local.json
 .lighthouseci/
+
+# Interne Arbeits-/Agent-Artefakte — nicht Teil der Abgabe (lokal behalten)
+AUTONOMOUS_RUN_LOG.md
+handoff.md
+Projekt_Overview.md
